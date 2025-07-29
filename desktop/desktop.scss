@@ -87,8 +87,7 @@
     grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)) !important;
     gap: 2rem !important;
     
-    .category-list-item,
-    .category {
+    .category-list-item {
       padding: 2rem !important;
       
       // Enhanced hover effects on desktop
@@ -98,53 +97,25 @@
         border-color: var(--groqsters-primary) !important;
       }
       
-      // Larger text on desktop
-      .category-name,
-      .category-title-link,
-      h3 {
-        font-size: 1.4rem !important;
-        margin-bottom: 1rem !important;
-      }
-      
-      .category-description {
-        font-size: 1rem !important;
-        line-height: 1.5 !important;
-        margin-bottom: 1.25rem !important;
-        -webkit-line-clamp: 4 !important; // Show more lines on desktop
-      }
-      
-      .category-stat,
-      .topics-count,
-      .posts-count {
-        font-size: 0.9rem !important;
-        padding: 0.3rem 0.6rem !important;
-      }
-      
-      .featured-topics,
-      .latest-topics {
-        padding-top: 1.25rem !important;
-        margin-top: 1.25rem !important;
-        
-        .topic-title {
-          font-size: 0.9rem !important;
-          padding: 0.3rem 0 !important;
+      td.category {
+        // Larger text on desktop
+        .category-name {
+          font-size: 1.4rem !important;
+          margin-bottom: 1rem !important;
+          
+          // Enhanced hover animation
+          transition: all 0.2s ease !important;
           
           &:hover {
-            transform: translateX(4px) !important;
+            transform: translateX(2px) !important;
           }
         }
-      }
-      
-      // Enhanced nested category styling for desktop
-      &.category-list-item {
-        .category {
-          padding: 2rem !important;
-          
-          &:hover {
-            transform: translateY(-6px) !important;
-            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2) !important;
-            border-color: var(--groqsters-primary) !important;
-          }
+        
+        .category-description {
+          font-size: 1rem !important;
+          line-height: 1.5 !important;
+          margin-bottom: 1.25rem !important;
+          -webkit-line-clamp: 4 !important; // Show more lines on desktop
         }
       }
     }
@@ -177,69 +148,23 @@
       border-color: var(--groqsters-primary) !important;
     }
     
-    .category-box-heading {
-      h3 {
-        font-size: 1.4rem !important;
-        margin-bottom: 1rem !important;
+    .category-box-heading h3 {
+      font-size: 1.4rem !important;
+      margin-bottom: 1rem !important;
+      
+      a {
+        transition: all 0.2s ease !important;
+        
+        &:hover {
+          transform: translateX(2px) !important;
+        }
       }
     }
     
-    .category-box-inner {
-      .category-description {
-        font-size: 1rem !important;
-        line-height: 1.5 !important;
-        margin-bottom: 1.25rem !important;
-      }
-      
-      .featured-topics {
-        padding-top: 1.25rem !important;
-        margin-top: 1.25rem !important;
-      }
-    }
-  }
-}
-
-// Enhanced category icons on desktop
-.category-list .category,
-.category-box {
-  .category-logo,
-  .category-icon {
-    width: 28px !important;
-    height: 28px !important;
-    margin-right: 0.75rem !important;
-  }
-  
-  .category-color,
-  .category-text-color {
-    &::before {
-      width: 14px !important;
-      height: 14px !important;
-      margin-right: 0.75rem !important;
-    }
-  }
-}
-
-// Desktop-specific animations for smooth interactions
-.category-list .category,
-.category-box {
-  .category-name,
-  .category-title-link,
-  h3 a {
-    transition: all 0.2s ease !important;
-    
-    &:hover {
-      transform: translateX(2px) !important;
-    }
-  }
-  
-  .featured-topics,
-  .latest-topics {
-    .topic-title {
-      transition: all 0.2s ease !important;
-      
-      &:hover {
-        padding-left: 0.5rem !important;
-      }
+    .category-description {
+      font-size: 1rem !important;
+      line-height: 1.5 !important;
+      margin-bottom: 1.25rem !important;
     }
   }
 } 

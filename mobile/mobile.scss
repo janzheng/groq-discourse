@@ -186,8 +186,7 @@ div.groqsters-feature-banner {
     margin: 1rem 0 !important;
     padding: 0 0.5rem !important;
     
-    .category-list-item,
-    .category {
+    .category-list-item {
       padding: 1rem !important;
       border-radius: 8px !important;
       
@@ -197,48 +196,17 @@ div.groqsters-feature-banner {
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
       }
       
-      // Smaller text on mobile
-      .category-name,
-      .category-title-link,
-      h3 {
-        font-size: 1.1rem !important;
-        margin-bottom: 0.5rem !important;
-      }
-      
-      .category-description {
-        font-size: 0.85rem !important;
-        -webkit-line-clamp: 2 !important; // Show fewer lines on mobile
-        margin-bottom: 0.75rem !important;
-      }
-      
-      .category-stat,
-      .topics-count,
-      .posts-count {
-        font-size: 0.8rem !important;
-        padding: 0.2rem 0.4rem !important;
-      }
-      
-      .featured-topics,
-      .latest-topics {
-        padding-top: 0.75rem !important;
-        margin-top: 0.75rem !important;
-        
-        .topic-title {
-          font-size: 0.8rem !important;
-          padding: 0.2rem 0 !important;
+      td.category {
+        // Smaller text on mobile
+        .category-name {
+          font-size: 1.1rem !important;
+          margin-bottom: 0.5rem !important;
         }
-      }
-      
-      // Nested category styling for mobile
-      &.category-list-item {
-        .category {
-          padding: 1rem !important;
-          border-radius: 8px !important;
-          
-          &:hover {
-            transform: none !important;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
-          }
+        
+        .category-description {
+          font-size: 0.85rem !important;
+          -webkit-line-clamp: 2 !important; // Show fewer lines on mobile
+          margin-bottom: 0.75rem !important;
         }
       }
     }
@@ -273,41 +241,14 @@ div.groqsters-feature-banner {
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
     }
     
-    .category-box-heading {
-      h3 {
-        font-size: 1.1rem !important;
-        margin-bottom: 0.5rem !important;
-      }
+    .category-box-heading h3 {
+      font-size: 1.1rem !important;
+      margin-bottom: 0.5rem !important;
     }
     
-    .category-box-inner {
-      .category-description {
-        font-size: 0.85rem !important;
-        margin-bottom: 0.75rem !important;
-      }
-      
-      .featured-topics {
-        padding-top: 0.75rem !important;
-        margin-top: 0.75rem !important;
-      }
-    }
-  }
-}
-
-// Ensure category icons are appropriately sized on mobile
-.category-list .category,
-.category-box {
-  .category-logo,
-  .category-icon {
-    width: 20px !important;
-    height: 20px !important;
-  }
-  
-  .category-color,
-  .category-text-color {
-    &::before {
-      width: 10px !important;
-      height: 10px !important;
+    .category-description {
+      font-size: 0.85rem !important;
+      margin-bottom: 0.75rem !important;
     }
   }
 } 

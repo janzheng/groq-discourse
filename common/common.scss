@@ -303,22 +303,38 @@ div.groqsters-feature-banner {
   }
 }
 
-// Main categories page container
+// VERCEL-STYLE CLEAN CATEGORY LAYOUT
+// Hide default Discourse category table completely
 .categories-and-latest,
 .categories-only {
+  // Hide the default category/topics table header
+  .category-list-header,
+  .category-list thead {
+    display: none !important;
+  }
+  
+  // Hide the category-topics table structure
+  .category-list table,
+  .category-list tbody,
+  .category-list tr {
+    display: block !important;
+    border: none !important;
+    background: none !important;
+    width: 100% !important;
+  }
+  
+  // Transform the category list into a clean grid
   .category-list {
     display: grid !important;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)) !important;
     gap: 1.5rem !important;
     margin: 2rem 0 !important;
     padding: 0 !important;
-    
-    // Remove default table styling
     border: none !important;
     background: none !important;
     
-    .category-list-item,
-    .category {
+    // Each category becomes a clean card
+    .category-list-item {
       display: block !important;
       background: var(--secondary) !important;
       border: 1px solid var(--primary-low) !important;
@@ -329,11 +345,88 @@ div.groqsters-feature-banner {
       cursor: pointer !important;
       position: relative !important;
       overflow: hidden !important;
-      
-      // Remove default table cell styles
       width: auto !important;
       height: auto !important;
-      vertical-align: unset !important;
+      
+      // Hide the table cell structure completely
+      td {
+        display: block !important;
+        border: none !important;
+        padding: 0 !important;
+        background: none !important;
+        
+        // Hide all the metadata columns we don't want
+        &.topics,
+        &.posts,
+        &.latest,
+        &.num {
+          display: none !important;
+        }
+        
+        // Only show the main category content
+        &.category {
+          display: block !important;
+          
+          // Category header section
+          .category-name {
+            font-size: 1.25rem !important;
+            font-weight: 600 !important;
+            color: var(--primary) !important;
+            margin: 0 0 0.75rem 0 !important;
+            text-decoration: none !important;
+            display: block !important;
+            
+            &:hover {
+              color: var(--groqsters-primary) !important;
+            }
+          }
+          
+          // Category description - clean and simple
+          .category-description {
+            color: var(--primary-medium) !important;
+            font-size: 0.9rem !important;
+            line-height: 1.4 !important;
+            margin-bottom: 1rem !important;
+            display: -webkit-box !important;
+            -webkit-line-clamp: 3 !important;
+            -webkit-box-orient: vertical !important;
+            overflow: hidden !important;
+          }
+          
+          // Hide subcategories and complex structures
+          .subcategories,
+          .category-logo,
+          .category-stat,
+          .featured-topics {
+            display: none !important;
+          }
+        }
+      }
+      
+      // Hover effects
+      &:hover {
+        transform: translateY(-4px) !important;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15) !important;
+        border-color: var(--primary-medium) !important;
+      }
+    }
+  }
+  
+  // Style any remaining category boxes (for different layouts)
+  .category-boxes,
+  .category-boxes-with-topics {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)) !important;
+    gap: 1.5rem !important;
+    margin: 2rem 0 !important;
+    
+    .category-box {
+      background: var(--secondary) !important;
+      border: 1px solid var(--primary-low) !important;
+      border-radius: 12px !important;
+      padding: 1.5rem !important;
+      transition: var(--groqsters-transition) !important;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
       
       &:hover {
         transform: translateY(-4px) !important;
@@ -341,61 +434,14 @@ div.groqsters-feature-banner {
         border-color: var(--primary-medium) !important;
       }
       
-      // Category header/title area
-      .category-name,
-      .category-title-link,
-      h3 {
+      .category-box-heading h3 {
         font-size: 1.25rem !important;
         font-weight: 600 !important;
-        color: var(--primary) !important;
-        margin: 0 0 0.75rem 0 !important;
-        text-decoration: none !important;
-        display: block !important;
+        margin-bottom: 0.75rem !important;
         
-        &:hover {
-          color: var(--groqsters-primary) !important;
-        }
-      }
-      
-      // Category description
-      .category-description {
-        color: var(--primary-medium) !important;
-        font-size: 0.9rem !important;
-        line-height: 1.4 !important;
-        margin-bottom: 1rem !important;
-        display: -webkit-box !important;
-        -webkit-line-clamp: 3 !important;
-        -webkit-box-orient: vertical !important;
-        overflow: hidden !important;
-      }
-      
-      // Category stats/meta info
-      .category-stat,
-      .topics-count,
-      .posts-count {
-        color: var(--primary-high) !important;
-        font-size: 0.85rem !important;
-        background: var(--primary-very-low) !important;
-        border-radius: 6px !important;
-        padding: 0.25rem 0.5rem !important;
-        display: inline-block !important;
-        margin-right: 0.5rem !important;
-        margin-bottom: 0.5rem !important;
-      }
-      
-      // Latest topics in category (if shown)
-      .featured-topics,
-      .latest-topics {
-        border-top: 1px solid var(--primary-low) !important;
-        padding-top: 1rem !important;
-        margin-top: 1rem !important;
-        
-        .topic-title {
-          font-size: 0.85rem !important;
-          color: var(--primary-high) !important;
+        a {
+          color: var(--primary) !important;
           text-decoration: none !important;
-          display: block !important;
-          padding: 0.25rem 0 !important;
           
           &:hover {
             color: var(--groqsters-primary) !important;
@@ -403,29 +449,17 @@ div.groqsters-feature-banner {
         }
       }
       
-      // Remove default table styling completely
-      &.category-list-item {
-        background: none !important;
-        border: none !important;
-        padding: 0 !important;
-        
-        // The actual category content
-        .category {
-          display: block !important;
-          background: var(--secondary) !important;
-          border: 1px solid var(--primary-low) !important;
-          border-radius: 12px !important;
-          padding: 1.5rem !important;
-          transition: var(--groqsters-transition) !important;
-          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
-          width: 100% !important;
-          
-          &:hover {
-            transform: translateY(-4px) !important;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15) !important;
-            border-color: var(--primary-medium) !important;
-          }
-        }
+      .category-description {
+        color: var(--primary-medium) !important;
+        font-size: 0.9rem !important;
+        line-height: 1.4 !important;
+        margin-bottom: 1rem !important;
+      }
+      
+      // Hide featured topics and stats for clean look
+      .featured-topics,
+      .category-stat {
+        display: none !important;
       }
     }
   }
@@ -450,59 +484,16 @@ div.groqsters-feature-banner {
   }
 }
 
-// Category boxes (used in some Discourse layouts)
-.category-boxes,
-.category-boxes-with-topics {
-  display: grid !important;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)) !important;
-  gap: 1.5rem !important;
-  margin: 2rem 0 !important;
-  
-  .category-box {
-    background: var(--secondary) !important;
-    border: 1px solid var(--primary-low) !important;
-    border-radius: 12px !important;
-    padding: 1.5rem !important;
-    transition: var(--groqsters-transition) !important;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
-    
-    &:hover {
-      transform: translateY(-4px) !important;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15) !important;
-      border-color: var(--primary-medium) !important;
-    }
-    
-    .category-box-heading {
-      h3 {
-        font-size: 1.25rem !important;
-        font-weight: 600 !important;
-        margin-bottom: 0.75rem !important;
-        
-        a {
-          color: var(--primary) !important;
-          text-decoration: none !important;
-          
-          &:hover {
-            color: var(--groqsters-primary) !important;
-          }
-        }
-      }
-    }
-    
-    .category-box-inner {
-      .category-description {
-        color: var(--primary-medium) !important;
-        font-size: 0.9rem !important;
-        line-height: 1.4 !important;
-        margin-bottom: 1rem !important;
-      }
-      
-      .featured-topics {
-        border-top: 1px solid var(--primary-low) !important;
-        padding-top: 1rem !important;
-        margin-top: 1rem !important;
-      }
-    }
+// Main categories page container
+.categories-and-latest,
+.categories-only {
+  // Remove any default styling
+  table,
+  thead,
+  tbody,
+  tr {
+    background: none !important;
+    border: none !important;
   }
 }
 
@@ -519,31 +510,6 @@ div.groqsters-feature-banner {
   .latest-topic-list,
   .topic-list-container {
     order: 2 !important;
-  }
-}
-
-// Style category icons/colors
-.category-list .category,
-.category-box {
-  .category-logo,
-  .category-icon {
-    width: 24px !important;
-    height: 24px !important;
-    margin-right: 0.5rem !important;
-    border-radius: 4px !important;
-  }
-  
-  .category-color,
-  .category-text-color {
-    &::before {
-      content: '' !important;
-      display: inline-block !important;
-      width: 12px !important;
-      height: 12px !important;
-      border-radius: 50% !important;
-      margin-right: 0.5rem !important;
-      vertical-align: middle !important;
-    }
   }
 }
 

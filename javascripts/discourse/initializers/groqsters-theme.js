@@ -99,21 +99,21 @@ export default {
                 dec.h("div.banner-item", [
                   dec.h("div.banner-image-placeholder", { 
                     "data-item": "1",
-                    "data-url": settings.feature_banner_item_1_url || ""
+                    "data-url": settings.feature_banner_item_1_image || ""
                   }),
                   dec.h("h3", settings.feature_banner_item_1_title || "Fast & Powerful")
                 ]),
                 dec.h("div.banner-item", [
                   dec.h("div.banner-image-placeholder", { 
                     "data-item": "2",
-                    "data-url": settings.feature_banner_item_2_url || ""
+                    "data-url": settings.feature_banner_item_2_image || ""
                   }),
                   dec.h("h3", settings.feature_banner_item_2_title || "Community Driven")
                 ]),
                 dec.h("div.banner-item", [
                   dec.h("div.banner-image-placeholder", { 
                     "data-item": "3",
-                    "data-url": settings.feature_banner_item_3_url || ""
+                    "data-url": settings.feature_banner_item_3_image || ""
                   }),
                   dec.h("h3", settings.feature_banner_item_3_title || "Always Learning")
                 ])
@@ -204,7 +204,7 @@ export default {
               const bannerItem = document.createElement('div');
               bannerItem.className = 'banner-item';
               
-              const imageUrl = settings[`feature_banner_item_${i}_url`];
+              const imageUrl = settings[`feature_banner_item_${i}_image`];
               const title = settings[`feature_banner_item_${i}_title`] || 
                           (i === 1 ? "Fast & Powerful" : i === 2 ? "Community Driven" : "Always Learning");
               
