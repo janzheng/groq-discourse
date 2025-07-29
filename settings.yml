@@ -31,4 +31,39 @@ custom_footer_text:
 enable_animations:
   type: bool
   default: true
-  description: "Enable CSS animations and transitions" 
+  description: "Enable CSS animations and transitions"
+
+show_feature_banner:
+  type: bool
+  default: true
+  description: "Show the 3-column feature banner on homepage"
+
+feature_banner_item_1_title:
+  type: string
+  default: "Fast & Powerful"
+  description: "Title for the first feature banner item"
+
+feature_banner_item_1_icon:
+  type: string
+  default: "⚡"
+  description: "Emoji or icon for the first feature banner item"
+
+feature_banner_item_2_title:
+  type: string
+  default: "Community Driven"
+  description: "Title for the second feature banner item"
+
+feature_banner_item_2_icon:
+  type: string
+  default: "🤝"
+  description: "Emoji or icon for the second feature banner item"
+
+feature_banner_item_3_title:
+  type: string
+  default: "Always Learning"
+  description: "Title for the third feature banner item"
+
+feature_banner_item_3_icon:
+  type: string
+  default: "🚀"
+  description: "Emoji or icon for the third feature banner item" 

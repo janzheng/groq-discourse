@@ -8,6 +8,7 @@ A modern, customizable Discourse theme designed for enhanced user experience and
 - **Custom Color Schemes**: Easy-to-customize color palette
 - **Advanced Animations**: Smooth transitions and engaging micro-interactions
 - **Custom JavaScript Components**: Built-in widgets and utilities
+- **3-Column Feature Banner**: Responsive grid banner with customizable icons and titles
 - **Flexible Templates**: Handlebars templates for header, footer, and topic lists
 - **Developer-Friendly**: Well-structured codebase with utility functions
 
@@ -43,6 +44,13 @@ After installation, configure the theme through **Admin Panel → Customize → 
 | `welcome_banner_text` | String | `"Welcome to our Groqsters community!"` | Welcome banner text |
 | `custom_footer_text` | String | `""` | Custom footer text |
 | `enable_animations` | Boolean | `true` | Enable CSS animations |
+| `show_feature_banner` | Boolean | `true` | Show 3-column feature banner on homepage |
+| `feature_banner_item_1_title` | String | `"Fast & Powerful"` | Title for first feature item |
+| `feature_banner_item_1_icon` | String | `"⚡"` | Icon/emoji for first feature item |
+| `feature_banner_item_2_title` | String | `"Community Driven"` | Title for second feature item |
+| `feature_banner_item_2_icon` | String | `"🤝"` | Icon/emoji for second feature item |
+| `feature_banner_item_3_title` | String | `"Always Learning"` | Title for third feature item |
+| `feature_banner_item_3_icon` | String | `"🚀"` | Icon/emoji for third feature item |
 
 ## 🎨 Customization
 

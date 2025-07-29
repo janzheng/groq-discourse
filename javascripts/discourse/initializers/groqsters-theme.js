@@ -29,6 +29,37 @@ export default {
         }
       });
 
+      // Add 3-column feature banner to homepage
+      api.decorateWidget("home-logo:after", (dec) => {
+        if (settings.show_feature_banner) {
+          const isHomePage = window.location.pathname === "/" || 
+                           window.location.pathname === "/latest" ||
+                           window.location.pathname === "/categories";
+          
+          if (isHomePage) {
+            return dec.h("div.groqsters-feature-banner", [
+              dec.h("div.banner-grid", [
+                // First banner item
+                dec.h("div.banner-item", [
+                  dec.h("div.banner-image", { innerHTML: settings.feature_banner_item_1_icon || "📋" }),
+                  dec.h("h3", settings.feature_banner_item_1_title || "Feature One")
+                ]),
+                // Second banner item
+                dec.h("div.banner-item", [
+                  dec.h("div.banner-image", { innerHTML: settings.feature_banner_item_2_icon || "📋" }),
+                  dec.h("h3", settings.feature_banner_item_2_title || "Feature Two")
+                ]),
+                // Third banner item
+                dec.h("div.banner-item", [
+                  dec.h("div.banner-image", { innerHTML: settings.feature_banner_item_3_icon || "📋" }),
+                  dec.h("h3", settings.feature_banner_item_3_title || "Feature Three")
+                ])
+              ])
+            ]);
+          }
+        }
+      });
+
       // Add custom footer
       api.decorateWidget("after-footer", (dec) => {
         const customFooterText = settings.custom_footer_text;
@@ -84,11 +115,26 @@ export default {
         }
       });
 
+      // Add animation classes to feature banner items on page load
+      api.onPageChange(() => {
+        if (settings.show_feature_banner && settings.enable_animations) {
+          setTimeout(() => {
+            const bannerItems = document.querySelectorAll(".groqsters-feature-banner .banner-item");
+            bannerItems.forEach((item, index) => {
+              setTimeout(() => {
+                item.classList.add("groqsters-fade-in");
+              }, index * 150); // Staggered animation
+            });
+          }, 100);
+        }
+      });
+
       // Log theme initialization for debugging
       console.log("Groqsters theme initialized with settings:", {
         customJs: settings.enable_custom_js,
         animations: settings.enable_animations,
         welcomeBanner: settings.show_welcome_banner,
+        featureBanner: settings.show_feature_banner,
         primaryColor: settings.primary_brand_color
       });
     });

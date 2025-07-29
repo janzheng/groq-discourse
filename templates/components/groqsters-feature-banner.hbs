@@ -1,0 +1,45 @@
+{{!-- Groqsters Feature Banner Component --}}
+
+{{#if showFeatureBanner}}
+  <div class="groqsters-feature-banner">
+    <div class="banner-grid">
+      
+      {{!-- First Feature Item --}}
+      <div class="banner-item">
+        <div class="banner-image">
+          {{#if featureBannerItem1Icon}}
+            <span class="banner-icon">{{featureBannerItem1Icon}}</span>
+          {{else}}
+            <span class="banner-icon">⚡</span>
+          {{/if}}
+        </div>
+        <h3>{{#if featureBannerItem1Title}}{{featureBannerItem1Title}}{{else}}Fast & Powerful{{/if}}</h3>
+      </div>
+
+      {{!-- Second Feature Item --}}
+      <div class="banner-item">
+        <div class="banner-image">
+          {{#if featureBannerItem2Icon}}
+            <span class="banner-icon">{{featureBannerItem2Icon}}</span>
+          {{else}}
+            <span class="banner-icon">🤝</span>
+          {{/if}}
+        </div>
+        <h3>{{#if featureBannerItem2Title}}{{featureBannerItem2Title}}{{else}}Community Driven{{/if}}</h3>
+      </div>
+
+      {{!-- Third Feature Item --}}
+      <div class="banner-item">
+        <div class="banner-image">
+          {{#if featureBannerItem3Icon}}
+            <span class="banner-icon">{{featureBannerItem3Icon}}</span>
+          {{else}}
+            <span class="banner-icon">🚀</span>
+          {{/if}}
+        </div>
+        <h3>{{#if featureBannerItem3Title}}{{featureBannerItem3Title}}{{else}}Always Learning{{/if}}</h3>
+      </div>
+
+    </div>
+  </div>
+{{/if}} 

@@ -37,6 +37,197 @@
   }
 }
 
+// Three-column feature banner
+.groqsters-feature-banner {
+  margin: 2rem 0;
+  padding: 0;
+  
+  .banner-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+  
+  .banner-item {
+    background: var(--secondary);
+    border: 2px solid var(--primary-low);
+    border-radius: 16px;
+    padding: 2rem 1.5rem;
+    text-align: center;
+    transition: var(--groqsters-transition);
+    position: relative;
+    overflow: hidden;
+    
+    // Subtle gradient background
+    background: linear-gradient(135deg, var(--secondary), var(--primary-very-low));
+    
+    // Hover effects
+    &:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 24px rgba($primary, 0.15);
+      border-color: var(--primary-medium);
+    }
+    
+    // Image placeholder
+    .banner-image {
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(45deg, var(--groqsters-primary), lighten($primary, 15%));
+      border-radius: 50%;
+      margin: 0 auto 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      
+      // Icon styling
+      .banner-icon {
+        font-size: 2.5rem;
+        line-height: 1;
+        color: white;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      }
+      
+      // Fallback placeholder if no icon
+      &:empty::before {
+        content: "📋";
+        font-size: 2rem;
+        filter: brightness(0) invert(1);
+      }
+      
+      // Optional: replace with actual image
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 50%;
+      }
+    }
+    
+    // Title styling
+    h3 {
+      margin: 0;
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--primary);
+      line-height: 1.4;
+      
+      // Ensure single line with ellipsis if too long
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    
+    // Subtle shine effect
+    &::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(45deg, transparent, rgba(white, 0.1), transparent);
+      transform: rotate(45deg);
+      transition: var(--groqsters-transition);
+      opacity: 0;
+    }
+    
+    &:hover::before {
+      opacity: 1;
+      animation: shine 1.5s ease-in-out;
+    }
+  }
+}
+
+// Mobile responsive behavior
+@media (max-width: 768px) {
+  .groqsters-feature-banner {
+    margin: 1rem 0;
+    
+    .banner-grid {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+      padding: 0 0.5rem;
+    }
+    
+    .banner-item {
+      padding: 1.5rem 1rem;
+      
+      .banner-image {
+        width: 60px;
+        height: 60px;
+        margin-bottom: 1rem;
+        
+        .banner-icon {
+          font-size: 2rem;
+        }
+        
+        &:empty::before {
+          font-size: 1.5rem;
+        }
+      }
+      
+      h3 {
+        font-size: 1.1rem;
+        white-space: normal; // Allow wrapping on mobile
+        overflow: visible;
+        text-overflow: unset;
+      }
+      
+      // Disable hover effects on mobile
+      &:hover {
+        transform: none;
+        box-shadow: none;
+        border-color: var(--primary-low);
+      }
+      
+      &::before {
+        display: none; // Disable shine effect on mobile
+      }
+    }
+  }
+}
+
+// Tablet responsive behavior
+@media (max-width: 1024px) and (min-width: 769px) {
+  .groqsters-feature-banner {
+    .banner-grid {
+      gap: 1.25rem;
+      padding: 0 0.75rem;
+    }
+    
+    .banner-item {
+      padding: 1.75rem 1.25rem;
+      
+      .banner-image {
+        width: 70px;
+        height: 70px;
+        
+        .banner-icon {
+          font-size: 2.25rem;
+        }
+      }
+      
+      h3 {
+        font-size: 1.15rem;
+      }
+    }
+  }
+}
+
+// Shine animation
+@keyframes shine {
+  0% {
+    transform: translateX(-100%) translateY(-100%) rotate(45deg);
+  }
+  100% {
+    transform: translateX(100%) translateY(100%) rotate(45deg);
+  }
+}
+
 // Enhanced topic list styling
 .topic-list {
   .main-link {
