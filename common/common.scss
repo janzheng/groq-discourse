@@ -775,13 +775,17 @@ body.groqsters-categories-page,
     border: 2px solid #d1d5db !important;
     border-radius: 16px !important;
     margin: 0 0 2rem 0 !important;
-    padding: 2rem !important;
+    padding: 0.5rem !important;
     display: block !important;
     position: relative !important;
     z-index: 1 !important;
     
+    // Add colorful top border like Cloudflare using category colors
+    border-top: 4px solid #d1d5db !important;
+    
     &:hover {
       border-color: #9ca3af !important;
+      border-top-color: #6b7280 !important;
       transform: translateY(-2px) !important;
       box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12) !important;
       z-index: 2 !important;
@@ -794,6 +798,25 @@ body.groqsters-categories-page,
     border: none !important;
     background: none !important;
     padding: 0 !important;
+  }
+  
+  // CLOUDFLARE-STYLE CATEGORY-SPECIFIC BORDER COLORS
+  // Add colorful top borders for different categories like Cloudflare
+  .category-list tr {
+    // Default colors for different category positions/types
+    &:nth-child(1) { border-top-color: #f97316 !important; } // Orange
+    &:nth-child(2) { border-top-color: #eab308 !important; } // Yellow  
+    &:nth-child(3) { border-top-color: #3b82f6 !important; } // Blue
+    &:nth-child(4) { border-top-color: #ef4444 !important; } // Red
+    &:nth-child(5) { border-top-color: #10b981 !important; } // Green
+    &:nth-child(6) { border-top-color: #8b5cf6 !important; } // Purple
+    &:nth-child(7) { border-top-color: #f59e0b !important; } // Amber
+    &:nth-child(8) { border-top-color: #06b6d4 !important; } // Cyan
+    
+    // You can also target specific categories by name if needed:
+    // &[data-category-id="1"] { border-top-color: #f97316 !important; } // Staff
+    // &[data-category-id="2"] { border-top-color: #3b82f6 !important; } // General
+    // &[data-category-id="3"] { border-top-color: #8b5cf6 !important; } // Site Feedback
   }
   
   // Force hide any remaining Latest sections
