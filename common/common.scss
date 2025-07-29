@@ -626,12 +626,14 @@ body.groqsters-categories-page,
   // Target the specific table structure but don't hide it completely
   .category-list {
     display: grid !important;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)) !important;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)) !important;
     gap: 1.5rem !important;
     margin: 2rem 0 !important;
     padding: 0 !important;
     border: none !important;
     background: none !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
     
     // Target table rows as category items - MAKE SURE THEY'RE VISIBLE
     tr.category-list-item,
@@ -774,11 +776,13 @@ body.groqsters-categories-page,
     background: var(--secondary) !important;
     border: 2px solid #d1d5db !important;
     border-radius: 16px !important;
-    margin: 0 0 2rem 0 !important;
+    margin: 0 !important;
     padding: 0.5rem !important;
     display: block !important;
     position: relative !important;
     z-index: 1 !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
     
     // Add colorful top border like Cloudflare using category colors
     border-top: 4px solid #d1d5db !important;
