@@ -19,7 +19,7 @@
 // Banner container
 .groqsters-banners-container {
   width: 100%;
-  margin-bottom: 2rem;
+  margin: 2rem 0;
 }
 
 // Welcome banner
@@ -43,7 +43,7 @@
   }
 }
 
-// Three-column feature banner - use more specific selectors
+// Three-column feature banner - redesigned as cover images
 .groqsters-feature-banner,
 div.groqsters-feature-banner {
   margin: 2rem 0 !important;
@@ -55,95 +55,70 @@ div.groqsters-feature-banner {
   div.banner-grid {
     display: grid !important;
     grid-template-columns: repeat(3, 1fr) !important;
-    gap: 1.5rem !important;
+    gap: 1rem !important;
     max-width: 1200px !important;
     margin: 0 auto !important;
     padding: 0 1rem !important;
     width: 100% !important;
+    box-sizing: border-box !important;
   }
   
   .banner-item,
   div.banner-item {
-    background: var(--secondary) !important;
-    border: 2px solid var(--primary-low) !important;
-    border-radius: 16px !important;
-    padding: 2rem 1.5rem !important;
-    text-align: center !important;
-    transition: var(--groqsters-transition) !important;
     position: relative !important;
     overflow: hidden !important;
     display: block !important;
-    
-    // Subtle gradient background
-    background: linear-gradient(135deg, var(--secondary), var(--primary-very-low)) !important;
+    height: 200px !important;
+    border-radius: 8px !important;
+    transition: var(--groqsters-transition) !important;
     
     // Hover effects
     &:hover {
-      transform: translateY(-4px) !important;
-      box-shadow: 0 8px 24px rgba($primary, 0.15) !important;
-      border-color: var(--primary-medium) !important;
+      transform: translateY(-2px) !important;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15) !important;
     }
     
-    // Image container - more specific and with proper sizing
+    // Image container - now full cover
     .banner-image,
     div.banner-image {
-      width: 80px !important;
-      height: 80px !important;
-      border-radius: 50% !important;
-      margin: 0 auto 1.5rem !important;
-      display: flex !important;
-      align-items: center !important;
-      justify-content: center !important;
-      position: relative !important;
+      position: absolute !important;
+      top: 0 !important;
+      left: 0 !important;
+      width: 100% !important;
+      height: 100% !important;
+      border-radius: 8px !important;
       overflow: hidden !important;
-      flex-shrink: 0 !important;
       
-      // Default background for when no image is provided
-      background: linear-gradient(45deg, var(--groqsters-primary), lighten($primary, 15%)) !important;
-      
-      // Actual image styling with proper containment
+      // Actual image styling - full cover
       img {
-        width: 80px !important;
-        height: 80px !important;
-        max-width: 80px !important;
-        max-height: 80px !important;
-        min-width: 80px !important;
-        min-height: 80px !important;
+        width: 100% !important;
+        height: 100% !important;
         object-fit: cover !important;
         object-position: center !important;
-        border-radius: 50% !important;
+        border-radius: 8px !important;
         transition: var(--groqsters-transition) !important;
-        position: absolute !important;
-        top: 0 !important;
-        left: 0 !important;
-        z-index: 2 !important;
         
         &:hover {
-          transform: scale(1.05) !important;
+          transform: scale(1.02) !important;
         }
-      }
-      
-      // Show image when loaded successfully
-      &.has-image {
-        background: transparent !important;
       }
       
       // Show placeholder when image fails or is not present
       &.no-image {
-        background: linear-gradient(45deg, var(--primary-low), var(--primary-very-low)) !important;
+        background: linear-gradient(135deg, var(--primary-low), var(--primary-very-low)) !important;
         
-        // Optional: add a subtle icon or pattern for empty state
+        // Simple placeholder pattern
         &::before {
           content: '' !important;
           position: absolute !important;
           top: 50% !important;
           left: 50% !important;
-          width: 24px !important;
-          height: 24px !important;
-          margin: -12px 0 0 -12px !important;
-          border: 2px solid var(--primary-medium) !important;
-          border-radius: 4px !important;
-          opacity: 0.5 !important;
+          width: 48px !important;
+          height: 48px !important;
+          margin: -24px 0 0 -24px !important;
+          border: 3px solid var(--primary-medium) !important;
+          border-radius: 8px !important;
+          opacity: 0.3 !important;
         }
         
         img {
@@ -153,17 +128,17 @@ div.groqsters-feature-banner {
       
       // Loading state
       &.loading {
-        background: linear-gradient(45deg, var(--primary-low), var(--primary-very-low)) !important;
+        background: linear-gradient(135deg, var(--primary-low), var(--primary-very-low)) !important;
         
         &::after {
           content: '' !important;
           position: absolute !important;
           top: 50% !important;
           left: 50% !important;
-          width: 20px !important;
-          height: 20px !important;
-          margin: -10px 0 0 -10px !important;
-          border: 2px solid var(--primary) !important;
+          width: 24px !important;
+          height: 24px !important;
+          margin: -12px 0 0 -12px !important;
+          border: 3px solid var(--primary) !important;
           border-radius: 50% !important;
           border-top-color: transparent !important;
           animation: spin 1s linear infinite !important;
@@ -176,38 +151,28 @@ div.groqsters-feature-banner {
       }
     }
     
-    // Title styling
+    // Title styling - positioned at bottom left
     h3 {
-      margin: 0 !important;
-      font-size: 1.25rem !important;
-      font-weight: 600 !important;
-      color: var(--primary) !important;
-      line-height: 1.4 !important;
-      
-      // Ensure single line with ellipsis if too long
-      white-space: nowrap !important;
-      overflow: hidden !important;
-      text-overflow: ellipsis !important;
-    }
-    
-    // Subtle shine effect
-    &::before {
-      content: '' !important;
       position: absolute !important;
-      top: -50% !important;
-      left: -50% !important;
-      width: 200% !important;
-      height: 200% !important;
-      background: linear-gradient(45deg, transparent, rgba(white, 0.1), transparent) !important;
-      transform: rotate(45deg) !important;
-      transition: var(--groqsters-transition) !important;
-      opacity: 0 !important;
-      pointer-events: none !important;
-    }
-    
-    &:hover::before {
-      opacity: 1 !important;
-      animation: shine 1.5s ease-in-out !important;
+      bottom: 0 !important;
+      left: 0 !important;
+      right: 0 !important;
+      margin: 0 !important;
+      padding: 1rem !important;
+      font-size: 1rem !important;
+      font-weight: 600 !important;
+      color: white !important;
+      text-align: left !important;
+      background: linear-gradient(transparent, rgba(0, 0, 0, 0.7)) !important;
+      border-radius: 0 0 8px 8px !important;
+      z-index: 2 !important;
+      
+      // Allow text wrapping
+      white-space: normal !important;
+      overflow: visible !important;
+      text-overflow: unset !important;
+      line-height: 1.3 !important;
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5) !important;
     }
   }
 }
@@ -216,16 +181,6 @@ div.groqsters-feature-banner {
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
-}
-
-// Shine animation
-@keyframes shine {
-  0% {
-    transform: translateX(-100%) translateY(-100%) rotate(45deg);
-  }
-  100% {
-    transform: translateX(100%) translateY(100%) rotate(45deg);
-  }
 }
 
 // Enhanced topic list styling

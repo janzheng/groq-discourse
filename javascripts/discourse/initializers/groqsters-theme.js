@@ -47,8 +47,8 @@ export default {
         }
       });
 
-      // Add banners to homepage - using discovery-list-container:before for better placement
-      api.decorateWidget("discovery-list-container:before", (dec) => {
+      // Add banners after hero area but before navigation tabs
+      api.decorateWidget("home-logo:after", (dec) => {
         const isHomePage = window.location.pathname === "/" || 
                          window.location.pathname === "/latest" ||
                          window.location.pathname === "/categories";
@@ -112,8 +112,18 @@ export default {
             return;
           }
 
-          const container = document.querySelector('.discovery-list-container, .list-container, #main-outlet');
-          if (!container) return;
+          // Try to find the hero area and insert after it
+          const heroArea = document.querySelector('.above-main-container-outlet, .home-logo-wrapper-outlet, #main-outlet');
+          const navigationContainer = document.querySelector('.navigation-container, .list-controls');
+          
+          let insertTarget = heroArea;
+          if (navigationContainer && heroArea) {
+            insertTarget = navigationContainer.parentNode;
+          } else if (navigationContainer) {
+            insertTarget = navigationContainer;
+          }
+
+          if (!insertTarget) return;
 
           // Create banner container
           const bannerContainer = document.createElement('div');
@@ -172,9 +182,13 @@ export default {
             bannerContainer.appendChild(featureBanner);
           }
 
-          // Insert the banner container at the beginning of the main content
+          // Insert the banner container before the navigation
           if (bannerContainer.children.length > 0) {
-            container.insertBefore(bannerContainer, container.firstChild);
+            if (navigationContainer) {
+              navigationContainer.parentNode.insertBefore(bannerContainer, navigationContainer);
+            } else {
+              insertTarget.appendChild(bannerContainer);
+            }
 
             // Add animations if enabled
             if (settings.enable_animations) {

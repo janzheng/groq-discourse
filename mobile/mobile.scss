@@ -3,7 +3,7 @@
 
 // Mobile banner container
 .groqsters-banners-container {
-  margin-bottom: 1rem;
+  margin: 1rem 0;
 }
 
 // Mobile header adjustments
@@ -36,56 +36,47 @@ div.groqsters-feature-banner {
   .banner-grid,
   div.banner-grid {
     grid-template-columns: 1fr !important;
-    gap: 1rem !important;
+    gap: 0.75rem !important;
     padding: 0 0.5rem !important;
   }
   
   .banner-item,
   div.banner-item {
-    padding: 1.5rem 1rem !important;
+    height: 150px !important; // Smaller height on mobile
     
     .banner-image,
     div.banner-image {
-      width: 60px !important;
-      height: 60px !important;
-      margin-bottom: 1rem !important;
-      
       img {
-        width: 60px !important;
-        height: 60px !important;
-        max-width: 60px !important;
-        max-height: 60px !important;
-        min-width: 60px !important;
-        min-height: 60px !important;
-        
         &:hover {
           transform: none !important; // Disable hover scaling on mobile
         }
       }
       
       &.no-image::before {
-        width: 16px !important;
-        height: 16px !important;
-        margin: -8px 0 0 -8px !important;
+        width: 32px !important;
+        height: 32px !important;
+        margin: -16px 0 0 -16px !important;
+        border-width: 2px !important;
+      }
+      
+      &.loading::after {
+        width: 20px !important;
+        height: 20px !important;
+        margin: -10px 0 0 -10px !important;
+        border-width: 2px !important;
       }
     }
     
     h3 {
-      font-size: 1.1rem !important;
-      white-space: normal !important; // Allow wrapping on mobile
-      overflow: visible !important;
-      text-overflow: unset !important;
+      font-size: 0.9rem !important;
+      padding: 0.75rem !important;
+      line-height: 1.2 !important;
     }
     
     // Disable hover effects on mobile
     &:hover {
       transform: none !important;
       box-shadow: none !important;
-      border-color: var(--primary-low) !important;
-    }
-    
-    &::before {
-      display: none !important; // Disable shine effect on mobile
     }
   }
 }
@@ -120,7 +111,6 @@ div.groqsters-feature-banner {
     > a {
       padding: 0.5rem 1rem;
       margin-right: 0.5rem;
-      border-radius: 20px;
       
       &:hover {
         transform: none; // Disable hover transforms on mobile

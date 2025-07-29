@@ -16,26 +16,6 @@
   }
 }
 
-// Enhanced desktop navigation
-.nav-pills {
-  > li {
-    > a {
-      transition: var(--groqsters-transition);
-      border-radius: 20px;
-      
-      &:hover {
-        background-color: rgba($primary, 0.1);
-        transform: translateY(-1px);
-      }
-    }
-    
-    &.active > a {
-      background: linear-gradient(45deg, var(--groqsters-primary), darken($primary, 10%));
-      box-shadow: 0 2px 8px rgba($primary, 0.2);
-    }
-  }
-}
-
 // Desktop topic list enhancements
 .topic-list {
   .topic-list-header {
