@@ -18,11 +18,10 @@ export default {
           // Handle image loading
           img.onload = () => {
             container.classList.remove('loading', 'no-image');
-            container.classList.add('has-image');
           };
           
           img.onerror = () => {
-            container.classList.remove('loading', 'has-image');
+            container.classList.remove('loading');
             container.classList.add('no-image');
           };
           
@@ -31,20 +30,18 @@ export default {
           
           return container;
         } else {
-          // No image URL provided, show empty placeholder
+          // Create placeholder
           const container = document.createElement('div');
           container.className = 'banner-image no-image';
-          
           return container;
         }
       };
 
-      // Add custom header text if configured
-      api.decorateWidget("header:before", (dec) => {
-        const customHeaderText = settings.custom_header_text;
-        if (customHeaderText && customHeaderText.length > 0) {
-          return dec.h("div.custom-header-text", customHeaderText);
-        }
+      // Console log for debugging
+      console.log("Groqsters theme initialized with settings:", {
+        welcomeBanner: settings.show_welcome_banner,
+        alertBanner: settings.show_alert_banner,
+        featureBanner: settings.show_feature_banner
       });
 
       // Add banners after hero area but before navigation tabs
@@ -96,42 +93,31 @@ export default {
 
         // Add feature banner if enabled
         if (settings.show_feature_banner) {
-          // Create banner items data with URLs
-          const bannerItems = [
-            {
-              title: settings.feature_banner_item_1_title || "Fast & Powerful",
-              url: settings.feature_banner_item_1_url,
-              dataItem: "1"
-            },
-            {
-              title: settings.feature_banner_item_2_title || "Community Driven", 
-              url: settings.feature_banner_item_2_url,
-              dataItem: "2"
-            },
-            {
-              title: settings.feature_banner_item_3_title || "Always Learning",
-              url: settings.feature_banner_item_3_url,
-              dataItem: "3"
-            }
-          ];
-
-          const bannerItemElements = bannerItems.map(item => {
-            const itemClass = item.url ? "banner-item clickable" : "banner-item";
-            const itemAttrs = {
-              class: itemClass,
-              "data-url": item.url || "",
-              onclick: item.url ? `window.${item.url.startsWith('http') ? 'open' : 'location'}('${item.url}'${item.url.startsWith('http') ? ', "_blank"' : ''})` : ""
-            };
-
-            return dec.h(`div.${itemClass}`, itemAttrs, [
-              dec.h("div.banner-image-placeholder", { "data-item": item.dataItem }),
-              dec.h("h3", item.title)
-            ]);
-          });
-
           elements.push(
             dec.h("div.groqsters-feature-banner", [
-              dec.h("div.banner-grid", bannerItemElements)
+              dec.h("div.banner-grid", [
+                dec.h("div.banner-item", [
+                  dec.h("div.banner-image-placeholder", { 
+                    "data-item": "1",
+                    "data-url": settings.feature_banner_item_1_url || ""
+                  }),
+                  dec.h("h3", settings.feature_banner_item_1_title || "Fast & Powerful")
+                ]),
+                dec.h("div.banner-item", [
+                  dec.h("div.banner-image-placeholder", { 
+                    "data-item": "2",
+                    "data-url": settings.feature_banner_item_2_url || ""
+                  }),
+                  dec.h("h3", settings.feature_banner_item_2_title || "Community Driven")
+                ]),
+                dec.h("div.banner-item", [
+                  dec.h("div.banner-image-placeholder", { 
+                    "data-item": "3",
+                    "data-url": settings.feature_banner_item_3_url || ""
+                  }),
+                  dec.h("h3", settings.feature_banner_item_3_title || "Always Learning")
+                ])
+              ])
             ])
           );
         }
@@ -189,33 +175,19 @@ export default {
             const alertBanner = document.createElement('div');
             alertBanner.className = 'groqsters-alert-banner';
             
-            // Set custom color if provided
             if (settings.alert_banner_color) {
               alertBanner.style.setProperty('--groqsters-alert-color', settings.alert_banner_color);
-              alertBanner.style.background = settings.alert_banner_color;
             }
             
-            // Create message element
-            const messageElement = document.createElement('div');
-            messageElement.className = 'alert-message';
-            messageElement.textContent = settings.alert_banner_message;
-            alertBanner.appendChild(messageElement);
+            let alertHTML = `<div class="alert-message">${settings.alert_banner_message}</div>`;
             
-            // Add CTA button if URL is provided
             if (settings.alert_banner_cta_url && settings.alert_banner_cta_url.trim()) {
-              const ctaElement = document.createElement('a');
-              ctaElement.className = 'alert-cta';
-              ctaElement.href = settings.alert_banner_cta_url;
-              ctaElement.textContent = settings.alert_banner_cta_text || "Learn More";
-              
-              // Open external links in new tab
-              if (settings.alert_banner_cta_url.startsWith('http')) {
-                ctaElement.target = '_blank';
-              }
-              
-              alertBanner.appendChild(ctaElement);
+              const target = settings.alert_banner_cta_url.startsWith('http') ? '_blank' : '_self';
+              const ctaText = settings.alert_banner_cta_text || "Learn More";
+              alertHTML += `<a class="alert-cta" href="${settings.alert_banner_cta_url}" target="${target}">${ctaText}</a>`;
             }
             
+            alertBanner.innerHTML = alertHTML;
             bannerContainer.appendChild(alertBanner);
           }
 
@@ -227,56 +199,30 @@ export default {
             const bannerGrid = document.createElement('div');
             bannerGrid.className = 'banner-grid';
             
-            // Create banner items with proper image handling and click functionality
-            const items = [
-              {
-                image: settings.feature_banner_item_1_image,
-                title: settings.feature_banner_item_1_title || "Fast & Powerful",
-                url: settings.feature_banner_item_1_url
-              },
-              {
-                image: settings.feature_banner_item_2_image,
-                title: settings.feature_banner_item_2_title || "Community Driven",
-                url: settings.feature_banner_item_2_url
-              },
-              {
-                image: settings.feature_banner_item_3_image,
-                title: settings.feature_banner_item_3_title || "Always Learning",
-                url: settings.feature_banner_item_3_url
-              }
-            ];
-            
-            items.forEach((item, index) => {
+            // Create three banner items
+            for (let i = 1; i <= 3; i++) {
               const bannerItem = document.createElement('div');
-              bannerItem.className = item.url ? 'banner-item clickable' : 'banner-item';
+              bannerItem.className = 'banner-item';
               
-              // Add click functionality if URL is provided
-              if (item.url) {
-                bannerItem.style.cursor = 'pointer';
-                bannerItem.addEventListener('click', () => {
-                  if (item.url.startsWith('http')) {
-                    window.open(item.url, '_blank');
-                  } else {
-                    window.location.href = item.url;
-                  }
-                });
-              }
+              const imageUrl = settings[`feature_banner_item_${i}_url`];
+              const title = settings[`feature_banner_item_${i}_title`] || 
+                          (i === 1 ? "Fast & Powerful" : i === 2 ? "Community Driven" : "Always Learning");
               
-              const imageContainer = createBannerImage(item.image, index + 1);
-              
-              const title = document.createElement('h3');
-              title.textContent = item.title;
-              
+              const imageContainer = createBannerImage(imageUrl, i);
               bannerItem.appendChild(imageContainer);
-              bannerItem.appendChild(title);
+              
+              const titleElement = document.createElement('h3');
+              titleElement.textContent = title;
+              bannerItem.appendChild(titleElement);
+              
               bannerGrid.appendChild(bannerItem);
-            });
+            }
             
             featureBanner.appendChild(bannerGrid);
             bannerContainer.appendChild(featureBanner);
           }
 
-          // Insert the banner container before the navigation
+          // Insert the banner container
           if (bannerContainer.children.length > 0) {
             if (navigationContainer) {
               navigationContainer.parentNode.insertBefore(bannerContainer, navigationContainer);
@@ -284,79 +230,48 @@ export default {
               insertTarget.appendChild(bannerContainer);
             }
           }
-        }, 500);
+
+          // Replace placeholders after a short delay
+          setTimeout(() => this.replaceBannerPlaceholders(), 100);
+        }, 100);
       });
 
-      // Function to replace placeholders with actual image elements (for widget decoration method)
+      // Simple category page enhancement without complex DOM manipulation
+      api.onPageChange(() => {
+        const isCategoriesPage = window.location.pathname === "/categories" || 
+                                window.location.pathname.includes("/categories");
+        
+        if (isCategoriesPage) {
+          setTimeout(() => {
+            const categoriesContainer = document.querySelector('.categories-and-latest, .categories-only');
+            if (categoriesContainer) {
+              categoriesContainer.classList.add('groqsters-categories-layout');
+            }
+          }, 100);
+        }
+      });
+
+      // Replace banner placeholders with actual images
       this.replaceBannerPlaceholders = () => {
         const placeholders = document.querySelectorAll('.banner-image-placeholder');
         placeholders.forEach(placeholder => {
-          const itemIndex = placeholder.getAttribute('data-item');
-          let imageUrl;
+          const item = placeholder.getAttribute('data-item');
+          const url = placeholder.getAttribute('data-url');
           
-          switch(itemIndex) {
-            case '1':
-              imageUrl = settings.feature_banner_item_1_image;
-              break;
-            case '2':
-              imageUrl = settings.feature_banner_item_2_image;
-              break;
-            case '3':
-              imageUrl = settings.feature_banner_item_3_image;
-              break;
+          if (url && url.trim()) {
+            const imageContainer = createBannerImage(url, item);
+            placeholder.parentNode.replaceChild(imageContainer, placeholder);
+          } else {
+            placeholder.className = 'banner-image no-image';
           }
-          
-          const imageContainer = createBannerImage(imageUrl, itemIndex);
-          placeholder.parentNode.replaceChild(imageContainer, placeholder);
         });
       };
 
-      // Add custom footer
-      api.decorateWidget("after-footer", (dec) => {
-        const customFooterText = settings.custom_footer_text;
-        if (customFooterText && customFooterText.length > 0) {
-          return dec.h("div.custom-footer", [
-            dec.h("div.footer-text", customFooterText)
-          ]);
-        }
-      });
-
-      // Custom topic list enhancements
-      api.decorateWidget("topic-list-item:after", (dec) => {
-        if (settings.enable_custom_js) {
-          // Add hover effects and interactions
-          const topicElement = document.querySelector(`[data-topic-id="${dec.attrs.topic.id}"]`);
-          if (topicElement) {
-            topicElement.addEventListener("mouseenter", () => {
-              topicElement.classList.add("groqsters-hover");
-            });
-            
-            topicElement.addEventListener("mouseleave", () => {
-              topicElement.classList.remove("groqsters-hover");
-            });
-          }
-        }
-      });
-
-      // Add custom CSS variables based on settings
-      api.onPageChange(() => {
-        if (settings.primary_brand_color) {
-          document.documentElement.style.setProperty("--groqsters-primary", settings.primary_brand_color);
-        }
-      });
-
-      // Log theme initialization for debugging
-      console.log("Groqsters theme initialized with settings:", {
-        customJs: settings.enable_custom_js,
-        welcomeBanner: settings.show_welcome_banner,
-        alertBanner: settings.show_alert_banner,
-        featureBanner: settings.show_feature_banner,
-        primaryColor: settings.primary_brand_color,
-        alertBannerColor: settings.alert_banner_color,
-        bannerImages: {
-          item1: settings.feature_banner_item_1_image,
-          item2: settings.feature_banner_item_2_image,
-          item3: settings.feature_banner_item_3_image
+      console.log("Groqsters theme API setup completed with banner config:", {
+        bannerTitles: {
+          item1: settings.feature_banner_item_1_title,
+          item2: settings.feature_banner_item_2_title,
+          item3: settings.feature_banner_item_3_title
         },
         bannerUrls: {
           item1: settings.feature_banner_item_1_url,
@@ -364,56 +279,6 @@ export default {
           item3: settings.feature_banner_item_3_url
         }
       });
-    });
-    
-    // Enhanced category page layout handling
-    api.onPageChange(() => {
-      const isCategoriesPage = window.location.pathname === "/categories" || 
-                              window.location.pathname.includes("/categories");
-      
-      if (isCategoriesPage) {
-        setTimeout(() => {
-          // Add Cloudflare-style classes and ensure proper ordering
-          const categoriesContainer = document.querySelector('.categories-and-latest, .categories-only');
-          if (categoriesContainer) {
-            categoriesContainer.classList.add('groqsters-categories-layout');
-            
-            // Ensure categories appear before latest topics
-            const categoryList = categoriesContainer.querySelector('.category-list, .categories-list');
-            const latestTopics = categoriesContainer.querySelector('.latest-topic-list, .topic-list');
-            
-            if (categoryList && latestTopics) {
-              // Make sure categories come first
-              if (categoryList.compareDocumentPosition(latestTopics) & Node.DOCUMENT_POSITION_PRECEDING) {
-                categoriesContainer.insertBefore(categoryList, latestTopics);
-              }
-            }
-            
-            // Add click handlers for category boxes
-            const categoryItems = categoriesContainer.querySelectorAll('.category-list-item, .category-box');
-            categoryItems.forEach(item => {
-              const categoryLink = item.querySelector('.category-name a, .category-title-link, h3 a');
-              if (categoryLink && !item.querySelector('.groqsters-category-overlay')) {
-                // Make entire box clickable
-                const overlay = document.createElement('a');
-                overlay.href = categoryLink.href;
-                overlay.className = 'groqsters-category-overlay';
-                overlay.style.cssText = `
-                  position: absolute;
-                  top: 0;
-                  left: 0;
-                  right: 0;
-                  bottom: 0;
-                  z-index: 1;
-                  text-decoration: none;
-                `;
-                item.style.position = 'relative';
-                item.appendChild(overlay);
-              }
-            });
-          }
-        }, 100);
-      }
     });
   }
 }; 
