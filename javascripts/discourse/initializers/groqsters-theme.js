@@ -67,6 +67,33 @@ export default {
           );
         }
 
+        // Add alert banner if enabled
+        if (settings.show_alert_banner && settings.alert_banner_message) {
+          const alertStyle = settings.alert_banner_color 
+            ? `--groqsters-alert-color: ${settings.alert_banner_color};` 
+            : '';
+            
+          const alertBannerChildren = [
+            dec.h("div.alert-message", settings.alert_banner_message)
+          ];
+          
+          // Add CTA button if URL is provided
+          if (settings.alert_banner_cta_url && settings.alert_banner_cta_url.trim()) {
+            alertBannerChildren.push(
+              dec.h("a.alert-cta", {
+                href: settings.alert_banner_cta_url,
+                target: settings.alert_banner_cta_url.startsWith('http') ? '_blank' : '_self'
+              }, settings.alert_banner_cta_text || "Learn More")
+            );
+          }
+
+          elements.push(
+            dec.h("div.groqsters-alert-banner", {
+              style: alertStyle
+            }, alertBannerChildren)
+          );
+        }
+
         // Add feature banner if enabled
         if (settings.show_feature_banner) {
           elements.push(
@@ -106,7 +133,7 @@ export default {
         // Wait a bit for the page to render
         setTimeout(() => {
           // Check if banners already exist to avoid duplicates
-          if (document.querySelector('.groqsters-feature-banner')) {
+          if (document.querySelector('.groqsters-feature-banner') || document.querySelector('.groqsters-alert-banner')) {
             // Replace placeholders with actual image elements
             setTimeout(() => this.replaceBannerPlaceholders(), 100);
             return;
@@ -138,6 +165,41 @@ export default {
               <p>${settings.welcome_banner_text}</p>
             `;
             bannerContainer.appendChild(welcomeBanner);
+          }
+
+          // Add alert banner if enabled
+          if (settings.show_alert_banner && settings.alert_banner_message) {
+            const alertBanner = document.createElement('div');
+            alertBanner.className = 'groqsters-alert-banner';
+            
+            // Set custom color if provided
+            if (settings.alert_banner_color) {
+              alertBanner.style.setProperty('--groqsters-alert-color', settings.alert_banner_color);
+              alertBanner.style.background = settings.alert_banner_color;
+            }
+            
+            // Create message element
+            const messageElement = document.createElement('div');
+            messageElement.className = 'alert-message';
+            messageElement.textContent = settings.alert_banner_message;
+            alertBanner.appendChild(messageElement);
+            
+            // Add CTA button if URL is provided
+            if (settings.alert_banner_cta_url && settings.alert_banner_cta_url.trim()) {
+              const ctaElement = document.createElement('a');
+              ctaElement.className = 'alert-cta';
+              ctaElement.href = settings.alert_banner_cta_url;
+              ctaElement.textContent = settings.alert_banner_cta_text || "Learn More";
+              
+              // Open external links in new tab
+              if (settings.alert_banner_cta_url.startsWith('http')) {
+                ctaElement.target = '_blank';
+              }
+              
+              alertBanner.appendChild(ctaElement);
+            }
+            
+            bannerContainer.appendChild(alertBanner);
           }
 
           // Add feature banner if enabled
@@ -189,18 +251,6 @@ export default {
             } else {
               insertTarget.appendChild(bannerContainer);
             }
-
-            // Add animations if enabled
-            if (settings.enable_animations) {
-              setTimeout(() => {
-                const bannerItems = bannerContainer.querySelectorAll(".banner-item");
-                bannerItems.forEach((item, index) => {
-                  setTimeout(() => {
-                    item.classList.add("groqsters-fade-in");
-                  }, index * 150);
-                });
-              }, 100);
-            }
           }
         }, 500);
       });
@@ -239,17 +289,6 @@ export default {
         }
       });
 
-      // Add animations to posts if enabled
-      if (settings.enable_animations) {
-        api.decorateWidget("post:after", (dec) => {
-          // Add fade-in animation class to posts
-          const postElement = document.querySelector(`#post_${dec.attrs.id}`);
-          if (postElement && !postElement.classList.contains("groqsters-fade-in")) {
-            postElement.classList.add("groqsters-fade-in");
-          }
-        });
-      }
-
       // Custom topic list enhancements
       api.decorateWidget("topic-list-item:after", (dec) => {
         if (settings.enable_custom_js) {
@@ -274,23 +313,14 @@ export default {
         }
       });
 
-      // Custom notification enhancements
-      api.onAppEvent("notification:changed", () => {
-        if (settings.enable_animations) {
-          const notifications = document.querySelectorAll(".notification:not(.groqsters-animated)");
-          notifications.forEach((notification) => {
-            notification.classList.add("groqsters-fade-in", "groqsters-animated");
-          });
-        }
-      });
-
       // Log theme initialization for debugging
       console.log("Groqsters theme initialized with settings:", {
         customJs: settings.enable_custom_js,
-        animations: settings.enable_animations,
         welcomeBanner: settings.show_welcome_banner,
+        alertBanner: settings.show_alert_banner,
         featureBanner: settings.show_feature_banner,
         primaryColor: settings.primary_brand_color,
+        alertBannerColor: settings.alert_banner_color,
         bannerImages: {
           item1: settings.feature_banner_item_1_image,
           item2: settings.feature_banner_item_2_image,

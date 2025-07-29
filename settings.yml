@@ -33,6 +33,31 @@ enable_animations:
   default: true
   description: "Enable CSS animations and transitions"
 
+show_alert_banner:
+  type: bool
+  default: false
+  description: "Show a custom alert banner on the homepage"
+
+alert_banner_message:
+  type: string
+  default: "Important announcement: Check out our latest updates and features!"
+  description: "Message text for the alert banner"
+
+alert_banner_color:
+  type: string
+  default: "#ff6a39"
+  description: "Background color for the alert banner (hex color)"
+
+alert_banner_cta_text:
+  type: string
+  default: "Learn More"
+  description: "Text for the call-to-action button"
+
+alert_banner_cta_url:
+  type: string
+  default: ""
+  description: "URL for the call-to-action button (can be relative like '/about' or external like 'https://example.com')"
+
 show_feature_banner:
   type: bool
   default: true

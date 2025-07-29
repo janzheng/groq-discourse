@@ -155,12 +155,4 @@ div.groqsters-feature-banner {
 .nav-pills > li > a,
 .btn {
   min-height: 44px; // Apple's recommended minimum touch target
-}
-
-// Disable animations on mobile for better performance
-@media (prefers-reduced-motion: reduce) {
-  * {
-    animation: none !important;
-    transition: none !important;
-  }
 } 
