@@ -597,3 +597,156 @@ div.groqsters-feature-banner {
     z-index: 9;
   }
 } 
+
+// AGGRESSIVE CATEGORY LAYOUT OVERRIDE
+// Target all possible Discourse category structures
+body.categories-list,
+body.groqsters-categories-page,
+.categories-page,
+#main-outlet .categories-and-latest,
+#main-outlet .categories-only,
+.full-width .wrap .categories-and-latest,
+.full-width .wrap .categories-only {
+  
+  // Force hide ALL table elements
+  table.category-list,
+  .category-list table,
+  .category-list thead,
+  .category-list tbody,
+  .category-list th,
+  thead.category-list-header {
+    display: none !important;
+    visibility: hidden !important;
+  }
+  
+  // Target the specific table structure
+  .category-list {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)) !important;
+    gap: 1.5rem !important;
+    margin: 2rem 0 !important;
+    padding: 0 !important;
+    border: none !important;
+    background: none !important;
+    
+    // Force block display on all elements
+    * {
+      border: none !important;
+      background: none !important;
+    }
+    
+    // Target table rows as category items
+    tr.category-list-item,
+    .category-list-item {
+      display: block !important;
+      background: var(--secondary) !important;
+      border: 1px solid var(--primary-low) !important;
+      border-radius: 12px !important;
+      padding: 1.5rem !important;
+      transition: var(--groqsters-transition) !important;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+      cursor: pointer !important;
+      position: relative !important;
+      overflow: hidden !important;
+      width: auto !important;
+      height: auto !important;
+      margin-bottom: 0 !important;
+      
+      // Force all table cells to be block
+      td {
+        display: block !important;
+        border: none !important;
+        padding: 0 !important;
+        background: none !important;
+        vertical-align: unset !important;
+        
+        // Hide metadata columns
+        &.topics,
+        &.posts,
+        &.latest,
+        &.num,
+        &.stats {
+          display: none !important;
+        }
+        
+        // Show only main category cell
+        &.category {
+          display: block !important;
+          
+          h3,
+          .category-name,
+          .category-title-link {
+            font-size: 1.25rem !important;
+            font-weight: 600 !important;
+            color: var(--primary) !important;
+            margin: 0 0 0.75rem 0 !important;
+            text-decoration: none !important;
+            display: block !important;
+            
+            a {
+              color: var(--primary) !important;
+              text-decoration: none !important;
+              
+              &:hover {
+                color: var(--groqsters-primary) !important;
+              }
+            }
+          }
+          
+          .category-description {
+            color: var(--primary-medium) !important;
+            font-size: 0.9rem !important;
+            line-height: 1.4 !important;
+            margin-bottom: 1rem !important;
+            display: -webkit-box !important;
+            -webkit-line-clamp: 3 !important;
+            -webkit-box-orient: vertical !important;
+            overflow: hidden !important;
+          }
+          
+          // Hide complex elements
+          .subcategories,
+          .category-logo,
+          .category-stat,
+          .featured-topics,
+          .topic-count,
+          .post-count {
+            display: none !important;
+          }
+        }
+      }
+      
+      // Hover effects
+      &:hover {
+        transform: translateY(-4px) !important;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15) !important;
+        border-color: var(--primary-medium) !important;
+      }
+    }
+  }
+  
+  // Fix Latest Topics section duplication
+  .latest-topic-list-item,
+  .topic-list {
+    // Remove our custom "Latest Topics" header if it exists
+    &::before {
+      display: none !important;
+    }
+  }
+  
+  // Style the real Latest Topics section
+  .latest-topic-list,
+  .latest-topic-list-container {
+    order: 2 !important;
+    margin-top: 3rem !important;
+    
+    h3 {
+      font-size: 1.5rem !important;
+      font-weight: 600 !important;
+      color: var(--primary) !important;
+      margin-bottom: 1.5rem !important;
+      padding-bottom: 0.5rem !important;
+      border-bottom: 2px solid var(--primary-low) !important;
+    }
+  }
+} 
