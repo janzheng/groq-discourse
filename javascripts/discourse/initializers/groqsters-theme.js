@@ -365,5 +365,55 @@ export default {
         }
       });
     });
+    
+    // Enhanced category page layout handling
+    api.onPageChange(() => {
+      const isCategoriesPage = window.location.pathname === "/categories" || 
+                              window.location.pathname.includes("/categories");
+      
+      if (isCategoriesPage) {
+        setTimeout(() => {
+          // Add Cloudflare-style classes and ensure proper ordering
+          const categoriesContainer = document.querySelector('.categories-and-latest, .categories-only');
+          if (categoriesContainer) {
+            categoriesContainer.classList.add('groqsters-categories-layout');
+            
+            // Ensure categories appear before latest topics
+            const categoryList = categoriesContainer.querySelector('.category-list, .categories-list');
+            const latestTopics = categoriesContainer.querySelector('.latest-topic-list, .topic-list');
+            
+            if (categoryList && latestTopics) {
+              // Make sure categories come first
+              if (categoryList.compareDocumentPosition(latestTopics) & Node.DOCUMENT_POSITION_PRECEDING) {
+                categoriesContainer.insertBefore(categoryList, latestTopics);
+              }
+            }
+            
+            // Add click handlers for category boxes
+            const categoryItems = categoriesContainer.querySelectorAll('.category-list-item, .category-box');
+            categoryItems.forEach(item => {
+              const categoryLink = item.querySelector('.category-name a, .category-title-link, h3 a');
+              if (categoryLink && !item.querySelector('.groqsters-category-overlay')) {
+                // Make entire box clickable
+                const overlay = document.createElement('a');
+                overlay.href = categoryLink.href;
+                overlay.className = 'groqsters-category-overlay';
+                overlay.style.cssText = `
+                  position: absolute;
+                  top: 0;
+                  left: 0;
+                  right: 0;
+                  bottom: 0;
+                  z-index: 1;
+                  text-decoration: none;
+                `;
+                item.style.position = 'relative';
+                item.appendChild(overlay);
+              }
+            });
+          }
+        }, 100);
+      }
+    });
   }
 }; 
