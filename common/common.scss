@@ -337,7 +337,7 @@ div.groqsters-feature-banner {
     .category-list-item {
       display: block !important;
       background: var(--secondary) !important;
-      border: 1px solid var(--primary-low) !important;
+      border: 2px solid #d1d5db !important;
       border-radius: 12px !important;
       padding: 1.5rem !important;
       transition: var(--groqsters-transition) !important;
@@ -407,7 +407,7 @@ div.groqsters-feature-banner {
       &:hover {
         transform: translateY(-4px) !important;
         box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15) !important;
-        border-color: var(--primary-medium) !important;
+        border-color: #9ca3af !important;
       }
     }
   }
@@ -422,7 +422,7 @@ div.groqsters-feature-banner {
     
     .category-box {
       background: var(--secondary) !important;
-      border: 1px solid var(--primary-low) !important;
+      border: 2px solid #d1d5db !important;
       border-radius: 12px !important;
       padding: 1.5rem !important;
       transition: var(--groqsters-transition) !important;
@@ -431,7 +431,7 @@ div.groqsters-feature-banner {
       &:hover {
         transform: translateY(-4px) !important;
         box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15) !important;
-        border-color: var(--primary-medium) !important;
+        border-color: #9ca3af !important;
       }
       
       .category-box-heading h3 {
@@ -639,7 +639,7 @@ body.groqsters-categories-page,
       display: block !important;
       visibility: visible !important;
       background: var(--secondary) !important;
-      border: 1px solid var(--primary-low) !important;
+      border: 2px solid #d1d5db !important;
       border-radius: 16px !important;
       padding: 2rem !important;
       transition: var(--groqsters-transition) !important;
@@ -743,7 +743,7 @@ body.groqsters-categories-page,
       &:hover {
         transform: translateY(-2px) !important;
         box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12) !important;
-        border-color: var(--primary) !important;
+        border-color: #9ca3af !important;
         
         &::before {
           background: var(--groqsters-primary) !important;
