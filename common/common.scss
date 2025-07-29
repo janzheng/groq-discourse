@@ -627,7 +627,7 @@ body.groqsters-categories-page,
   .category-list {
     display: grid !important;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)) !important;
-    gap: 1.5rem !important;
+    gap: 1rem !important;
     margin: 2rem 0 !important;
     padding: 0 !important;
     border: none !important;
@@ -643,16 +643,17 @@ body.groqsters-categories-page,
       background: var(--secondary) !important;
       border: 2px solid #d1d5db !important;
       border-radius: 16px !important;
-      padding: 2rem !important;
+      padding: 0.5rem !important;
       transition: var(--groqsters-transition) !important;
       box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08) !important;
       cursor: pointer !important;
       position: relative !important;
       overflow: hidden !important;
-      width: auto !important;
+      width: 100% !important;
       height: auto !important;
-      margin-bottom: 0 !important;
-      min-height: 160px !important;
+      margin: 0 !important;
+      min-height: 120px !important;
+      box-sizing: border-box !important;
       
       // Add left border accent like Cloudflare
       &::before {
