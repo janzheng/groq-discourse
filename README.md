@@ -118,9 +118,11 @@ const primaryColor = getThemeSetting('primary_brand_color', '#1f8dd6');
 groqsters/
 ├── about.json                          # Theme manifest
 ├── settings.yml                        # Theme settings configuration
-├── scss/
-│   ├── common.scss                     # Common styles (all devices)
-│   ├── desktop.scss                    # Desktop-specific styles
+├── common/
+│   └── common.scss                     # Common styles (all devices)
+├── desktop/
+│   └── desktop.scss                    # Desktop-specific styles
+├── mobile/
 │   └── mobile.scss                     # Mobile-specific styles
 ├── javascripts/
 │   └── discourse/
@@ -179,9 +181,9 @@ export default {
 
 Add styles to the appropriate SCSS files:
 
-- `scss/common.scss` - Styles for all devices
-- `scss/desktop.scss` - Desktop-only styles  
-- `scss/mobile.scss` - Mobile-only styles
+- `common/common.scss` - Styles for all devices
+- `desktop/desktop.scss` - Desktop-only styles  
+- `mobile/mobile.scss` - Mobile-only styles
 
 ## 🐛 Troubleshooting
 
