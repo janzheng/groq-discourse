@@ -257,11 +257,17 @@ export default {
             // Force the body to have our category class
             document.body.classList.add('groqsters-categories-page');
             
-            // Gentle application of grid layout
+            // Hide Latest section on Categories tab
+            const latestSections = document.querySelectorAll('.latest-topic-list, .latest-topic-list-container, .latest-topic-list-item');
+            latestSections.forEach(section => {
+              section.style.display = 'none';
+            });
+            
+            // Apply Cloudflare-style grid layout
             const categoryList = document.querySelector('.category-list');
             if (categoryList) {
               categoryList.style.display = 'grid';
-              categoryList.style.gridTemplateColumns = 'repeat(auto-fit, minmax(300px, 1fr))';
+              categoryList.style.gridTemplateColumns = 'repeat(auto-fit, minmax(320px, 1fr))';
               categoryList.style.gap = '1.5rem';
               
               // Ensure the table structure supports grid
@@ -275,40 +281,75 @@ export default {
                 tbody.style.display = 'contents';
               }
               
-              // Style category items gently
+              // Style category items like Cloudflare
               const categoryItems = categoryList.querySelectorAll('.category-list-item, tr.category-list-item');
               categoryItems.forEach(item => {
                 item.style.display = 'block';
                 item.style.visibility = 'visible';
                 item.style.background = 'var(--secondary)';
                 item.style.border = '1px solid var(--primary-low)';
-                item.style.borderRadius = '12px';
-                item.style.padding = '1.5rem';
+                item.style.borderRadius = '16px';
+                item.style.padding = '2rem';
                 item.style.marginBottom = '0';
+                item.style.minHeight = '160px';
+                item.style.position = 'relative';
                 
-                // Hide metadata cells
+                // Add left border accent
+                item.style.setProperty('--before-content', '""');
+                item.style.setProperty('--before-position', 'absolute');
+                item.style.setProperty('--before-left', '0');
+                item.style.setProperty('--before-top', '0');
+                item.style.setProperty('--before-width', '4px');
+                item.style.setProperty('--before-height', '100%');
+                item.style.setProperty('--before-background', 'var(--groqsters-primary)');
+                
+                // Hide ALL metadata cells
                 const hideCells = item.querySelectorAll('td.topics, td.posts, td.latest, td.num, td.stats');
                 hideCells.forEach(cell => {
                   cell.style.display = 'none';
                 });
                 
-                // Ensure category cell is visible
+                // Style the category cell
                 const categoryCell = item.querySelector('td.category');
                 if (categoryCell) {
                   categoryCell.style.display = 'block';
                   categoryCell.style.padding = '0';
                   categoryCell.style.border = 'none';
+                  
+                  // Style category name
+                  const categoryName = categoryCell.querySelector('h3, .category-name, .category-title-link');
+                  if (categoryName) {
+                    categoryName.style.fontSize = '1.5rem';
+                    categoryName.style.fontWeight = '700';
+                    categoryName.style.margin = '0 0 1rem 0';
+                    categoryName.style.lineHeight = '1.3';
+                  }
+                  
+                  // Style description
+                  const description = categoryCell.querySelector('.category-description');
+                  if (description) {
+                    description.style.fontSize = '1rem';
+                    description.style.lineHeight = '1.6';
+                    description.style.marginBottom = '0';
+                    description.style.fontWeight = '400';
+                  }
+                  
+                  // Hide category icons/logos
+                  const icons = categoryCell.querySelectorAll('.category-logo, .category-icon');
+                  icons.forEach(icon => {
+                    icon.style.display = 'none';
+                  });
                 }
               });
             }
             
-            // Hide only table headers, not the whole table
+            // Hide table headers
             const tableHeaders = document.querySelectorAll('.category-list thead, .category-list-header');
             tableHeaders.forEach(header => {
               header.style.display = 'none';
             });
             
-            console.log('Groqsters categories layout applied');
+            console.log('Groqsters Cloudflare-style categories layout applied');
             
           }, 100);
         } else {
