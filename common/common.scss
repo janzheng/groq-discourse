@@ -42,6 +42,12 @@
   }
 }
 
+// Override Discourse core welcome banner wrapper padding
+.welcome-banner__wrap {
+  padding: 0 !important;
+  box-sizing: border-box !important;
+}
+
 // Alert banner (like SSL/TLS message)
 .groqsters-alert-banner {
   background: var(--groqsters-alert-color, #ff6a39);
