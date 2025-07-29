@@ -43,27 +43,42 @@ feature_banner_item_1_title:
   default: "Fast & Powerful"
   description: "Title for the first feature banner item"
 
-feature_banner_item_1_icon:
+feature_banner_item_1_image:
   type: string
-  default: "⚡"
-  description: "Emoji or icon for the first feature banner item"
+  default: ""
+  description: "Image URL for the first feature banner item (use relative path like 'assets/feature1.png' for local assets or full URL for external images)"
 
 feature_banner_item_2_title:
   type: string
   default: "Community Driven"
   description: "Title for the second feature banner item"
 
-feature_banner_item_2_icon:
+feature_banner_item_2_image:
   type: string
-  default: "🤝"
-  description: "Emoji or icon for the second feature banner item"
+  default: ""
+  description: "Image URL for the second feature banner item (use relative path like 'assets/feature2.png' for local assets or full URL for external images)"
 
 feature_banner_item_3_title:
   type: string
   default: "Always Learning"
   description: "Title for the third feature banner item"
 
-feature_banner_item_3_icon:
+feature_banner_item_3_image:
+  type: string
+  default: ""
+  description: "Image URL for the third feature banner item (use relative path like 'assets/feature3.png' for local assets or full URL for external images)"
+
+feature_banner_fallback_icon_1:
+  type: string
+  default: "⚡"
+  description: "Fallback emoji/icon for first item if image fails to load"
+
+feature_banner_fallback_icon_2:
+  type: string
+  default: "🤝"
+  description: "Fallback emoji/icon for second item if image fails to load"
+
+feature_banner_fallback_icon_3:
   type: string
   default: "🚀"
-  description: "Emoji or icon for the third feature banner item" 
+  description: "Fallback emoji/icon for third item if image fails to load" 

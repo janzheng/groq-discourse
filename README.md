@@ -46,13 +46,35 @@ After installation, configure the theme through **Admin Panel → Customize → 
 | `enable_animations` | Boolean | `true` | Enable CSS animations |
 | `show_feature_banner` | Boolean | `true` | Show 3-column feature banner on homepage |
 | `feature_banner_item_1_title` | String | `"Fast & Powerful"` | Title for first feature item |
-| `feature_banner_item_1_icon` | String | `"⚡"` | Icon/emoji for first feature item |
+| `feature_banner_item_1_image` | String | `""` | Image URL for first item (local: `assets/image.png` or external URL) |
 | `feature_banner_item_2_title` | String | `"Community Driven"` | Title for second feature item |
-| `feature_banner_item_2_icon` | String | `"🤝"` | Icon/emoji for second feature item |
+| `feature_banner_item_2_image` | String | `""` | Image URL for second item (local: `assets/image.png` or external URL) |
 | `feature_banner_item_3_title` | String | `"Always Learning"` | Title for third feature item |
-| `feature_banner_item_3_icon` | String | `"🚀"` | Icon/emoji for third feature item |
+| `feature_banner_item_3_image` | String | `""` | Image URL for third item (local: `assets/image.png` or external URL) |
+| `feature_banner_fallback_icon_1` | String | `"⚡"` | Fallback icon if first image fails to load |
+| `feature_banner_fallback_icon_2` | String | `"🤝"` | Fallback icon if second image fails to load |
+| `feature_banner_fallback_icon_3` | String | `"🚀"` | Fallback icon if third image fails to load |
 
 ## 🎨 Customization
+
+### Feature Banner Images
+
+The 3-column feature banner supports both local and external images:
+
+#### Local Images (Recommended)
+1. Upload your images to the `assets/` folder
+2. Use relative paths in settings: `assets/your-image.png`
+3. Recommended size: 200x200px minimum
+4. Formats: PNG, JPG, WebP, SVG
+
+#### External Images
+Use full URLs: `https://example.com/image.png`
+
+#### Image Features
+- **Automatic Fallbacks**: If an image fails to load, shows the configured fallback icon
+- **Loading States**: Displays a spinner while images load
+- **Responsive Design**: Images scale appropriately on mobile devices
+- **Hover Effects**: Subtle zoom effect on desktop (disabled on mobile)
 
 ### Color Scheme
 

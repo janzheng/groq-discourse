@@ -16,6 +16,12 @@
   }
 }
 
+// Banner container
+.groqsters-banners-container {
+  width: 100%;
+  margin-bottom: 2rem;
+}
+
 // Welcome banner
 .welcome-banner {
   background: linear-gradient(135deg, var(--groqsters-primary), lighten($primary, 20%));
@@ -71,39 +77,84 @@
       border-color: var(--primary-medium);
     }
     
-    // Image placeholder
+    // Image container
     .banner-image {
       width: 80px;
       height: 80px;
-      background: linear-gradient(45deg, var(--groqsters-primary), lighten($primary, 15%));
       border-radius: 50%;
       margin: 0 auto 1.5rem;
       display: flex;
       align-items: center;
       justify-content: center;
       position: relative;
+      overflow: hidden;
       
-      // Icon styling
-      .banner-icon {
-        font-size: 2.5rem;
-        line-height: 1;
-        color: white;
-        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-      }
+      // Background for when image is present
+      background: linear-gradient(45deg, var(--groqsters-primary), lighten($primary, 15%));
       
-      // Fallback placeholder if no icon
-      &:empty::before {
-        content: "📋";
-        font-size: 2rem;
-        filter: brightness(0) invert(1);
-      }
-      
-      // Optional: replace with actual image
+      // Actual image styling
       img {
         width: 100%;
         height: 100%;
         object-fit: cover;
         border-radius: 50%;
+        transition: var(--groqsters-transition);
+        
+        &:hover {
+          transform: scale(1.05);
+        }
+      }
+      
+      // Fallback icon styling (when no image or image fails)
+      .banner-icon {
+        font-size: 2.5rem;
+        line-height: 1;
+        color: white;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 1;
+      }
+      
+      // Hide icon when image is loaded successfully
+      &.has-image .banner-icon {
+        display: none;
+      }
+      
+      // Show icon when image fails or is not present
+      &.no-image {
+        .banner-icon {
+          display: block;
+        }
+        
+        img {
+          display: none;
+        }
+      }
+      
+      // Loading state
+      &.loading {
+        background: linear-gradient(45deg, var(--primary-low), var(--primary-very-low));
+        
+        &::after {
+          content: '';
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          width: 20px;
+          height: 20px;
+          margin: -10px 0 0 -10px;
+          border: 2px solid var(--primary);
+          border-radius: 50%;
+          border-top-color: transparent;
+          animation: spin 1s linear infinite;
+        }
+        
+        .banner-icon {
+          display: none;
+        }
       }
     }
     
@@ -144,6 +195,23 @@
 
 // Mobile responsive behavior
 @media (max-width: 768px) {
+  .groqsters-banners-container {
+    margin-bottom: 1rem;
+  }
+
+  .welcome-banner {
+    margin: 1rem 0.5rem;
+    padding: 1.5rem 1rem;
+    
+    h2 {
+      font-size: 1.3rem;
+    }
+    
+    p {
+      font-size: 0.95rem;
+    }
+  }
+
   .groqsters-feature-banner {
     margin: 1rem 0;
     
@@ -165,8 +233,10 @@
           font-size: 2rem;
         }
         
-        &:empty::before {
-          font-size: 1.5rem;
+        img {
+          &:hover {
+            transform: none; // Disable hover scaling on mobile
+          }
         }
       }
       
@@ -216,6 +286,12 @@
       }
     }
   }
+}
+
+// Loading spinner animation
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
 // Shine animation
