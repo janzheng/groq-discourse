@@ -51,9 +51,6 @@ After installation, configure the theme through **Admin Panel → Customize → 
 | `feature_banner_item_2_image` | String | `""` | Image URL for second item (local: `assets/image.png` or external URL) |
 | `feature_banner_item_3_title` | String | `"Always Learning"` | Title for third feature item |
 | `feature_banner_item_3_image` | String | `""` | Image URL for third item (local: `assets/image.png` or external URL) |
-| `feature_banner_fallback_icon_1` | String | `"⚡"` | Fallback icon if first image fails to load |
-| `feature_banner_fallback_icon_2` | String | `"🤝"` | Fallback icon if second image fails to load |
-| `feature_banner_fallback_icon_3` | String | `"🚀"` | Fallback icon if third image fails to load |
 
 ## 🎨 Customization
 
@@ -71,7 +68,7 @@ The 3-column feature banner supports both local and external images:
 Use full URLs: `https://example.com/image.png`
 
 #### Image Features
-- **Automatic Fallbacks**: If an image fails to load, shows the configured fallback icon
+- **Clean Placeholders**: If no image is provided or fails to load, shows a subtle placeholder
 - **Loading States**: Displays a spinner while images load
 - **Responsive Design**: Images scale appropriately on mobile devices
 - **Hover Effects**: Subtle zoom effect on desktop (disabled on mobile)

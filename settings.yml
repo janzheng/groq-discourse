@@ -66,19 +66,4 @@ feature_banner_item_3_title:
 feature_banner_item_3_image:
   type: string
   default: ""
-  description: "Image URL for the third feature banner item (use relative path like 'assets/feature3.png' for local assets or full URL for external images)"
-
-feature_banner_fallback_icon_1:
-  type: string
-  default: "⚡"
-  description: "Fallback emoji/icon for first item if image fails to load"
-
-feature_banner_fallback_icon_2:
-  type: string
-  default: "🤝"
-  description: "Fallback emoji/icon for second item if image fails to load"
-
-feature_banner_fallback_icon_3:
-  type: string
-  default: "🚀"
-  description: "Fallback emoji/icon for third item if image fails to load" 
+  description: "Image URL for the third feature banner item (use relative path like 'assets/feature3.png' for local assets or full URL for external images)" 

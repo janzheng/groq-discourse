@@ -6,18 +6,14 @@ export default {
   initialize() {
     withPluginApi("0.8.31", (api) => {
       // Helper function to create banner image element
-      const createBannerImage = (imageUrl, fallbackIcon, itemIndex) => {
+      const createBannerImage = (imageUrl, itemIndex) => {
         if (imageUrl && imageUrl.trim()) {
           // Create image element
           const img = document.createElement('img');
-          const iconSpan = document.createElement('span');
-          iconSpan.className = 'banner-icon';
-          iconSpan.textContent = fallbackIcon;
           
           const container = document.createElement('div');
           container.className = 'banner-image loading';
           container.appendChild(img);
-          container.appendChild(iconSpan);
           
           // Handle image loading
           img.onload = () => {
@@ -35,14 +31,9 @@ export default {
           
           return container;
         } else {
-          // No image URL provided, use fallback icon
+          // No image URL provided, show empty placeholder
           const container = document.createElement('div');
           container.className = 'banner-image no-image';
-          
-          const iconSpan = document.createElement('span');
-          iconSpan.className = 'banner-icon';
-          iconSpan.textContent = fallbackIcon;
-          container.appendChild(iconSpan);
           
           return container;
         }
@@ -151,18 +142,15 @@ export default {
             const items = [
               {
                 image: settings.feature_banner_item_1_image,
-                title: settings.feature_banner_item_1_title || "Fast & Powerful",
-                fallback: settings.feature_banner_fallback_icon_1 || "⚡"
+                title: settings.feature_banner_item_1_title || "Fast & Powerful"
               },
               {
                 image: settings.feature_banner_item_2_image,
-                title: settings.feature_banner_item_2_title || "Community Driven", 
-                fallback: settings.feature_banner_fallback_icon_2 || "🤝"
+                title: settings.feature_banner_item_2_title || "Community Driven"
               },
               {
                 image: settings.feature_banner_item_3_image,
-                title: settings.feature_banner_item_3_title || "Always Learning",
-                fallback: settings.feature_banner_fallback_icon_3 || "🚀"
+                title: settings.feature_banner_item_3_title || "Always Learning"
               }
             ];
             
@@ -170,7 +158,7 @@ export default {
               const bannerItem = document.createElement('div');
               bannerItem.className = 'banner-item';
               
-              const imageContainer = createBannerImage(item.image, item.fallback, index + 1);
+              const imageContainer = createBannerImage(item.image, index + 1);
               
               const title = document.createElement('h3');
               title.textContent = item.title;
@@ -208,24 +196,21 @@ export default {
         const placeholders = document.querySelectorAll('.banner-image-placeholder');
         placeholders.forEach(placeholder => {
           const itemIndex = placeholder.getAttribute('data-item');
-          let imageUrl, fallbackIcon;
+          let imageUrl;
           
           switch(itemIndex) {
             case '1':
               imageUrl = settings.feature_banner_item_1_image;
-              fallbackIcon = settings.feature_banner_fallback_icon_1 || "⚡";
               break;
             case '2':
               imageUrl = settings.feature_banner_item_2_image;
-              fallbackIcon = settings.feature_banner_fallback_icon_2 || "🤝";
               break;
             case '3':
               imageUrl = settings.feature_banner_item_3_image;
-              fallbackIcon = settings.feature_banner_fallback_icon_3 || "🚀";
               break;
           }
           
-          const imageContainer = createBannerImage(imageUrl, fallbackIcon, itemIndex);
+          const imageContainer = createBannerImage(imageUrl, itemIndex);
           placeholder.parentNode.replaceChild(imageContainer, placeholder);
         });
       };

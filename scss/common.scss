@@ -43,152 +43,171 @@
   }
 }
 
-// Three-column feature banner
-.groqsters-feature-banner {
-  margin: 2rem 0;
-  padding: 0;
+// Three-column feature banner - use more specific selectors
+.groqsters-feature-banner,
+div.groqsters-feature-banner {
+  margin: 2rem 0 !important;
+  padding: 0 !important;
+  width: 100% !important;
+  display: block !important;
   
-  .banner-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 1rem;
+  .banner-grid,
+  div.banner-grid {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 1.5rem !important;
+    max-width: 1200px !important;
+    margin: 0 auto !important;
+    padding: 0 1rem !important;
+    width: 100% !important;
   }
   
-  .banner-item {
-    background: var(--secondary);
-    border: 2px solid var(--primary-low);
-    border-radius: 16px;
-    padding: 2rem 1.5rem;
-    text-align: center;
-    transition: var(--groqsters-transition);
-    position: relative;
-    overflow: hidden;
+  .banner-item,
+  div.banner-item {
+    background: var(--secondary) !important;
+    border: 2px solid var(--primary-low) !important;
+    border-radius: 16px !important;
+    padding: 2rem 1.5rem !important;
+    text-align: center !important;
+    transition: var(--groqsters-transition) !important;
+    position: relative !important;
+    overflow: hidden !important;
+    display: block !important;
     
     // Subtle gradient background
-    background: linear-gradient(135deg, var(--secondary), var(--primary-very-low));
+    background: linear-gradient(135deg, var(--secondary), var(--primary-very-low)) !important;
     
     // Hover effects
     &:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 8px 24px rgba($primary, 0.15);
-      border-color: var(--primary-medium);
+      transform: translateY(-4px) !important;
+      box-shadow: 0 8px 24px rgba($primary, 0.15) !important;
+      border-color: var(--primary-medium) !important;
     }
     
-    // Image container
-    .banner-image {
-      width: 80px;
-      height: 80px;
-      border-radius: 50%;
-      margin: 0 auto 1.5rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      overflow: hidden;
+    // Image container - more specific and with proper sizing
+    .banner-image,
+    div.banner-image {
+      width: 80px !important;
+      height: 80px !important;
+      border-radius: 50% !important;
+      margin: 0 auto 1.5rem !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      position: relative !important;
+      overflow: hidden !important;
+      flex-shrink: 0 !important;
       
-      // Background for when image is present
-      background: linear-gradient(45deg, var(--groqsters-primary), lighten($primary, 15%));
+      // Default background for when no image is provided
+      background: linear-gradient(45deg, var(--groqsters-primary), lighten($primary, 15%)) !important;
       
-      // Actual image styling
+      // Actual image styling with proper containment
       img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        border-radius: 50%;
-        transition: var(--groqsters-transition);
+        width: 80px !important;
+        height: 80px !important;
+        max-width: 80px !important;
+        max-height: 80px !important;
+        min-width: 80px !important;
+        min-height: 80px !important;
+        object-fit: cover !important;
+        object-position: center !important;
+        border-radius: 50% !important;
+        transition: var(--groqsters-transition) !important;
+        position: absolute !important;
+        top: 0 !important;
+        left: 0 !important;
+        z-index: 2 !important;
         
         &:hover {
-          transform: scale(1.05);
+          transform: scale(1.05) !important;
         }
       }
       
-      // Fallback icon styling (when no image or image fails)
-      .banner-icon {
-        font-size: 2.5rem;
-        line-height: 1;
-        color: white;
-        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        z-index: 1;
+      // Show image when loaded successfully
+      &.has-image {
+        background: transparent !important;
       }
       
-      // Hide icon when image is loaded successfully
-      &.has-image .banner-icon {
-        display: none;
-      }
-      
-      // Show icon when image fails or is not present
+      // Show placeholder when image fails or is not present
       &.no-image {
-        .banner-icon {
-          display: block;
+        background: linear-gradient(45deg, var(--primary-low), var(--primary-very-low)) !important;
+        
+        // Optional: add a subtle icon or pattern for empty state
+        &::before {
+          content: '' !important;
+          position: absolute !important;
+          top: 50% !important;
+          left: 50% !important;
+          width: 24px !important;
+          height: 24px !important;
+          margin: -12px 0 0 -12px !important;
+          border: 2px solid var(--primary-medium) !important;
+          border-radius: 4px !important;
+          opacity: 0.5 !important;
         }
         
         img {
-          display: none;
+          display: none !important;
         }
       }
       
       // Loading state
       &.loading {
-        background: linear-gradient(45deg, var(--primary-low), var(--primary-very-low));
+        background: linear-gradient(45deg, var(--primary-low), var(--primary-very-low)) !important;
         
         &::after {
-          content: '';
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          width: 20px;
-          height: 20px;
-          margin: -10px 0 0 -10px;
-          border: 2px solid var(--primary);
-          border-radius: 50%;
-          border-top-color: transparent;
-          animation: spin 1s linear infinite;
+          content: '' !important;
+          position: absolute !important;
+          top: 50% !important;
+          left: 50% !important;
+          width: 20px !important;
+          height: 20px !important;
+          margin: -10px 0 0 -10px !important;
+          border: 2px solid var(--primary) !important;
+          border-radius: 50% !important;
+          border-top-color: transparent !important;
+          animation: spin 1s linear infinite !important;
+          z-index: 3 !important;
         }
         
-        .banner-icon {
-          display: none;
+        &::before {
+          display: none !important;
         }
       }
     }
     
     // Title styling
     h3 {
-      margin: 0;
-      font-size: 1.25rem;
-      font-weight: 600;
-      color: var(--primary);
-      line-height: 1.4;
+      margin: 0 !important;
+      font-size: 1.25rem !important;
+      font-weight: 600 !important;
+      color: var(--primary) !important;
+      line-height: 1.4 !important;
       
       // Ensure single line with ellipsis if too long
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      white-space: nowrap !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
     }
     
     // Subtle shine effect
     &::before {
-      content: '';
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: linear-gradient(45deg, transparent, rgba(white, 0.1), transparent);
-      transform: rotate(45deg);
-      transition: var(--groqsters-transition);
-      opacity: 0;
+      content: '' !important;
+      position: absolute !important;
+      top: -50% !important;
+      left: -50% !important;
+      width: 200% !important;
+      height: 200% !important;
+      background: linear-gradient(45deg, transparent, rgba(white, 0.1), transparent) !important;
+      transform: rotate(45deg) !important;
+      transition: var(--groqsters-transition) !important;
+      opacity: 0 !important;
+      pointer-events: none !important;
     }
     
     &:hover::before {
-      opacity: 1;
-      animation: shine 1.5s ease-in-out;
+      opacity: 1 !important;
+      animation: shine 1.5s ease-in-out !important;
     }
   }
 }
@@ -212,50 +231,63 @@
     }
   }
 
-  .groqsters-feature-banner {
-    margin: 1rem 0;
+  .groqsters-feature-banner,
+  div.groqsters-feature-banner {
+    margin: 1rem 0 !important;
     
-    .banner-grid {
-      grid-template-columns: 1fr;
-      gap: 1rem;
-      padding: 0 0.5rem;
+    .banner-grid,
+    div.banner-grid {
+      grid-template-columns: 1fr !important;
+      gap: 1rem !important;
+      padding: 0 0.5rem !important;
     }
     
-    .banner-item {
-      padding: 1.5rem 1rem;
+    .banner-item,
+    div.banner-item {
+      padding: 1.5rem 1rem !important;
       
-      .banner-image {
-        width: 60px;
-        height: 60px;
-        margin-bottom: 1rem;
-        
-        .banner-icon {
-          font-size: 2rem;
-        }
+      .banner-image,
+      div.banner-image {
+        width: 60px !important;
+        height: 60px !important;
+        margin-bottom: 1rem !important;
         
         img {
+          width: 60px !important;
+          height: 60px !important;
+          max-width: 60px !important;
+          max-height: 60px !important;
+          min-width: 60px !important;
+          min-height: 60px !important;
+          
           &:hover {
-            transform: none; // Disable hover scaling on mobile
+            transform: none !important; // Disable hover scaling on mobile
           }
+        }
+        
+        &.no-image::before {
+          width: 16px !important;
+          height: 16px !important;
+          margin: -8px 0 0 -8px !important;
         }
       }
       
       h3 {
-        font-size: 1.1rem;
-        white-space: normal; // Allow wrapping on mobile
-        overflow: visible;
-        text-overflow: unset;
+        font-size: 1.1rem !important;
+        white-space: normal !important; // Allow wrapping on mobile
+        overflow: visible !important;
+        text-overflow: unset !important;
       }
       
       // Disable hover effects on mobile
       &:hover {
-        transform: none;
-        box-shadow: none;
-        border-color: var(--primary-low);
+        transform: none !important;
+        box-shadow: none !important;
+        border-color: var(--primary-low) !important;
       }
       
       &::before {
-        display: none; // Disable shine effect on mobile
+        display: none !important; // Disable shine effect on mobile
       }
     }
   }
@@ -263,26 +295,41 @@
 
 // Tablet responsive behavior
 @media (max-width: 1024px) and (min-width: 769px) {
-  .groqsters-feature-banner {
-    .banner-grid {
-      gap: 1.25rem;
-      padding: 0 0.75rem;
+  .groqsters-feature-banner,
+  div.groqsters-feature-banner {
+    .banner-grid,
+    div.banner-grid {
+      gap: 1.25rem !important;
+      padding: 0 0.75rem !important;
     }
     
-    .banner-item {
-      padding: 1.75rem 1.25rem;
+    .banner-item,
+    div.banner-item {
+      padding: 1.75rem 1.25rem !important;
       
-      .banner-image {
-        width: 70px;
-        height: 70px;
+      .banner-image,
+      div.banner-image {
+        width: 70px !important;
+        height: 70px !important;
         
-        .banner-icon {
-          font-size: 2.25rem;
+        img {
+          width: 70px !important;
+          height: 70px !important;
+          max-width: 70px !important;
+          max-height: 70px !important;
+          min-width: 70px !important;
+          min-height: 70px !important;
+        }
+        
+        &.no-image::before {
+          width: 20px !important;
+          height: 20px !important;
+          margin: -10px 0 0 -10px !important;
         }
       }
       
       h3 {
-        font-size: 1.15rem;
+        font-size: 1.15rem !important;
       }
     }
   }
