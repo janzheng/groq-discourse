@@ -52,10 +52,13 @@ After installation, configure the theme through **Admin Panel → Customize → 
 | `show_feature_banner` | Boolean | `true` | Show 3-column feature banner on homepage |
 | `feature_banner_item_1_title` | String | `"Fast & Powerful"` | Title for first feature item |
 | `feature_banner_item_1_image` | String | `""` | Image URL for first item (local: `assets/image.png` or external URL) |
+| `feature_banner_item_1_url` | String | `""` | Click URL for first item (relative: `/about` or external: `https://example.com`) |
 | `feature_banner_item_2_title` | String | `"Community Driven"` | Title for second feature item |
 | `feature_banner_item_2_image` | String | `""` | Image URL for second item (local: `assets/image.png` or external URL) |
+| `feature_banner_item_2_url` | String | `""` | Click URL for second item (relative: `/about` or external: `https://example.com`) |
 | `feature_banner_item_3_title` | String | `"Always Learning"` | Title for third feature item |
 | `feature_banner_item_3_image` | String | `""` | Image URL for third item (local: `assets/image.png` or external URL) |
+| `feature_banner_item_3_url` | String | `""` | Click URL for third item (relative: `/about` or external: `https://example.com`) |
 
 ## 🎨 Customization
 

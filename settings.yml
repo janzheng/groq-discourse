@@ -73,6 +73,11 @@ feature_banner_item_1_image:
   default: ""
   description: "Image URL for the first feature banner item (use relative path like 'assets/feature1.png' for local assets or full URL for external images)"
 
+feature_banner_item_1_url:
+  type: string
+  default: ""
+  description: "URL to link to when clicking the first feature banner item (can be relative like '/about' or external like 'https://example.com')"
+
 feature_banner_item_2_title:
   type: string
   default: "Community Driven"
@@ -83,6 +88,11 @@ feature_banner_item_2_image:
   default: ""
   description: "Image URL for the second feature banner item (use relative path like 'assets/feature2.png' for local assets or full URL for external images)"
 
+feature_banner_item_2_url:
+  type: string
+  default: ""
+  description: "URL to link to when clicking the second feature banner item (can be relative like '/about' or external like 'https://example.com')"
+
 feature_banner_item_3_title:
   type: string
   default: "Always Learning"
@@ -91,4 +101,9 @@ feature_banner_item_3_title:
 feature_banner_item_3_image:
   type: string
   default: ""
-  description: "Image URL for the third feature banner item (use relative path like 'assets/feature3.png' for local assets or full URL for external images)" 
+  description: "Image URL for the third feature banner item (use relative path like 'assets/feature3.png' for local assets or full URL for external images)"
+
+feature_banner_item_3_url:
+  type: string
+  default: ""
+  description: "URL to link to when clicking the third feature banner item (can be relative like '/about' or external like 'https://example.com')" 

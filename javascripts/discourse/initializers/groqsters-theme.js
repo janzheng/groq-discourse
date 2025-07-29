@@ -96,25 +96,42 @@ export default {
 
         // Add feature banner if enabled
         if (settings.show_feature_banner) {
+          // Create banner items data with URLs
+          const bannerItems = [
+            {
+              title: settings.feature_banner_item_1_title || "Fast & Powerful",
+              url: settings.feature_banner_item_1_url,
+              dataItem: "1"
+            },
+            {
+              title: settings.feature_banner_item_2_title || "Community Driven", 
+              url: settings.feature_banner_item_2_url,
+              dataItem: "2"
+            },
+            {
+              title: settings.feature_banner_item_3_title || "Always Learning",
+              url: settings.feature_banner_item_3_url,
+              dataItem: "3"
+            }
+          ];
+
+          const bannerItemElements = bannerItems.map(item => {
+            const itemClass = item.url ? "banner-item clickable" : "banner-item";
+            const itemAttrs = {
+              class: itemClass,
+              "data-url": item.url || "",
+              onclick: item.url ? `window.${item.url.startsWith('http') ? 'open' : 'location'}('${item.url}'${item.url.startsWith('http') ? ', "_blank"' : ''})` : ""
+            };
+
+            return dec.h(`div.${itemClass}`, itemAttrs, [
+              dec.h("div.banner-image-placeholder", { "data-item": item.dataItem }),
+              dec.h("h3", item.title)
+            ]);
+          });
+
           elements.push(
             dec.h("div.groqsters-feature-banner", [
-              dec.h("div.banner-grid", [
-                // First banner item
-                dec.h("div.banner-item", [
-                  dec.h("div.banner-image-placeholder", { "data-item": "1" }),
-                  dec.h("h3", settings.feature_banner_item_1_title || "Fast & Powerful")
-                ]),
-                // Second banner item
-                dec.h("div.banner-item", [
-                  dec.h("div.banner-image-placeholder", { "data-item": "2" }),
-                  dec.h("h3", settings.feature_banner_item_2_title || "Community Driven")
-                ]),
-                // Third banner item
-                dec.h("div.banner-item", [
-                  dec.h("div.banner-image-placeholder", { "data-item": "3" }),
-                  dec.h("h3", settings.feature_banner_item_3_title || "Always Learning")
-                ])
-              ])
+              dec.h("div.banner-grid", bannerItemElements)
             ])
           );
         }
@@ -210,25 +227,40 @@ export default {
             const bannerGrid = document.createElement('div');
             bannerGrid.className = 'banner-grid';
             
-            // Create banner items with proper image handling
+            // Create banner items with proper image handling and click functionality
             const items = [
               {
                 image: settings.feature_banner_item_1_image,
-                title: settings.feature_banner_item_1_title || "Fast & Powerful"
+                title: settings.feature_banner_item_1_title || "Fast & Powerful",
+                url: settings.feature_banner_item_1_url
               },
               {
                 image: settings.feature_banner_item_2_image,
-                title: settings.feature_banner_item_2_title || "Community Driven"
+                title: settings.feature_banner_item_2_title || "Community Driven",
+                url: settings.feature_banner_item_2_url
               },
               {
                 image: settings.feature_banner_item_3_image,
-                title: settings.feature_banner_item_3_title || "Always Learning"
+                title: settings.feature_banner_item_3_title || "Always Learning",
+                url: settings.feature_banner_item_3_url
               }
             ];
             
             items.forEach((item, index) => {
               const bannerItem = document.createElement('div');
-              bannerItem.className = 'banner-item';
+              bannerItem.className = item.url ? 'banner-item clickable' : 'banner-item';
+              
+              // Add click functionality if URL is provided
+              if (item.url) {
+                bannerItem.style.cursor = 'pointer';
+                bannerItem.addEventListener('click', () => {
+                  if (item.url.startsWith('http')) {
+                    window.open(item.url, '_blank');
+                  } else {
+                    window.location.href = item.url;
+                  }
+                });
+              }
               
               const imageContainer = createBannerImage(item.image, index + 1);
               
@@ -325,6 +357,11 @@ export default {
           item1: settings.feature_banner_item_1_image,
           item2: settings.feature_banner_item_2_image,
           item3: settings.feature_banner_item_3_image
+        },
+        bannerUrls: {
+          item1: settings.feature_banner_item_1_url,
+          item2: settings.feature_banner_item_2_url,
+          item3: settings.feature_banner_item_3_url
         }
       });
     });

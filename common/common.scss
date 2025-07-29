@@ -114,6 +114,11 @@ div.groqsters-feature-banner {
     border-radius: 8px !important;
     transition: var(--groqsters-transition) !important;
     
+    // Make clickable items have pointer cursor
+    &.clickable {
+      cursor: pointer !important;
+    }
+    
     // Hover effects
     &:hover {
       transform: translateY(-2px) !important;
