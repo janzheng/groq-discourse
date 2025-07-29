@@ -44,6 +44,11 @@ After installation, configure the theme through **Admin Panel → Customize → 
 | `welcome_banner_text` | String | `"Welcome to our Groqsters community!"` | Welcome banner text |
 | `custom_footer_text` | String | `""` | Custom footer text |
 | `enable_animations` | Boolean | `true` | Enable CSS animations |
+| `show_alert_banner` | Boolean | `false` | Show custom alert banner on homepage |
+| `alert_banner_message` | String | `"Important announcement: Check out our latest updates and features!"` | Message text for alert banner |
+| `alert_banner_color` | String | `"#ff6a39"` | Background color for alert banner (hex color) |
+| `alert_banner_cta_text` | String | `"Learn More"` | Text for the call-to-action button |
+| `alert_banner_cta_url` | String | `""` | URL for the CTA button (relative or external) |
 | `show_feature_banner` | Boolean | `true` | Show 3-column feature banner on homepage |
 | `feature_banner_item_1_title` | String | `"Fast & Powerful"` | Title for first feature item |
 | `feature_banner_item_1_image` | String | `""` | Image URL for first item (local: `assets/image.png` or external URL) |
