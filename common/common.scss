@@ -766,6 +766,33 @@ body.groqsters-categories-page,
     }
   }
   
+  // DIRECT TARGETING OF TABLE STRUCTURE FOR GRAY BORDERS
+  // Target the exact elements shown in browser dev tools
+  .category-list tr,
+  table.category-list tr,
+  tr[data-category-id] {
+    background: var(--secondary) !important;
+    border: 2px solid #d1d5db !important;
+    border-radius: 16px !important;
+    margin-bottom: 1.5rem !important;
+    padding: 2rem !important;
+    display: block !important;
+    
+    &:hover {
+      border-color: #9ca3af !important;
+      transform: translateY(-2px) !important;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12) !important;
+    }
+  }
+  
+  // Also target the td.category directly 
+  .category-list td.category,
+  table.category-list td.category {
+    border: none !important;
+    background: none !important;
+    padding: 0 !important;
+  }
+  
   // Force hide any remaining Latest sections
   .latest-topic-list-item,
   .topic-list {
