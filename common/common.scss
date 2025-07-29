@@ -774,14 +774,17 @@ body.groqsters-categories-page,
     background: var(--secondary) !important;
     border: 2px solid #d1d5db !important;
     border-radius: 16px !important;
-    margin-bottom: 1.5rem !important;
+    margin: 0 0 2rem 0 !important;
     padding: 2rem !important;
     display: block !important;
+    position: relative !important;
+    z-index: 1 !important;
     
     &:hover {
       border-color: #9ca3af !important;
       transform: translateY(-2px) !important;
       box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12) !important;
+      z-index: 2 !important;
     }
   }
   
