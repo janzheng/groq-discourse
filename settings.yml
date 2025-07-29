@@ -20,7 +20,7 @@ show_welcome_banner:
 
 welcome_banner_text:
   type: string
-  default: "Welcome to our Groqsters community!"
+  default: "Find help, share your knowledge, and experience fast inference"
   description: "Text to display in the welcome banner"
 
 custom_footer_text:

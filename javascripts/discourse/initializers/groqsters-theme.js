@@ -58,8 +58,8 @@ export default {
         if (settings.show_welcome_banner && settings.welcome_banner_text) {
           elements.push(
             dec.h("div.welcome-banner", [
-              dec.h("h2", "Welcome to Groqsters!"),
-              dec.h("p", settings.welcome_banner_text)
+              dec.h("h2", "Welcome to Our Community"),
+              dec.h("p", "Find help, share your knowledge, and experience fast inference")
             ])
           );
         }
@@ -164,8 +164,8 @@ export default {
             const welcomeBanner = document.createElement('div');
             welcomeBanner.className = 'welcome-banner';
             welcomeBanner.innerHTML = `
-              <h2>Welcome to Groqsters!</h2>
-              <p>${settings.welcome_banner_text}</p>
+              <h2>Welcome to Our Community</h2>
+              <p>Find help, share your knowledge, and experience fast inference</p>
             `;
             bannerContainer.appendChild(welcomeBanner);
           }
