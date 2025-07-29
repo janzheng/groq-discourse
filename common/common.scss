@@ -608,18 +608,15 @@ body.groqsters-categories-page,
 .full-width .wrap .categories-and-latest,
 .full-width .wrap .categories-only {
   
-  // Force hide ALL table elements
-  table.category-list,
-  .category-list table,
+  // Hide only the table HEADERS, not the whole table
   .category-list thead,
-  .category-list tbody,
   .category-list th,
   thead.category-list-header {
     display: none !important;
     visibility: hidden !important;
   }
   
-  // Target the specific table structure
+  // Target the specific table structure but don't hide it completely
   .category-list {
     display: grid !important;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)) !important;
@@ -629,16 +626,11 @@ body.groqsters-categories-page,
     border: none !important;
     background: none !important;
     
-    // Force block display on all elements
-    * {
-      border: none !important;
-      background: none !important;
-    }
-    
-    // Target table rows as category items
+    // Target table rows as category items - MAKE SURE THEY'RE VISIBLE
     tr.category-list-item,
     .category-list-item {
       display: block !important;
+      visibility: visible !important;
       background: var(--secondary) !important;
       border: 1px solid var(--primary-low) !important;
       border-radius: 12px !important;
@@ -654,13 +646,11 @@ body.groqsters-categories-page,
       
       // Force all table cells to be block
       td {
-        display: block !important;
         border: none !important;
-        padding: 0 !important;
         background: none !important;
         vertical-align: unset !important;
         
-        // Hide metadata columns
+        // Hide metadata columns but keep them in DOM
         &.topics,
         &.posts,
         &.latest,
@@ -672,6 +662,7 @@ body.groqsters-categories-page,
         // Show only main category cell
         &.category {
           display: block !important;
+          padding: 0 !important;
           
           h3,
           .category-name,
@@ -704,7 +695,7 @@ body.groqsters-categories-page,
             overflow: hidden !important;
           }
           
-          // Hide complex elements
+          // Hide complex elements but don't break layout
           .subcategories,
           .category-logo,
           .category-stat,
@@ -722,6 +713,19 @@ body.groqsters-categories-page,
         box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15) !important;
         border-color: var(--primary-medium) !important;
       }
+    }
+    
+    // Make sure the table itself is visible as a grid
+    table {
+      display: contents !important;
+      border: none !important;
+      background: none !important;
+    }
+    
+    tbody {
+      display: contents !important;
+      border: none !important;
+      background: none !important;
     }
   }
   

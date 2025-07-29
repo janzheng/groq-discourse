@@ -257,30 +257,42 @@ export default {
             // Force the body to have our category class
             document.body.classList.add('groqsters-categories-page');
             
-            // Additional force application of grid layout
+            // Gentle application of grid layout
             const categoryList = document.querySelector('.category-list');
             if (categoryList) {
               categoryList.style.display = 'grid';
               categoryList.style.gridTemplateColumns = 'repeat(auto-fit, minmax(300px, 1fr))';
               categoryList.style.gap = '1.5rem';
               
-              // Force category items to be block
-              const categoryItems = categoryList.querySelectorAll('.category-list-item, tr');
+              // Ensure the table structure supports grid
+              const table = categoryList.querySelector('table');
+              if (table) {
+                table.style.display = 'contents';
+              }
+              
+              const tbody = categoryList.querySelector('tbody');
+              if (tbody) {
+                tbody.style.display = 'contents';
+              }
+              
+              // Style category items gently
+              const categoryItems = categoryList.querySelectorAll('.category-list-item, tr.category-list-item');
               categoryItems.forEach(item => {
                 item.style.display = 'block';
+                item.style.visibility = 'visible';
                 item.style.background = 'var(--secondary)';
                 item.style.border = '1px solid var(--primary-low)';
                 item.style.borderRadius = '12px';
                 item.style.padding = '1.5rem';
                 item.style.marginBottom = '0';
                 
-                // Hide table cells we don't want
+                // Hide metadata cells
                 const hideCells = item.querySelectorAll('td.topics, td.posts, td.latest, td.num, td.stats');
                 hideCells.forEach(cell => {
                   cell.style.display = 'none';
                 });
                 
-                // Style the category cell
+                // Ensure category cell is visible
                 const categoryCell = item.querySelector('td.category');
                 if (categoryCell) {
                   categoryCell.style.display = 'block';
@@ -290,11 +302,13 @@ export default {
               });
             }
             
-            // Hide table headers
+            // Hide only table headers, not the whole table
             const tableHeaders = document.querySelectorAll('.category-list thead, .category-list-header');
             tableHeaders.forEach(header => {
               header.style.display = 'none';
             });
+            
+            console.log('Groqsters categories layout applied');
             
           }, 100);
         } else {
