@@ -1,0 +1,75 @@
+{{!-- Groqsters Theme Custom Topic List Item Template --}}
+
+<tr class="topic-list-item groqsters-topic-item {{if topic.visited 'visited'}}" data-topic-id="{{topic.id}}">
+  
+  {{!-- Topic title with enhanced styling --}}
+  <td class="main-link clearfix" colspan="1">
+    <div class="topic-title-wrapper">
+      {{#if topic.featured_link}}
+        {{topic-featured-link topic}}
+      {{else}}
+        <span class="link-top-line">
+          {{#if topic.unread_posts}}
+            <span class="unread-indicator"></span>
+          {{/if}}
+          
+          {{raw "topic-status" topic=topic}}
+          {{topic-link topic class="raw-link raw-topic-link"}}
+          
+          {{#if topic.tags}}
+            <div class="topic-tags">
+              {{#each topic.tags as |tag|}}
+                <span class="topic-tag">{{tag}}</span>
+              {{/each}}
+            </div>
+          {{/if}}
+        </span>
+      {{/if}}
+      
+      {{#if topic.excerpt}}
+        <div class="topic-excerpt">
+          {{topic.excerpt}}
+        </div>
+      {{/if}}
+    </div>
+  </td>
+
+  {{!-- Category column --}}
+  {{#if showCategory}}
+    <td class="category">
+      {{category-link topic.category}}
+    </td>
+  {{/if}}
+
+  {{!-- Poster avatars --}}
+  <td class="posters">
+    <div class="poster-avatars">
+      {{#each posters as |poster|}}
+        <a href="{{poster.user.path}}" data-user-card="{{poster.user.username}}" class="poster-avatar">
+          {{avatar poster.user imageSize="small"}}
+        </a>
+      {{/each}}
+    </div>
+  </td>
+
+  {{!-- Post count --}}
+  <td class="posts-map posts" title="{{topic.posts_count}} posts">
+    <span class="number">{{topic.posts_count}}</span>
+    {{#if topic.unread_posts}}
+      <span class="unread-posts">+{{topic.unread_posts}}</span>
+    {{/if}}
+  </td>
+
+  {{!-- Activity/Age column --}}
+  <td class="age activity" title="{{topic.last_activity_at}}">
+    <span class="relative-date">{{format-age topic.last_activity_at}}</span>
+    {{#if topic.last_poster}}
+      <div class="last-poster">
+        <a href="{{topic.last_poster.path}}" class="last-poster-avatar">
+          {{avatar topic.last_poster imageSize="tiny"}}
+        </a>
+      </div>
+    {{/if}}
+  </td>
+
+</tr> 

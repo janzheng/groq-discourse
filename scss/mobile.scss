@@ -1,0 +1,109 @@
+// Groqsters Theme - Mobile Styles
+// Styles that apply only to mobile devices
+
+// Mobile header adjustments
+.d-header {
+  .custom-header-text {
+    font-size: 0.9rem;
+    margin-left: 0.5em;
+  }
+}
+
+// Mobile-optimized welcome banner
+.welcome-banner {
+  padding: 1.5rem 1rem;
+  margin: 0.5rem;
+  
+  h2 {
+    font-size: 1.3rem;
+  }
+  
+  p {
+    font-size: 0.95rem;
+  }
+}
+
+// Mobile topic list optimizations
+.topic-list {
+  .topic-list-item {
+    padding: 1rem 0.5rem;
+    
+    .main-link {
+      .topic-title {
+        font-size: 1rem;
+        line-height: 1.4;
+      }
+    }
+    
+    &:hover {
+      transform: none; // Disable hover transforms on mobile
+    }
+  }
+}
+
+// Mobile navigation improvements
+.nav-pills {
+  overflow-x: auto;
+  white-space: nowrap;
+  padding-bottom: 0.5rem;
+  
+  > li {
+    display: inline-block;
+    
+    > a {
+      padding: 0.5rem 1rem;
+      margin-right: 0.5rem;
+      border-radius: 20px;
+      
+      &:hover {
+        transform: none; // Disable hover transforms on mobile
+      }
+    }
+  }
+}
+
+// Mobile post optimizations
+.topic-post {
+  .post-menu-area {
+    opacity: 1; // Always show on mobile
+  }
+  
+  &:hover {
+    transform: none; // Disable hover effects on mobile
+    box-shadow: none;
+  }
+}
+
+// Mobile-specific button adjustments
+.btn-groqsters {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  
+  &:hover {
+    transform: none; // Disable hover transforms on mobile
+  }
+}
+
+// Mobile footer adjustments
+.custom-footer {
+  padding: 1.5rem 1rem;
+  
+  .footer-text {
+    font-size: 0.85rem;
+  }
+}
+
+// Touch-friendly improvements
+.topic-list-item,
+.nav-pills > li > a,
+.btn {
+  min-height: 44px; // Apple's recommended minimum touch target
+}
+
+// Disable animations on mobile for better performance
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+} 

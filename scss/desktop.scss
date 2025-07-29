@@ -1,0 +1,100 @@
+// Groqsters Theme - Desktop Styles
+// Styles that apply only to desktop devices
+
+// Desktop-specific header adjustments
+.d-header {
+  .title {
+    font-size: 1.2em;
+    
+    a {
+      transition: var(--groqsters-transition);
+      
+      &:hover {
+        color: var(--groqsters-primary);
+      }
+    }
+  }
+}
+
+// Enhanced desktop navigation
+.nav-pills {
+  > li {
+    > a {
+      transition: var(--groqsters-transition);
+      border-radius: 20px;
+      
+      &:hover {
+        background-color: rgba($primary, 0.1);
+        transform: translateY(-1px);
+      }
+    }
+    
+    &.active > a {
+      background: linear-gradient(45deg, var(--groqsters-primary), darken($primary, 10%));
+      box-shadow: 0 2px 8px rgba($primary, 0.2);
+    }
+  }
+}
+
+// Desktop topic list enhancements
+.topic-list {
+  .topic-list-header {
+    .topic-list-data {
+      transition: var(--groqsters-transition);
+      
+      &:hover {
+        background-color: rgba($primary, 0.05);
+      }
+    }
+  }
+  
+  .topic-list-item {
+    &:hover {
+      .topic-title {
+        color: var(--groqsters-primary);
+      }
+    }
+  }
+}
+
+// Desktop sidebar enhancements
+.navigation-topics {
+  .topic-list {
+    .topic-list-item {
+      padding: 0.75rem;
+      margin-bottom: 0.5rem;
+      border-radius: 8px;
+      
+      &:hover {
+        background: linear-gradient(45deg, rgba($primary, 0.05), rgba($primary, 0.02));
+      }
+    }
+  }
+}
+
+// Desktop post enhancements
+.topic-body {
+  .regular {
+    .topic-post {
+      transition: var(--groqsters-transition);
+      
+      &:hover {
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+        border-radius: 8px;
+      }
+    }
+  }
+}
+
+// Desktop-specific welcome banner
+.welcome-banner {
+  padding: 3rem 2rem;
+  
+  h2 {
+    font-size: 2rem;
+  }
+  
+  p {
+    font-size: 1.1rem;
+  }
+} 

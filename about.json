@@ -1,0 +1,26 @@
+{
+  "name": "Groqsters Theme",
+  "about_url": "https://github.com/your-username/groqsters",
+  "license_url": "https://github.com/your-username/groqsters/blob/main/LICENSE",
+  "assets": {
+    "logo": "assets/logo.png"
+  },
+  "color_schemes": {
+    "Groqsters": {
+      "primary": "#1f8dd6",
+      "secondary": "#f3f3f3",
+      "tertiary": "#0084ff",
+      "quaternary": "#e45735",
+      "header_background": "#ffffff",
+      "header_primary": "#333333",
+      "highlight": "#ffdd00",
+      "danger": "#e45735",
+      "success": "#009900",
+      "love": "#fa6c8d"
+    }
+  },
+  "modifiers": {
+    "serialize_topic_excerpts": true
+  },
+  "learn_more": "https://meta.discourse.org/t/beginners-guide-to-using-discourse-themes/91966"
+} 

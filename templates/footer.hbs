@@ -1,0 +1,85 @@
+{{!-- Groqsters Theme Custom Footer Template --}}
+
+<footer class="custom-footer groqsters-footer">
+  <div class="footer-content">
+    
+    {{!-- Custom footer text from settings --}}
+    {{#if customFooterText}}
+      <div class="footer-text">
+        {{customFooterText}}
+      </div>
+    {{/if}}
+
+    {{!-- Default footer content if no custom text --}}
+    {{#unless customFooterText}}
+      <div class="footer-text">
+        <p>Powered by <a href="https://www.discourse.org" target="_blank">Discourse</a> 
+           with Groqsters Theme</p>
+        <p>© {{currentYear}} {{site.title}}. All rights reserved.</p>
+      </div>
+    {{/unless}}
+
+    {{!-- Social links (if configured) --}}
+    {{#if site.twitter_url}}
+      <div class="social-links">
+        <a href="{{site.twitter_url}}" target="_blank" class="social-link twitter">
+          {{d-icon "fab-twitter"}}
+        </a>
+        {{#if site.facebook_url}}
+          <a href="{{site.facebook_url}}" target="_blank" class="social-link facebook">
+            {{d-icon "fab-facebook"}}
+          </a>
+        {{/if}}
+        {{#if site.github_url}}
+          <a href="{{site.github_url}}" target="_blank" class="social-link github">
+            {{d-icon "fab-github"}}
+          </a>
+        {{/if}}
+      </div>
+    {{/if}}
+
+    {{!-- Back to top button --}}
+    <div class="back-to-top">
+      <button class="btn btn-groqsters back-to-top-btn" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+        {{d-icon "chevron-up"}} Back to Top
+      </button>
+    </div>
+
+  </div>
+</footer>
+
+{{!-- Additional footer styling --}}
+<style>
+  .groqsters-footer {
+    background: linear-gradient(135deg, var(--secondary), var(--primary-very-low));
+    border-top: 2px solid var(--primary-low);
+  }
+  
+  .social-links {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin: 1rem 0;
+  }
+  
+  .social-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--primary);
+    color: white;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .social-link:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  }
+  
+  .back-to-top-btn {
+    margin-top: 1rem;
+  }
+</style> 

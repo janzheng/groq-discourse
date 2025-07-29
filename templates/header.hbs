@@ -1,0 +1,40 @@
+{{!-- Groqsters Theme Custom Header Template --}}
+
+{{#if customHeaderText}}
+  <div class="custom-header-text">
+    {{customHeaderText}}
+  </div>
+{{/if}}
+
+{{!-- Enhanced header with custom branding --}}
+<header class="d-header groqsters-header">
+  {{#if site.logo_url}}
+    <div class="logo-wrapper">
+      <a href="{{site.base_url}}" class="logo-link">
+        <img src="{{site.logo_url}}" alt="{{site.title}}" class="logo-image">
+      </a>
+    </div>
+  {{/if}}
+  
+  {{!-- Custom navigation enhancement --}}
+  <nav class="header-nav">
+    {{#if currentUser}}
+      <div class="user-menu-wrapper">
+        <span class="welcome-text">Welcome back, {{currentUser.username}}!</span>
+      </div>
+    {{else}}
+      <div class="guest-actions">
+        <a href="/login" class="btn btn-groqsters login-button">Sign In</a>
+        <a href="/signup" class="btn btn-groqsters signup-button">Join Us</a>
+      </div>
+    {{/if}}
+  </nav>
+</header>
+
+{{!-- Welcome banner for homepage --}}
+{{#if (and showWelcomeBanner welcomeBannerText)}}
+  <div class="welcome-banner groqsters-fade-in">
+    <h2>Welcome to Groqsters!</h2>
+    <p>{{welcomeBannerText}}</p>
+  </div>
+{{/if}} 

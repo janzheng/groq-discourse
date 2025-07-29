@@ -1,0 +1,118 @@
+// Groqsters Theme - Common Styles
+// This file contains styles that apply to all devices
+
+// Import theme settings
+:root {
+  --groqsters-primary: #{$primary_brand_color};
+  --groqsters-transition: all 0.3s ease;
+}
+
+// Custom header styling
+.d-header {
+  .custom-header-text {
+    font-weight: 600;
+    color: var(--header_primary);
+    margin-left: 1em;
+  }
+}
+
+// Welcome banner
+.welcome-banner {
+  background: linear-gradient(135deg, var(--groqsters-primary), lighten($primary, 20%));
+  color: white;
+  padding: 2rem;
+  text-align: center;
+  margin-bottom: 1rem;
+  border-radius: 8px;
+  
+  h2 {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+  
+  p {
+    margin: 0.5rem 0 0 0;
+    opacity: 0.9;
+  }
+}
+
+// Enhanced topic list styling
+.topic-list {
+  .main-link {
+    transition: var(--groqsters-transition);
+    
+    &:hover {
+      transform: translateX(4px);
+    }
+  }
+  
+  .topic-item {
+    border-radius: 6px;
+    transition: var(--groqsters-transition);
+    
+    &:hover {
+      background-color: rgba($primary, 0.05);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+  }
+}
+
+// Custom button styles
+.btn-groqsters {
+  background: linear-gradient(45deg, var(--groqsters-primary), darken($primary, 10%));
+  border: none;
+  color: white;
+  transition: var(--groqsters-transition);
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba($primary, 0.3);
+  }
+}
+
+// Post enhancements
+.topic-post {
+  transition: var(--groqsters-transition);
+  
+  &:hover {
+    .post-menu-area {
+      opacity: 1;
+    }
+  }
+  
+  .post-menu-area {
+    opacity: 0.7;
+    transition: var(--groqsters-transition);
+  }
+}
+
+// Custom footer
+.custom-footer {
+  background-color: var(--secondary);
+  padding: 1rem;
+  text-align: center;
+  border-top: 1px solid var(--primary-low);
+  margin-top: 2rem;
+  
+  .footer-text {
+    color: var(--primary-medium);
+    font-size: 0.9rem;
+  }
+}
+
+// Animations (when enabled)
+.groqsters-fade-in {
+  animation: groqsters-fadeIn 0.6s ease-out;
+}
+
+@keyframes groqsters-fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+} 
