@@ -18,6 +18,7 @@
 .welcome-banner {
   margin: 1rem 0.5rem;
   padding: 1.5rem 1rem;
+  border-radius: 0; // Keep full width on mobile like Vercel
   
   h2 {
     font-size: 1.3rem;
@@ -25,6 +26,31 @@
   
   p {
     font-size: 0.95rem;
+  }
+}
+
+// Mobile-specific banner positioning for search banner
+.search-banner.welcome-banner {
+  // Ensure full width on mobile like Vercel
+  width: 100vw;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  margin-top: 0;
+  margin-bottom: 1rem;
+  padding: 1.5rem 1rem;
+  border-radius: 0;
+  
+  .welcome-banner__inner-wrapper,
+  .custom-search-banner {
+    padding: 0 1rem; // Reduce padding on mobile
+    max-width: none; // Remove max-width constraint on mobile
+  }
+  
+  .custom-search-banner-headline {
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
   }
 }
 
@@ -253,6 +279,7 @@ div.groqsters-feature-banner {
         .category-description {
           font-size: 0.85rem !important;
           -webkit-line-clamp: 2 !important; // Show fewer lines on mobile
+          line-clamp: 2 !important;
           margin-bottom: 0.75rem !important;
         }
       }

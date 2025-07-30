@@ -78,15 +78,18 @@
   width: 100%;
 }
 
-// Welcome banner (can be in header-nav or standalone)
+// Welcome banner positioned above main layout (including sidebar)
 .welcome-banner {
   background: linear-gradient(135deg, #c2410c, #ea580c, #f97316);
   color: white;
   padding: 2rem;
   text-align: center;
-  border-radius: 8px;
+  border-radius: 0; // Remove border radius for full-width design like Vercel
   display: block;
   margin: 0;
+  width: 100%;
+  position: relative;
+  z-index: 10;
   
   h1 {
     margin: 0 0 0.75rem 0;
@@ -166,6 +169,54 @@
 .welcome-banner__wrap {
   padding: 0 !important;
   box-sizing: border-box !important;
+}
+
+// Vercel-style banner positioning - above main layout including sidebar
+.below-site-header-outlet {
+  .welcome-banner {
+    position: relative;
+    margin: 0 0 2rem 0; // Add margin bottom to separate from content below
+    border-radius: 0; // Keep full width design
+    
+    // Ensure banner appears above the main layout grid
+    order: -1; // Put banner first in flex/grid layouts
+  }
+}
+
+// Special positioning for banner in search-banner context
+.search-banner.welcome-banner {
+  position: relative;
+  width: 100vw; // Full viewport width like Vercel
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  margin-bottom: 2rem;
+  border-radius: 0;
+  
+  // Center the content within the full-width banner
+  .welcome-banner__inner-wrapper,
+  .custom-search-banner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+}
+
+// Position banner above main content area (including sidebar)
+#main-outlet-wrapper {
+  .welcome-banner,
+  .search-banner.welcome-banner {
+    margin-top: 0;
+    margin-bottom: 2rem;
+  }
+}
+
+// Ensure banner appears before main layout on discovery pages
+.navigation-container + .welcome-banner,
+.navigation-container + .search-banner.welcome-banner {
+  order: -1;
+  margin-bottom: 2rem;
 }
 
 // Navigation Grid Component
