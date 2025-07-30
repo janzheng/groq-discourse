@@ -170,12 +170,12 @@
 
 // Navigation Grid Component
 .groqsters-navigation-grid {
-  margin: 2rem 0;
+  margin: 1rem 0;
   
   .navigation-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 1.5rem;
+    gap: 0.5rem;
     max-width: 1200px;
     margin: 0 auto;
   }
