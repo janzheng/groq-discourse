@@ -171,8 +171,8 @@
   box-sizing: border-box !important;
 }
 
-// Vercel-style banner using below-site-header-outlet (already positioned correctly)
-.below-site-header-outlet.search-banner.welcome-banner {
+// Vercel-style banner using connector in below-site-header-outlet
+.groqsters-welcome-banner {
   // Full viewport width like Vercel
   width: 100vw;
   margin-left: calc(-50vw + 50%);
@@ -201,6 +201,14 @@
     color: white;
   }
   
+  // Style the subtitle
+  p {
+    font-size: 1.1rem;
+    opacity: 0.9;
+    margin-bottom: 1.5rem;
+    color: white;
+  }
+  
   // Style the search area
   .search-menu.welcome-banner__search-menu {
     margin-top: 1.5rem;
@@ -208,6 +216,7 @@
     .search-menu-container {
       max-width: 500px;
       margin: 0 auto;
+      position: relative;
       
       .search-input-wrapper {
         .search-input {
@@ -217,12 +226,47 @@
           padding: 0.75rem 1rem;
           width: 100%;
           font-size: 1rem;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+          transition: all 0.3s ease;
+          
+          &:focus-within {
+            background: white;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+            transform: translateY(-1px);
+          }
           
           input {
             background: transparent;
             border: none;
             outline: none;
             width: 100%;
+            color: #374151;
+            
+            &::placeholder {
+              color: #9ca3af;
+            }
+          }
+          
+          .searching {
+            position: absolute;
+            right: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            
+            button {
+              background: none;
+              border: none;
+              color: #6b7280;
+              cursor: pointer;
+              padding: 0.5rem;
+              border-radius: 4px;
+              transition: all 0.2s ease;
+              
+              &:hover {
+                color: #374151;
+                background: rgba(0, 0, 0, 0.05);
+              }
+            }
           }
         }
       }

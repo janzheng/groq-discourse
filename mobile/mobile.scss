@@ -29,8 +29,8 @@
   }
 }
 
-// Mobile-specific banner for below-site-header-outlet
-.below-site-header-outlet.search-banner.welcome-banner {
+// Mobile-specific banner for connector-based welcome banner
+.groqsters-welcome-banner {
   // Ensure full width on mobile like Vercel
   width: 100vw;
   margin-left: calc(-50vw + 50%);
@@ -46,6 +46,11 @@
   
   .custom-search-banner-headline {
     font-size: 1.3rem;
+    margin-bottom: 1rem;
+  }
+  
+  p {
+    font-size: 0.95rem;
     margin-bottom: 1rem;
   }
   

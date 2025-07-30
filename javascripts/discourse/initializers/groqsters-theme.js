@@ -41,38 +41,40 @@ export default {
 
 
 
-      // Function to update banner styling (let CSS handle positioning via below-site-header-outlet)
+      // Function to enhance our connector-based welcome banner
       const updateHeaderBanner = () => {
-        // Target the below-site-header-outlet banner (CSS handles the positioning)
-        let targetBanner = document.querySelector('.below-site-header-outlet.search-banner.welcome-banner');
+        // Target our connector-based banner in below-site-header-outlet
+        const targetBanner = document.querySelector('.groqsters-welcome-banner');
         
-        // The banner is already positioned correctly by Discourse in below-site-header-outlet
-        // Just ensure our styling is applied (CSS should handle most of this)
         if (targetBanner) {
-          // Minimal JS - let CSS do the work
-          console.log('Found Vercel-style banner in below-site-header-outlet');
-        } else {
-          // Fallback: look for other banner types and style them
-          targetBanner = document.querySelector('.search-banner.welcome-banner') ||
-                        document.querySelector('.welcome-banner.--above-topic-content') ||
-                        document.querySelector('.welcome-banner') ||
-                        document.querySelector('[class*="welcome-banner"]') ||
-                        document.getElementById('groqsters-header-banner');
+          // Our banner is injected via connector, CSS handles the styling
+          console.log('Found connector-based welcome banner');
           
-          if (targetBanner) {
-            // Apply fallback styling for non-below-site-header-outlet banners
-            targetBanner.style.background = 'linear-gradient(135deg, #c2410c, #ea580c, #f97316)';
-            targetBanner.style.color = 'white';
-            targetBanner.style.padding = '2rem';
-            targetBanner.style.textAlign = 'center';
-            targetBanner.style.borderRadius = '8px';
-            targetBanner.style.margin = '1rem 0';
+          // Add any dynamic functionality to the search input
+          const searchInput = targetBanner.querySelector('#custom-search-input');
+          if (searchInput) {
+            searchInput.addEventListener('keydown', (e) => {
+              if (e.key === 'Enter') {
+                const query = e.target.value.trim();
+                if (query) {
+                  window.location.href = `/search?q=${encodeURIComponent(query)}`;
+                }
+              }
+            });
+          }
+          
+          // Add functionality to advanced search button
+          const advancedBtn = targetBanner.querySelector('.show-advanced-search');
+          if (advancedBtn) {
+            advancedBtn.addEventListener('click', () => {
+              window.location.href = '/search?expanded=true';
+            });
           }
         }
         
-        // Hide our header banner if we're using Discourse's banner
+        // Hide our old header banner since we're using the connector now
         const headerBanner = document.getElementById('groqsters-header-banner');
-        if (headerBanner && targetBanner !== headerBanner) {
+        if (headerBanner) {
           headerBanner.style.display = 'none';
         }
       };
