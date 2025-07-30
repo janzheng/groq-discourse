@@ -339,110 +339,10 @@ export default {
         }, 100);
       });
 
-      // Generate a simple footer for testing
-      const createSimpleFooter = () => {
-        const footer = document.createElement('footer');
-        footer.className = 'site-footer groqsters-footer';
-        footer.role = 'contentinfo';
-        footer.innerHTML = `
-          <div class="site-footer__contents container">
-            <div class="community-links-row">
-              <h4 class="community-title">Community</h4>
-              <div class="community-links">
-                <a href="/latest" class="community-link">Latest</a>
-                <a href="/categories" class="community-link">Categories</a>
-                <a href="/top" class="community-link">Top Posts</a>
-                <a href="/new-topic" class="community-link">Start Discussion</a>
-              </div>
-            </div>
-            <div class="footer-grid">
-              <div class="footer-branding">
-                <div class="footer-logo">
-                  <a href="https://groq.com/">
-                    <span style="font-size: 1.5rem; font-weight: bold;">GROQ</span>
-                  </a>
-                </div>
-                <p class="footer-tagline">Groq was established in 2016 for one thing: inference.</p>
-              </div>
-              <div class="footer-links-group">
-                <h4 class="footer-group-title">Products</h4>
-                <ul class="footer-links-list">
-                  <li><a href="https://groq.com/pricing" class="footer-link">Pricing</a></li>
-                  <li><a href="https://groq.com/products" class="footer-link">Products Overview</a></li>
-                </ul>
-              </div>
-            </div>
-            <div class="footer-bottom">
-              <div class="footer-legal">
-                <p>© ${new Date().getFullYear()} Groq, Inc., All rights reserved.</p>
-                ${settings.show_powered_by ? '<p class="powered-by">Community powered by <a href="https://www.discourse.org" target="_blank">Discourse</a></p>' : ''}
-              </div>
-            </div>
-          </div>
-        `;
-        return footer;
-      };
-
-      // Add custom footer to all pages
-      const addCustomFooter = () => {
-        // Check if footer already exists to avoid duplicates
-        if (document.querySelector('.groqsters-footer')) {
-          return;
-        }
-
-        // Find the main content container
-        const mainOutlet = document.querySelector('#main-outlet');
-        
-        if (mainOutlet) {
-          const footerElement = createSimpleFooter();
-          mainOutlet.parentNode.insertBefore(footerElement, mainOutlet.nextSibling);
-        }
-      };
-
-      // Alternative method - use document.body
-      const addFooterToBody = () => {
-        if (document.querySelector('.groqsters-footer')) return;
-        
-        const footerElement = createSimpleFooter();
-        document.body.appendChild(footerElement);
-      };
-
-      // Cleanup and re-add footer
-      const refreshFooter = () => {
-        const existingFooter = document.querySelector('.groqsters-footer');
-        if (existingFooter) {
-          existingFooter.remove();
-        }
-        setTimeout(() => {
-          addCustomFooter();
-          // Fallback to body if main-outlet method fails
-          if (!document.querySelector('.groqsters-footer')) {
-            addFooterToBody();
-          }
-        }, 100);
-      };
-
-      // Test method - force add to body on load
-      const forceAddFooter = () => {
-        if (!document.querySelector('.groqsters-footer')) {
-          const footer = createSimpleFooter();
-          const wrap = document.querySelector('#main-outlet-wrapper') || 
-                       document.querySelector('#main-outlet') ||
-                       document.querySelector('body');
-          if (wrap) {
-            wrap.appendChild(footer);
-          }
-        }
-      };
-
-      // Add footer on initial load and page changes
+      // Footer is now handled by Discourse connectors
+      
+      // Add page change handling for categories page
       api.onPageChange(() => {
-        setTimeout(() => {
-          // Clean approach - just add footer if it doesn't exist
-          if (!document.querySelector('.groqsters-footer')) {
-            forceAddFooter();
-          }
-        }, 200);
         
         const isCategoriesPage = window.location.pathname === "/" ||
                                 window.location.pathname === "/latest" ||
@@ -577,12 +477,7 @@ export default {
         }
       });
 
-      // Also add footer on initial load
-      setTimeout(() => {
-        if (!document.querySelector('.groqsters-footer')) {
-          forceAddFooter();
-        }
-      }, 1000);
+      // Footer is now handled by Discourse connectors
 
       // Replace banner placeholders with actual images
       this.replaceBannerPlaceholders = () => {

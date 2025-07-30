@@ -1217,10 +1217,54 @@ body.groqsters-categories-page,
   margin-top: 2rem;
   padding: 0;
   
+  // Ensure footer spans full width, breaking out of sidebar layout
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  width: 100vw;
+  
+  // Alternative approach for sidebar layouts
+  .has-sidebar-page & {
+    position: relative;
+    left: 0;
+    right: 0;
+    margin-left: 0;
+    margin-right: 0;
+    width: 100%;
+    margin-top: 2rem;
+    grid-column: 1 / -1; // Span full grid width
+  }
+
+  // Ensure footer appears outside main content wrapper
+  #main-outlet-wrapper + &,
+  #main-outlet + & {
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    width: 100vw;
+    margin-top: 2rem;
+  }
+
+  // Special handling for pages with discovery layout
+  .navigation-container + * & {
+    position: relative;
+    width: 100%;
+    left: auto;
+    right: auto;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
   .site-footer__contents {
     max-width: 1200px;
     margin: 0 auto;
     padding: 3rem 2rem 2rem;
+    position: relative;
+    z-index: 1;
   }
   
   // Community links row at top
@@ -1285,10 +1329,18 @@ body.groqsters-categories-page,
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
     gap: 2rem;
     margin-bottom: 2rem;
+    width: 100%;
+    overflow: visible;
     
     // Desktop: 7 columns (branding + 6 link groups)
-    @media (min-width: 1024px) {
+    @media (min-width: 1200px) {
       grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    }
+    
+    // Medium desktop: adjust for better fit
+    @media (max-width: 1199px) and (min-width: 1024px) {
+      grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr 1fr 1fr;
+      gap: 1.5rem;
     }
     
     // Tablet: 3 columns, branding spans all
@@ -1350,6 +1402,9 @@ body.groqsters-categories-page,
   
   // Footer link groups
   .footer-links-group {
+    min-width: 0; // Prevent grid overflow
+    width: 100%;
+    
     .footer-group-title {
       font-size: 0.875rem;
       font-weight: 600;
@@ -1357,12 +1412,15 @@ body.groqsters-categories-page,
       margin: 0 0 1rem 0;
       text-transform: uppercase;
       letter-spacing: 0.5px;
+      white-space: nowrap;
+      overflow: visible;
     }
     
     .footer-links-list {
       list-style: none;
       padding: 0;
       margin: 0;
+      width: 100%;
       
       li {
         margin-bottom: 0.5rem;
@@ -1378,6 +1436,8 @@ body.groqsters-categories-page,
         font-size: 0.875rem;
         line-height: 1.5;
         transition: color 0.2s ease;
+        display: block;
+        white-space: nowrap;
         
         &:hover {
           color: var(--primary);
