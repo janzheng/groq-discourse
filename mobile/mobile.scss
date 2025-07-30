@@ -290,11 +290,11 @@ div.groqsters-feature-banner {
         .footer-group-title {
           font-size: 1rem;
           margin-bottom: 1.25rem;
-          text-align: center;
+          text-align: left;
         }
         
         .footer-links-list {
-          text-align: center;
+          text-align: left;
           
           li {
             margin-bottom: 0.75rem;
@@ -336,7 +336,7 @@ div.groqsters-feature-banner {
     }
     
     .footer-social {
-      justify-content: center;
+      justify-content: flex-start;
       gap: 1.5rem;
       
       .footer-social-link {
@@ -421,19 +421,19 @@ div.groqsters-feature-banner {
     .footer-grid {
       .footer-links-group {
         .footer-group-title {
-          text-align: center;
+          text-align: left;
           margin-bottom: 1.25rem;
         }
         
         .footer-links-list {
-          text-align: center;
+          text-align: left;
         }
       }
     }
     
     .footer-bottom {
       .footer-social {
-        justify-content: center;
+        justify-content: flex-start;
       }
     }
   }
