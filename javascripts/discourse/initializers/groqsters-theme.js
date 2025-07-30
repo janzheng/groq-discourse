@@ -485,7 +485,7 @@ export default {
         });
       };
 
-      // Create categories page sidebar
+      // Create categories page sidebar - FIXED TO USE PROPER CONTAINER
       this.createCategoriesSidebar = () => {
         // Remove existing sidebar if it exists
         const existingSidebar = document.querySelector('.groqsters-categories-sidebar');
@@ -493,9 +493,27 @@ export default {
           existingSidebar.remove();
         }
 
-        // Find the main categories container
-        const mainContainer = document.querySelector('.categories-and-latest, .categories-only, .categories-page, #main-outlet');
-        if (!mainContainer) return;
+        // Find the main outlet wrapper (the proper parent container)
+        let mainOutletWrapper = document.querySelector('#main-outlet-wrapper');
+        const mainOutlet = document.querySelector('#main-outlet');
+        
+        // Fallback: if main-outlet-wrapper doesn't exist, create it or use body as container
+        if (!mainOutletWrapper && mainOutlet) {
+          mainOutletWrapper = mainOutlet.parentElement;
+          if (mainOutletWrapper) {
+            mainOutletWrapper.id = 'main-outlet-wrapper';
+          }
+        }
+        
+        if (!mainOutletWrapper || !mainOutlet) {
+          console.warn('Could not find suitable container for sidebar');
+          return;
+        }
+
+        // Don't wrap if sidebar already exists at the right level
+        if (mainOutletWrapper.querySelector('.groqsters-categories-sidebar')) {
+          return;
+        }
 
         // Create sidebar container
         const sidebar = document.createElement('div');
@@ -589,9 +607,9 @@ export default {
           }
         }
 
-        // Insert sidebar into the page
+        // FIXED: Add sidebar directly to main outlet wrapper (proper grid container)
         if (sidebar.children.length > 0) {
-          mainContainer.appendChild(sidebar);
+          mainOutletWrapper.appendChild(sidebar);
         }
       };
 

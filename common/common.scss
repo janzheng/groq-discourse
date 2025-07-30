@@ -266,18 +266,64 @@
   }
 }
 
-// Categories Page Sidebar Layout
+// Categories Page Sidebar Layout - FIXED GRID STRUCTURE
 .groqsters-categories-page {
   &.has-sidebar {
-    .categories-and-latest,
-    .categories-only,
-    .categories-page,
-    #main-outlet {
+    // Apply grid to the main outlet wrapper, not content containers
+    #main-outlet-wrapper {
       display: grid;
       grid-template-columns: 1fr 300px;
       gap: 2rem;
       align-items: start;
+      max-width: 100vw; // Prevent horizontal overflow
+      box-sizing: border-box;
+      overflow-x: hidden; // Prevent horizontal scroll
+      padding: 0 1rem; // Add some padding to prevent edge touching
     }
+    
+    // Ensure main outlet takes up the content area
+    #main-outlet {
+      grid-column: 1;
+      min-width: 0; // Prevent overflow
+      overflow-x: hidden; // Prevent horizontal overflow
+      width: 100%; // Full width of grid column
+    }
+    
+    // Make sure wrapper is created correctly (fallback)
+    .groqsters-categories-wrapper {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 2rem;
+      align-items: start;
+      max-width: 100%;
+      box-sizing: border-box;
+    }
+    
+    .groqsters-categories-content {
+      grid-column: 1;
+      min-width: 0; // Prevent overflow
+    }
+    
+    .groqsters-categories-sidebar {
+      grid-column: 2;
+      width: 300px; // Fixed width
+      flex-shrink: 0; // Don't shrink
+    }
+  }
+}
+
+// Ensure the header doesn't get affected by category grid
+.groqsters-categories-page.has-sidebar {
+  .d-header {
+    position: relative; // Reset positioning
+    width: 100%; // Full width
+    z-index: 100; // Keep header on top
+  }
+  
+  // Ensure body and html don't overflow
+  html, body {
+    overflow-x: hidden;
+    max-width: 100vw;
   }
 }
 
@@ -384,10 +430,7 @@
 // Mobile responsive - hide sidebar on small screens
 @media (max-width: 1024px) {
   .groqsters-categories-page.has-sidebar {
-    .categories-and-latest,
-    .categories-only,
-    .categories-page,
-    #main-outlet {
+    .groqsters-categories-wrapper {
       grid-template-columns: 1fr;
     }
   }
@@ -400,10 +443,7 @@
 // Tablet responsive - narrower sidebar
 @media (max-width: 1200px) and (min-width: 1025px) {
   .groqsters-categories-page.has-sidebar {
-    .categories-and-latest,
-    .categories-only,
-    .categories-page,
-    #main-outlet {
+    .groqsters-categories-wrapper {
       grid-template-columns: 1fr 250px;
       gap: 1.5rem;
     }
@@ -972,15 +1012,11 @@ div.groqsters-feature-banner {
   }
 } 
 
-// AGGRESSIVE CATEGORY LAYOUT OVERRIDE
-// Target all possible Discourse category structures
-body.categories-list,
-body.groqsters-categories-page,
-.categories-page,
-#main-outlet .categories-and-latest,
-#main-outlet .categories-only,
-.full-width .wrap .categories-and-latest,
-.full-width .wrap .categories-only {
+// CATEGORY LAYOUT OVERRIDE - FIXED TO NOT INTERFERE WITH MAIN GRID
+// Target specific category content, not main layout containers
+.groqsters-categories-page .categories-and-latest,
+.groqsters-categories-page .categories-only,
+.groqsters-categories-page .categories-page {
   
   // Hide only the table HEADERS, not the whole table
   .category-list thead,
