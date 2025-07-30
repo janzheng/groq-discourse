@@ -281,10 +281,7 @@
   border: 1px solid var(--primary-low);
   border-radius: 12px;
   padding: 0;
-  position: sticky;
-  top: 1rem;
   margin-top: 1rem;
-  max-height: calc(100vh - 2rem);
   overflow-y: auto;
   
   .sidebar-section {
