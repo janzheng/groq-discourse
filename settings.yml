@@ -18,10 +18,25 @@ show_welcome_banner:
   default: false
   description: "Show a welcome banner on the homepage"
 
-welcome_banner_text:
+welcome_banner_header_logged_in:
+  type: string
+  default: "Welcome back, {username}!"
+  description: "Main header text for logged-in users (use {username} as placeholder)"
+
+welcome_banner_header_guest:
+  type: string
+  default: "Welcome to Our Community"
+  description: "Main header text for guests"
+
+welcome_banner_subtitle:
   type: string
   default: "Find help, share your knowledge, and experience fast inference"
-  description: "Text to display in the welcome banner"
+  description: "Subtitle text (h2) shown below the main header"
+
+show_banner_search:
+  type: bool
+  default: true
+  description: "Show search bar in the welcome banner"
 
 custom_footer_text:
   type: string
