@@ -44,6 +44,57 @@ export default {
         featureBanner: settings.show_feature_banner
       });
 
+      // Function to update header banner
+      const updateHeaderBanner = () => {
+        const headerBanner = document.getElementById('groqsters-header-banner');
+        console.log('Groqsters: Looking for banner, found:', !!headerBanner);
+        console.log('Groqsters: Settings:', {
+          show_welcome_banner: settings.show_welcome_banner,
+          welcome_banner_header_logged_in: settings.welcome_banner_header_logged_in,
+          welcome_banner_header_guest: settings.welcome_banner_header_guest,
+          welcome_banner_subtitle: settings.welcome_banner_subtitle,
+          show_banner_search: settings.show_banner_search
+        });
+        
+        if (headerBanner && settings.show_welcome_banner) {
+          const currentUser = api.getCurrentUser();
+          console.log('Groqsters: Current user:', currentUser?.username);
+          
+          // Update header text
+          const headerElement = headerBanner.querySelector('[data-banner-header]');
+          if (headerElement) {
+            let headerText;
+            if (currentUser) {
+              headerText = (settings.welcome_banner_header_logged_in || "Welcome back, {username}!")
+                .replace("{username}", currentUser.username);
+            } else {
+              headerText = settings.welcome_banner_header_guest || "Welcome to Our Community";
+            }
+            console.log('Groqsters: Setting header text to:', headerText);
+            headerElement.textContent = headerText;
+          }
+          
+          // Update subtitle
+          const subtitleElement = headerBanner.querySelector('[data-banner-subtitle]');
+          if (subtitleElement) {
+            const subtitleText = settings.welcome_banner_subtitle || "Find help, share your knowledge, and experience fast inference";
+            console.log('Groqsters: Setting subtitle to:', subtitleText);
+            subtitleElement.textContent = subtitleText;
+          }
+          
+          // Show/hide search bar
+          const searchElement = headerBanner.querySelector('[data-banner-search]');
+          if (searchElement) {
+            if (settings.show_banner_search === false) {
+              searchElement.style.display = 'none';
+            } else {
+              searchElement.style.display = 'block';
+            }
+            console.log('Groqsters: Search bar display:', searchElement.style.display);
+          }
+        }
+      };
+
       // Add banners after hero area but before navigation tabs
       api.decorateWidget("home-logo:after", (dec) => {
         const isHomePage = window.location.pathname === "/" || 
@@ -54,43 +105,10 @@ export default {
 
         const elements = [];
 
-        // Update header banner content with theme settings (with delay to ensure DOM is ready)
-        setTimeout(() => {
-          const headerBanner = document.getElementById('groqsters-header-banner');
-          if (headerBanner && settings.show_welcome_banner) {
-            const currentUser = api.getCurrentUser();
-            
-            // Update header text
-            const headerElement = headerBanner.querySelector('[data-banner-header]');
-            if (headerElement) {
-              let headerText;
-              if (currentUser) {
-                headerText = (settings.welcome_banner_header_logged_in || "Welcome back, {username}!")
-                  .replace("{username}", currentUser.username);
-              } else {
-                headerText = settings.welcome_banner_header_guest || "Welcome to Our Community";
-              }
-              headerElement.textContent = headerText;
-            }
-            
-            // Update subtitle
-            const subtitleElement = headerBanner.querySelector('[data-banner-subtitle]');
-            if (subtitleElement) {
-              const subtitleText = settings.welcome_banner_subtitle || "Find help, share your knowledge, and experience fast inference";
-              subtitleElement.textContent = subtitleText;
-            }
-            
-            // Show/hide search bar
-            const searchElement = headerBanner.querySelector('[data-banner-search]');
-            if (searchElement) {
-              if (settings.show_banner_search === false) {
-                searchElement.style.display = 'none';
-              } else {
-                searchElement.style.display = 'block';
-              }
-            }
-          }
-        }, 100);
+        // Update header banner with a longer delay and retry mechanism
+        setTimeout(updateHeaderBanner, 100);
+        setTimeout(updateHeaderBanner, 500);
+        setTimeout(updateHeaderBanner, 1000);
 
         // Add alert banner if enabled
         if (settings.show_alert_banner && settings.alert_banner_message) {
@@ -153,8 +171,15 @@ export default {
         return elements.length > 0 ? elements : null;
       });
 
-      // Fallback: Also try to inject using DOM manipulation if widget decoration doesn't work
+      // Always try to update header banner on page changes
       api.onPageChange(() => {
+        console.log('Groqsters: Page changed to:', window.location.pathname);
+        
+        // Update header banner regardless of page (in case banner is shown on multiple pages)
+        setTimeout(updateHeaderBanner, 100);
+        setTimeout(updateHeaderBanner, 500);
+        setTimeout(updateHeaderBanner, 1000);
+        
         const isHomePage = window.location.pathname === "/" || 
                          window.location.pathname === "/latest" ||
                          window.location.pathname === "/categories";
@@ -186,44 +211,6 @@ export default {
           // Create banner container
           const bannerContainer = document.createElement('div');
           bannerContainer.className = 'groqsters-banners-container';
-
-          // Update header banner content with theme settings (with delay to ensure DOM is ready)
-          setTimeout(() => {
-            const headerBanner = document.getElementById('groqsters-header-banner');
-            if (headerBanner && settings.show_welcome_banner) {
-              const currentUser = api.getCurrentUser();
-              
-              // Update header text
-              const headerElement = headerBanner.querySelector('[data-banner-header]');
-              if (headerElement) {
-                let headerText;
-                if (currentUser) {
-                  headerText = (settings.welcome_banner_header_logged_in || "Welcome back, {username}!")
-                    .replace("{username}", currentUser.username);
-                } else {
-                  headerText = settings.welcome_banner_header_guest || "Welcome to Our Community";
-                }
-                headerElement.textContent = headerText;
-              }
-              
-              // Update subtitle
-              const subtitleElement = headerBanner.querySelector('[data-banner-subtitle]');
-              if (subtitleElement) {
-                const subtitleText = settings.welcome_banner_subtitle || "Find help, share your knowledge, and experience fast inference";
-                subtitleElement.textContent = subtitleText;
-              }
-              
-              // Show/hide search bar
-              const searchElement = headerBanner.querySelector('[data-banner-search]');
-              if (searchElement) {
-                if (settings.show_banner_search === false) {
-                  searchElement.style.display = 'none';
-                } else {
-                  searchElement.style.display = 'block';
-                }
-              }
-            }
-          }, 100);
 
           // Add alert banner if enabled
           if (settings.show_alert_banner && settings.alert_banner_message) {
@@ -440,6 +427,25 @@ export default {
           item2: settings.feature_banner_item_2_url,
           item3: settings.feature_banner_item_3_url
         }
+      });
+
+      // Add mutation observer to catch banner when it's added to DOM
+      const observer = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+          mutation.addedNodes.forEach((node) => {
+            if (node.nodeType === 1) { // Element node
+              if (node.id === 'groqsters-header-banner' || node.querySelector('#groqsters-header-banner')) {
+                console.log('Groqsters: Banner detected via mutation observer');
+                setTimeout(updateHeaderBanner, 10);
+              }
+            }
+          });
+        });
+      });
+
+      observer.observe(document.body, {
+        childList: true,
+        subtree: true
       });
     });
   }
