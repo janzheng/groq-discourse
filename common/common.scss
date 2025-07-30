@@ -80,11 +80,9 @@
 
 // Welcome banner positioned above main layout (including sidebar)
 .welcome-banner {
-  background: linear-gradient(135deg, #c2410c, #ea580c, #f97316);
-  color: white;
+  color: #222222;
   padding: 2rem;
   text-align: center;
-  border-radius: 0; // Remove border radius for full-width design like Vercel
   display: block;
   margin: 0;
   margin-bottom: 1rem;
@@ -119,14 +117,17 @@
       margin: 0 auto;
       
       .search-input {
+        margin-top: 0.5rem;
         width: 100%;
         padding: 0.75rem 1rem;
         border: none;
         border-radius: 8px;
         font-size: 1rem;
-        background: rgba(255, 255, 255, 0.95);
-        color: #374151;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 4px;
+
+        color: #222222;
+        border: 2px solid #f97316;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
         transition: all 0.3s ease;
         
         &:focus {
