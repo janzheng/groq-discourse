@@ -231,8 +231,9 @@
 // Medium devices: 2 columns
 @media (max-width: 1024px) and (min-width: 769px) {
   .groqsters-navigation-grid {
+    --nav-columns: 2;
+    
     .navigation-grid {
-      grid-template-columns: repeat(2, 1fr);
       gap: 1rem;
     }
   }
@@ -241,9 +242,9 @@
 // Mobile responsive adjustments for navigation grid
 @media (max-width: 768px) {
   .groqsters-navigation-grid {
+    --nav-columns: 1;
     
     .navigation-grid {
-      grid-template-columns: 1fr;
       gap: 1rem;
     }
     
