@@ -5,6 +5,8 @@ export default {
 
   initialize() {
     withPluginApi("0.8.31", (api) => {
+      // Note: Discourse uses site texts for welcome banner, but we'll override with theme settings
+      
       // Helper function to create banner image element
       const createBannerImage = (imageUrl, itemIndex) => {
         if (imageUrl && imageUrl.trim()) {
@@ -44,10 +46,17 @@ export default {
         featureBanner: settings.show_feature_banner
       });
 
-      // Function to update header banner
+      // Function to update banner (target Discourse's existing banner OR our header banner)
       const updateHeaderBanner = () => {
-        const headerBanner = document.getElementById('groqsters-header-banner');
-        console.log('Groqsters: Looking for banner, found:', !!headerBanner);
+        // Try multiple selectors for Discourse's welcome banner
+        let targetBanner = document.querySelector('.welcome-banner.--above-topic-content') ||
+                          document.querySelector('.welcome-banner') ||
+                          document.querySelector('[class*="welcome-banner"]') ||
+                          document.getElementById('groqsters-header-banner');
+        
+        console.log('Groqsters: Looking for banner, found:', !!targetBanner);
+        console.log('Groqsters: Banner type:', targetBanner?.classList.toString() || 'none');
+        console.log('Groqsters: Current banner content:', targetBanner?.textContent?.substring(0, 100) || 'none');
         console.log('Groqsters: Settings:', {
           show_welcome_banner: settings.show_welcome_banner,
           welcome_banner_header_logged_in: settings.welcome_banner_header_logged_in,
@@ -56,42 +65,63 @@ export default {
           show_banner_search: settings.show_banner_search
         });
         
-        if (headerBanner && settings.show_welcome_banner) {
+        if (targetBanner && settings.show_welcome_banner) {
           const currentUser = api.getCurrentUser();
           console.log('Groqsters: Current user:', currentUser?.username);
           
-          // Update header text
-          const headerElement = headerBanner.querySelector('[data-banner-header]');
-          if (headerElement) {
-            let headerText;
-            if (currentUser) {
-              headerText = (settings.welcome_banner_header_logged_in || "Welcome back, {username}!")
-                .replace("{username}", currentUser.username);
-            } else {
-              headerText = settings.welcome_banner_header_guest || "Welcome to Our Community";
-            }
-            console.log('Groqsters: Setting header text to:', headerText);
-            headerElement.textContent = headerText;
+          // Apply our custom styling to the existing banner
+          targetBanner.style.background = 'linear-gradient(135deg, #c2410c, #ea580c, #f97316)';
+          targetBanner.style.color = 'white';
+          targetBanner.style.padding = '2rem';
+          targetBanner.style.textAlign = 'center';
+          targetBanner.style.borderRadius = '8px';
+          targetBanner.style.margin = '1rem 0';
+          
+          // Create or update banner content
+          let headerText;
+          if (currentUser) {
+            headerText = (settings.welcome_banner_header_logged_in || "Welcome back, {username}!")
+              .replace("{username}", currentUser.username);
+          } else {
+            headerText = settings.welcome_banner_header_guest || "Welcome to Our Community";
           }
           
-          // Update subtitle
-          const subtitleElement = headerBanner.querySelector('[data-banner-subtitle]');
-          if (subtitleElement) {
-            const subtitleText = settings.welcome_banner_subtitle || "Find help, share your knowledge, and experience fast inference";
-            console.log('Groqsters: Setting subtitle to:', subtitleText);
-            subtitleElement.textContent = subtitleText;
+          const subtitleText = settings.welcome_banner_subtitle || "Find help, share your knowledge, and experience fast inference";
+          
+          // Replace banner content with our custom structure
+          let bannerHTML = `
+            <h1 style="margin: 0 0 0.75rem 0; font-size: 2rem; font-weight: 700; line-height: 1.2;">${headerText}</h1>
+            <h2 style="margin: 0 0 1.5rem 0; font-size: 1.1rem; font-weight: 400; opacity: 0.9; line-height: 1.4;">${subtitleText}</h2>
+          `;
+          
+          // Add search bar if enabled
+          if (settings.show_banner_search !== false) {
+            bannerHTML += `
+              <div style="margin-top: 1.5rem; max-width: 500px; margin-left: auto; margin-right: auto;">
+                <div style="position: relative;">
+                  <input type="text" placeholder="Search" style="width: 100%; padding: 0.75rem 1rem; border: none; border-radius: 8px; font-size: 1rem; background: rgba(255, 255, 255, 0.95); color: #374151; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);">
+                  <button style="position: absolute; right: 8px; top: 50%; transform: translateY(-50%); background: none; border: none; color: #6b7280; cursor: pointer; padding: 0.5rem;">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                      <path d="M14.386 14.386l4.0877 4.0877-1.4142 1.4142-4.0877-4.0877C11.8352 16.3385 10.0578 17 8.1429 17 3.6467 17 0 13.3533 0 8.8571 0 4.3609 3.6467 0.7142 8.1429 0.7142c4.4962 0 8.1428 3.6467 8.1428 8.1429 0 1.9149-0.6615 3.6923-1.8999 5.5289zM8.1429 15.1429c3.5829 0 6.4286-2.8457 6.4286-6.4286 0-3.5829-2.8457-6.4286-6.4286-6.4286-3.5829 0-6.4286 2.8457-6.4286 6.4286 0 3.5829 2.8457 6.4286 6.4286 6.4286z"/>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            `;
           }
           
-          // Show/hide search bar
-          const searchElement = headerBanner.querySelector('[data-banner-search]');
-          if (searchElement) {
-            if (settings.show_banner_search === false) {
-              searchElement.style.display = 'none';
-            } else {
-              searchElement.style.display = 'block';
-            }
-            console.log('Groqsters: Search bar display:', searchElement.style.display);
-          }
+          targetBanner.innerHTML = bannerHTML;
+          console.log('Groqsters: Updated banner content');
+        } else if (targetBanner && !settings.show_welcome_banner) {
+          // Hide banner if setting is disabled
+          targetBanner.style.display = 'none';
+          console.log('Groqsters: Hidden banner per settings');
+        }
+        
+        // Hide our header banner if we're using Discourse's banner
+        const headerBanner = document.getElementById('groqsters-header-banner');
+        if (headerBanner && targetBanner !== headerBanner) {
+          headerBanner.style.display = 'none';
         }
       };
 

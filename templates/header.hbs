@@ -18,29 +18,29 @@
   
   {{!-- Custom navigation enhancement --}}
   <nav class="header-nav">
-    {{#if showWelcomeBanner}}
-      {{!-- Welcome banner integrated into header --}}
-      <div class="welcome-banner groqsters-fade-in" id="groqsters-header-banner">
-        {{#if currentUser}}
-          <h1 data-banner-header="logged-in">Welcome back, {{currentUser.username}}!</h1>
-        {{else}}
-          <h1 data-banner-header="guest">Welcome to Our Community</h1>
-        {{/if}}
-        <h2 data-banner-subtitle>Find help, share your knowledge, and experience fast inference</h2>
-        
-        <div class="banner-search" data-banner-search>
-          <div class="search-container">
-            <input type="text" placeholder="Search" class="search-input">
-            <button class="search-button">
-              <svg class="search-icon" width="20" height="20" viewBox="0 0 20 20">
-                <path fill="currentColor" d="M14.386 14.386l4.0877 4.0877-1.4142 1.4142-4.0877-4.0877C11.8352 16.3385 10.0578 17 8.1429 17 3.6467 17 0 13.3533 0 8.8571 0 4.3609 3.6467 0.7142 8.1429 0.7142c4.4962 0 8.1428 3.6467 8.1428 8.1429 0 1.9149-0.6615 3.6923-1.8999 5.5289zM8.1429 15.1429c3.5829 0 6.4286-2.8457 6.4286-6.4286 0-3.5829-2.8457-6.4286-6.4286-6.4286-3.5829 0-6.4286 2.8457-6.4286 6.4286 0 3.5829 2.8457 6.4286 6.4286 6.4286z"/>
-              </svg>
-            </button>
-          </div>
+    {{!-- Welcome banner integrated into header (controlled by JavaScript) --}}
+    <div class="welcome-banner groqsters-fade-in" id="groqsters-header-banner" style="display: none;">
+      {{#if currentUser}}
+        <h1 data-banner-header="logged-in">Welcome back, {{currentUser.username}}!</h1>
+      {{else}}
+        <h1 data-banner-header="guest">Welcome to Our Community</h1>
+      {{/if}}
+      <h2 data-banner-subtitle>Find help, share your knowledge, and experience fast inference</h2>
+      
+      <div class="banner-search" data-banner-search>
+        <div class="search-container">
+          <input type="text" placeholder="Search" class="search-input">
+          <button class="search-button">
+            <svg class="search-icon" width="20" height="20" viewBox="0 0 20 20">
+              <path fill="currentColor" d="M14.386 14.386l4.0877 4.0877-1.4142 1.4142-4.0877-4.0877C11.8352 16.3385 10.0578 17 8.1429 17 3.6467 17 0 13.3533 0 8.8571 0 4.3609 3.6467 0.7142 8.1429 0.7142c4.4962 0 8.1428 3.6467 8.1428 8.1429 0 1.9149-0.6615 3.6923-1.8999 5.5289zM8.1429 15.1429c3.5829 0 6.4286-2.8457 6.4286-6.4286 0-3.5829-2.8457-6.4286-6.4286-6.4286-3.5829 0-6.4286 2.8457-6.4286 6.4286 0 3.5829 2.8457 6.4286 6.4286 6.4286z"/>
+            </svg>
+          </button>
         </div>
       </div>
-    {{else}}
-      {{!-- Fallback: Simple welcome/auth buttons when banner disabled --}}
+    </div>
+    
+    {{!-- Fallback: Simple welcome/auth buttons when banner disabled --}}
+    <div class="simple-header-fallback" id="groqsters-simple-header" style="display: none;">
       {{#if currentUser}}
         <div class="user-menu-wrapper">
           <span class="welcome-text">Welcome back, {{currentUser.username}}!</span>
@@ -51,6 +51,6 @@
           <a href="/signup" class="btn btn-groqsters signup-button">Join Us</a>
         </div>
       {{/if}}
-    {{/if}}
+    </div>
   </nav>
 </header> 
