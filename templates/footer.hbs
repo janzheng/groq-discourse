@@ -1,85 +1,182 @@
-{{!-- Groqsters Theme Custom Footer Template --}}
+{{!-- Groqsters Theme Comprehensive Footer Template --}}
 
-<footer class="custom-footer groqsters-footer">
-  <div class="footer-content">
+<footer class="site-footer groqsters-footer" role="contentinfo">
+  <div class="site-footer__contents container">
     
-    {{!-- Custom footer text from settings --}}
-    {{#if customFooterText}}
-      <div class="footer-text">
-        {{customFooterText}}
+    {{!-- Community Links Row --}}
+    <div class="community-links-row">
+      <h4 class="community-title">Community</h4>
+      <div class="community-links">
+        <a href="/latest" class="community-link">Latest</a>
+        <a href="/categories" class="community-link">Categories</a>
+        <a href="/top" class="community-link">Top Posts</a>
+        <a href="/new-topic" class="community-link">Start Discussion</a>
       </div>
-    {{/if}}
-
-    {{!-- Default footer content if no custom text --}}
-    {{#unless customFooterText}}
-      <div class="footer-text">
-        <p>Powered by <a href="https://www.discourse.org" target="_blank">Discourse</a> 
-           with Groqsters Theme</p>
-        <p>© {{currentYear}} {{site.title}}. All rights reserved.</p>
-      </div>
-    {{/unless}}
-
-    {{!-- Social links (if configured) --}}
-    {{#if site.twitter_url}}
-      <div class="social-links">
-        <a href="{{site.twitter_url}}" target="_blank" class="social-link twitter">
-          {{d-icon "fab-twitter"}}
-        </a>
-        {{#if site.facebook_url}}
-          <a href="{{site.facebook_url}}" target="_blank" class="social-link facebook">
-            {{d-icon "fab-facebook"}}
-          </a>
-        {{/if}}
-        {{#if site.github_url}}
-          <a href="{{site.github_url}}" target="_blank" class="social-link github">
-            {{d-icon "fab-github"}}
-          </a>
-        {{/if}}
-      </div>
-    {{/if}}
-
-    {{!-- Back to top button --}}
-    <div class="back-to-top">
-      <button class="btn btn-groqsters back-to-top-btn" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
-        {{d-icon "chevron-up"}} Back to Top
-      </button>
     </div>
 
-  </div>
-</footer>
+    {{!-- Main Footer Grid --}}
+    <div class="footer-grid">
+      
+      {{!-- Branding section --}}
+      <div class="footer-branding">
+        <div class="footer-logo">
+          <a href="https://groq.com/">
+            <svg viewBox="0 0 176 60" width="3em" height="1em" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <path d="M98.274.099c-11.337 0-20.548 9.193-20.548 20.55 0 11.36 9.191 20.552 20.548 20.552 11.357 0 20.548-9.193 20.548-20.551C118.803 9.31 109.611.118 98.274.099Zm0 33.386c-7.086 0-12.833-5.749-12.833-12.835 0-7.087 5.747-12.835 12.833-12.835s12.833 5.748 12.833 12.835c0 7.086-5.747 12.834-12.833 12.834ZM69.912.178A18.88 18.88 0 0 0 67.806.06c-.354 0-.689 0-1.023.02l-1.024.058a20.731 20.731 0 0 0-4.094.709 20.927 20.927 0 0 0-7.538 3.78 18.857 18.857 0 0 0-5.334 6.771 19.192 19.192 0 0 0-1.358 4.134 26.392 26.392 0 0 0-.315 2.126c-.02.354-.06.709-.06 1.063l-.019.532v.492l.02 6.89.02 6.87.039 6.87h7.696l.039-6.87.02-6.87.02-6.89V19.016c0-.216.039-.433.039-.65.039-.432.118-.846.197-1.279.177-.827.432-1.634.787-2.401a10.964 10.964 0 0 1 3.09-3.938 12.762 12.762 0 0 1 4.665-2.362 15.243 15.243 0 0 1 2.676-.472c.237-.02.453-.04.69-.04.236 0 .472-.02.688-.02.433 0 .886.02 1.319.06a12.92 12.92 0 0 1 5 1.575l3.837-6.674A20.407 20.407 0 0 0 69.912.178ZM20.725 0C9.388-.1.098 9.016-.001 20.354c-.098 11.339 9.015 20.63 20.352 20.729h7.125v-7.697h-6.751c-7.086.078-12.912-5.59-12.99-12.697-.08-7.107 5.59-12.914 12.695-12.992h.295c7.086 0 12.833 5.748 12.872 12.834V39.45c0 7.027-5.727 12.756-12.734 12.834a12.687 12.687 0 0 1-8.936-3.76l-5.452 5.453a20.317 20.317 0 0 0 14.25 6.004H21c11.2-.157 20.195-9.252 20.254-20.453V20.02C40.978 8.898 31.865.02 20.724 0ZM143.623.099c-11.338 0-20.549 9.193-20.529 20.55 0 11.34 9.191 20.532 20.529 20.532h7.026v-7.697h-7.026c-7.086 0-12.833-5.748-12.833-12.834 0-7.087 5.747-12.835 12.833-12.835 6.652 0 12.203 5.099 12.793 11.732h-.02v39.45h7.696V20.65c0-11.339-9.152-20.551-20.469-20.551ZM176 2.992a2.975 2.975 0 0 1-3.011 3.012c-1.693 0-2.992-1.319-2.992-2.992A2.987 2.987 0 0 1 173.008 0C174.721 0 176 1.3 176 2.992Zm-.315 0c0-1.516-1.141-2.677-2.677-2.677-1.535 0-2.696 1.181-2.696 2.677s1.161 2.677 2.677 2.677c1.535.02 2.696-1.18 2.696-2.677Zm-1.929.492.807 1.22h-.452l-.748-1.141h-1.083v1.161h-.452V1.28h1.318c.847 0 1.358.433 1.358 1.141.02.532-.275.906-.748 1.063Zm.335-1.063c0-.492-.354-.767-.945-.767h-.866v1.555h.866c.591 0 .945-.296.945-.788Z"></path>
+            </svg>
+            <span class="visually-hidden">Groq</span>
+          </a>
+        </div>
+        <p class="footer-tagline">Groq was established in 2016 for one thing: inference.</p>
+      </div>
 
-{{!-- Additional footer styling --}}
-<style>
-  .groqsters-footer {
-    background: linear-gradient(135deg, var(--secondary), var(--primary-very-low));
-    border-top: 2px solid var(--primary-low);
-  }
-  
-  .social-links {
-    display: flex;
-    gap: 1rem;
-    justify-content: center;
-    margin: 1rem 0;
-  }
-  
-  .social-link {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background: var(--primary);
-    color: white;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
-  
-  .social-link:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-  }
-  
-  .back-to-top-btn {
-    margin-top: 1rem;
-  }
-</style> 
+      {{!-- Products --}}
+      <div class="footer-links-group">
+        <h4 class="footer-group-title">Products</h4>
+        <ul class="footer-links-list">
+          <li><a href="https://groq.com/pricing" class="footer-link">Pricing</a></li>
+          <li><a href="https://groq.com/products" class="footer-link">Products Overview</a></li>
+          <li><a href="https://groq.com/groqcloud" class="footer-link">GroqCloud™ Platform</a></li>
+          <li><a href="https://groq.com/groqrack" class="footer-link">GroqRack™ Cluster</a></li>
+        </ul>
+      </div>
+
+      {{!-- Enterprise --}}
+      <div class="footer-links-group">
+        <h4 class="footer-group-title">Enterprise</h4>
+        <ul class="footer-links-list">
+          <li><a href="https://groq.com/enterprise-access" class="footer-link">Enterprise Access</a></li>
+        </ul>
+      </div>
+
+      {{!-- Developers --}}
+      <div class="footer-links-group">
+        <h4 class="footer-group-title">Developers</h4>
+        <ul class="footer-links-list">
+          <li><a href="https://console.groq.com/keys" class="footer-link" target="_blank">Free API Key</a></li>
+          <li><a href="https://console.groq.com/" class="footer-link" target="_blank">Start Building</a></li>
+          <li><a href="https://console.groq.com/docs/libraries" class="footer-link" target="_blank">Groq Libraries</a></li>
+          <li><a href="https://groq.com/demos" class="footer-link">Demos</a></li>
+        </ul>
+      </div>
+
+      {{!-- Resources --}}
+      <div class="footer-links-group">
+        <h4 class="footer-group-title">Resources</h4>
+        <ul class="footer-links-list">
+          <li><a href="https://groq.com/blog" class="footer-link">Blog</a></li>
+          <li><a href="https://groq.com/case-studies" class="footer-link">Case Studies</a></li>
+          <li><a href="https://groq.com/news" class="footer-link">News</a></li>
+          <li><a href="https://www.youtube.com/@GroqInc" class="footer-link" target="_blank">Videos</a></li>
+          <li><a href="https://groq.com/papers" class="footer-link">Whitepapers</a></li>
+        </ul>
+      </div>
+
+      {{!-- About --}}
+      <div class="footer-links-group">
+        <h4 class="footer-group-title">About</h4>
+        <ul class="footer-links-list">
+          <li><a href="https://groq.com/about-us" class="footer-link">About Groq</a></li>
+          <li><a href="https://groq.com/announcements" class="footer-link">Announcements</a></li>
+          <li><a href="https://groq.com/team" class="footer-link">Team</a></li>
+          <li><a href="https://groq.com/careers" class="footer-link">Careers</a></li>
+          <li><a href="https://groq.com/news" class="footer-link">News</a></li>
+          <li><a href="https://groq.com/contact" class="footer-link">Contact Us</a></li>
+        </ul>
+      </div>
+
+      {{!-- Terms & Policies --}}
+      <div class="footer-links-group">
+        <h4 class="footer-group-title">Terms &amp; Policies</h4>
+        <ul class="footer-links-list">
+          <li><a href="https://groq.com/privacy-policy" class="footer-link">Privacy Policy</a></li>
+          <li><a href="https://trust.groq.com/" class="footer-link" target="_blank">Trust Center</a></li>
+          <li><a href="https://groq.com/terms-of-use" class="footer-link">Terms of Use</a></li>
+          <li><a href="https://console.groq.com/docs/terms-of-sale" class="footer-link" target="_blank">GroqCloud Terms</a></li>
+          <li><a href="https://groq.com/security" class="footer-link">Security</a></li>
+          <li><a href="https://groq.com/trademark-policy" class="footer-link">Trademark Policy</a></li>
+          <li><a href="https://groq.com/cookie-policy" class="footer-link">Cookie Policy</a></li>
+        </ul>
+      </div>
+
+    </div>
+
+    {{!-- Footer bottom section --}}
+    <div class="footer-bottom">
+      <div class="footer-legal">
+        <p>© {{moment-format (now) "YYYY"}} Groq, Inc., All rights reserved.</p>
+        <button class="manage-cookies-btn">Manage cookies</button>
+        {{#if settings.show_powered_by}}
+          <p class="powered-by">Community powered by <a href="https://www.discourse.org" target="_blank">Discourse</a></p>
+        {{/if}}
+      </div>
+
+      {{!-- Social media links --}}
+      <div class="footer-social">
+        <a href="https://community.groq.com/" target="_blank" class="footer-social-link" title="Groq Community">
+          <svg width="1em" height="1em" viewBox="0 0 512 512" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path d="M448 0H64C28.7 0 0 28.7 0 64v288c0 35.3 28.7 64 64 64h96v84c0 9.8 11.2 15.5 19.1 9.7L304 416h144c35.3 0 64-28.7 64-64V64c0-35.3-28.7-64-64-64z"></path>
+          </svg>
+        </a>
+        {{#if settings.footer_discord_url}}
+          <a href="{{settings.footer_discord_url}}" target="_blank" class="footer-social-link" title="Discord">
+            <svg width="1em" height="1em" viewBox="0 0 36 36" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <path d="M28.7802 8.89416C26.7397 7.95997 24.5856 7.29722 22.3728 6.92285C22.0701 7.46414 21.7961 8.02105 21.5521 8.59126C19.1951 8.23609 16.7982 8.23609 14.4412 8.59126C14.1971 8.02111 13.9231 7.4642 13.6204 6.92285C11.4063 7.30039 9.25072 7.96471 7.20817 8.89905C3.15319 14.8985 2.05394 20.7489 2.60357 26.5163C4.97827 28.2708 7.63623 29.6051 10.4619 30.4613C11.0982 29.6056 11.6612 28.6977 12.145 27.7474C11.2261 27.4042 10.3392 26.9808 9.4946 26.4821C9.71689 26.3208 9.9343 26.1547 10.1444 25.9935C12.602 27.1493 15.2844 27.7485 18.0003 27.7485C20.7162 27.7485 23.3986 27.1493 25.8562 25.9935C26.0687 26.1669 26.2861 26.333 26.506 26.4821C25.6597 26.9816 24.7712 27.4058 23.8507 27.7498C24.3339 28.6997 24.897 29.6068 25.5338 30.4613C28.3619 29.6086 31.0219 28.2749 33.397 26.5187C34.0419 19.8304 32.2953 14.0337 28.7802 8.89416ZM12.8412 22.9694C11.3096 22.9694 10.0442 21.5794 10.0442 19.8695C10.0442 18.1596 11.2656 16.7574 12.8363 16.7574C14.407 16.7574 15.6626 18.1596 15.6357 19.8695C15.6088 21.5794 14.4021 22.9694 12.8412 22.9694ZM23.1594 22.9694C21.6254 22.9694 20.3649 21.5794 20.3649 19.8695C20.3649 18.1596 21.5863 16.7574 23.1594 16.7574C24.7326 16.7574 25.9784 18.1596 25.9515 19.8695C25.9246 21.5794 24.7203 22.9694 23.1594 22.9694Z"></path>
+            </svg>
+          </a>
+        {{/if}}
+        <a href="https://x.com/groqinc" target="_blank" class="footer-social-link" title="Twitter">
+          <svg width="1em" height="1em" viewBox="0 0 36 36" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path d="M24.4701 8.0332H27.9202L20.3827 16.6109L29.25 28.2832H22.3069L16.8689 21.204L10.6465 28.2832H7.19431L15.2565 19.1084L6.75 8.0332H13.8693L18.7848 14.5039L24.4701 8.0332ZM23.2592 26.2271H25.1709L12.8305 9.98136H10.779L23.2592 26.2271Z"></path>
+          </svg>
+        </a>
+        {{#if settings.footer_youtube_url}}
+          <a href="{{settings.footer_youtube_url}}" target="_blank" class="footer-social-link" title="YouTube">
+            <svg width="1em" height="1em" viewBox="0 0 36 36" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <path d="M33.7878 10.3892C33.4255 9.02476 32.3578 7.95018 31.0022 7.58551C28.5451 6.92285 18.6923 6.92285 18.6923 6.92285C18.6923 6.92285 8.83965 6.92285 6.38248 7.58551C5.02688 7.95024 3.95923 9.02476 3.59686 10.3892C2.93848 12.8623 2.93848 18.0222 2.93848 18.0222C2.93848 18.0222 2.93848 23.182 3.59686 25.6551C3.95923 27.0196 5.02688 28.0494 6.38248 28.414C8.83965 29.0767 18.6923 29.0767 18.6923 29.0767C18.6923 29.0767 28.545 29.0767 31.0022 28.414C32.3578 28.0494 33.4255 27.0196 33.7878 25.6551C34.4462 23.182 34.4462 18.0222 34.4462 18.0222C34.4462 18.0222 34.4462 12.8623 33.7878 10.3892ZM15.4699 22.7069V13.3374L23.7049 18.0223L15.4699 22.7069Z"></path>
+            </svg>
+          </a>
+        {{else}}
+          <a href="https://www.youtube.com/c/GroqInc" target="_blank" class="footer-social-link" title="YouTube">
+            <svg width="1em" height="1em" viewBox="0 0 36 36" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <path d="M33.7878 10.3892C33.4255 9.02476 32.3578 7.95018 31.0022 7.58551C28.5451 6.92285 18.6923 6.92285 18.6923 6.92285C18.6923 6.92285 8.83965 6.92285 6.38248 7.58551C5.02688 7.95024 3.95923 9.02476 3.59686 10.3892C2.93848 12.8623 2.93848 18.0222 2.93848 18.0222C2.93848 18.0222 2.93848 23.182 3.59686 25.6551C3.95923 27.0196 5.02688 28.0494 6.38248 28.414C8.83965 29.0767 18.6923 29.0767 18.6923 29.0767C18.6923 29.0767 28.545 29.0767 31.0022 28.414C32.3578 28.0494 33.4255 27.0196 33.7878 25.6551C34.4462 23.182 34.4462 18.0222 34.4462 18.0222C34.4462 18.0222 34.4462 12.8623 33.7878 10.3892ZM15.4699 22.7069V13.3374L23.7049 18.0223L15.4699 22.7069Z"></path>
+            </svg>
+          </a>
+        {{/if}}
+        <a href="https://www.threads.net/@groqinc" target="_blank" class="footer-social-link" title="Threads">
+          <svg width="1em" height="1em" viewBox="0 0 36 36" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path d="M25.003 17.6309C24.8769 17.5709 24.7489 17.5131 24.6192 17.4578C24.3933 13.3223 22.1191 10.9548 18.3005 10.9306C18.2832 10.9305 18.266 10.9305 18.2487 10.9305C15.9647 10.9305 14.0651 11.8992 12.8959 13.662L14.9961 15.0934C15.8695 13.7767 17.2402 13.496 18.2497 13.496C18.2614 13.496 18.2731 13.496 18.2846 13.4961C19.542 13.5041 20.4907 13.8673 21.1048 14.5756C21.5517 15.0914 21.8506 15.804 21.9986 16.7034C20.8838 16.5151 19.6782 16.4572 18.3894 16.5307C14.7589 16.7385 12.4248 18.8424 12.5816 21.7658C12.6611 23.2487 13.4047 24.5245 14.6751 25.3579C15.7492 26.0624 17.1326 26.4069 18.5704 26.3289C20.4691 26.2255 21.9586 25.5057 22.9978 24.1895C23.787 23.19 24.2861 21.8947 24.5065 20.2626C25.4114 20.8052 26.082 21.5193 26.4524 22.3777C27.0822 23.8368 27.1189 26.2346 25.1499 28.1894C23.4247 29.9019 21.351 30.6428 18.2169 30.6656C14.7405 30.64 12.1113 29.5322 10.4019 27.373C8.80111 25.3511 7.97384 22.4307 7.94297 18.6928C7.97384 14.9548 8.80111 12.0344 10.4019 10.0125C12.1113 7.85326 14.7404 6.74547 18.2169 6.71981C21.7186 6.74567 24.3936 7.85879 26.1685 10.0284C27.0387 11.0924 27.6949 12.4304 28.1274 13.9905L30.5885 13.3381C30.0642 11.4178 29.2391 9.76307 28.1165 8.39074C25.8411 5.60915 22.5133 4.18385 18.2255 4.1543H18.2083C13.9292 4.18375 10.6387 5.61447 8.42812 8.40669C6.46101 10.8914 5.44631 14.3487 5.41222 18.6825L5.41211 18.6928L5.41222 18.703C5.44631 23.0367 6.46101 26.4942 8.42812 28.9789C10.6387 31.771 13.9292 33.2018 18.2083 33.2312H18.2255C22.0298 33.205 24.7114 32.2153 26.9205 30.0223C29.8107 27.1532 29.7237 23.5569 28.7711 21.3492C28.0877 19.766 26.7847 18.4802 25.003 17.6309ZM18.4344 23.7671C16.8432 23.8562 15.1901 23.1465 15.1086 21.6265C15.0482 20.4995 15.9158 19.2419 18.5321 19.0921C18.8317 19.0749 19.1257 19.0665 19.4145 19.0665C20.3648 19.0665 21.2539 19.1582 22.0621 19.3338C21.7606 23.0747 19.9923 23.6822 18.4344 23.7671Z"></path>
+          </svg>
+        </a>
+        {{#if settings.footer_linkedin_url}}
+          <a href="{{settings.footer_linkedin_url}}" target="_blank" class="footer-social-link" title="LinkedIn">
+            <svg width="1em" height="1em" viewBox="0 0 36 36" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M7.5 4.5H28.5C30.1569 4.5 31.5 5.84314 31.5 7.5V28.5C31.5 30.1569 30.1569 31.5 28.5 31.5H7.5C5.84314 31.5 4.5 30.1569 4.5 28.5V7.5C4.5 5.84314 5.84314 4.5 7.5 4.5ZM12 27C12.4142 27 12.75 26.6642 12.75 26.25V15.75C12.75 15.3358 12.4142 15 12 15H9.75C9.33579 15 9 15.3358 9 15.75V26.25C9 26.6642 9.33579 27 9.75 27H12ZM10.875 13.5C9.63236 13.5 8.625 12.4926 8.625 11.25C8.625 10.0074 9.63236 9 10.875 9C12.1176 9 13.125 10.0074 13.125 11.25C13.125 12.4926 12.1176 13.5 10.875 13.5ZM26.25 27C26.6642 27 27 26.6642 27 26.25V19.35C27.0487 16.9662 25.2864 14.9318 22.92 14.64C21.2655 14.4889 19.6624 15.2616 18.75 16.65V15.75C18.75 15.3358 18.4142 15 18 15H15.75C15.3358 15 15 15.3358 15 15.75V26.25C15 26.6642 15.3358 27 15.75 27H18C18.4142 27 18.75 26.6642 18.75 26.25V20.625C18.75 19.3824 19.7574 18.375 21 18.375C22.2426 18.375 23.25 19.3824 23.25 20.625V26.25C23.25 26.6642 23.5858 27 24 27H26.25Z"></path>
+            </svg>
+          </a>
+        {{else}}
+          <a href="https://www.linkedin.com/company/groq" target="_blank" class="footer-social-link" title="LinkedIn">
+            <svg width="1em" height="1em" viewBox="0 0 36 36" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M7.5 4.5H28.5C30.1569 4.5 31.5 5.84314 31.5 7.5V28.5C31.5 30.1569 30.1569 31.5 28.5 31.5H7.5C5.84314 31.5 4.5 30.1569 4.5 28.5V7.5C4.5 5.84314 5.84314 4.5 7.5 4.5ZM12 27C12.4142 27 12.75 26.6642 12.75 26.25V15.75C12.75 15.3358 12.4142 15 12 15H9.75C9.33579 15 9 15.3358 9 15.75V26.25C9 26.6642 9.33579 27 9.75 27H12ZM10.875 13.5C9.63236 13.5 8.625 12.4926 8.625 11.25C8.625 10.0074 9.63236 9 10.875 9C12.1176 9 13.125 10.0074 13.125 11.25C13.125 12.4926 12.1176 13.5 10.875 13.5ZM26.25 27C26.6642 27 27 26.6642 27 26.25V19.35C27.0487 16.9662 25.2864 14.9318 22.92 14.64C21.2655 14.4889 19.6624 15.2616 18.75 16.65V15.75C18.75 15.3358 18.4142 15 18 15H15.75C15.3358 15 15 15.3358 15 15.75V26.25C15 26.6642 15.3358 27 15.75 27H18C18.4142 27 18.75 26.6642 18.75 26.25V20.625C18.75 19.3824 19.7574 18.375 21 18.375C22.2426 18.375 23.25 19.3824 23.25 20.625V26.25C23.25 26.6642 23.5858 27 24 27H26.25Z"></path>
+            </svg>
+          </a>
+        {{/if}}
+        <a href="https://instagram.com/groqinc" target="_blank" class="footer-social-link" title="Instagram">
+          <svg width="1em" height="1em" viewBox="0 0 36 36" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M24 4.5H12C7.85787 4.5 4.5 7.85787 4.5 12V24C4.5 28.1421 7.85787 31.5 12 31.5H24C28.1421 31.5 31.5 28.1421 31.5 24V12C31.5 7.85787 28.1421 4.5 24 4.5ZM28.875 24C28.8668 26.6889 26.6889 28.8668 24 28.875H12C9.31103 28.8668 7.13323 26.6889 7.125 24V12C7.13323 9.31103 9.31103 7.13323 12 7.125H24C26.6889 7.13323 28.8668 9.31103 28.875 12V24ZM25.125 12.375C25.9534 12.375 26.625 11.7034 26.625 10.875C26.625 10.0466 25.9534 9.375 25.125 9.375C24.2966 9.375 23.625 10.0466 23.625 10.875C23.625 11.7034 24.2966 12.375 25.125 12.375ZM18 11.25C14.2721 11.25 11.25 14.2721 11.25 18C11.25 21.728 14.2721 24.75 18 24.75C21.728 24.75 24.75 21.728 24.75 18C24.754 16.2085 24.0441 14.4894 22.7774 13.2226C21.5106 11.9559 19.7915 11.246 18 11.25ZM13.875 18C13.875 20.2782 15.7218 22.125 18 22.125C20.2782 22.125 22.125 20.2782 22.125 18C22.125 15.7218 20.2782 13.875 18 13.875C15.7218 13.875 13.875 15.7218 13.875 18Z"></path>
+          </svg>
+        </a>
+      </div>
+    </div>
+
+    {{!-- Back to top button --}}
+    {{#if settings.show_back_to_top}}
+      <div class="back-to-top">
+        <button class="btn btn-primary back-to-top-btn" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" title="Back to top">
+          {{d-icon "chevron-up"}} Back to Top
+        </button>
+      </div>
+    {{/if}}
+
+  </div>
+</footer> 

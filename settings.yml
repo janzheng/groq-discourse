@@ -288,4 +288,31 @@ sidebar_section_3_description:
 sidebar_section_3_url:
   type: string
   default: "/docs"
-  description: "URL for the third sidebar section" 
+  description: "URL for the third sidebar section"
+
+# Footer Settings
+show_powered_by:
+  type: bool
+  default: true
+  description: "Show 'Community powered by Discourse' text in footer"
+
+show_back_to_top:
+  type: bool
+  default: true
+  description: "Show back to top button in footer"
+
+# Additional Social Media Links
+footer_discord_url:
+  type: string
+  default: ""
+  description: "Discord URL for footer social links (leave empty to hide)"
+
+footer_linkedin_url:
+  type: string
+  default: ""
+  description: "LinkedIn URL for footer social links (leave empty to use default Groq LinkedIn)"
+
+footer_youtube_url:
+  type: string
+  default: ""
+  description: "YouTube URL for footer social links (leave empty to use default Groq YouTube)" 

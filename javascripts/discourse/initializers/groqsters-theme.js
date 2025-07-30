@@ -342,6 +342,8 @@ export default {
       // Simple category page enhancement without complex DOM manipulation
       api.onPageChange(() => {
         const isCategoriesPage = window.location.pathname === "/" ||
+                                window.location.pathname === "/latest" ||
+                                window.location.pathname === "/top" ||
                                 window.location.pathname === "/categories" || 
                                 window.location.pathname.includes("/categories");
         
