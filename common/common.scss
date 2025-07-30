@@ -1267,82 +1267,38 @@ body.groqsters-categories-page,
     z-index: 1;
   }
   
-  // Header row with logo and community links aligned to grid
-  .footer-header-row {
-    display: grid;
-    grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1fr 1fr;
-    align-items: center;
-    padding-bottom: 2.5rem;
+  // Community links row at top
+  .community-links-row {
+    text-align: center;
+    padding: 1.5rem 0 2.5rem;
     border-bottom: 1px solid var(--primary-low);
     margin-bottom: 2.5rem;
-    gap: 2rem;
     
-    // Desktop: 7 columns (branding + 6 link groups)
-    @media (min-width: 1200px) {
-      grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1fr 1fr;
-    }
-    
-    // Medium desktop: adjust for better fit
-    @media (max-width: 1199px) and (min-width: 1024px) {
-      grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr 1fr 1fr;
-      gap: 1.5rem;
-    }
-    
-    // Tablet: 3 columns, branding spans all
-    @media (max-width: 1023px) and (min-width: 768px) {
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 1.5rem;
-    }
-    
-    // Mobile: single column
-    @media (max-width: 767px) {
-      grid-template-columns: 1fr;
-      gap: 1.5rem;
-      padding-bottom: 2rem;
-      margin-bottom: 2rem;
-    }
-    
-    .footer-branding {
-      grid-column: 1;
+    @media (max-width: 1023px) {
+      text-align: left;
       
-      .footer-logo {
-        margin-bottom: 0;
-        
-        .footer-logo-img {
-          max-height: 3rem;
-          width: auto;
-        }
-        
-        .footer-site-title {
-          text-decoration: none;
-          color: var(--primary);
-          
-          h3 {
-            margin: 0;
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--primary);
-          }
-        }
+      .community-title {
+        text-align: left;
       }
+    }
+    
+    .community-title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--primary);
+      margin: 0 0 1rem 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
     }
     
     .community-links {
-      // Align with Products column (column 2)
-      grid-column: 2 / -1;
       display: flex;
+      justify-content: center;
       gap: 2rem;
       flex-wrap: wrap;
-      justify-content: flex-start;
       
       @media (max-width: 1023px) {
-        grid-column: 1 / -1;
-        margin-top: 1rem;
-      }
-      
-      @media (max-width: 767px) {
-        gap: 1rem;
-        margin-top: 1rem;
+        justify-content: flex-start;
       }
       
       .community-link {
@@ -1356,9 +1312,19 @@ body.groqsters-categories-page,
           color: var(--primary);
           text-decoration: underline;
         }
+      }
+    }
+    
+    @media (max-width: 767px) {
+      padding: 1rem 0 2rem;
+      margin-bottom: 2rem;
+      
+      .community-links {
+        gap: 1rem;
         
-        @media (max-width: 767px) {
+        .community-link {
           font-size: 0.85rem;
+          padding: 0.4rem 0.8rem;
         }
       }
     }
@@ -1405,8 +1371,29 @@ body.groqsters-categories-page,
     }
   }
   
-  // Footer branding section (now only for tagline in grid)
+  // Footer branding section
   .footer-branding {
+    .footer-logo {
+      margin-bottom: 1rem;
+      
+      .footer-logo-img {
+        max-height: 3rem;
+        width: auto;
+      }
+      
+      .footer-site-title {
+        text-decoration: none;
+        color: var(--primary);
+        
+        h3 {
+          margin: 0;
+          font-size: 1.5rem;
+          font-weight: 700;
+          color: var(--primary);
+        }
+      }
+    }
+    
     .footer-tagline {
       color: var(--primary-medium);
       font-size: 0.9rem;
@@ -1418,6 +1405,28 @@ body.groqsters-categories-page,
         max-width: none;
         text-align: left;
         margin: 0;
+      }
+    }
+    
+    // Mobile/tablet layout: logo left, tagline right
+    @media (max-width: 1023px) {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      text-align: left;
+      
+      .footer-logo {
+        margin-bottom: 0;
+        flex-shrink: 0;
+        
+        a svg {
+          width: 8em !important;
+          height: 2.5em !important;
+        }
+      }
+      
+      .footer-tagline {
+        flex: 1;
       }
     }
   }
@@ -1610,12 +1619,19 @@ body.groqsters-categories-page,
     }
   }
   
-  .footer-header-row {
+  .community-links-row {
+    
+    .community-title {
+      color: var(--primary-high);
+    }
+    
     .community-link {
+      background: var(--primary-very-low);
       color: var(--primary-medium);
       
       &:hover {
-        color: var(--primary-high);
+        background: var(--primary);
+        color: white;
       }
     }
   }
