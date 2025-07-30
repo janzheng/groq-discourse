@@ -1380,9 +1380,9 @@ body.groqsters-categories-page,
       grid-template-columns: repeat(6, 1fr);
     }
     
-    // Medium desktop: 6 columns with adjusted spacing
+    // Medium-large desktop: 4 columns for better spacing
     @media (max-width: 1199px) and (min-width: 1024px) {
-      grid-template-columns: repeat(6, 1fr);
+      grid-template-columns: repeat(4, 1fr);
       gap: 1.5rem;
     }
     
