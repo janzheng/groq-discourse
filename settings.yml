@@ -3,11 +3,6 @@ enable_custom_js:
   default: true
   description: "Enable custom JavaScript functionality"
 
-custom_header_text:
-  type: string
-  default: ""
-  description: "Custom text to display in the header"
-
 primary_brand_color:
   type: string
   default: "#1f8dd6"
@@ -38,15 +33,7 @@ show_banner_search:
   default: true
   description: "Show search bar in the welcome banner"
 
-custom_footer_text:
-  type: string
-  default: ""
-  description: "Custom text to display in the footer"
 
-enable_animations:
-  type: bool
-  default: true
-  description: "Enable CSS animations and transitions"
 
 show_alert_banner:
   type: bool
