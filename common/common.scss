@@ -1280,10 +1280,6 @@ body.groqsters-categories-page,
       .community-title {
         text-align: left;
       }
-      
-      .community-links {
-        justify-content: flex-start;
-      }
     }
     
     .community-title {
@@ -1300,6 +1296,10 @@ body.groqsters-categories-page,
       justify-content: center;
       gap: 2rem;
       flex-wrap: wrap;
+      
+      @media (max-width: 1023px) {
+        justify-content: flex-start;
+      }
       
       .community-link {
         color: var(--primary-medium);
@@ -1354,16 +1354,17 @@ body.groqsters-categories-page,
     @media (max-width: 1023px) and (min-width: 768px) {
       grid-template-columns: 1fr 1fr 1fr;
       gap: 1.5rem;
+      text-align: left;
       
       .footer-branding {
         grid-column: 1 / -1;
-        text-align: center;
+        text-align: left;
         margin-bottom: 1rem;
       }
     }
     
-    // Mobile/tablet: single column
-    @media (max-width: 1023px) {
+    // Mobile: single column
+    @media (max-width: 767px) {
       grid-template-columns: 1fr;
       gap: 1.5rem;
       text-align: left;
