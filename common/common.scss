@@ -1267,20 +1267,9 @@ body.groqsters-categories-page,
     z-index: 1;
   }
   
-  // Community links row at top
+  // Community links row (now in right section)
   .community-links-row {
-    text-align: center;
-    padding: 1.5rem 0 2.5rem;
-    border-bottom: 1px solid var(--primary-low);
-    margin-bottom: 2.5rem;
-    
-    @media (max-width: 1023px) {
-      text-align: left;
-      
-      .community-title {
-        text-align: left;
-      }
-    }
+    // Default styles (already handled in .footer-right-section above)
     
     .community-title {
       font-size: 1rem;
@@ -1289,17 +1278,14 @@ body.groqsters-categories-page,
       margin: 0 0 1rem 0;
       text-transform: uppercase;
       letter-spacing: 0.5px;
+      text-align: left;
     }
     
     .community-links {
       display: flex;
-      justify-content: center;
+      justify-content: flex-start;
       gap: 2rem;
       flex-wrap: wrap;
-      
-      @media (max-width: 1023px) {
-        justify-content: flex-start;
-      }
       
       .community-link {
         color: var(--primary-medium);
@@ -1316,9 +1302,6 @@ body.groqsters-categories-page,
     }
     
     @media (max-width: 767px) {
-      padding: 1rem 0 2rem;
-      margin-bottom: 2rem;
-      
       .community-links {
         gap: 1rem;
         
@@ -1329,58 +1312,97 @@ body.groqsters-categories-page,
       }
     }
   }
-  
-  // Main footer grid layout
-  .footer-grid-container {
+
+  // Main footer layout - branding left, content right
+  .main-footer-layout {
     display: flex;
-    flex-direction: column;
-    gap: 2rem;
+    gap: 3rem;
     margin-bottom: 2rem;
-    width: 100%;
-    overflow: visible;
-
-    .footer-grid {
-      flex: 1;
-    }
-  }
-
-  .footer-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-    gap: 2rem;
-    margin-bottom: 2rem;
-    width: 100%;
-    overflow: visible;
+    align-items: flex-start;
     
-    // Desktop: 7 columns (branding + 6 link groups)
-    @media (min-width: 1200px) {
-      grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1fr 1fr;
-    }
-    
-    // Medium desktop: adjust for better fit
-    @media (max-width: 1199px) and (min-width: 1024px) {
-      grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr 1fr 1fr;
-      gap: 1.5rem;
-    }
-    
-    // Tablet: 3 columns, branding spans all
-    @media (max-width: 1023px) and (min-width: 768px) {
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 1.5rem;
-      text-align: left;
-      
+    // Desktop layout: side by side
+    @media (min-width: 768px) {
       .footer-branding {
-        grid-column: 1 / -1;
-        text-align: left;
-        margin-bottom: 1rem;
+        flex: 0 0 280px; // Fixed width for branding
+        max-width: 280px;
+      }
+      
+      .footer-right-section {
+        flex: 1; // Take remaining space
       }
     }
     
-    // Mobile: single column
+    // Mobile layout: stack vertically but keep logo and community links aligned
     @media (max-width: 767px) {
-      grid-template-columns: 1fr;
+      flex-direction: column;
+      gap: 2rem;
+      
+      .footer-branding {
+        flex: none;
+      }
+      
+      .footer-right-section {
+        flex: none;
+      }
+    }
+  }
+  
+  // Right section containing community links and footer grid
+  .footer-right-section {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    
+    .community-links-row {
+      // Remove previous styles that added borders and spacing
+      border-bottom: none;
+      margin-bottom: 0;
+      padding: 0;
+      text-align: left;
+      
+      .community-links {
+        justify-content: flex-start;
+      }
+    }
+  }
+
+  
+  // Main footer grid layout
+  .footer-grid {
+    display: grid;
+    gap: 2rem;
+    margin-bottom: 0;
+    width: 100%;
+    overflow: visible;
+    
+    // Desktop: 6 columns for link groups
+    @media (min-width: 1200px) {
+      grid-template-columns: repeat(6, 1fr);
+    }
+    
+    // Medium desktop: 6 columns with adjusted spacing
+    @media (max-width: 1199px) and (min-width: 1024px) {
+      grid-template-columns: repeat(6, 1fr);
+      gap: 1.5rem;
+    }
+    
+    // Tablet: 3 columns
+    @media (max-width: 1023px) and (min-width: 768px) {
+      grid-template-columns: repeat(3, 1fr);
       gap: 1.5rem;
       text-align: left;
+    }
+    
+    // Mobile: 2 columns for better space usage
+    @media (max-width: 767px) {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+      text-align: left;
+    }
+    
+    // Very small mobile: single column
+    @media (max-width: 480px) {
+      grid-template-columns: 1fr;
     }
   }
   
@@ -1413,33 +1435,24 @@ body.groqsters-categories-page,
       line-height: 1.5;
       margin: 0;
       max-width: 280px;
-      
-      @media (max-width: 1023px) {
-        max-width: none;
-        text-align: left;
-        margin: 0;
-      }
     }
     
-    // Mobile/tablet layout: logo left, tagline right
-    @media (max-width: 1023px) {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      text-align: left;
+    // Mobile layout: logo and tagline stacked but compact
+    @media (max-width: 767px) {
+      margin-bottom: 1rem;
       
       .footer-logo {
-        margin-bottom: 0;
-        flex-shrink: 0;
+        margin-bottom: 0.5rem;
         
         a svg {
-          width: 8em !important;
-          height: 2.5em !important;
+          width: 10em !important;
+          height: 3em !important;
         }
       }
       
       .footer-tagline {
-        flex: 1;
+        font-size: 0.85rem;
+        max-width: none;
       }
     }
   }
