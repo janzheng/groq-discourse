@@ -1218,7 +1218,6 @@ body.groqsters-categories-page,
 .groqsters-footer {
   background: var(--secondary);
   border-top: 1px solid var(--primary-low);
-  margin-top: 2rem;
   padding: 0;
   
   // Ensure footer spans full width, breaking out of sidebar layout
@@ -1800,6 +1799,25 @@ body.groqsters-categories-page,
       
       .dummy-icon {
         font-size: 1.25rem;
+      }
+    }
+  }
+}
+
+// Groqsters Header Test for above-site-header outlet
+.groqsters-header-test {
+  position: relative;
+  z-index: 200;
+  font-family: var(--base-font-family);
+  
+  div {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    
+    span {
+      transition: opacity 0.2s ease;
+      
+      &:hover {
+        opacity: 0.8;
       }
     }
   }
