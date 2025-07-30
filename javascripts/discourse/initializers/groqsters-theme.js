@@ -54,8 +54,43 @@ export default {
 
         const elements = [];
 
-        // Welcome banner is now handled in header template
-        // JavaScript banner creation disabled to prevent duplicates
+        // Update header banner content with theme settings (with delay to ensure DOM is ready)
+        setTimeout(() => {
+          const headerBanner = document.getElementById('groqsters-header-banner');
+          if (headerBanner && settings.show_welcome_banner) {
+            const currentUser = api.getCurrentUser();
+            
+            // Update header text
+            const headerElement = headerBanner.querySelector('[data-banner-header]');
+            if (headerElement) {
+              let headerText;
+              if (currentUser) {
+                headerText = (settings.welcome_banner_header_logged_in || "Welcome back, {username}!")
+                  .replace("{username}", currentUser.username);
+              } else {
+                headerText = settings.welcome_banner_header_guest || "Welcome to Our Community";
+              }
+              headerElement.textContent = headerText;
+            }
+            
+            // Update subtitle
+            const subtitleElement = headerBanner.querySelector('[data-banner-subtitle]');
+            if (subtitleElement) {
+              const subtitleText = settings.welcome_banner_subtitle || "Find help, share your knowledge, and experience fast inference";
+              subtitleElement.textContent = subtitleText;
+            }
+            
+            // Show/hide search bar
+            const searchElement = headerBanner.querySelector('[data-banner-search]');
+            if (searchElement) {
+              if (settings.show_banner_search === false) {
+                searchElement.style.display = 'none';
+              } else {
+                searchElement.style.display = 'block';
+              }
+            }
+          }
+        }, 100);
 
         // Add alert banner if enabled
         if (settings.show_alert_banner && settings.alert_banner_message) {
@@ -152,8 +187,43 @@ export default {
           const bannerContainer = document.createElement('div');
           bannerContainer.className = 'groqsters-banners-container';
 
-          // Welcome banner is now handled in header template
-          // JavaScript banner creation disabled to prevent duplicates
+          // Update header banner content with theme settings (with delay to ensure DOM is ready)
+          setTimeout(() => {
+            const headerBanner = document.getElementById('groqsters-header-banner');
+            if (headerBanner && settings.show_welcome_banner) {
+              const currentUser = api.getCurrentUser();
+              
+              // Update header text
+              const headerElement = headerBanner.querySelector('[data-banner-header]');
+              if (headerElement) {
+                let headerText;
+                if (currentUser) {
+                  headerText = (settings.welcome_banner_header_logged_in || "Welcome back, {username}!")
+                    .replace("{username}", currentUser.username);
+                } else {
+                  headerText = settings.welcome_banner_header_guest || "Welcome to Our Community";
+                }
+                headerElement.textContent = headerText;
+              }
+              
+              // Update subtitle
+              const subtitleElement = headerBanner.querySelector('[data-banner-subtitle]');
+              if (subtitleElement) {
+                const subtitleText = settings.welcome_banner_subtitle || "Find help, share your knowledge, and experience fast inference";
+                subtitleElement.textContent = subtitleText;
+              }
+              
+              // Show/hide search bar
+              const searchElement = headerBanner.querySelector('[data-banner-search]');
+              if (searchElement) {
+                if (settings.show_banner_search === false) {
+                  searchElement.style.display = 'none';
+                } else {
+                  searchElement.style.display = 'block';
+                }
+              }
+            }
+          }, 100);
 
           // Add alert banner if enabled
           if (settings.show_alert_banner && settings.alert_banner_message) {
