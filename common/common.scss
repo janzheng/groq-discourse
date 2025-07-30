@@ -16,19 +16,83 @@
   }
 }
 
+// Header nav styling for welcome banner
+.header-nav {
+  width: 100%;
+  
+  .welcome-banner {
+    margin: 1rem 0;
+  }
+  
+  // Fallback styles for simple auth buttons
+  .user-menu-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    
+    .welcome-text {
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: var(--primary);
+    }
+  }
+  
+  .guest-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    padding: 1rem;
+    
+    .btn {
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: var(--groqsters-transition);
+      
+      &.login-button {
+        background: var(--primary);
+        color: white;
+        border: 2px solid var(--primary);
+        
+        &:hover {
+          background: var(--primary-high);
+          transform: translateY(-2px);
+        }
+      }
+      
+      &.signup-button {
+        background: transparent;
+        color: var(--primary);
+        border: 2px solid var(--primary);
+        
+        &:hover {
+          background: var(--primary);
+          color: white;
+          transform: translateY(-2px);
+        }
+      }
+    }
+  }
+}
+
 // Banner container
 .groqsters-banners-container {
   width: 100%;
   margin: 2rem 0;
 }
 
-// Welcome banner
+// Welcome banner (can be in header-nav or standalone)
 .welcome-banner {
   background: linear-gradient(135deg, #c2410c, #ea580c, #f97316);
   color: white;
   padding: 2rem;
   text-align: center;
   border-radius: 8px;
+  width: 100%;
+  display: block;
+  margin: 0;
   
   h1 {
     margin: 0 0 0.75rem 0;

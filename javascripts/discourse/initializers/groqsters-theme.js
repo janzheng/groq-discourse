@@ -54,51 +54,8 @@ export default {
 
         const elements = [];
 
-        // Add welcome banner if enabled
-        if (settings.show_welcome_banner) {
-          const currentUser = api.getCurrentUser();
-          let headerText;
-          
-          if (currentUser) {
-            headerText = (settings.welcome_banner_header_logged_in || "Welcome back, {username}!")
-              .replace("{username}", currentUser.username);
-          } else {
-            headerText = settings.welcome_banner_header_guest || "Welcome to Our Community";
-          }
-          
-          const bannerElements = [
-            dec.h("h1", headerText),
-            dec.h("h2", settings.welcome_banner_subtitle || "Find help, share your knowledge, and experience fast inference")
-          ];
-          
-          // Add search bar if enabled
-          if (settings.show_banner_search !== false) {
-            bannerElements.push(
-              dec.h("div.banner-search", [
-                dec.h("div.search-container", [
-                  dec.h("input.search-input", {
-                    type: "text",
-                    placeholder: "Search"
-                  }),
-                  dec.h("button.search-button", [
-                    dec.h("svg.search-icon", {
-                      width: "20",
-                      height: "20",
-                      viewBox: "0 0 20 20"
-                    }, [
-                      dec.h("path", {
-                        fill: "currentColor",
-                        d: "M14.386 14.386l4.0877 4.0877-1.4142 1.4142-4.0877-4.0877C11.8352 16.3385 10.0578 17 8.1429 17 3.6467 17 0 13.3533 0 8.8571 0 4.3609 3.6467 0.7142 8.1429 0.7142c4.4962 0 8.1428 3.6467 8.1428 8.1429 0 1.9149-0.6615 3.6923-1.8999 5.5289zM8.1429 15.1429c3.5829 0 6.4286-2.8457 6.4286-6.4286 0-3.5829-2.8457-6.4286-6.4286-6.4286-3.5829 0-6.4286 2.8457-6.4286 6.4286 0 3.5829 2.8457 6.4286 6.4286 6.4286z"
-                      })
-                    ])
-                  ])
-                ])
-              ])
-            );
-          }
-          
-          elements.push(dec.h("div.welcome-banner", bannerElements));
-        }
+        // Welcome banner is now handled in header template
+        // JavaScript banner creation disabled to prevent duplicates
 
         // Add alert banner if enabled
         if (settings.show_alert_banner && settings.alert_banner_message) {
@@ -195,47 +152,8 @@ export default {
           const bannerContainer = document.createElement('div');
           bannerContainer.className = 'groqsters-banners-container';
 
-          // Add welcome banner if enabled
-          if (settings.show_welcome_banner) {
-            const currentUser = api.getCurrentUser();
-            let headerText;
-            
-            if (currentUser) {
-              headerText = (settings.welcome_banner_header_logged_in || "Welcome back, {username}!")
-                .replace("{username}", currentUser.username);
-            } else {
-              headerText = settings.welcome_banner_header_guest || "Welcome to Our Community";
-            }
-            
-            const subtitleText = settings.welcome_banner_subtitle || "Find help, share your knowledge, and experience fast inference";
-            
-            const welcomeBanner = document.createElement('div');
-            welcomeBanner.className = 'welcome-banner';
-            
-            let bannerHTML = `
-              <h1>${headerText}</h1>
-              <h2>${subtitleText}</h2>
-            `;
-            
-            // Add search bar if enabled
-            if (settings.show_banner_search !== false) {
-              bannerHTML += `
-                <div class="banner-search">
-                  <div class="search-container">
-                    <input type="text" placeholder="Search" class="search-input">
-                    <button class="search-button">
-                      <svg class="search-icon" width="20" height="20" viewBox="0 0 20 20">
-                        <path fill="currentColor" d="M14.386 14.386l4.0877 4.0877-1.4142 1.4142-4.0877-4.0877C11.8352 16.3385 10.0578 17 8.1429 17 3.6467 17 0 13.3533 0 8.8571 0 4.3609 3.6467 0.7142 8.1429 0.7142c4.4962 0 8.1428 3.6467 8.1428 8.1429 0 1.9149-0.6615 3.6923-1.8999 5.5289zM8.1429 15.1429c3.5829 0 6.4286-2.8457 6.4286-6.4286 0-3.5829-2.8457-6.4286-6.4286-6.4286-3.5829 0-6.4286 2.8457-6.4286 6.4286 0 3.5829 2.8457 6.4286 6.4286 6.4286z"/>
-                      </svg>
-                    </button>
-                  </div>
-                </div>
-              `;
-            }
-            
-            welcomeBanner.innerHTML = bannerHTML;
-            bannerContainer.appendChild(welcomeBanner);
-          }
+          // Welcome banner is now handled in header template
+          // JavaScript banner creation disabled to prevent duplicates
 
           // Add alert banner if enabled
           if (settings.show_alert_banner && settings.alert_banner_message) {
