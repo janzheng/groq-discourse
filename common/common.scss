@@ -174,7 +174,7 @@
   
   .navigation-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(var(--nav-columns, 4), 1fr);
     gap: 0.5rem;
     max-width: 1200px;
     margin: 0 auto;
@@ -697,7 +697,7 @@ div.groqsters-feature-banner {
     display: grid !important;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)) !important;
     gap: 1.5rem !important;
-    // margin: 2rem 0 !important;
+    margin: 1rem 0 !important;
     padding: 0 !important;
     border: none !important;
     background: none !important;
@@ -997,7 +997,7 @@ body.groqsters-categories-page,
     display: grid !important;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)) !important;
     gap: 1rem !important;
-    // margin: 2rem 0 !important;
+    margin: 1rem 0 !important;
     padding: 0 !important;
     border: none !important;
     background: none !important;
