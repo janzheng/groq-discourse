@@ -1267,38 +1267,54 @@ body.groqsters-categories-page,
     z-index: 1;
   }
   
-  // Community links row at top
-  .community-links-row {
-    text-align: center;
-    padding: 1.5rem 0 2.5rem;
+  // Header row with logo and community links
+  .footer-header-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 2.5rem;
     border-bottom: 1px solid var(--primary-low);
     margin-bottom: 2.5rem;
+    gap: 2rem;
     
-    @media (max-width: 1023px) {
-      text-align: left;
-      
-      .community-title {
-        text-align: left;
-      }
+    @media (max-width: 767px) {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1.5rem;
+      padding-bottom: 2rem;
+      margin-bottom: 2rem;
     }
     
-    .community-title {
-      font-size: 1rem;
-      font-weight: 600;
-      color: var(--primary);
-      margin: 0 0 1rem 0;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
+    .footer-branding {
+      .footer-logo {
+        margin-bottom: 0;
+        
+        .footer-logo-img {
+          max-height: 3rem;
+          width: auto;
+        }
+        
+        .footer-site-title {
+          text-decoration: none;
+          color: var(--primary);
+          
+          h3 {
+            margin: 0;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+          }
+        }
+      }
     }
     
     .community-links {
       display: flex;
-      justify-content: center;
       gap: 2rem;
       flex-wrap: wrap;
       
-      @media (max-width: 1023px) {
-        justify-content: flex-start;
+      @media (max-width: 767px) {
+        gap: 1rem;
       }
       
       .community-link {
@@ -1312,19 +1328,9 @@ body.groqsters-categories-page,
           color: var(--primary);
           text-decoration: underline;
         }
-      }
-    }
-    
-    @media (max-width: 767px) {
-      padding: 1rem 0 2rem;
-      margin-bottom: 2rem;
-      
-      .community-links {
-        gap: 1rem;
         
-        .community-link {
+        @media (max-width: 767px) {
           font-size: 0.85rem;
-          padding: 0.4rem 0.8rem;
         }
       }
     }
@@ -1371,29 +1377,8 @@ body.groqsters-categories-page,
     }
   }
   
-  // Footer branding section
+  // Footer branding section (now only for tagline in grid)
   .footer-branding {
-    .footer-logo {
-      margin-bottom: 1rem;
-      
-      .footer-logo-img {
-        max-height: 3rem;
-        width: auto;
-      }
-      
-      .footer-site-title {
-        text-decoration: none;
-        color: var(--primary);
-        
-        h3 {
-          margin: 0;
-          font-size: 1.5rem;
-          font-weight: 700;
-          color: var(--primary);
-        }
-      }
-    }
-    
     .footer-tagline {
       color: var(--primary-medium);
       font-size: 0.9rem;
@@ -1405,28 +1390,6 @@ body.groqsters-categories-page,
         max-width: none;
         text-align: left;
         margin: 0;
-      }
-    }
-    
-    // Mobile/tablet layout: logo left, tagline right
-    @media (max-width: 1023px) {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      text-align: left;
-      
-      .footer-logo {
-        margin-bottom: 0;
-        flex-shrink: 0;
-        
-        a svg {
-          width: 8em !important;
-          height: 2.5em !important;
-        }
-      }
-      
-      .footer-tagline {
-        flex: 1;
       }
     }
   }
@@ -1484,7 +1447,6 @@ body.groqsters-categories-page,
     justify-content: space-between;
     align-items: center;
     padding-top: 2rem;
-    border-top: 1px solid var(--primary-low);
     
     @media (max-width: 767px) {
       flex-direction: column;
@@ -1620,20 +1582,12 @@ body.groqsters-categories-page,
     }
   }
   
-  .community-links-row {
-    border-bottom-color: var(--primary-low);
-    
-    .community-title {
-      color: var(--primary-high);
-    }
-    
+  .footer-header-row {
     .community-link {
-      background: var(--primary-very-low);
       color: var(--primary-medium);
       
       &:hover {
-        background: var(--primary);
-        color: white;
+        color: var(--primary-high);
       }
     }
   }
