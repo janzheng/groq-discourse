@@ -43,8 +43,9 @@ export default {
 
       // Function to update banner styling (applies Vercel-style positioning to Discourse's welcome banner)
       const updateHeaderBanner = () => {
-        // Try multiple selectors for Discourse's welcome banner
-        let targetBanner = document.querySelector('.search-banner.welcome-banner') ||
+        // Target the specific Discourse welcome banner structure like Vercel
+        let targetBanner = document.querySelector('.below-site-header-outlet.search-banner.welcome-banner') ||
+                          document.querySelector('.search-banner.welcome-banner') ||
                           document.querySelector('.welcome-banner.--above-topic-content') ||
                           document.querySelector('.welcome-banner') ||
                           document.querySelector('[class*="welcome-banner"]') ||
@@ -52,26 +53,36 @@ export default {
         
         // Apply Vercel-style positioning and styling to existing banner
         if (targetBanner) {
+          // Let CSS handle most styling, but ensure key properties are set
           targetBanner.style.background = 'linear-gradient(135deg, #c2410c, #ea580c, #f97316)';
           targetBanner.style.color = 'white';
-          targetBanner.style.padding = '2rem';
-          targetBanner.style.textAlign = 'center';
-          targetBanner.style.borderRadius = '0'; // Full width like Vercel
-          targetBanner.style.margin = '0 0 2rem 0';
+          targetBanner.style.borderRadius = '0';
           targetBanner.style.width = '100vw';
+          targetBanner.style.marginLeft = 'calc(-50vw + 50%)';
+          targetBanner.style.marginRight = 'calc(-50vw + 50%)';
+          targetBanner.style.marginBottom = '2rem';
+          targetBanner.style.padding = '2rem 0';
+          targetBanner.style.textAlign = 'center';
+          
+          // Ensure the banner appears above main content
           targetBanner.style.position = 'relative';
-          targetBanner.style.left = '50%';
-          targetBanner.style.right = '50%';
-          targetBanner.style.marginLeft = '-50vw';
-          targetBanner.style.marginRight = '-50vw';
           targetBanner.style.zIndex = '10';
           
-          // Center the inner content
-          const innerWrapper = targetBanner.querySelector('.welcome-banner__inner-wrapper, .custom-search-banner');
-          if (innerWrapper) {
-            innerWrapper.style.maxWidth = '1200px';
-            innerWrapper.style.margin = '0 auto';
-            innerWrapper.style.padding = '0 2rem';
+          // Style inner content containers
+          const innerWrappers = targetBanner.querySelectorAll('.welcome-banner__inner-wrapper, .custom-search-banner, .welcome-banner__wrap');
+          innerWrappers.forEach(wrapper => {
+            wrapper.style.maxWidth = '1200px';
+            wrapper.style.margin = '0 auto';
+            wrapper.style.padding = '0 2rem';
+          });
+          
+          // Style the headline
+          const headline = targetBanner.querySelector('.custom-search-banner-headline');
+          if (headline) {
+            headline.style.fontSize = '2rem';
+            headline.style.fontWeight = '700';
+            headline.style.marginBottom = '0.75rem';
+            headline.style.color = 'white';
           }
         }
         
