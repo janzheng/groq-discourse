@@ -93,6 +93,7 @@
   z-index: 10;
   
   h1 {
+    font-family: var(--heading-font-family); // Use heading font family
     margin: 0 0 0.75rem 0;
     font-size: 2rem;
     font-weight: 700;
@@ -100,6 +101,7 @@
   }
   
   h2 {
+    font-family: var(--heading-font-family); // Use heading font family
     margin: 0 0 1.5rem 0;
     font-size: 1.1rem;
     font-weight: 400;
@@ -180,10 +182,11 @@
   margin-right: calc(-50vw + 50%);
   margin-bottom: 2rem;
   border-radius: 0;
-  background: linear-gradient(135deg, #c2410c, #ea580c, #f97316);
-  color: white;
+  background: var(--secondary); // Remove gradient, use secondary background
+  color: var(--primary); // Use primary text color instead of white
   padding: 2rem 0;
   text-align: center;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1); // Add box shadow
   
   // Center the inner content
   .welcome-banner__inner-wrapper,
@@ -196,10 +199,11 @@
   
   // Style the headline
   .custom-search-banner-headline {
+    font-family: var(--heading-font-family); // Use heading font family
     font-size: 2rem;
     font-weight: 700;
     margin-bottom: 0.75rem;
-    color: white;
+    color: var(--primary); // Use primary color instead of white
   }
   
   // Style the subtitle
@@ -207,7 +211,7 @@
     font-size: 1.1rem;
     opacity: 0.9;
     margin-bottom: 1.5rem;
-    color: white;
+    color: var(--primary); // Use primary color instead of white
   }
   
   // Style the search area
@@ -221,8 +225,8 @@
       
       .search-input-wrapper {
         .search-input {
-          background: rgba(255, 255, 255, 0.95);
-          border: none;
+          background: var(--secondary);
+          border: 3px solid #f97316; // Add thick orange border
           border-radius: 8px;
           padding: 0.75rem 1rem;
           width: 100%;
@@ -232,7 +236,8 @@
           
           &:focus-within {
             background: white;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+            border-color: #ea580c; // Darker orange on focus
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15), 0 0 0 2px rgba(249, 115, 22, 0.2); // Add orange glow
             transform: translateY(-1px);
           }
           

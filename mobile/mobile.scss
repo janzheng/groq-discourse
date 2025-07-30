@@ -21,6 +21,7 @@
   border-radius: 0; // Keep full width on mobile like Vercel
   
   h2 {
+    font-family: var(--heading-font-family); // Use heading font family on mobile
     font-size: 1.3rem;
   }
   
@@ -37,6 +38,10 @@
   margin-right: calc(-50vw + 50%);
   margin-bottom: 1rem;
   padding: 1.5rem 0;
+  // Override background and add box shadow for mobile
+  background: var(--secondary) !important;
+  color: var(--primary) !important;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1) !important;
   
   .welcome-banner__inner-wrapper,
   .custom-search-banner,
@@ -45,6 +50,7 @@
   }
   
   .custom-search-banner-headline {
+    font-family: var(--heading-font-family); // Use heading font family on mobile
     font-size: 1.3rem;
     margin-bottom: 1rem;
   }
@@ -63,6 +69,13 @@
       .search-input-wrapper .search-input {
         padding: 0.5rem 1rem;
         font-size: 0.9rem;
+        border: 3px solid #f97316; // Ensure orange border on mobile
+        background: var(--secondary);
+        
+        &:focus-within {
+          border-color: #ea580c;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1), 0 0 0 2px rgba(249, 115, 22, 0.2);
+        }
       }
     }
   }

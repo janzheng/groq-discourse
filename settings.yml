@@ -28,13 +28,6 @@ welcome_banner_subtitle:
   default: "Find help, share your knowledge, and experience fast inference"
   description: "Subtitle text (h2) shown below the main header"
 
-show_banner_search:
-  type: bool
-  default: true
-  description: "Show search bar in the welcome banner"
-
-
-
 show_alert_banner:
   type: bool
   default: false
