@@ -55,10 +55,13 @@ export default {
         const elements = [];
 
         // Add welcome banner if enabled
-        if (settings.show_welcome_banner && settings.welcome_banner_text) {
+        if (settings.show_welcome_banner) {
+          const currentUser = api.getCurrentUser();
+          const headerText = currentUser ? `Welcome back, ${currentUser.username}!` : "Welcome to Our Community";
+          
           elements.push(
             dec.h("div.welcome-banner", [
-              dec.h("h2", "Welcome to Our Community"),
+              dec.h("h2", headerText),
               dec.h("p", "Find help, share your knowledge, and experience fast inference")
             ])
           );
@@ -160,11 +163,14 @@ export default {
           bannerContainer.className = 'groqsters-banners-container';
 
           // Add welcome banner if enabled
-          if (settings.show_welcome_banner && settings.welcome_banner_text) {
+          if (settings.show_welcome_banner) {
+            const currentUser = api.getCurrentUser();
+            const headerText = currentUser ? `Welcome back, ${currentUser.username}!` : "Welcome to Our Community";
+            
             const welcomeBanner = document.createElement('div');
             welcomeBanner.className = 'welcome-banner';
             welcomeBanner.innerHTML = `
-              <h2>Welcome to Our Community</h2>
+              <h2>${headerText}</h2>
               <p>Find help, share your knowledge, and experience fast inference</p>
             `;
             bannerContainer.appendChild(welcomeBanner);

@@ -32,9 +32,14 @@
 </header>
 
 {{!-- Welcome banner for homepage --}}
-{{#if (and showWelcomeBanner welcomeBannerText)}}
+{{#if showWelcomeBanner}}
   <div class="welcome-banner groqsters-fade-in">
-    <h2>Welcome to Our Community</h2>
-    <p>Find help, share your knowledge, and experience fast inference</p>
+    {{#if currentUser}}
+      <h2>Welcome back, {{currentUser.username}}!</h2>
+      <p>Find help, share your knowledge, and experience fast inference</p>
+    {{else}}
+      <h2>Welcome to Our Community</h2>
+      <p>Find help, share your knowledge, and experience fast inference</p>
+    {{/if}}
   </div>
 {{/if}} 
