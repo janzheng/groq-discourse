@@ -485,7 +485,8 @@ div.groqsters-feature-banner {
     
     // Tablet: 2 columns
     @media (max-width: 768px) and (min-width: 481px) {
-      grid-template-columns: repeat(2, 1fr) !important;
+      // grid-template-columns: repeat(2, 1fr) !important;
+      grid-template-columns: 1fr !important;
       gap: 0.75rem !important;
     }
     
