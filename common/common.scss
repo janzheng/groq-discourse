@@ -1821,4 +1821,24 @@ body.groqsters-categories-page,
       }
     }
   }
+}
+
+// Groqsters Below Header Test for below-site-header outlet
+.groqsters-below-header-test {
+  position: relative;
+  z-index: 150;
+  font-family: var(--base-font-family);
+  
+  div {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    
+    span {
+      transition: all 0.2s ease;
+      border-radius: 3px;
+      
+      &:hover {
+        background: rgba(255, 255, 255, 0.1);
+      }
+    }
+  }
 } 
