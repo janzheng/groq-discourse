@@ -176,7 +176,6 @@
 // Navigation Grid Component
 .groqsters-navigation-grid {
   margin: 2rem 0;
-  padding: 0 1rem;
   
   .navigation-grid {
     display: grid;
@@ -470,7 +469,6 @@ div.groqsters-feature-banner {
     display: grid !important;
     grid-template-columns: repeat(3, 1fr) !important;
     gap: 1rem !important;
-    max-width: 1200px !important;
     margin: 0 auto !important;
     padding: 0 !important;
     width: 100% !important;
