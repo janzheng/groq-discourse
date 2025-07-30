@@ -493,23 +493,13 @@ export default {
           existingSidebar.remove();
         }
 
-        // Find the main categories container
-        const mainContainer = document.querySelector('.categories-and-latest, .categories-only, .categories-page, #main-outlet');
-        if (!mainContainer) return;
+        // Find the categories column specifically
+        const categoriesColumn = document.querySelector('.column.categories');
+        if (!categoriesColumn) return;
 
-        // Create a wrapper to hold both content and sidebar
-        const wrapper = document.createElement('div');
-        wrapper.className = 'groqsters-categories-wrapper';
-        
-        // Move existing content into wrapper
-        const existingContent = mainContainer.innerHTML;
-        mainContainer.innerHTML = '';
-        
-        const contentDiv = document.createElement('div');
-        contentDiv.className = 'groqsters-categories-content';
-        contentDiv.innerHTML = existingContent;
-        
-        wrapper.appendChild(contentDiv);
+        // Find the category-list table within the categories column
+        const categoryListTable = categoriesColumn.querySelector('.category-list');
+        if (!categoryListTable) return;
 
         // Create sidebar container
         const sidebar = document.createElement('div');
@@ -603,13 +593,9 @@ export default {
           }
         }
 
-        // Add sidebar to wrapper and insert wrapper into main container
+        // Insert sidebar directly after the category table within the categories column
         if (sidebar.children.length > 0) {
-          wrapper.appendChild(sidebar);
-          mainContainer.appendChild(wrapper);
-        } else {
-          // If no sidebar content, just put the content back
-          mainContainer.appendChild(contentDiv);
+          categoriesColumn.insertBefore(sidebar, categoryListTable.nextSibling);
         }
       };
 
