@@ -399,10 +399,50 @@ export default {
         }
       };
 
+      // Alternative method - use document.body
+      const addFooterToBody = () => {
+        if (document.querySelector('.groqsters-footer')) return;
+        
+        const footerElement = createSimpleFooter();
+        document.body.appendChild(footerElement);
+      };
+
+      // Cleanup and re-add footer
+      const refreshFooter = () => {
+        const existingFooter = document.querySelector('.groqsters-footer');
+        if (existingFooter) {
+          existingFooter.remove();
+        }
+        setTimeout(() => {
+          addCustomFooter();
+          // Fallback to body if main-outlet method fails
+          if (!document.querySelector('.groqsters-footer')) {
+            addFooterToBody();
+          }
+        }, 100);
+      };
+
+      // Test method - force add to body on load
+      const forceAddFooter = () => {
+        if (!document.querySelector('.groqsters-footer')) {
+          const footer = createSimpleFooter();
+          const wrap = document.querySelector('#main-outlet-wrapper') || 
+                       document.querySelector('#main-outlet') ||
+                       document.querySelector('body');
+          if (wrap) {
+            wrap.appendChild(footer);
+          }
+        }
+      };
+
       // Add footer on initial load and page changes
       api.onPageChange(() => {
-        setTimeout(refreshFooter, 100);
-        setTimeout(forceAddFooter, 500); // Fallback method
+        setTimeout(() => {
+          // Clean approach - just add footer if it doesn't exist
+          if (!document.querySelector('.groqsters-footer')) {
+            forceAddFooter();
+          }
+        }, 200);
         
         const isCategoriesPage = window.location.pathname === "/" ||
                                 window.location.pathname === "/latest" ||
@@ -537,10 +577,12 @@ export default {
         }
       });
 
-      // Also add footer on initial load - multiple attempts
-      setTimeout(forceAddFooter, 500);
-      setTimeout(forceAddFooter, 1000);
-      setTimeout(forceAddFooter, 2000);
+      // Also add footer on initial load
+      setTimeout(() => {
+        if (!document.querySelector('.groqsters-footer')) {
+          forceAddFooter();
+        }
+      }, 1000);
 
       // Replace banner placeholders with actual images
       this.replaceBannerPlaceholders = () => {
