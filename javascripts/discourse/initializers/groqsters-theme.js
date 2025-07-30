@@ -94,17 +94,12 @@ export default {
             <h2 style="margin: 0 0 1.5rem 0; font-size: 1.1rem; font-weight: 400; opacity: 0.9; line-height: 1.4;">${subtitleText}</h2>
           `;
           
-          // Add search bar if enabled
+          // Add search bar if enabled - use Discourse's built-in search
           if (settings.show_banner_search !== false) {
             bannerHTML += `
               <div style="margin-top: 1.5rem; max-width: 500px; margin-left: auto; margin-right: auto;">
-                <div style="position: relative;">
-                  <input type="text" placeholder="Search" style="width: 100%; padding: 0.75rem 1rem; border: none; border-radius: 8px; font-size: 1rem; background: rgba(255, 255, 255, 0.95); color: #374151; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);">
-                  <button style="position: absolute; right: 8px; top: 50%; transform: translateY(-50%); background: none; border: none; color: #6b7280; cursor: pointer; padding: 0.5rem;">
-                    <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
-                      <path d="M14.386 14.386l4.0877 4.0877-1.4142 1.4142-4.0877-4.0877C11.8352 16.3385 10.0578 17 8.1429 17 3.6467 17 0 13.3533 0 8.8571 0 4.3609 3.6467 0.7142 8.1429 0.7142c4.4962 0 8.1428 3.6467 8.1428 8.1429 0 1.9149-0.6615 3.6923-1.8999 5.5289zM8.1429 15.1429c3.5829 0 6.4286-2.8457 6.4286-6.4286 0-3.5829-2.8457-6.4286-6.4286-6.4286-3.5829 0-6.4286 2.8457-6.4286 6.4286 0 3.5829 2.8457 6.4286 6.4286 6.4286z"/>
-                    </svg>
-                  </button>
+                <div id="groqsters-search-container" style="position: relative;">
+                  <!-- Discourse search will be inserted here -->
                 </div>
               </div>
             `;
