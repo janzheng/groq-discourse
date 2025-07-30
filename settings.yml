@@ -108,4 +108,184 @@ feature_banner_item_3_image:
 feature_banner_item_3_url:
   type: string
   default: ""
-  description: "URL to link to when clicking the third feature banner item (can be relative like '/about' or external like 'https://example.com')" 
+  description: "URL to link to when clicking the third feature banner item (can be relative like '/about' or external like 'https://example.com')"
+
+show_navigation_grid:
+  type: bool
+  default: true
+  description: "Show a customizable navigation grid with icons and links"
+
+nav_item_1_icon:
+  type: string
+  default: "💬"
+  description: "Emoji icon for the first navigation item"
+
+nav_item_1_title:
+  type: string
+  default: "Discussion Forum"
+  description: "Title for the first navigation item"
+
+nav_item_1_description:
+  type: string
+  default: "Ask questions, share ideas, and connect with the community"
+  description: "Description for the first navigation item"
+
+nav_item_1_url:
+  type: string
+  default: "/latest"
+  description: "URL for the first navigation item"
+
+nav_item_2_icon:
+  type: string
+  default: "🚀"
+  description: "Emoji icon for the second navigation item"
+
+nav_item_2_title:
+  type: string
+  default: "Groq API Tutorials"
+  description: "Title for the second navigation item"
+
+nav_item_2_description:
+  type: string
+  default: "Explore guides, examples, and tutorials"
+  description: "Description for the second navigation item"
+
+nav_item_2_url:
+  type: string
+  default: "/c/tutorials"
+  description: "URL for the second navigation item"
+
+nav_item_3_icon:
+  type: string
+  default: "📚"
+  description: "Emoji icon for the third navigation item"
+
+nav_item_3_title:
+  type: string
+  default: "Help Center"
+  description: "Title for the third navigation item"
+
+nav_item_3_description:
+  type: string
+  default: "Find answers to frequently asked questions"
+  description: "Description for the third navigation item"
+
+nav_item_3_url:
+  type: string
+  default: "/c/help"
+  description: "URL for the third navigation item"
+
+nav_item_4_icon:
+  type: string
+  default: "💡"
+  description: "Emoji icon for the fourth navigation item"
+
+nav_item_4_title:
+  type: string
+  default: "Feature Requests"
+  description: "Title for the fourth navigation item"
+
+nav_item_4_description:
+  type: string
+  default: "Submit and vote on new feature ideas"
+  description: "Description for the fourth navigation item"
+
+nav_item_4_url:
+  type: string
+  default: "/c/feature-requests"
+  description: "URL for the fourth navigation item"
+
+show_categories_sidebar:
+  type: bool
+  default: true
+  description: "Show a customizable sidebar on the categories page"
+
+sidebar_intro_title:
+  type: string
+  default: "New to the community?"
+  description: "Title for the sidebar introduction section"
+
+sidebar_intro_text:
+  type: string
+  default: "If you're new to the community, please {introduce_link}! If you need help, {ask_link}, troubleshoot issues, or {share_link}!"
+  description: "Introduction text with placeholders for links: {introduce_link}, {ask_link}, {share_link}"
+
+sidebar_intro_link_1_text:
+  type: string
+  default: "introduce yourself"
+  description: "Text for the first inline link in introduction"
+
+sidebar_intro_link_1_url:
+  type: string
+  default: "/t/introduce-yourself"
+  description: "URL for the first inline link"
+
+sidebar_intro_link_2_text:
+  type: string
+  default: "ask the community"
+  description: "Text for the second inline link in introduction"
+
+sidebar_intro_link_2_url:
+  type: string
+  default: "/c/help"
+  description: "URL for the second inline link"
+
+sidebar_intro_link_3_text:
+  type: string
+  default: "share your project"
+  description: "Text for the third inline link in introduction"
+
+sidebar_intro_link_3_url:
+  type: string
+  default: "/c/showcase"
+  description: "URL for the third inline link"
+
+sidebar_quick_links:
+  type: string
+  default: "Youtube|https://youtube.com,Examples|/examples,API Cookbook|/cookbook"
+  description: "Quick links in format: Text|URL,Text|URL (comma separated)"
+
+sidebar_section_1_title:
+  type: string
+  default: "API Cookbook"
+  description: "Title for the first sidebar section"
+
+sidebar_section_1_description:
+  type: string
+  default: "Example code and guides for Groq API"
+  description: "Description for the first sidebar section"
+
+sidebar_section_1_url:
+  type: string
+  default: "/c/cookbook"
+  description: "URL for the first sidebar section"
+
+sidebar_section_2_title:
+  type: string
+  default: "Examples"
+  description: "Title for the second sidebar section"
+
+sidebar_section_2_description:
+  type: string
+  default: "Fully-developed apps from both our team and the Groq community"
+  description: "Description for the second sidebar section"
+
+sidebar_section_2_url:
+  type: string
+  default: "/c/examples"
+  description: "URL for the second sidebar section"
+
+sidebar_section_3_title:
+  type: string
+  default: "Docs"
+  description: "Title for the third sidebar section"
+
+sidebar_section_3_description:
+  type: string
+  default: "Get up and running with the Groq API"
+  description: "Description for the third sidebar section"
+
+sidebar_section_3_url:
+  type: string
+  default: "/docs"
+  description: "URL for the third sidebar section" 

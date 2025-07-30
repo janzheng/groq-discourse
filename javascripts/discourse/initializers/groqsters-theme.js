@@ -39,14 +39,9 @@ export default {
         }
       };
 
-      // Console log for debugging
-      console.log("Groqsters theme initialized with settings:", {
-        welcomeBanner: settings.show_welcome_banner,
-        alertBanner: settings.show_alert_banner,
-        featureBanner: settings.show_feature_banner
-      });
 
-      // Function to update banner (target Discourse's existing banner OR our header banner)
+
+      // Function to update banner styling (applies orange gradient to Discourse's welcome banner)
       const updateHeaderBanner = () => {
         // Try multiple selectors for Discourse's welcome banner
         let targetBanner = document.querySelector('.welcome-banner.--above-topic-content') ||
@@ -54,78 +49,8 @@ export default {
                           document.querySelector('[class*="welcome-banner"]') ||
                           document.getElementById('groqsters-header-banner');
         
-        console.log('Groqsters: Looking for banner, found:', !!targetBanner);
-        console.log('Groqsters: Banner type:', targetBanner?.classList.toString() || 'none');
-        console.log('Groqsters: Current banner content:', targetBanner?.textContent?.substring(0, 100) || 'none');
-        console.log('Groqsters: Settings:', {
-          show_welcome_banner: settings.show_welcome_banner,
-          welcome_banner_header_logged_in: settings.welcome_banner_header_logged_in,
-          welcome_banner_header_guest: settings.welcome_banner_header_guest,
-          welcome_banner_subtitle: settings.welcome_banner_subtitle,
-          show_banner_search: settings.show_banner_search
-        });
-        
-        // COMMENTED OUT: Custom banner modification - testing site texts approach
-        /*
-        if (targetBanner && settings.show_welcome_banner) {
-          const currentUser = api.getCurrentUser();
-          console.log('Groqsters: Current user:', currentUser?.username);
-          
-          // Apply our custom styling to the existing banner
-          targetBanner.style.background = 'linear-gradient(135deg, #c2410c, #ea580c, #f97316)';
-          targetBanner.style.color = 'white';
-          targetBanner.style.padding = '2rem';
-          targetBanner.style.textAlign = 'center';
-          targetBanner.style.borderRadius = '8px';
-          targetBanner.style.margin = '1rem 0';
-          
-          // Create or update banner content
-          let headerText;
-          if (currentUser) {
-            headerText = (settings.welcome_banner_header_logged_in || "Welcome back, {username}!")
-              .replace("{username}", currentUser.username);
-          } else {
-            headerText = settings.welcome_banner_header_guest || "Welcome to Our Community";
-          }
-          
-          const subtitleText = settings.welcome_banner_subtitle || "Find help, share your knowledge, and experience fast inference";
-          
-          // Replace banner content with our custom structure
-          let bannerHTML = `
-            <h1 style="margin: 0 0 0.75rem 0; font-size: 2rem; font-weight: 700; line-height: 1.2;">${headerText}</h1>
-            <h2 style="margin: 0 0 1.5rem 0; font-size: 1.1rem; font-weight: 400; opacity: 0.9; line-height: 1.4;">${subtitleText}</h2>
-          `;
-          
-          // Add search bar if enabled - check actual setting value
-          console.log('Groqsters: Search setting check:', {
-            show_banner_search: settings.show_banner_search,
-            type: typeof settings.show_banner_search,
-            condition: settings.show_banner_search !== false
-          });
-          
-          if (settings.show_banner_search === true) {
-            console.log('Groqsters: Adding search placeholder - will inject Discourse search after banner update');
-            bannerHTML += `
-              <div id="groqsters-search-mount" style="margin-top: 1.5rem; max-width: 500px; margin-left: auto; margin-right: auto;">
-                <!-- Discourse search component will be mounted here -->
-              </div>
-            `;
-          } else {
-            console.log('Groqsters: Search bar disabled, setting value:', settings.show_banner_search);
-          }
-          
-          targetBanner.innerHTML = bannerHTML;
-          console.log('Groqsters: Updated banner content');
-        } else if (targetBanner && !settings.show_welcome_banner) {
-          // Hide banner if setting is disabled
-          targetBanner.style.display = 'none';
-          console.log('Groqsters: Hidden banner per settings');
-        }
-        */
-        
-        // TESTING: Just apply styling to existing banner without changing content
+        // Apply orange gradient styling to existing banner without changing content
         if (targetBanner) {
-          console.log('Groqsters: Found banner, applying styling only');
           targetBanner.style.background = 'linear-gradient(135deg, #c2410c, #ea580c, #f97316)';
           targetBanner.style.color = 'white';
           targetBanner.style.padding = '2rem';
@@ -214,12 +139,48 @@ export default {
           );
         }
 
+        // Add navigation grid if enabled
+        if (settings.show_navigation_grid) {
+          const navItems = [];
+          
+          // Create navigation items for each configured item
+          for (let i = 1; i <= 4; i++) {
+            const icon = settings[`nav_item_${i}_icon`];
+            const title = settings[`nav_item_${i}_title`];
+            const description = settings[`nav_item_${i}_description`];
+            const url = settings[`nav_item_${i}_url`];
+            
+            // Only add item if it has at least a title and URL
+            if (title && url) {
+              navItems.push(
+                dec.h("a.nav-item", {
+                  href: url,
+                  target: url.startsWith('http') ? '_blank' : '_self'
+                }, [
+                  dec.h("div.nav-item-header", [
+                    dec.h("span.nav-item-icon", icon || "📍"),
+                    dec.h("h3.nav-item-title", title)
+                  ]),
+                  dec.h("p.nav-item-description", description || "")
+                ])
+              );
+            }
+          }
+          
+          if (navItems.length > 0) {
+            elements.push(
+              dec.h("div.groqsters-navigation-grid", [
+                dec.h("div.navigation-grid", navItems)
+              ])
+            );
+          }
+        }
+
         return elements.length > 0 ? elements : null;
       });
 
       // Always try to update header banner on page changes
       api.onPageChange(() => {
-        console.log('Groqsters: Page changed to:', window.location.pathname);
         
         // Update header banner regardless of page (in case banner is shown on multiple pages)
         setTimeout(updateHeaderBanner, 100);
@@ -310,6 +271,58 @@ export default {
             bannerContainer.appendChild(featureBanner);
           }
 
+          // Add navigation grid if enabled
+          if (settings.show_navigation_grid) {
+            const navigationContainer = document.createElement('div');
+            navigationContainer.className = 'groqsters-navigation-grid';
+            
+            const navigationGrid = document.createElement('div');
+            navigationGrid.className = 'navigation-grid';
+            
+            // Create navigation items
+            for (let i = 1; i <= 4; i++) {
+              const icon = settings[`nav_item_${i}_icon`];
+              const title = settings[`nav_item_${i}_title`];
+              const description = settings[`nav_item_${i}_description`];
+              const url = settings[`nav_item_${i}_url`];
+              
+              // Only add item if it has at least a title and URL
+              if (title && url) {
+                const navItem = document.createElement('a');
+                navItem.className = 'nav-item';
+                navItem.href = url;
+                navItem.target = url.startsWith('http') ? '_blank' : '_self';
+                
+                const header = document.createElement('div');
+                header.className = 'nav-item-header';
+                
+                const iconSpan = document.createElement('span');
+                iconSpan.className = 'nav-item-icon';
+                iconSpan.textContent = icon || "📍";
+                
+                const titleElement = document.createElement('h3');
+                titleElement.className = 'nav-item-title';
+                titleElement.textContent = title;
+                
+                header.appendChild(iconSpan);
+                header.appendChild(titleElement);
+                
+                const descriptionElement = document.createElement('p');
+                descriptionElement.className = 'nav-item-description';
+                descriptionElement.textContent = description || "";
+                
+                navItem.appendChild(header);
+                navItem.appendChild(descriptionElement);
+                navigationGrid.appendChild(navItem);
+              }
+            }
+            
+            if (navigationGrid.children.length > 0) {
+              navigationContainer.appendChild(navigationGrid);
+              bannerContainer.appendChild(navigationContainer);
+            }
+          }
+
           // Insert the banner container
           if (bannerContainer.children.length > 0) {
             if (navigationContainer) {
@@ -344,6 +357,12 @@ export default {
             
             // Force the body to have our category class
             document.body.classList.add('groqsters-categories-page');
+            
+            // Add sidebar if enabled
+            if (settings.show_categories_sidebar) {
+              document.body.classList.add('has-sidebar');
+              this.createCategoriesSidebar();
+            }
             
             // Hide Latest section on Categories tab
             const latestSections = document.querySelectorAll('.latest-topic-list, .latest-topic-list-container, .latest-topic-list-item');
@@ -437,12 +456,16 @@ export default {
               header.style.display = 'none';
             });
             
-            console.log('Groqsters Cloudflare-style categories layout applied');
-            
           }, 100);
         } else {
           // Remove classes when not on categories page
-          document.body.classList.remove('groqsters-categories-page');
+          document.body.classList.remove('groqsters-categories-page', 'has-sidebar');
+          
+          // Remove sidebar if it exists
+          const existingSidebar = document.querySelector('.groqsters-categories-sidebar');
+          if (existingSidebar) {
+            existingSidebar.remove();
+          }
         }
       });
 
@@ -462,18 +485,117 @@ export default {
         });
       };
 
-      console.log("Groqsters theme API setup completed with banner config:", {
-        bannerTitles: {
-          item1: settings.feature_banner_item_1_title,
-          item2: settings.feature_banner_item_2_title,
-          item3: settings.feature_banner_item_3_title
-        },
-        bannerUrls: {
-          item1: settings.feature_banner_item_1_url,
-          item2: settings.feature_banner_item_2_url,
-          item3: settings.feature_banner_item_3_url
+      // Create categories page sidebar
+      this.createCategoriesSidebar = () => {
+        // Remove existing sidebar if it exists
+        const existingSidebar = document.querySelector('.groqsters-categories-sidebar');
+        if (existingSidebar) {
+          existingSidebar.remove();
         }
-      });
+
+        // Find the main categories container
+        const mainContainer = document.querySelector('.categories-and-latest, .categories-only, .categories-page, #main-outlet');
+        if (!mainContainer) return;
+
+        // Create sidebar container
+        const sidebar = document.createElement('div');
+        sidebar.className = 'groqsters-categories-sidebar';
+
+        // Create introduction section
+        if (settings.sidebar_intro_title || settings.sidebar_intro_text) {
+          const introSection = document.createElement('div');
+          introSection.className = 'sidebar-section';
+
+          if (settings.sidebar_intro_title) {
+            const title = document.createElement('h3');
+            title.className = 'sidebar-title';
+            title.textContent = settings.sidebar_intro_title;
+            introSection.appendChild(title);
+          }
+
+          if (settings.sidebar_intro_text) {
+            const introText = document.createElement('div');
+            introText.className = 'sidebar-intro-text';
+            
+            // Replace link placeholders with actual links
+            let text = settings.sidebar_intro_text;
+            if (settings.sidebar_intro_link_1_text && settings.sidebar_intro_link_1_url) {
+              const link1 = `<a href="${settings.sidebar_intro_link_1_url}">${settings.sidebar_intro_link_1_text}</a>`;
+              text = text.replace('{introduce_link}', link1);
+            }
+            if (settings.sidebar_intro_link_2_text && settings.sidebar_intro_link_2_url) {
+              const link2 = `<a href="${settings.sidebar_intro_link_2_url}">${settings.sidebar_intro_link_2_text}</a>`;
+              text = text.replace('{ask_link}', link2);
+            }
+            if (settings.sidebar_intro_link_3_text && settings.sidebar_intro_link_3_url) {
+              const link3 = `<a href="${settings.sidebar_intro_link_3_url}">${settings.sidebar_intro_link_3_text}</a>`;
+              text = text.replace('{share_link}', link3);
+            }
+            
+            introText.innerHTML = text;
+            introSection.appendChild(introText);
+          }
+
+          // Add quick links if configured
+          if (settings.sidebar_quick_links) {
+            const quickLinksContainer = document.createElement('div');
+            quickLinksContainer.className = 'sidebar-quick-links';
+            
+            const links = settings.sidebar_quick_links.split(',');
+            links.forEach(linkData => {
+              const [text, url] = linkData.split('|');
+              if (text && url) {
+                const link = document.createElement('a');
+                link.href = url.trim();
+                link.textContent = text.trim();
+                link.target = url.trim().startsWith('http') ? '_blank' : '_self';
+                quickLinksContainer.appendChild(link);
+              }
+            });
+            
+            if (quickLinksContainer.children.length > 0) {
+              introSection.appendChild(quickLinksContainer);
+            }
+          }
+
+          sidebar.appendChild(introSection);
+        }
+
+        // Create detailed sections
+        for (let i = 1; i <= 3; i++) {
+          const title = settings[`sidebar_section_${i}_title`];
+          const description = settings[`sidebar_section_${i}_description`];
+          const url = settings[`sidebar_section_${i}_url`];
+
+          if (title && url) {
+            const section = document.createElement('a');
+            section.className = 'sidebar-section sidebar-detailed-section';
+            section.href = url;
+            section.target = url.startsWith('http') ? '_blank' : '_self';
+
+            const titleElement = document.createElement('h4');
+            titleElement.className = 'section-title';
+            titleElement.textContent = title;
+            section.appendChild(titleElement);
+
+            if (description) {
+              const descElement = document.createElement('p');
+              descElement.className = 'section-description';
+              descElement.textContent = description;
+              section.appendChild(descElement);
+            }
+
+            sidebar.appendChild(section);
+          }
+        }
+
+        // Insert sidebar into the page
+        if (sidebar.children.length > 0) {
+          mainContainer.appendChild(sidebar);
+        }
+      };
+
+
 
       // Add mutation observer to catch banner when it's added to DOM
       const observer = new MutationObserver((mutations) => {
@@ -481,7 +603,6 @@ export default {
           mutation.addedNodes.forEach((node) => {
             if (node.nodeType === 1) { // Element node
               if (node.id === 'groqsters-header-banner' || node.querySelector('#groqsters-header-banner')) {
-                console.log('Groqsters: Banner detected via mutation observer');
                 setTimeout(updateHeaderBanner, 10);
               }
             }
