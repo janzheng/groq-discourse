@@ -70,7 +70,8 @@ export default {
       api.decorateWidget("home-logo:after", (dec) => {
         const isHomePage = window.location.pathname === "/" || 
                          window.location.pathname === "/latest" ||
-                         window.location.pathname === "/categories";
+                         window.location.pathname === "/categories" ||
+                         window.location.pathname === "/top";
         
         if (!isHomePage) return;
 
@@ -189,7 +190,8 @@ export default {
         
         const isHomePage = window.location.pathname === "/" || 
                          window.location.pathname === "/latest" ||
-                         window.location.pathname === "/categories";
+                         window.location.pathname === "/categories" ||
+                         window.location.pathname === "/top";
         
         if (!isHomePage) return;
 
@@ -339,7 +341,8 @@ export default {
 
       // Simple category page enhancement without complex DOM manipulation
       api.onPageChange(() => {
-        const isCategoriesPage = window.location.pathname === "/categories" || 
+        const isCategoriesPage = window.location.pathname === "/" ||
+                                window.location.pathname === "/categories" || 
                                 window.location.pathname.includes("/categories");
         
         if (isCategoriesPage) {
