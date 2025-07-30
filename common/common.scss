@@ -171,86 +171,62 @@
   box-sizing: border-box !important;
 }
 
-// Vercel-style banner positioning - above the entire layout including sidebar
-.below-site-header-outlet {
-  // Position the outlet to break out of container constraints
-  position: relative;
+// Vercel-style banner using below-site-header-outlet (already positioned correctly)
+.below-site-header-outlet.search-banner.welcome-banner {
+  // Full viewport width like Vercel
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+  margin-right: calc(-50vw + 50%);
+  margin-bottom: 2rem;
+  border-radius: 0;
+  background: linear-gradient(135deg, #c2410c, #ea580c, #f97316);
+  color: white;
+  padding: 2rem 0;
+  text-align: center;
   
-  &.search-banner.welcome-banner {
-    // Full viewport width positioning like Vercel
-    width: 100vw;
-    margin-left: calc(-50vw + 50%);
-    margin-right: calc(-50vw + 50%);
-    margin-bottom: 2rem;
-    border-radius: 0;
-    background: linear-gradient(135deg, #c2410c, #ea580c, #f97316);
+  // Center the inner content
+  .welcome-banner__inner-wrapper,
+  .custom-search-banner,
+  .welcome-banner__wrap {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+  
+  // Style the headline
+  .custom-search-banner-headline {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
     color: white;
-    padding: 2rem 0;
-    text-align: center;
+  }
+  
+  // Style the search area
+  .search-menu.welcome-banner__search-menu {
+    margin-top: 1.5rem;
     
-    // Center the inner content
-    .welcome-banner__inner-wrapper,
-    .custom-search-banner,
-    .welcome-banner__wrap {
-      max-width: 1200px;
+    .search-menu-container {
+      max-width: 500px;
       margin: 0 auto;
-      padding: 0 2rem;
-    }
-    
-    // Style the headline
-    .custom-search-banner-headline {
-      font-size: 2rem;
-      font-weight: 700;
-      margin-bottom: 0.75rem;
-      color: white;
-    }
-    
-    // Style the search area
-    .search-menu.welcome-banner__search-menu {
-      margin-top: 1.5rem;
       
-      .search-menu-container {
-        max-width: 500px;
-        margin: 0 auto;
-        
-        .search-input-wrapper {
-          .search-input {
-            background: rgba(255, 255, 255, 0.95);
+      .search-input-wrapper {
+        .search-input {
+          background: rgba(255, 255, 255, 0.95);
+          border: none;
+          border-radius: 8px;
+          padding: 0.75rem 1rem;
+          width: 100%;
+          font-size: 1rem;
+          
+          input {
+            background: transparent;
             border: none;
-            border-radius: 8px;
-            padding: 0.75rem 1rem;
+            outline: none;
             width: 100%;
-            font-size: 1rem;
-            
-            input {
-              background: transparent;
-              border: none;
-              outline: none;
-              width: 100%;
-            }
           }
         }
       }
     }
-  }
-}
-
-// Ensure main content area appears below the banner
-#main-outlet,
-#main-outlet-wrapper,
-.categories-and-latest,
-.categories-only {
-  position: relative;
-  z-index: 1;
-}
-
-// Force banner to appear above sidebar on discovery pages
-body.discovery-list,
-body.discovery-categories {
-  .below-site-header-outlet.search-banner.welcome-banner {
-    position: relative;
-    z-index: 10;
-    margin-bottom: 2rem;
   }
 }
 

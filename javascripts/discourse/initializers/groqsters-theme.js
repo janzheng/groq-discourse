@@ -41,48 +41,32 @@ export default {
 
 
 
-      // Function to update banner styling (applies Vercel-style positioning to Discourse's welcome banner)
+      // Function to update banner styling (let CSS handle positioning via below-site-header-outlet)
       const updateHeaderBanner = () => {
-        // Target the specific Discourse welcome banner structure like Vercel
-        let targetBanner = document.querySelector('.below-site-header-outlet.search-banner.welcome-banner') ||
-                          document.querySelector('.search-banner.welcome-banner') ||
-                          document.querySelector('.welcome-banner.--above-topic-content') ||
-                          document.querySelector('.welcome-banner') ||
-                          document.querySelector('[class*="welcome-banner"]') ||
-                          document.getElementById('groqsters-header-banner');
+        // Target the below-site-header-outlet banner (CSS handles the positioning)
+        let targetBanner = document.querySelector('.below-site-header-outlet.search-banner.welcome-banner');
         
-        // Apply Vercel-style positioning and styling to existing banner
+        // The banner is already positioned correctly by Discourse in below-site-header-outlet
+        // Just ensure our styling is applied (CSS should handle most of this)
         if (targetBanner) {
-          // Let CSS handle most styling, but ensure key properties are set
-          targetBanner.style.background = 'linear-gradient(135deg, #c2410c, #ea580c, #f97316)';
-          targetBanner.style.color = 'white';
-          targetBanner.style.borderRadius = '0';
-          targetBanner.style.width = '100vw';
-          targetBanner.style.marginLeft = 'calc(-50vw + 50%)';
-          targetBanner.style.marginRight = 'calc(-50vw + 50%)';
-          targetBanner.style.marginBottom = '2rem';
-          targetBanner.style.padding = '2rem 0';
-          targetBanner.style.textAlign = 'center';
+          // Minimal JS - let CSS do the work
+          console.log('Found Vercel-style banner in below-site-header-outlet');
+        } else {
+          // Fallback: look for other banner types and style them
+          targetBanner = document.querySelector('.search-banner.welcome-banner') ||
+                        document.querySelector('.welcome-banner.--above-topic-content') ||
+                        document.querySelector('.welcome-banner') ||
+                        document.querySelector('[class*="welcome-banner"]') ||
+                        document.getElementById('groqsters-header-banner');
           
-          // Ensure the banner appears above main content
-          targetBanner.style.position = 'relative';
-          targetBanner.style.zIndex = '10';
-          
-          // Style inner content containers
-          const innerWrappers = targetBanner.querySelectorAll('.welcome-banner__inner-wrapper, .custom-search-banner, .welcome-banner__wrap');
-          innerWrappers.forEach(wrapper => {
-            wrapper.style.maxWidth = '1200px';
-            wrapper.style.margin = '0 auto';
-            wrapper.style.padding = '0 2rem';
-          });
-          
-          // Style the headline
-          const headline = targetBanner.querySelector('.custom-search-banner-headline');
-          if (headline) {
-            headline.style.fontSize = '2rem';
-            headline.style.fontWeight = '700';
-            headline.style.marginBottom = '0.75rem';
-            headline.style.color = 'white';
+          if (targetBanner) {
+            // Apply fallback styling for non-below-site-header-outlet banners
+            targetBanner.style.background = 'linear-gradient(135deg, #c2410c, #ea580c, #f97316)';
+            targetBanner.style.color = 'white';
+            targetBanner.style.padding = '2rem';
+            targetBanner.style.textAlign = 'center';
+            targetBanner.style.borderRadius = '8px';
+            targetBanner.style.margin = '1rem 0';
           }
         }
         
