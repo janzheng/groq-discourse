@@ -39,46 +39,6 @@ export default {
         }
       };
 
-
-
-      // Function to enhance our connector-based welcome banner
-      const updateHeaderBanner = () => {
-        // Target our connector-based banner in below-site-header-outlet
-        const targetBanner = document.querySelector('.groqsters-welcome-banner');
-        
-        if (targetBanner) {
-          // Our banner is injected via connector, CSS handles the styling
-          console.log('Found connector-based welcome banner');
-          
-          // Add any dynamic functionality to the search input
-          const searchInput = targetBanner.querySelector('#custom-search-input');
-          if (searchInput) {
-            searchInput.addEventListener('keydown', (e) => {
-              if (e.key === 'Enter') {
-                const query = e.target.value.trim();
-                if (query) {
-                  window.location.href = `/search?q=${encodeURIComponent(query)}`;
-                }
-              }
-            });
-          }
-          
-          // Add functionality to advanced search button
-          const advancedBtn = targetBanner.querySelector('.show-advanced-search');
-          if (advancedBtn) {
-            advancedBtn.addEventListener('click', () => {
-              window.location.href = '/search?expanded=true';
-            });
-          }
-        }
-        
-        // Hide our old header banner since we're using the connector now
-        const headerBanner = document.getElementById('groqsters-header-banner');
-        if (headerBanner) {
-          headerBanner.style.display = 'none';
-        }
-      };
-
       // Add banners after hero area but before navigation tabs
       api.decorateWidget("home-logo:after", (dec) => {
         const isHomePage = window.location.pathname === "/" || 
@@ -89,11 +49,6 @@ export default {
         if (!isHomePage) return;
 
         const elements = [];
-
-        // Update header banner with a longer delay and retry mechanism
-        setTimeout(updateHeaderBanner, 100);
-        setTimeout(updateHeaderBanner, 500);
-        setTimeout(updateHeaderBanner, 1000);
 
         // Add alert banner if enabled
         if (settings.show_alert_banner && settings.alert_banner_message) {
@@ -195,11 +150,6 @@ export default {
 
       // Always try to update header banner on page changes
       api.onPageChange(() => {
-        
-        // Update header banner regardless of page (in case banner is shown on multiple pages)
-        setTimeout(updateHeaderBanner, 100);
-        setTimeout(updateHeaderBanner, 500);
-        setTimeout(updateHeaderBanner, 1000);
         
         const isHomePage = window.location.pathname === "/" || 
                          window.location.pathname === "/latest" ||
@@ -621,21 +571,6 @@ export default {
           categoriesColumn.insertBefore(sidebar, categoryListTable.nextSibling);
         }
       };
-
-
-
-      // Add mutation observer to catch banner when it's added to DOM
-      const observer = new MutationObserver((mutations) => {
-        mutations.forEach((mutation) => {
-          mutation.addedNodes.forEach((node) => {
-            if (node.nodeType === 1) { // Element node
-              if (node.id === 'groqsters-header-banner' || node.querySelector('#groqsters-header-banner')) {
-                setTimeout(updateHeaderBanner, 10);
-              }
-            }
-          });
-        });
-      });
 
       observer.observe(document.body, {
         childList: true,
