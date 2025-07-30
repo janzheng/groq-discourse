@@ -1331,6 +1331,18 @@ body.groqsters-categories-page,
   }
   
   // Main footer grid layout
+  .footer-grid-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    margin-bottom: 2rem;
+    width: 100%;
+    overflow: visible;
+    
+    .footer-grid {
+      flex: 1;
+    }
+
   .footer-grid {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
