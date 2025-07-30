@@ -65,6 +65,8 @@ export default {
           show_banner_search: settings.show_banner_search
         });
         
+        // COMMENTED OUT: Custom banner modification - testing site texts approach
+        /*
         if (targetBanner && settings.show_welcome_banner) {
           const currentUser = api.getCurrentUser();
           console.log('Groqsters: Current user:', currentUser?.username);
@@ -102,17 +104,10 @@ export default {
           });
           
           if (settings.show_banner_search === true) {
-            console.log('Groqsters: Adding search bar to banner');
+            console.log('Groqsters: Adding search placeholder - will inject Discourse search after banner update');
             bannerHTML += `
-              <div style="margin-top: 1.5rem; max-width: 500px; margin-left: auto; margin-right: auto;">
-                <div style="position: relative;">
-                  <input type="text" placeholder="Search" onclick="window.open('/search', '_self')" style="width: 100%; padding: 0.75rem 2.5rem 0.75rem 1rem; border: none; border-radius: 8px; font-size: 1rem; background: rgba(255, 255, 255, 0.95); color: #374151; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); cursor: pointer;" readonly>
-                  <button onclick="window.open('/search', '_self')" style="position: absolute; right: 8px; top: 50%; transform: translateY(-50%); background: none; border: none; color: #6b7280; cursor: pointer; padding: 0.5rem;">
-                    <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
-                      <path d="M14.386 14.386l4.0877 4.0877-1.4142 1.4142-4.0877-4.0877C11.8352 16.3385 10.0578 17 8.1429 17 3.6467 17 0 13.3533 0 8.8571 0 4.3609 3.6467 0.7142 8.1429 0.7142c4.4962 0 8.1428 3.6467 8.1428 8.1429 0 1.9149-0.6615 3.6923-1.8999 5.5289zM8.1429 15.1429c3.5829 0 6.4286-2.8457 6.4286-6.4286 0-3.5829-2.8457-6.4286-6.4286-6.4286-3.5829 0-6.4286 2.8457-6.4286 6.4286 0 3.5829 2.8457 6.4286 6.4286 6.4286z"/>
-                    </svg>
-                  </button>
-                </div>
+              <div id="groqsters-search-mount" style="margin-top: 1.5rem; max-width: 500px; margin-left: auto; margin-right: auto;">
+                <!-- Discourse search component will be mounted here -->
               </div>
             `;
           } else {
@@ -125,6 +120,18 @@ export default {
           // Hide banner if setting is disabled
           targetBanner.style.display = 'none';
           console.log('Groqsters: Hidden banner per settings');
+        }
+        */
+        
+        // TESTING: Just apply styling to existing banner without changing content
+        if (targetBanner) {
+          console.log('Groqsters: Found banner, applying styling only');
+          targetBanner.style.background = 'linear-gradient(135deg, #c2410c, #ea580c, #f97316)';
+          targetBanner.style.color = 'white';
+          targetBanner.style.padding = '2rem';
+          targetBanner.style.textAlign = 'center';
+          targetBanner.style.borderRadius = '8px';
+          targetBanner.style.margin = '1rem 0';
         }
         
         // Hide our header banner if we're using Discourse's banner
