@@ -174,6 +174,14 @@
   box-sizing: border-box !important;
 }
 
+// Ensure any Discourse core welcome banner title classes use heading font
+.welcome-banner__title,
+.welcome-banner .banner-title,
+.search-banner .banner-title,
+.search-banner__title {
+  font-family: var(--heading-font-family) !important;
+}
+
 // Vercel-style banner using connector in below-site-header-outlet
 .groqsters-welcome-banner {
   // Full viewport width like Vercel

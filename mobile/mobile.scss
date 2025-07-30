@@ -43,6 +43,13 @@
   color: var(--primary) !important;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1) !important;
   
+  // Ensure any potential title classes use heading font on mobile
+  .welcome-banner__title,
+  .banner-title,
+  .search-banner__title {
+    font-family: var(--heading-font-family) !important;
+  }
+  
   .welcome-banner__inner-wrapper,
   .custom-search-banner,
   .welcome-banner__wrap {
