@@ -165,7 +165,6 @@ div.groqsters-feature-banner {
 .show-more {
   position: relative !important; // Override absolute positioning
   z-index: auto !important; // Reset z-index issues
-  margin: 1rem 0 !important; // Add proper spacing
   width: 100% !important; // Ensure full width
   order: -1 !important; // Place at top of grid when in flex/grid container
   
