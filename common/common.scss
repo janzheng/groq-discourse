@@ -151,6 +151,91 @@
   font-family: var(--heading-font-family) !important;
 }
 
+// Groqsters Functional Search Widget Styling
+.groqsters-search-banner {
+  margin-bottom: 1rem;
+  
+  .groqsters-functional-search {
+    background: var(--secondary);
+    border-radius: 8px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  .groqsters-search-container {
+    margin-top: 1.5rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .search-input-wrapper {
+    display: flex;
+    align-items: center;
+    background: white;
+    border: 2px solid #f97316;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    
+    &:focus-within {
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+      transform: translateY(-1px);
+    }
+  }
+  
+  .groqsters-search-input {
+    flex: 1;
+    border: none;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    background: transparent;
+    outline: none;
+    color: #222222;
+    
+    &::placeholder {
+      color: #9ca3af;
+    }
+  }
+  
+  .groqsters-search-btn,
+  .groqsters-advanced-search {
+    padding: 0.75rem;
+    border: none;
+    background: transparent;
+    color: #f97316;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    
+    &:hover {
+      background: rgba(249, 115, 22, 0.1);
+      color: #ea580c;
+    }
+    
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+    
+    svg {
+      width: 16px;
+      height: 16px;
+    }
+  }
+  
+  .groqsters-search-btn {
+    border-left: 1px solid #e5e7eb;
+  }
+  
+  .groqsters-advanced-search {
+    border-left: 1px solid #e5e7eb;
+  }
+}
+
 
 // Navigation Grid Component
 .groqsters-navigation-grid {
@@ -1828,17 +1913,4 @@ body.groqsters-categories-page,
   position: relative;
   z-index: 150;
   font-family: var(--base-font-family);
-  
-  div {
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    
-    span {
-      transition: all 0.2s ease;
-      border-radius: 3px;
-      
-      &:hover {
-        background: rgba(255, 255, 255, 0.1);
-      }
-    }
-  }
 } 
