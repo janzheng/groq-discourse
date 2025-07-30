@@ -1294,16 +1294,11 @@ body.groqsters-categories-page,
         text-decoration: none;
         font-size: 0.9rem;
         font-weight: 500;
-        padding: 0.5rem 1rem;
-        border-radius: 1.5rem;
-        background: var(--primary-very-low);
         transition: all 0.3s ease;
         
         &:hover {
-          color: white;
-          background: var(--primary);
-          text-decoration: none;
-          transform: translateY(-1px);
+          color: var(--primary);
+          text-decoration: underline;
         }
       }
     }
@@ -1395,7 +1390,30 @@ body.groqsters-categories-page,
       
       @media (max-width: 767px) {
         max-width: none;
-        text-align: center;
+        text-align: left;
+        margin: 0;
+      }
+    }
+    
+    // Mobile layout: logo left, tagline right
+    @media (max-width: 767px) {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      text-align: left;
+      
+      .footer-logo {
+        margin-bottom: 0;
+        flex-shrink: 0;
+        
+        a svg {
+          width: 8em !important;
+          height: 2.5em !important;
+        }
+      }
+      
+      .footer-tagline {
+        flex: 1;
       }
     }
   }
@@ -1512,30 +1530,28 @@ body.groqsters-categories-page,
   // Social media links
   .footer-social {
     display: flex;
-    gap: 0.75rem;
+    gap: 1rem;
     align-items: center;
     
     .footer-social-link {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 2.5rem;
-      height: 2.5rem;
-      border-radius: 50%;
-      background: var(--primary-low);
-      color: var(--primary);
+      color: var(--primary-medium);
       text-decoration: none;
       transition: all 0.3s ease;
       
       &:hover {
-        background: var(--primary);
-        color: white;
+        color: var(--primary);
         transform: translateY(-2px);
         text-decoration: none;
       }
       
+      svg {
+        width: 1.5em;
+        height: 1.5em;
+        display: block;
+      }
+      
       .d-icon {
-        font-size: 1rem;
+        font-size: 1.5rem;
       }
     }
   }

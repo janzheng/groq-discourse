@@ -337,33 +337,20 @@ div.groqsters-feature-banner {
     
     .footer-social {
       justify-content: center;
-      gap: 1rem;
+      gap: 1.5rem;
       
       .footer-social-link {
-        width: 3rem;
-        height: 3rem;
+        svg {
+          width: 2em;
+          height: 2em;
+        }
         
         .d-icon {
-          font-size: 1.25rem;
+          font-size: 2rem;
         }
       }
     }
-    
-    .back-to-top {
-      margin-top: 1.5rem;
-      
-      .back-to-top-btn {
-        padding: 1rem 2rem;
-        font-size: 1rem;
-        border-radius: 2.5rem;
-        min-height: 44px; // Touch target size
-        
-        .d-icon {
-          margin-right: 0.75rem;
-          font-size: 1rem;
-        }
-      }
-    }
+
   }
   
   // Small mobile devices (iPhone SE, etc.)

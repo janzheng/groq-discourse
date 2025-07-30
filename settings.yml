@@ -301,6 +301,22 @@ show_back_to_top:
   default: true
   description: "Show back to top button in footer"
 
+# Community Footer Links
+community_code_of_conduct_url:
+  type: string
+  default: "/guidelines"
+  description: "URL for Code of Conduct link in community footer section"
+
+community_about_url:
+  type: string
+  default: "/about"
+  description: "URL for About link in community footer section"
+
+community_privacy_url:
+  type: string
+  default: "/privacy"
+  description: "URL for Privacy link in community footer section"
+
 # Additional Social Media Links
 footer_discord_url:
   type: string
