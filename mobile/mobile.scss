@@ -174,17 +174,17 @@ div.groqsters-feature-banner {
     justify-content: flex-start !important; // Align content to start
     padding: 0.75rem 1rem !important; // Proper touch-friendly padding
     min-height: 44px !important; // Touch target size
-    background: var(--primary-low) !important; // Ensure visible background
-    border: 1px solid var(--primary-low-mid) !important; // Add border for definition
+    background: transparent !important; // Transparent background like other banners
+    border: 2px solid var(--groqsters-alert-color, #ff6a39) !important; // Orange border to match theme
     border-radius: 8px !important; // Rounded corners
-    color: var(--primary) !important; // Ensure text is visible
+    color: var(--groqsters-alert-color, #ff6a39) !important; // Orange text to match border
     text-align: left !important; // Left align text
     font-size: 0.9rem !important; // Readable font size
     line-height: 1.4 !important; // Proper line height
     
     span {
       display: block !important; // Ensure span shows
-      color: var(--primary) !important; // Override any inherited colors
+      color: var(--groqsters-alert-color, #ff6a39) !important; // Orange text to match theme
       font-weight: 500 !important; // Make text slightly bold
     }
     

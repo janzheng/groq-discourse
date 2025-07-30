@@ -275,7 +275,7 @@
   &.has-sidebar {
     .column.categories {
       display: flex;
-      gap: 2rem;
+      gap: 1rem;
       align-items: start;
     }
     
@@ -1714,10 +1714,10 @@ body.groqsters-categories-page,
     align-items: center !important; // Center content vertically
     justify-content: flex-start !important; // Align content to start
     padding: 1rem 1.5rem !important; // Proper padding
-    background: var(--primary-low) !important; // Ensure visible background
-    border: 1px solid var(--primary-low-mid) !important; // Add border for definition
+    background: transparent !important; // Transparent background like other banners
+    border: 2px solid var(--groqsters-alert-color, #ff6a39) !important; // Orange border to match theme
     border-radius: 8px !important; // Rounded corners
-    color: var(--primary) !important; // Ensure text is visible
+    color: var(--groqsters-alert-color, #ff6a39) !important; // Orange text to match border
     text-align: left !important; // Left align text
     font-size: 1rem !important; // Readable font size
     line-height: 1.4 !important; // Proper line height
@@ -1725,13 +1725,13 @@ body.groqsters-categories-page,
     cursor: pointer !important; // Show it's clickable
     
     &:hover {
-      background: var(--primary-low-mid) !important; // Hover state
-      border-color: var(--primary-medium) !important;
+      background: rgba(255, 106, 57, 0.1) !important; // Subtle orange background on hover
+      border-color: var(--groqsters-alert-color, #ff6a39) !important; // Keep orange border
     }
     
     span {
       display: block !important; // Ensure span shows
-      color: var(--primary) !important; // Override any inherited colors
+      color: var(--groqsters-alert-color, #ff6a39) !important; // Orange text to match theme
       font-weight: 500 !important; // Make text slightly bold
     }
     
