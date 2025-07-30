@@ -263,19 +263,20 @@
 // Categories Page Sidebar Layout
 .groqsters-categories-page {
   &.has-sidebar {
-    .groqsters-categories-wrapper {
-      display: grid;
-      grid-template-columns: 1fr 300px;
+    .column.categories {
+      display: flex;
       gap: 2rem;
       align-items: start;
     }
     
-    .groqsters-categories-content {
-      grid-column: 1;
+    .category-list {
+      flex: 1;
+      min-width: 0; // Prevent flex item from overflowing
     }
     
     .groqsters-categories-sidebar {
-      grid-column: 2;
+      flex: 0 0 300px; // Don't grow or shrink, fixed width of 300px
+      order: 2; // Ensure sidebar appears on the right
     }
   }
 }
@@ -383,8 +384,8 @@
 // Mobile responsive - hide sidebar on small screens
 @media (max-width: 1024px) {
   .groqsters-categories-page.has-sidebar {
-    .groqsters-categories-wrapper {
-      grid-template-columns: 1fr;
+    .column.categories {
+      flex-direction: column;
     }
   }
   
@@ -396,9 +397,12 @@
 // Tablet responsive - narrower sidebar
 @media (max-width: 1200px) and (min-width: 1025px) {
   .groqsters-categories-page.has-sidebar {
-    .groqsters-categories-wrapper {
-      grid-template-columns: 1fr 250px;
+    .column.categories {
       gap: 1.5rem;
+    }
+    
+    .groqsters-categories-sidebar {
+      flex: 0 0 250px; // Narrower sidebar on tablets
     }
   }
   
