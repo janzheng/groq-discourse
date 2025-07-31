@@ -1,0 +1,323 @@
+// Post enhancements
+// .topic-post {
+//   transition: var(--groqsters-transition);
+
+//   &:hover {
+//     .post-menu-area {
+//       opacity: 1;
+//     }
+//   }
+
+//   .post-menu-area {
+//     opacity: 0.7;
+//     transition: var(--groqsters-transition);
+//   }
+// }
+
+// Cloudflare-style Category Grid Layout
+// Override Discourse's default category layout
+.categories-list,
+.category-list {
+
+  // On categories page, reorder layout to show categories first, then latest topics
+  &.category-list-item {
+    order: 1;
+  }
+}
+
+// VERCEL-STYLE CLEAN CATEGORY LAYOUT
+// Hide default Discourse category table completely
+.categories-and-latest,
+.categories-only {
+
+  // Hide the default category/topics table header
+  .category-list-header,
+  .category-list thead {
+    display: none !important;
+  }
+
+  // Hide the category-topics table structure
+  .category-list table,
+  .category-list tbody,
+  .category-list tr {
+    display: block !important;
+    border: none !important;
+    background: none !important;
+    width: 100% !important;
+  }
+
+  // Transform the category list into a clean grid
+  .category-list {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)) !important;
+    gap: 1.5rem !important;
+    margin: 1rem 0 !important;
+    padding: 0 !important;
+    border: none !important;
+    background: none !important;
+
+    // Each category becomes a clean card
+    .category-list-item {
+      display: block !important;
+      background: var(--secondary) !important;
+      border: 2px solid #d1d5db !important;
+      border-radius: 12px !important;
+      padding: 1.5rem !important;
+      transition: var(--groqsters-transition) !important;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+      cursor: pointer !important;
+      position: relative !important;
+      overflow: hidden !important;
+      width: auto !important;
+      height: auto !important;
+
+      // Hide the table cell structure completely
+      td {
+        display: block !important;
+        border: none !important;
+        padding: 0 !important;
+        background: none !important;
+
+        // Hide all the metadata columns we don't want
+        &.topics,
+        &.posts,
+        &.latest,
+        &.num {
+          display: none !important;
+        }
+
+        // Only show the main category content
+        &.category {
+          display: block !important;
+
+          // Category header section
+          .category-name {
+            font-size: 1.25rem !important;
+            font-weight: 600 !important;
+            color: var(--primary) !important;
+            margin: 0 0 0.75rem 0 !important;
+            text-decoration: none !important;
+            display: block !important;
+
+            &:hover {
+              color: var(--groqsters-primary) !important;
+            }
+          }
+
+          // Category description - clean and simple
+          .category-description {
+            color: var(--primary-medium) !important;
+            font-size: 0.9rem !important;
+            line-height: 1.4 !important;
+            margin-bottom: 1rem !important;
+            display: -webkit-box !important;
+            -webkit-line-clamp: 3 !important;
+            -webkit-box-orient: vertical !important;
+            overflow: hidden !important;
+          }
+
+          // Hide subcategories and complex structures
+          .subcategories,
+          .category-logo,
+          .category-stat,
+          .featured-topics {
+            display: none !important;
+          }
+        }
+      }
+
+      // Hover effects
+      &:hover {
+        transform: translateY(-4px) !important;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15) !important;
+        border-color: #9ca3af !important;
+      }
+    }
+  }
+
+  // Style any remaining category boxes (for different layouts)
+  .category-boxes,
+  .category-boxes-with-topics {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)) !important;
+    gap: 1.5rem !important;
+    margin: 2rem 0 !important;
+
+    .category-box {
+      background: var(--secondary) !important;
+      border: 2px solid #d1d5db !important;
+      border-radius: 12px !important;
+      padding: 1.5rem !important;
+      transition: var(--groqsters-transition) !important;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+
+      &:hover {
+        transform: translateY(-4px) !important;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15) !important;
+        border-color: #9ca3af !important;
+      }
+
+      .category-box-heading h3 {
+        font-size: 1.25rem !important;
+        font-weight: 600 !important;
+        margin-bottom: 0.75rem !important;
+
+        a {
+          color: var(--primary) !important;
+          text-decoration: none !important;
+
+          &:hover {
+            color: var(--groqsters-primary) !important;
+          }
+        }
+      }
+
+      .category-description {
+        color: var(--primary-medium) !important;
+        font-size: 0.9rem !important;
+        line-height: 1.4 !important;
+        margin-bottom: 1rem !important;
+      }
+
+      // Hide featured topics and stats for clean look
+      .featured-topics,
+      .category-stat {
+        display: none !important;
+      }
+    }
+  }
+
+  // Latest topics section - ensure it appears below categories
+  .latest-topic-list-item,
+  .topic-list {
+    order: 2 !important;
+    margin-top: 3rem !important;
+
+    // Add a header for the latest topics section
+    &::before {
+      content: "Latest Topics" !important;
+      display: block !important;
+      font-size: 1.5rem !important;
+      font-weight: 600 !important;
+      color: var(--primary) !important;
+      margin-bottom: 1.5rem !important;
+      padding-bottom: 0.5rem !important;
+      border-bottom: 2px solid var(--primary-low) !important;
+    }
+  }
+}
+
+// Main categories page container
+.categories-and-latest,
+.categories-only {
+
+  // Remove any default styling
+  table,
+  thead,
+  tbody,
+  tr {
+    background: none !important;
+    border: none !important;
+  }
+}
+
+// Ensure proper flexbox/grid ordering for the categories page
+.categories-and-latest {
+  display: flex !important;
+  flex-direction: column !important;
+
+  .categories-list,
+  .category-list {
+    order: 1 !important;
+  }
+
+  .latest-topic-list,
+  .topic-list-container {
+    order: 2 !important;
+  }
+}
+
+// Additional Groqsters theme integration for categories
+.groqsters-categories-layout {
+  // Add subtle background pattern
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, transparent 25%, rgba(var(--groqsters-primary), 0.02) 25%, rgba(var(--groqsters-primary), 0.02) 50%, transparent 50%);
+    background-size: 60px 60px;
+    pointer-events: none;
+    opacity: 0.3;
+    z-index: -1;
+  }
+}
+
+// Enhanced category hover states with Groqsters branding
+.category-list .category,
+.category-box {
+  &:hover {
+    // Subtle brand color border on hover
+    border-color: var(--groqsters-primary) !important;
+
+    .category-name,
+    .category-title-link,
+    h3 a {
+      color: var(--groqsters-primary) !important;
+    }
+  }
+
+  // Add subtle gradient backgrounds based on category colors
+  &[data-category-id] {
+    background: linear-gradient(135deg, var(--secondary) 0%, rgba(var(--primary-very-low), 0.5) 100%) !important;
+  }
+}
+
+// Latest Topics section styling to match Cloudflare aesthetic
+.latest-topic-list,
+.topic-list {
+  &::before {
+    background: linear-gradient(90deg, var(--groqsters-primary) 0%, transparent 100%);
+    background-size: 100% 2px;
+    background-repeat: no-repeat;
+    background-position: bottom;
+  }
+}
+
+// Add loading states for category boxes
+.category-list.loading .category,
+.category-box.loading {
+  position: relative;
+  pointer-events: none;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 24px;
+    height: 24px;
+    margin: -12px 0 0 -12px;
+    border: 3px solid var(--primary-low);
+    border-radius: 50%;
+    border-top-color: var(--groqsters-primary);
+    animation: spin 1s linear infinite;
+    z-index: 10;
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(var(--secondary), 0.8);
+    border-radius: 12px;
+    z-index: 9;
+  }
+}

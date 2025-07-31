@@ -1,3 +1,5 @@
+// These are for the home page / custom banners and Categories / Sidebar etc
+
 // Banner container
 .groqsters-banners-container {
   width: 100%;
@@ -82,6 +84,34 @@
 .search-banner__title {
   font-family: var(--heading-font-family) !important;
 }
+
+
+// Dark mode adjustments for custom search banner
+.dark-mode .custom-search-banner {
+  color: #a6a6a6;
+
+  .custom-search-banner-headline {
+    color: #a6a6a6;
+  }
+
+  p {
+    color: #a6a6a6;
+  }
+}
+
+.dark-mode .welcome-banner__inner-wrapper {
+  .custom-search-banner-headline {
+    color: #a6a6a6;
+  }
+
+  p {
+    color: #a6a6a6;
+  }
+}
+
+
+
+
 
 // Groqsters Functional Search Widget Styling
 // .groqsters-search-banner {
@@ -385,6 +415,485 @@ div.groqsters-feature-banner {
 
   p {
     color: #a6a6a6;
+  }
+}
+
+
+// Navigation Grid Component
+.groqsters-navigation-grid {
+  margin: 1rem 0;
+
+  .navigation-grid {
+    display: grid;
+    grid-template-columns: repeat(var(--nav-columns, 4), 1fr);
+    gap: 0.5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .nav-item {
+    background: var(--secondary);
+    border: 1px solid var(--primary-low);
+    border-radius: 12px;
+    padding: 0.75rem;
+    text-decoration: none;
+    color: var(--primary);
+    transition: all 0.2s ease;
+    display: block;
+
+    &:hover {
+      border-color: var(--tertiary);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      transform: translateY(-2px);
+      text-decoration: none;
+      color: var(--primary);
+    }
+
+    .nav-item-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .nav-item-icon {
+      font-size: 1.5rem;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+
+    .nav-item-title {
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: var(--primary);
+      margin: 0;
+      line-height: 1.3;
+    }
+
+    .nav-item-description {
+      font-size: 0.875rem;
+      color: var(--primary-medium);
+      margin: 0;
+      line-height: 1.5;
+    }
+  }
+}
+
+// Medium devices: 2 columns
+@media (max-width: 1024px) and (min-width: 769px) {
+  .groqsters-navigation-grid {
+    --nav-columns: 2;
+
+    .navigation-grid {
+      gap: 1rem;
+    }
+  }
+}
+
+// Mobile responsive adjustments for navigation grid
+@media (max-width: 768px) {
+  .groqsters-navigation-grid {
+    --nav-columns: 1;
+
+    .navigation-grid {
+      gap: 1rem;
+    }
+
+    .nav-item {
+      padding: 1.25rem;
+
+      .nav-item-header {
+        gap: 0.5rem;
+      }
+
+      .nav-item-icon {
+        font-size: 1.25rem;
+      }
+
+      .nav-item-title {
+        font-size: 1rem;
+      }
+
+      .nav-item-description {
+        font-size: 0.8rem;
+      }
+    }
+  }
+}
+
+
+// Categories Page Sidebar Layout
+.groqsters-categories-page {
+  &.has-sidebar {
+    .column.categories {
+      display: flex;
+      gap: 1rem;
+      align-items: start;
+    }
+
+    .category-list {
+      flex: 1;
+      min-width: 0; // Prevent flex item from overflowing
+    }
+
+    .groqsters-categories-sidebar {
+      flex: 0 0 300px; // Don't grow or shrink, fixed width of 300px
+      order: 2; // Ensure sidebar appears on the right
+    }
+  }
+}
+
+// Categories Right Sidebar
+.groqsters-categories-sidebar {
+  background: var(--secondary);
+  border: 1px solid var(--primary-low);
+  border-radius: 12px;
+  padding: 0;
+  margin-top: 1rem;
+  overflow-y: auto;
+
+  .sidebar-section {
+    padding: 1.5rem;
+    border-bottom: 1px solid var(--primary-low);
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    .sidebar-title {
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: var(--primary);
+      margin: 0 0 1rem 0;
+      line-height: 1.3;
+    }
+
+    .sidebar-intro-text {
+      font-size: 0.875rem;
+      color: var(--primary-medium);
+      line-height: 1.5;
+      margin: 0 0 1rem 0;
+
+      a {
+        color: var(--tertiary);
+        text-decoration: none;
+        font-weight: 500;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+
+    .sidebar-quick-links {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+
+      a {
+        color: var(--tertiary);
+        text-decoration: none;
+        font-size: 0.875rem;
+        font-weight: 500;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+
+  .sidebar-detailed-section {
+    display: block;
+    text-decoration: none;
+    color: var(--primary);
+    transition: background-color 0.2s ease;
+
+    &:hover {
+      background: var(--primary-very-low);
+      text-decoration: none;
+      color: var(--primary);
+    }
+
+    .section-title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--primary);
+      margin: 0 0 0.5rem 0;
+      line-height: 1.3;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+
+      &::after {
+        content: "↗";
+        font-size: 0.75rem;
+        opacity: 0.6;
+      }
+    }
+
+    .section-description {
+      font-size: 0.8rem;
+      color: var(--primary-medium);
+      margin: 0;
+      line-height: 1.4;
+    }
+  }
+}
+
+// Mobile responsive - hide sidebar on small screens
+@media (max-width: 1024px) {
+  .groqsters-categories-page.has-sidebar {
+    .column.categories {
+      flex-direction: column;
+    }
+  }
+
+  .groqsters-categories-sidebar {
+    display: none;
+  }
+}
+
+// Tablet responsive - narrower sidebar
+@media (max-width: 1200px) and (min-width: 1025px) {
+  .groqsters-categories-page.has-sidebar {
+    .column.categories {
+      gap: 1.5rem;
+    }
+
+    .groqsters-categories-sidebar {
+      flex: 0 0 250px; // Narrower sidebar on tablets
+    }
+  }
+
+  .groqsters-categories-sidebar {
+    .sidebar-section {
+      padding: 1.25rem;
+    }
+  }
+}
+
+// Alert banner (like SSL/TLS message)
+.groqsters-alert-banner {
+  background: var(--groqsters-alert-color, #ff6a39);
+  color: white;
+  padding: 1rem 1.5rem;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+
+  .alert-message {
+    flex: 1;
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1.4;
+    margin: 0;
+  }
+
+  .alert-cta {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: var(--groqsters-transition);
+    flex-shrink: 0;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.3);
+      border-color: rgba(255, 255, 255, 0.5);
+      color: white;
+      text-decoration: none;
+    }
+  }
+}
+
+// Three-column feature banner - redesigned as cover images
+.groqsters-feature-banner,
+div.groqsters-feature-banner {
+  margin: 1rem 0 !important;
+  padding: 0 !important;
+  width: 100% !important;
+  display: block !important;
+
+  .banner-grid,
+  div.banner-grid {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 1rem !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+
+    // Tablet: 2 columns
+    @media (max-width: 768px) and (min-width: 481px) {
+      // grid-template-columns: repeat(2, 1fr) !important;
+      grid-template-columns: 1fr !important;
+      gap: 0.75rem !important;
+    }
+
+    // Mobile: 1 column
+    @media (max-width: 480px) {
+      grid-template-columns: 1fr !important;
+      gap: 0.75rem !important;
+    }
+  }
+
+  .banner-item,
+  div.banner-item {
+    position: relative !important;
+    overflow: hidden !important;
+    display: block !important;
+    height: 200px !important;
+    border-radius: 8px !important;
+    transition: var(--groqsters-transition) !important;
+
+    // Make clickable items have pointer cursor
+    &.clickable {
+      cursor: pointer !important;
+    }
+
+    // Hover effects
+    &:hover {
+      transform: translateY(-2px) !important;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15) !important;
+    }
+
+    // Image container - now full cover
+    .banner-image,
+    div.banner-image {
+      position: absolute !important;
+      top: 0 !important;
+      left: 0 !important;
+      width: 100% !important;
+      height: 100% !important;
+      border-radius: 8px !important;
+      overflow: hidden !important;
+
+      // Actual image styling - full cover
+      img {
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover !important;
+        object-position: center !important;
+        border-radius: 8px !important;
+        transition: var(--groqsters-transition) !important;
+
+        &:hover {
+          transform: scale(1.02) !important;
+        }
+      }
+
+      // Show placeholder when image fails or is not present
+      &.no-image {
+        background: linear-gradient(135deg, var(--primary-low), var(--primary-very-low)) !important;
+
+        // Simple placeholder pattern
+        &::before {
+          content: '' !important;
+          position: absolute !important;
+          top: 50% !important;
+          left: 50% !important;
+          width: 48px !important;
+          height: 48px !important;
+          margin: -24px 0 0 -24px !important;
+          border: 3px solid var(--primary-medium) !important;
+          border-radius: 8px !important;
+          opacity: 0.3 !important;
+        }
+
+        img {
+          display: none !important;
+        }
+      }
+
+      // Loading state
+      &.loading {
+        background: linear-gradient(135deg, var(--primary-low), var(--primary-very-low)) !important;
+
+        &::after {
+          content: '' !important;
+          position: absolute !important;
+          top: 50% !important;
+          left: 50% !important;
+          width: 24px !important;
+          height: 24px !important;
+          margin: -12px 0 0 -12px !important;
+          border: 3px solid var(--primary) !important;
+          border-radius: 50% !important;
+          border-top-color: transparent !important;
+          animation: spin 1s linear infinite !important;
+          z-index: 3 !important;
+        }
+
+        &::before {
+          display: none !important;
+        }
+      }
+    }
+
+    // Title styling - positioned at bottom left
+    h3 {
+      position: absolute !important;
+      bottom: 0 !important;
+      left: 0 !important;
+      right: 0 !important;
+      margin: 0 !important;
+      padding: 1rem !important;
+      font-size: 1rem !important;
+      font-weight: 600 !important;
+      color: white !important;
+      text-align: left !important;
+      background: linear-gradient(transparent, rgba(0, 0, 0, 0.7)) !important;
+      border-radius: 0 0 8px 8px !important;
+      z-index: 2 !important;
+
+      // Allow text wrapping
+      white-space: normal !important;
+      overflow: visible !important;
+      text-overflow: unset !important;
+      line-height: 1.3 !important;
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5) !important;
+    }
+  }
+}
+
+// Loading spinner animation
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+// Enhanced topic list styling
+.topic-list {
+  .main-link {
+    transition: var(--groqsters-transition);
+
+    &:hover {
+      transform: translateX(4px);
+    }
+  }
+
+  .topic-item {
+    border-radius: 6px;
+    transition: var(--groqsters-transition);
+
+    &:hover {
+      background-color: rgba($primary, 0.05);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
   }
 }
 
