@@ -1,0 +1,460 @@
+// Banner container
+.groqsters-banners-container {
+  width: 100%;
+}
+
+// Welcome banner positioned above main layout (including sidebar)
+// This includes the CUSTOM TOP BANNER COMPONENT at the top of the page
+.welcome-banner {
+  color: #222222;
+  padding: 2rem;
+  text-align: center;
+  display: block;
+  margin: 0;
+  margin-bottom: 1rem;
+  position: relative;
+  border-radius: 8px;
+  z-index: 10;
+
+  h1 {
+    font-family: var(--heading-font-family); // Use heading font family
+    margin: 0 0 0.75rem 0;
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  h2 {
+    font-family: var(--heading-font-family); // Use heading font family
+    margin: 0 0 1.5rem 0;
+    font-size: 1.1rem;
+    font-weight: 400;
+    opacity: 0.9;
+    line-height: 1.4;
+  }
+
+  .search-input {
+    margin-top: 0.5rem;
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    border-radius: 4px;
+
+    color: #222222;
+    border: 2px solid #f97316;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+
+    &:focus {
+      outline: none;
+      background: white;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+      transform: translateY(-1px);
+    }
+
+    &::placeholder {
+      color: #9ca3af;
+    }
+  }
+
+  .search-icon {
+    top: 5px;
+  }
+}
+
+// hide welcome-banner on admin (custom)
+.admin-area .welcome-banner {
+  display: none;
+}
+
+// Override Discourse core welcome banner wrapper padding if needed
+.welcome-banner__wrap {
+  padding: 0 !important;
+  box-sizing: border-box !important;
+}
+
+// Ensure any Discourse core welcome banner title classes use heading font
+.welcome-banner__title,
+.welcome-banner .banner-title,
+.search-banner .banner-title,
+.search-banner__title {
+  font-family: var(--heading-font-family) !important;
+}
+
+// Groqsters Functional Search Widget Styling
+// .groqsters-search-banner {
+//   margin-bottom: 1rem;
+
+//   .groqsters-functional-search {
+//     background: var(--secondary);
+//     border-radius: 8px;
+//     box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+//   }
+
+//   .groqsters-search-container {
+//     margin-top: 1.5rem;
+//     max-width: 600px;
+//     margin-left: auto;
+//     margin-right: auto;
+//   }
+
+//   .search-input-wrapper {
+//     display: flex;
+//     align-items: center;
+//     background: white;
+//     border: 2px solid #f97316;
+//     border-radius: 8px;
+//     overflow: hidden;
+//     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+//     transition: all 0.3s ease;
+
+//     &:focus-within {
+//       box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+//       transform: translateY(-1px);
+//     }
+//   }
+
+//   .groqsters-search-input {
+//     flex: 1;
+//     border: none;
+//     padding: 0.75rem 1rem;
+//     font-size: 1rem;
+//     background: transparent;
+//     outline: none;
+//     color: #222222;
+
+//     &::placeholder {
+//       color: #9ca3af;
+//     }
+//   }
+
+//   .groqsters-search-btn,
+//   .groqsters-advanced-search {
+//     padding: 0.75rem;
+//     border: none;
+//     background: transparent;
+//     color: #f97316;
+//     cursor: pointer;
+//     display: flex;
+//     align-items: center;
+//     justify-content: center;
+//     transition: all 0.2s ease;
+//     text-decoration: none;
+
+//     &:hover {
+//       background: rgba(249, 115, 22, 0.1);
+//       color: #ea580c;
+//     }
+
+//     &:disabled {
+//       opacity: 0.5;
+//       cursor: not-allowed;
+//     }
+
+//     svg {
+//       width: 16px;
+//       height: 16px;
+//     }
+//   }
+
+//   .groqsters-search-btn {
+//     border-left: 1px solid #e5e7eb;
+//   }
+
+//   .groqsters-advanced-search {
+//     border-left: 1px solid #e5e7eb;
+//   }
+// }
+
+
+
+
+
+// Alert banner (like SSL/TLS message)
+.groqsters-alert-banner {
+  background: var(--groqsters-alert-color, #ff6a39);
+  color: white;
+  padding: 1rem 1.5rem;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+
+  .alert-message {
+    flex: 1;
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1.4;
+    margin: 0;
+  }
+
+  .alert-cta {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: var(--groqsters-transition);
+    flex-shrink: 0;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.3);
+      border-color: rgba(255, 255, 255, 0.5);
+      color: white;
+      text-decoration: none;
+    }
+  }
+}
+
+// Three-column feature banner - redesigned as cover images
+.groqsters-feature-banner,
+div.groqsters-feature-banner {
+  margin: 1rem 0 !important;
+  padding: 0 !important;
+  width: 100% !important;
+  display: block !important;
+
+  .banner-grid,
+  div.banner-grid {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 1rem !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+
+    // Tablet: 2 columns
+    @media (max-width: 768px) and (min-width: 481px) {
+      // grid-template-columns: repeat(2, 1fr) !important;
+      grid-template-columns: 1fr !important;
+      gap: 0.75rem !important;
+    }
+
+    // Mobile: 1 column
+    @media (max-width: 480px) {
+      grid-template-columns: 1fr !important;
+      gap: 0.75rem !important;
+    }
+  }
+
+  .banner-item,
+  div.banner-item {
+    position: relative !important;
+    overflow: hidden !important;
+    display: block !important;
+    height: 200px !important;
+    border-radius: 8px !important;
+    transition: var(--groqsters-transition) !important;
+
+    // Make clickable items have pointer cursor
+    &.clickable {
+      cursor: pointer !important;
+    }
+
+    // Hover effects
+    &:hover {
+      transform: translateY(-2px) !important;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15) !important;
+    }
+
+    // Image container - now full cover
+    .banner-image,
+    div.banner-image {
+      position: absolute !important;
+      top: 0 !important;
+      left: 0 !important;
+      width: 100% !important;
+      height: 100% !important;
+      border-radius: 8px !important;
+      overflow: hidden !important;
+
+      // Actual image styling - full cover
+      img {
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover !important;
+        object-position: center !important;
+        border-radius: 8px !important;
+        transition: var(--groqsters-transition) !important;
+
+        &:hover {
+          transform: scale(1.02) !important;
+        }
+      }
+
+      // Show placeholder when image fails or is not present
+      &.no-image {
+        background: linear-gradient(135deg, var(--primary-low), var(--primary-very-low)) !important;
+
+        // Simple placeholder pattern
+        &::before {
+          content: '' !important;
+          position: absolute !important;
+          top: 50% !important;
+          left: 50% !important;
+          width: 48px !important;
+          height: 48px !important;
+          margin: -24px 0 0 -24px !important;
+          border: 3px solid var(--primary-medium) !important;
+          border-radius: 8px !important;
+          opacity: 0.3 !important;
+        }
+
+        img {
+          display: none !important;
+        }
+      }
+
+      // Loading state
+      &.loading {
+        background: linear-gradient(135deg, var(--primary-low), var(--primary-very-low)) !important;
+
+        &::after {
+          content: '' !important;
+          position: absolute !important;
+          top: 50% !important;
+          left: 50% !important;
+          width: 24px !important;
+          height: 24px !important;
+          margin: -12px 0 0 -12px !important;
+          border: 3px solid var(--primary) !important;
+          border-radius: 50% !important;
+          border-top-color: transparent !important;
+          animation: spin 1s linear infinite !important;
+          z-index: 3 !important;
+        }
+
+        &::before {
+          display: none !important;
+        }
+      }
+    }
+
+    // Title styling - positioned at bottom left
+    h3 {
+      position: absolute !important;
+      bottom: 0 !important;
+      left: 0 !important;
+      right: 0 !important;
+      margin: 0 !important;
+      padding: 1rem !important;
+      font-size: 1rem !important;
+      font-weight: 600 !important;
+      color: white !important;
+      text-align: left !important;
+      background: linear-gradient(transparent, rgba(0, 0, 0, 0.7)) !important;
+      border-radius: 0 0 8px 8px !important;
+      z-index: 2 !important;
+
+      // Allow text wrapping
+      white-space: normal !important;
+      overflow: visible !important;
+      text-overflow: unset !important;
+      line-height: 1.3 !important;
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5) !important;
+    }
+  }
+}
+
+
+// Dark mode adjustments for custom search banner
+.dark-mode .custom-search-banner {
+  color: #a6a6a6;
+
+  .custom-search-banner-headline {
+    color: #a6a6a6;
+  }
+
+  p {
+    color: #a6a6a6;
+  }
+}
+
+.dark-mode .welcome-banner__inner-wrapper {
+  .custom-search-banner-headline {
+    color: #a6a6a6;
+  }
+
+  p {
+    color: #a6a6a6;
+  }
+}
+
+
+
+
+
+
+// Custom header styling
+// .d-header {
+//   .custom-header-text {
+//     font-weight: 600;
+//     color: var(--header_primary);
+//     margin-left: 1em;
+//   }
+// }
+
+// Header nav styling for welcome banner
+// .header-nav {
+//   width: 100%;
+
+//   // Fallback styles for simple auth buttons
+//   .user-menu-wrapper {
+//     display: flex;
+//     align-items: center;
+//     justify-content: center;
+//     padding: 1rem;
+
+//     .welcome-text {
+//       font-size: 1.1rem;
+//       font-weight: 500;
+//       color: var(--primary);
+//     }
+//   }
+
+//   .guest-actions {
+//     display: flex;
+//     gap: 1rem;
+//     justify-content: center;
+//     padding: 1rem;
+
+//     .btn {
+//       padding: 0.75rem 1.5rem;
+//       border-radius: 8px;
+//       text-decoration: none;
+//       font-weight: 600;
+//       transition: var(--groqsters-transition);
+
+//       &.login-button {
+//         background: var(--primary);
+//         color: white;
+//         border: 2px solid var(--primary);
+
+//         &:hover {
+//           background: var(--primary-high);
+//           transform: translateY(-2px);
+//         }
+//       }
+
+//       &.signup-button {
+//         background: transparent;
+//         color: var(--primary);
+//         border: 2px solid var(--primary);
+
+//         &:hover {
+//           background: var(--primary);
+//           color: white;
+//           transform: translateY(-2px);
+//         }
+//       }
+//     }
+//   }
+// }
