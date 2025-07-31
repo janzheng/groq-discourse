@@ -40,7 +40,7 @@
   .category-list table,
   .category-list tbody,
   .category-list tr {
-    display: block !important;
+    display: flex !important;
     border: none !important;
     background: none !important;
     width: 100% !important;
@@ -55,84 +55,6 @@
     padding: 0 !important;
     border: none !important;
     background: none !important;
-
-    // Each category becomes a clean card
-    .category-list-item {
-      display: block !important;
-      background: var(--secondary) !important;
-      border: 2px solid #d1d5db !important;
-      border-radius: 12px !important;
-      padding: 1.5rem !important;
-      transition: var(--groqsters-transition) !important;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
-      cursor: pointer !important;
-      position: relative !important;
-      overflow: hidden !important;
-      width: auto !important;
-      height: auto !important;
-
-      // Hide the table cell structure completely
-      td {
-        display: block !important;
-        border: none !important;
-        padding: 0 !important;
-        background: none !important;
-
-        // Hide all the metadata columns we don't want
-        &.topics,
-        &.posts,
-        &.latest,
-        &.num {
-          display: none !important;
-        }
-
-        // Only show the main category content
-        &.category {
-          display: block !important;
-
-          // Category header section
-          .category-name {
-            font-size: 1.25rem !important;
-            font-weight: 600 !important;
-            color: var(--primary) !important;
-            margin: 0 0 0.75rem 0 !important;
-            text-decoration: none !important;
-            display: block !important;
-
-            &:hover {
-              color: var(--groqsters-primary) !important;
-            }
-          }
-
-          // Category description - clean and simple
-          .category-description {
-            color: var(--primary-medium) !important;
-            font-size: 0.9rem !important;
-            line-height: 1.4 !important;
-            margin-bottom: 1rem !important;
-            display: -webkit-box !important;
-            -webkit-line-clamp: 3 !important;
-            -webkit-box-orient: vertical !important;
-            overflow: hidden !important;
-          }
-
-          // Hide subcategories and complex structures
-          .subcategories,
-          .category-logo,
-          .category-stat,
-          .featured-topics {
-            display: none !important;
-          }
-        }
-      }
-
-      // Hover effects
-      &:hover {
-        transform: translateY(-4px) !important;
-        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15) !important;
-        border-color: #9ca3af !important;
-      }
-    }
   }
 
   // Style any remaining category boxes (for different layouts)
@@ -397,6 +319,7 @@ body.groqsters-categories-page,
         border: none !important;
         background: none !important;
         vertical-align: unset !important;
+        flex-grow: 1;
 
         // Hide ALL metadata columns 
         &.topics,
@@ -594,4 +517,11 @@ body.groqsters-categories-page,
     // Hide the entire Latest section on Categories tab
     display: none !important;
   }
+}
+
+
+/* overrides */
+
+.category-list .topics .badge-notification:first-child {
+  margin-top: 0;
 }
