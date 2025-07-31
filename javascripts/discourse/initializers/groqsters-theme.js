@@ -85,31 +85,45 @@ export default {
 
         // Add feature banner if enabled
         if (settings.show_feature_banner) {
+          const featureCards = [];
+          
+          // Create feature cards
+          for (let i = 1; i <= 3; i++) {
+            const imageUrl = settings[`feature_banner_item_${i}_image`];
+            const title = settings[`feature_banner_item_${i}_title`] || 
+                         (i === 1 ? "Fast & Powerful" : i === 2 ? "Community Driven" : "Always Learning");
+            const url = settings[`feature_banner_item_${i}_url`] || "#";
+            
+            const cardElement = url && url !== "#" ? 
+              dec.h("a.feature-card", { href: url, target: url.startsWith('http') ? '_blank' : '_self' }, [
+                dec.h("div.feature-card-image", [
+                  dec.h("div.banner-image-placeholder", { 
+                    "data-item": i.toString(),
+                    "data-url": imageUrl || ""
+                  })
+                ]),
+                dec.h("div.feature-card-text", [
+                  dec.h("h3.feature-card-title", title)
+                ])
+              ]) :
+              dec.h("div.feature-card", [
+                dec.h("div.feature-card-image", [
+                  dec.h("div.banner-image-placeholder", { 
+                    "data-item": i.toString(),
+                    "data-url": imageUrl || ""
+                  })
+                ]),
+                dec.h("div.feature-card-text", [
+                  dec.h("h3.feature-card-title", title)
+                ])
+              ]);
+            
+            featureCards.push(cardElement);
+          }
+          
           elements.push(
             dec.h("div.groqsters-feature-banner", [
-              dec.h("div.banner-grid", [
-                dec.h("div.banner-item", [
-                  dec.h("div.banner-image-placeholder", { 
-                    "data-item": "1",
-                    "data-url": settings.feature_banner_item_1_image || ""
-                  }),
-                  dec.h("h3", settings.feature_banner_item_1_title || "Fast & Powerful")
-                ]),
-                dec.h("div.banner-item", [
-                  dec.h("div.banner-image-placeholder", { 
-                    "data-item": "2",
-                    "data-url": settings.feature_banner_item_2_image || ""
-                  }),
-                  dec.h("h3", settings.feature_banner_item_2_title || "Community Driven")
-                ]),
-                dec.h("div.banner-item", [
-                  dec.h("div.banner-image-placeholder", { 
-                    "data-item": "3",
-                    "data-url": settings.feature_banner_item_3_image || ""
-                  }),
-                  dec.h("h3", settings.feature_banner_item_3_title || "Always Learning")
-                ])
-              ])
+              dec.h("div.feature-cards-row", featureCards)
             ])
           );
         }
@@ -217,29 +231,50 @@ export default {
             const featureBanner = document.createElement('div');
             featureBanner.className = 'groqsters-feature-banner';
             
-            const bannerGrid = document.createElement('div');
-            bannerGrid.className = 'banner-grid';
+            const featureCardsRow = document.createElement('div');
+            featureCardsRow.className = 'feature-cards-row';
             
-            // Create three banner items
+            // Create three feature cards
             for (let i = 1; i <= 3; i++) {
-              const bannerItem = document.createElement('div');
-              bannerItem.className = 'banner-item';
-              
               const imageUrl = settings[`feature_banner_item_${i}_image`];
               const title = settings[`feature_banner_item_${i}_title`] || 
                           (i === 1 ? "Fast & Powerful" : i === 2 ? "Community Driven" : "Always Learning");
+              const url = settings[`feature_banner_item_${i}_url`] || "#";
               
-              const imageContainer = createBannerImage(imageUrl, i);
-              bannerItem.appendChild(imageContainer);
+              // Create either a link or div depending on URL
+              const featureCard = url && url !== "#" ? 
+                document.createElement('a') : 
+                document.createElement('div');
+              
+              featureCard.className = 'feature-card';
+              
+              if (url && url !== "#") {
+                featureCard.href = url;
+                featureCard.target = url.startsWith('http') ? '_blank' : '_self';
+              }
+              
+              // Create image container
+              const imageContainer = document.createElement('div');
+              imageContainer.className = 'feature-card-image';
+              
+              const imageElement = createBannerImage(imageUrl, i);
+              imageContainer.appendChild(imageElement);
+              
+              // Create text container
+              const textContainer = document.createElement('div');
+              textContainer.className = 'feature-card-text';
               
               const titleElement = document.createElement('h3');
+              titleElement.className = 'feature-card-title';
               titleElement.textContent = title;
-              bannerItem.appendChild(titleElement);
+              textContainer.appendChild(titleElement);
               
-              bannerGrid.appendChild(bannerItem);
+              featureCard.appendChild(imageContainer);
+              featureCard.appendChild(textContainer);
+              featureCardsRow.appendChild(featureCard);
             }
             
-            featureBanner.appendChild(bannerGrid);
+            featureBanner.appendChild(featureCardsRow);
             bannerContainer.appendChild(featureBanner);
           }
 

@@ -2,43 +2,73 @@
 
 {{#if showFeatureBanner}}
   <div class="groqsters-feature-banner">
-    <div class="banner-grid">
+    <div class="feature-cards-row">
       
-      {{!-- First Feature Item --}}
-      <div class="banner-item">
-        <div class="banner-image">
-          {{#if featureBannerItem1Icon}}
-            <span class="banner-icon">{{featureBannerItem1Icon}}</span>
+      {{!-- First Feature Card --}}
+      {{#if featureBannerItem1Url}}
+        <a href="{{featureBannerItem1Url}}" class="feature-card" {{#if (starts-with featureBannerItem1Url "http")}}target="_blank"{{/if}}>
+      {{else}}
+        <div class="feature-card">
+      {{/if}}
+        <div class="feature-card-image">
+          {{#if featureBannerItem1Image}}
+            <img src="{{featureBannerItem1Image}}" alt="{{#if featureBannerItem1Title}}{{featureBannerItem1Title}}{{else}}Fast & Powerful{{/if}}">
           {{else}}
-            <span class="banner-icon">⚡</span>
+            <div class="feature-card-placeholder">⚡</div>
           {{/if}}
         </div>
-        <h3>{{#if featureBannerItem1Title}}{{featureBannerItem1Title}}{{else}}Fast & Powerful{{/if}}</h3>
-      </div>
+        <div class="feature-card-text">
+          <h3 class="feature-card-title">{{#if featureBannerItem1Title}}{{featureBannerItem1Title}}{{else}}Fast & Powerful{{/if}}</h3>
+        </div>
+      {{#if featureBannerItem1Url}}
+        </a>
+      {{else}}
+        </div>
+      {{/if}}
 
-      {{!-- Second Feature Item --}}
-      <div class="banner-item">
-        <div class="banner-image">
-          {{#if featureBannerItem2Icon}}
-            <span class="banner-icon">{{featureBannerItem2Icon}}</span>
+      {{!-- Second Feature Card --}}
+      {{#if featureBannerItem2Url}}
+        <a href="{{featureBannerItem2Url}}" class="feature-card" {{#if (starts-with featureBannerItem2Url "http")}}target="_blank"{{/if}}>
+      {{else}}
+        <div class="feature-card">
+      {{/if}}
+        <div class="feature-card-image">
+          {{#if featureBannerItem2Image}}
+            <img src="{{featureBannerItem2Image}}" alt="{{#if featureBannerItem2Title}}{{featureBannerItem2Title}}{{else}}Community Driven{{/if}}">
           {{else}}
-            <span class="banner-icon">🤝</span>
+            <div class="feature-card-placeholder">🤝</div>
           {{/if}}
         </div>
-        <h3>{{#if featureBannerItem2Title}}{{featureBannerItem2Title}}{{else}}Community Driven{{/if}}</h3>
-      </div>
+        <div class="feature-card-text">
+          <h3 class="feature-card-title">{{#if featureBannerItem2Title}}{{featureBannerItem2Title}}{{else}}Community Driven{{/if}}</h3>
+        </div>
+      {{#if featureBannerItem2Url}}
+        </a>
+      {{else}}
+        </div>
+      {{/if}}
 
-      {{!-- Third Feature Item --}}
-      <div class="banner-item">
-        <div class="banner-image">
-          {{#if featureBannerItem3Icon}}
-            <span class="banner-icon">{{featureBannerItem3Icon}}</span>
+      {{!-- Third Feature Card --}}
+      {{#if featureBannerItem3Url}}
+        <a href="{{featureBannerItem3Url}}" class="feature-card" {{#if (starts-with featureBannerItem3Url "http")}}target="_blank"{{/if}}>
+      {{else}}
+        <div class="feature-card">
+      {{/if}}
+        <div class="feature-card-image">
+          {{#if featureBannerItem3Image}}
+            <img src="{{featureBannerItem3Image}}" alt="{{#if featureBannerItem3Title}}{{featureBannerItem3Title}}{{else}}Always Learning{{/if}}">
           {{else}}
-            <span class="banner-icon">🚀</span>
+            <div class="feature-card-placeholder">🚀</div>
           {{/if}}
         </div>
-        <h3>{{#if featureBannerItem3Title}}{{featureBannerItem3Title}}{{else}}Always Learning{{/if}}</h3>
-      </div>
+        <div class="feature-card-text">
+          <h3 class="feature-card-title">{{#if featureBannerItem3Title}}{{featureBannerItem3Title}}{{else}}Always Learning{{/if}}</h3>
+        </div>
+      {{#if featureBannerItem3Url}}
+        </a>
+      {{else}}
+        </div>
+      {{/if}}
 
     </div>
   </div>

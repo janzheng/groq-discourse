@@ -243,7 +243,7 @@
   }
 }
 
-// Three-column feature banner - redesigned as cover images
+// Feature banner - card style layout
 .groqsters-feature-banner,
 div.groqsters-feature-banner {
   margin: 1rem 0 !important;
@@ -251,8 +251,8 @@ div.groqsters-feature-banner {
   width: 100% !important;
   display: block !important;
 
-  .banner-grid,
-  div.banner-grid {
+  .feature-cards-row,
+  div.feature-cards-row {
     display: grid !important;
     grid-template-columns: repeat(3, 1fr) !important;
     gap: 1rem !important;
@@ -263,8 +263,7 @@ div.groqsters-feature-banner {
 
     // Tablet: 2 columns
     @media (max-width: 768px) and (min-width: 481px) {
-      // grid-template-columns: repeat(2, 1fr) !important;
-      grid-template-columns: 1fr !important;
+      grid-template-columns: repeat(2, 1fr) !important;
       gap: 0.75rem !important;
     }
 
@@ -275,27 +274,48 @@ div.groqsters-feature-banner {
     }
   }
 
-  .banner-item,
-  div.banner-item {
-    position: relative !important;
-    overflow: hidden !important;
-    display: block !important;
-    height: 200px !important;
+  .feature-card,
+  a.feature-card,
+  div.feature-card {
+    display: flex !important;
+    flex-direction: column !important;
+    background-color: #ffffff !important;
+    border: 1px solid #d3cec877 !important;
     border-radius: 8px !important;
-    transition: var(--groqsters-transition) !important;
+    overflow: hidden !important;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, .06), 0 2px 4px -2px rgba(0, 0, 0, .08) !important;
+    transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+    text-decoration: none !important;
+    color: inherit !important;
 
-    // Make clickable items have pointer cursor
-    &.clickable {
-      cursor: pointer !important;
-    }
-
-    // Hover effects
     &:hover {
       transform: translateY(-2px) !important;
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15) !important;
+      box-shadow: 0 8px 12px -1px rgba(0, 0, 0, .1), 0 4px 8px -2px rgba(0, 0, 0, .12) !important;
+      text-decoration: none !important;
+      color: inherit !important;
     }
 
-    // Image container - now full cover
+    &:visited {
+      color: inherit !important;
+    }
+  }
+
+  .feature-card-image,
+  div.feature-card-image {
+    position: relative !important;
+    width: 100% !important;
+    height: 200px !important;
+    overflow: hidden !important;
+
+    img {
+      width: 100% !important;
+      height: 100% !important;
+      object-fit: cover !important;
+      object-position: center !important;
+      transition: var(--groqsters-transition) !important;
+    }
+
+    // Handle the banner-image wrapper created by JavaScript
     .banner-image,
     div.banner-image {
       position: absolute !important;
@@ -303,63 +323,44 @@ div.groqsters-feature-banner {
       left: 0 !important;
       width: 100% !important;
       height: 100% !important;
-      border-radius: 8px !important;
-      overflow: hidden !important;
+      border-radius: 0 !important;
 
-      // Actual image styling - full cover
       img {
-        width: 100% !important;
-        height: 100% !important;
-        object-fit: cover !important;
-        object-position: center !important;
-        border-radius: 8px !important;
-        transition: var(--groqsters-transition) !important;
-
-        &:hover {
-          transform: scale(1.02) !important;
-        }
+        border-radius: 0 !important;
       }
 
       // Show placeholder when image fails or is not present
       &.no-image {
         background: linear-gradient(135deg, var(--primary-low), var(--primary-very-low)) !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
 
-        // Simple placeholder pattern
         &::before {
           content: '' !important;
-          position: absolute !important;
-          top: 50% !important;
-          left: 50% !important;
           width: 48px !important;
           height: 48px !important;
-          margin: -24px 0 0 -24px !important;
           border: 3px solid var(--primary-medium) !important;
           border-radius: 8px !important;
           opacity: 0.3 !important;
-        }
-
-        img {
-          display: none !important;
         }
       }
 
       // Loading state
       &.loading {
         background: linear-gradient(135deg, var(--primary-low), var(--primary-very-low)) !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
 
         &::after {
           content: '' !important;
-          position: absolute !important;
-          top: 50% !important;
-          left: 50% !important;
           width: 24px !important;
           height: 24px !important;
-          margin: -12px 0 0 -12px !important;
           border: 3px solid var(--primary) !important;
           border-radius: 50% !important;
           border-top-color: transparent !important;
           animation: spin 1s linear infinite !important;
-          z-index: 3 !important;
         }
 
         &::before {
@@ -368,28 +369,61 @@ div.groqsters-feature-banner {
       }
     }
 
-    // Title styling - positioned at bottom left
-    h3 {
-      position: absolute !important;
-      bottom: 0 !important;
-      left: 0 !important;
-      right: 0 !important;
-      margin: 0 !important;
-      padding: 1rem !important;
-      font-size: 1rem !important;
-      font-weight: 600 !important;
-      color: white !important;
-      text-align: left !important;
-      background: linear-gradient(transparent, rgba(0, 0, 0, 0.7)) !important;
-      border-radius: 0 0 8px 8px !important;
-      z-index: 2 !important;
+    // Placeholder for handlebars template
+    .feature-card-placeholder {
+      width: 100% !important;
+      height: 100% !important;
+      background: linear-gradient(135deg, var(--primary-low), var(--primary-very-low)) !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      font-size: 3rem !important;
+      color: var(--primary-medium) !important;
+    }
+  }
 
-      // Allow text wrapping
-      white-space: normal !important;
-      overflow: visible !important;
-      text-overflow: unset !important;
+  .feature-card-text,
+  div.feature-card-text {
+    background-color: #f7f7f7 !important;
+    padding: 16px !important;
+    flex: 1 !important;
+    display: flex !important;
+    flex-direction: column !important;
+
+    .feature-card-title,
+    h3.feature-card-title,
+    h3 {
+      margin: 0 !important;
+      font-size: 1.1rem !important;
+      font-weight: 600 !important;
+      color: var(--primary) !important;
       line-height: 1.3 !important;
-      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5) !important;
+      text-align: left !important;
+    }
+  }
+}
+
+// Dark mode adjustments for feature cards
+.dark-mode .groqsters-feature-banner {
+  .feature-card,
+  a.feature-card,
+  div.feature-card {
+    background-color: var(--secondary) !important;
+    border-color: var(--primary-low) !important;
+    
+    &:hover {
+      background-color: var(--tertiary-low) !important;
+    }
+  }
+
+  .feature-card-text,
+  div.feature-card-text {
+    background-color: var(--primary-very-low) !important;
+
+    .feature-card-title,
+    h3.feature-card-title,
+    h3 {
+      color: var(--primary) !important;
     }
   }
 }
@@ -710,157 +744,6 @@ div.groqsters-feature-banner {
       border-color: rgba(255, 255, 255, 0.5);
       color: white;
       text-decoration: none;
-    }
-  }
-}
-
-// Three-column feature banner - redesigned as cover images
-.groqsters-feature-banner,
-div.groqsters-feature-banner {
-  margin: 1rem 0 !important;
-  padding: 0 !important;
-  width: 100% !important;
-  display: block !important;
-
-  .banner-grid,
-  div.banner-grid {
-    display: grid !important;
-    grid-template-columns: repeat(3, 1fr) !important;
-    gap: 1rem !important;
-    margin: 0 auto !important;
-    padding: 0 !important;
-    width: 100% !important;
-    box-sizing: border-box !important;
-
-    // Tablet: 2 columns
-    @media (max-width: 768px) and (min-width: 481px) {
-      // grid-template-columns: repeat(2, 1fr) !important;
-      grid-template-columns: 1fr !important;
-      gap: 0.75rem !important;
-    }
-
-    // Mobile: 1 column
-    @media (max-width: 480px) {
-      grid-template-columns: 1fr !important;
-      gap: 0.75rem !important;
-    }
-  }
-
-  .banner-item,
-  div.banner-item {
-    position: relative !important;
-    overflow: hidden !important;
-    display: block !important;
-    height: 200px !important;
-    border-radius: 8px !important;
-    transition: var(--groqsters-transition) !important;
-
-    // Make clickable items have pointer cursor
-    &.clickable {
-      cursor: pointer !important;
-    }
-
-    // Hover effects
-    &:hover {
-      transform: translateY(-2px) !important;
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15) !important;
-    }
-
-    // Image container - now full cover
-    .banner-image,
-    div.banner-image {
-      position: absolute !important;
-      top: 0 !important;
-      left: 0 !important;
-      width: 100% !important;
-      height: 100% !important;
-      border-radius: 8px !important;
-      overflow: hidden !important;
-
-      // Actual image styling - full cover
-      img {
-        width: 100% !important;
-        height: 100% !important;
-        object-fit: cover !important;
-        object-position: center !important;
-        border-radius: 8px !important;
-        transition: var(--groqsters-transition) !important;
-
-        &:hover {
-          transform: scale(1.02) !important;
-        }
-      }
-
-      // Show placeholder when image fails or is not present
-      &.no-image {
-        background: linear-gradient(135deg, var(--primary-low), var(--primary-very-low)) !important;
-
-        // Simple placeholder pattern
-        &::before {
-          content: '' !important;
-          position: absolute !important;
-          top: 50% !important;
-          left: 50% !important;
-          width: 48px !important;
-          height: 48px !important;
-          margin: -24px 0 0 -24px !important;
-          border: 3px solid var(--primary-medium) !important;
-          border-radius: 8px !important;
-          opacity: 0.3 !important;
-        }
-
-        img {
-          display: none !important;
-        }
-      }
-
-      // Loading state
-      &.loading {
-        background: linear-gradient(135deg, var(--primary-low), var(--primary-very-low)) !important;
-
-        &::after {
-          content: '' !important;
-          position: absolute !important;
-          top: 50% !important;
-          left: 50% !important;
-          width: 24px !important;
-          height: 24px !important;
-          margin: -12px 0 0 -12px !important;
-          border: 3px solid var(--primary) !important;
-          border-radius: 50% !important;
-          border-top-color: transparent !important;
-          animation: spin 1s linear infinite !important;
-          z-index: 3 !important;
-        }
-
-        &::before {
-          display: none !important;
-        }
-      }
-    }
-
-    // Title styling - positioned at bottom left
-    h3 {
-      position: absolute !important;
-      bottom: 0 !important;
-      left: 0 !important;
-      right: 0 !important;
-      margin: 0 !important;
-      padding: 1rem !important;
-      font-size: 1rem !important;
-      font-weight: 600 !important;
-      color: white !important;
-      text-align: left !important;
-      background: linear-gradient(transparent, rgba(0, 0, 0, 0.7)) !important;
-      border-radius: 0 0 8px 8px !important;
-      z-index: 2 !important;
-
-      // Allow text wrapping
-      white-space: normal !important;
-      overflow: visible !important;
-      text-overflow: unset !important;
-      line-height: 1.3 !important;
-      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5) !important;
     }
   }
 }
