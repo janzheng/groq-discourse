@@ -1,13 +1,16 @@
 // Groqsters Theme - Common Styles
 // This file contains styles that apply to all devices
 
+
+@use "common/banners";
+
+
 // Import theme settings
 :root {
   --groqsters-primary: #{$primary_brand_color};
   --groqsters-transition: all 0.3s ease;
 }
 
-@use "common/banners";
 @import "./footer.scss";
 
 
