@@ -7,27 +7,7 @@ primary_brand_color:
   type: string
   default: "#1f8dd6"
   description: "Primary brand color for the theme"
-
-show_welcome_banner:
-  type: bool
-  default: false
-  description: "Show a welcome banner on the homepage"
-
-welcome_banner_header_logged_in:
-  type: string
-  default: "Welcome back, {username}!"
-  description: "Main header text for logged-in users (use {username} as placeholder)"
-
-welcome_banner_header_guest:
-  type: string
-  default: "Welcome to Our Community"
-  description: "Main header text for guests"
-
-welcome_banner_subtitle:
-  type: string
-  default: "Find help, share your knowledge, and experience fast inference"
-  description: "Subtitle text (h2) shown below the main header"
-
+  
 show_alert_banner:
   type: bool
   default: false
