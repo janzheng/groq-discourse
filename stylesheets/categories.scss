@@ -450,6 +450,7 @@ body.groqsters-categories-page,
   table.category-list td.category {
     border: none !important;
     background: none !important;
+    flex-grow: 1;
     padding: 0 !important;
   }
 
