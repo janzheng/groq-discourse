@@ -1762,6 +1762,29 @@ body.groqsters-categories-page,
   }
 }
 
+// Dark mode adjustments for custom search banner
+.dark-mode .custom-search-banner {
+  color: #a6a6a6;
+  
+  .custom-search-banner-headline {
+    color: #a6a6a6;
+  }
+  
+  p {
+    color: #a6a6a6;
+  }
+}
+
+.dark-mode .welcome-banner__inner-wrapper {
+  .custom-search-banner-headline {
+    color: #a6a6a6;
+  }
+  
+  p {
+    color: #a6a6a6;
+  }
+}
+
 // ============================================
 // DISCOURSE SHOW-MORE NOTIFICATION FIXES
 // ============================================

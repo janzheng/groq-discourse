@@ -1,5 +1,4 @@
 import { withPluginApi } from "discourse/lib/plugin-api";
-import { groqstersSearchWidget } from "../components/groqsters-custom-widget";
 
 export default {
   name: "groqsters-theme",
@@ -583,7 +582,7 @@ export default {
 
 
 
-      // The groqsters-search-banner widget is automatically registered when imported
+      // Search banner functionality is provided by the official discourse-search-banner component
 
     });
   }
