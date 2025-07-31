@@ -8,6 +8,7 @@
 }
 
 // these are for home page or general site styles
+@import "home";
 @import "banners";
 @import "footer";
 @import "categories";
@@ -21,7 +22,9 @@
 
 
 
-
+.main-outlet-wrapper {
+  border-top: 1px solid rgb(233, 233, 233);
+}
 
 // ============================================
 // DISCOURSE SHOW-MORE NOTIFICATION FIXES
