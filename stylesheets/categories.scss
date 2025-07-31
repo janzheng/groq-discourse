@@ -321,3 +321,277 @@
     z-index: 9;
   }
 }
+
+
+// AGGRESSIVE CATEGORY LAYOUT OVERRIDE
+// Target all possible Discourse category structures
+body.categories-list,
+body.groqsters-categories-page,
+.categories-page,
+#main-outlet .categories-and-latest,
+#main-outlet .categories-only,
+.full-width .wrap .categories-and-latest,
+.full-width .wrap .categories-only {
+
+  // Hide only the table HEADERS, not the whole table
+  .category-list thead,
+  .category-list th,
+  thead.category-list-header {
+    display: none !important;
+    visibility: hidden !important;
+  }
+
+  // Hide Latest section on Categories tab
+  .latest-topic-list,
+  .latest-topic-list-container,
+  .latest-topic-list-item {
+    display: none !important;
+  }
+
+  // Target the specific table structure but don't hide it completely
+  .category-list {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)) !important;
+    gap: 1rem !important;
+    margin: 1rem 0 !important;
+    padding: 0 !important;
+    border: none !important;
+    background: none !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+
+    // Target table rows as category items - MAKE SURE THEY'RE VISIBLE
+    tr.category-list-item,
+    .category-list-item {
+      display: block !important;
+      visibility: visible !important;
+      background: var(--secondary) !important;
+      border: 2px solid #d1d5db !important;
+      border-radius: 8px !important;
+      padding: 0.5rem !important;
+      transition: var(--groqsters-transition) !important;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08) !important;
+      cursor: pointer !important;
+      position: relative !important;
+      overflow: hidden !important;
+      width: 100% !important;
+      height: auto !important;
+      margin: 0 !important;
+      min-height: 120px !important;
+      box-sizing: border-box !important;
+
+      // Add left border accent like Cloudflare
+      &::before {
+        content: '' !important;
+        position: absolute !important;
+        left: 0 !important;
+        top: 0 !important;
+        width: 4px !important;
+        height: 100% !important;
+        background: var(--groqsters-primary) !important;
+        border-radius: 4px 0 0 4px !important;
+      }
+
+      // Force all table cells to be block
+      td {
+        border: none !important;
+        background: none !important;
+        vertical-align: unset !important;
+
+        // Hide ALL metadata columns 
+        &.topics,
+        &.posts,
+        &.latest,
+        &.num,
+        &.stats {
+          display: none !important;
+        }
+
+        // Show only main category cell
+        &.category {
+          display: block !important;
+          padding: 0 !important;
+
+          // Hide the category icon/logo
+          .category-logo,
+          .category-icon {
+            display: none !important;
+          }
+
+          // Style category name like Cloudflare
+          h3,
+          .category-name,
+          .category-title-link {
+            font-size: 1.5rem !important;
+            font-weight: 700 !important;
+            color: var(--primary) !important;
+            margin: 0 0 1rem 0 !important;
+            text-decoration: none !important;
+            display: block !important;
+            line-height: 1.3 !important;
+
+            a {
+              color: var(--primary) !important;
+              text-decoration: none !important;
+              font-weight: 700 !important;
+
+              &:hover {
+                color: var(--groqsters-primary) !important;
+              }
+            }
+          }
+
+          // Style description like Cloudflare
+          .category-description {
+            color: var(--primary-high) !important;
+            font-size: 1rem !important;
+            line-height: 1.6 !important;
+            margin-bottom: 0 !important;
+            display: -webkit-box !important;
+            -webkit-line-clamp: 4 !important;
+            -webkit-box-orient: vertical !important;
+            overflow: hidden !important;
+            font-weight: 400 !important;
+          }
+
+          // Hide ALL complex elements and metadata
+          .subcategories,
+          .category-stat,
+          .featured-topics,
+          .topic-count,
+          .post-count,
+          .num,
+          .stats {
+            display: none !important;
+          }
+        }
+      }
+
+      // Enhanced hover effects like Cloudflare
+      &:hover {
+        transform: translateY(-2px) !important;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12) !important;
+        border-color: #9ca3af !important;
+
+        &::before {
+          background: var(--groqsters-primary) !important;
+          width: 6px !important;
+        }
+      }
+    }
+
+    // Make sure the table itself is visible as a grid
+    table {
+      display: contents !important;
+      border: none !important;
+      background: none !important;
+    }
+
+    tbody {
+      display: contents !important;
+      border: none !important;
+      background: none !important;
+    }
+  }
+
+  // DIRECT TARGETING OF TABLE STRUCTURE FOR GRAY BORDERS
+  // Target the exact elements shown in browser dev tools
+  .category-list tr,
+  table.category-list tr,
+  tr[data-category-id] {
+    background: var(--secondary) !important;
+    border: 2px solid #d1d5db !important;
+    border-radius: 8px !important;
+    margin: 0 !important;
+    padding: 0.5rem !important;
+    display: block !important;
+    position: relative !important;
+    z-index: 1 !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+
+    // Add colorful top border like Cloudflare using category colors
+    border-top: 4px solid #d1d5db !important;
+
+    &:hover {
+      border-color: #9ca3af !important;
+      border-top-color: #6b7280 !important;
+      transform: translateY(-2px) !important;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12) !important;
+      z-index: 2 !important;
+    }
+  }
+
+  // Also target the td.category directly 
+  .category-list td.category,
+  table.category-list td.category {
+    border: none !important;
+    background: none !important;
+    padding: 0 !important;
+  }
+
+  // CLOUDFLARE-STYLE CATEGORY-SPECIFIC BORDER COLORS
+  // Add colorful top borders for different categories like Cloudflare
+  .category-list tr {
+
+    // Default colors for different category positions/types
+    &:nth-child(1) {
+      border-top-color: #f97316 !important;
+    }
+
+    // Orange
+    &:nth-child(2) {
+      border-top-color: #eab308 !important;
+    }
+
+    // Yellow  
+    &:nth-child(3) {
+      border-top-color: #3b82f6 !important;
+    }
+
+    // Blue
+    &:nth-child(4) {
+      border-top-color: #ef4444 !important;
+    }
+
+    // Red
+    &:nth-child(5) {
+      border-top-color: #10b981 !important;
+    }
+
+    // Green
+    &:nth-child(6) {
+      border-top-color: #8b5cf6 !important;
+    }
+
+    // Purple
+    &:nth-child(7) {
+      border-top-color: #f59e0b !important;
+    }
+
+    // Amber
+    &:nth-child(8) {
+      border-top-color: #06b6d4 !important;
+    }
+
+    // Cyan
+
+    // You can also target specific categories by name if needed:
+    // &[data-category-id="1"] { border-top-color: #f97316 !important; } // Staff
+    // &[data-category-id="2"] { border-top-color: #3b82f6 !important; } // General
+    // &[data-category-id="3"] { border-top-color: #8b5cf6 !important; } // Site Feedback
+  }
+
+  // Force hide any remaining Latest sections
+  .latest-topic-list-item,
+  .topic-list {
+
+    // Remove our custom "Latest Topics" header
+    &::before {
+      display: none !important;
+    }
+
+    // Hide the entire Latest section on Categories tab
+    display: none !important;
+  }
+}
