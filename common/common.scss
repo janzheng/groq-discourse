@@ -1,11 +1,77 @@
 // Groqsters Theme - Common Styles
 // This file contains styles that apply to all devices
 
+// Import theme settings
+:root {
+  --groqsters-primary: #{$primary_brand_color};
+  --groqsters-transition: all 0.3s ease;
+}
 
-// @import "banners";
-@import "footer";
+// Custom header styling
+.d-header {
+  .custom-header-text {
+    font-weight: 600;
+    color: var(--header_primary);
+    margin-left: 1em;
+  }
+}
 
-
+// Header nav styling for welcome banner
+.header-nav {
+  width: 100%;
+  
+  // Fallback styles for simple auth buttons
+  .user-menu-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    
+    .welcome-text {
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: var(--primary);
+    }
+  }
+  
+  .guest-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    padding: 1rem;
+    
+    .btn {
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: var(--groqsters-transition);
+      
+      &.login-button {
+        background: var(--primary);
+        color: white;
+        border: 2px solid var(--primary);
+        
+        &:hover {
+          background: var(--primary-high);
+          transform: translateY(-2px);
+        }
+      }
+      
+      &.signup-button {
+        background: transparent;
+        color: var(--primary);
+        border: 2px solid var(--primary);
+        
+        &:hover {
+          background: var(--primary);
+          color: white;
+          transform: translateY(-2px);
+        }
+      }
+    }
+  }
+}
 
 // Banner container
 .groqsters-banners-container {
@@ -13,7 +79,6 @@
 }
 
 // Welcome banner positioned above main layout (including sidebar)
-// This includes the CUSTOM TOP BANNER COMPONENT at the top of the page
 .welcome-banner {
   color: #222222;
   padding: 2rem;
@@ -24,7 +89,7 @@
   position: relative;
   border-radius: 8px;
   z-index: 10;
-
+  
   h1 {
     font-family: var(--heading-font-family); // Use heading font family
     margin: 0 0 0.75rem 0;
@@ -32,7 +97,7 @@
     font-weight: 700;
     line-height: 1.2;
   }
-
+  
   h2 {
     font-family: var(--heading-font-family); // Use heading font family
     margin: 0 0 1.5rem 0;
@@ -41,7 +106,7 @@
     opacity: 0.9;
     line-height: 1.4;
   }
-
+  
   .search-input {
     margin-top: 0.5rem;
     width: 100%;
@@ -67,15 +132,9 @@
       color: #9ca3af;
     }
   }
-
   .search-icon {
     top: 5px;
   }
-}
-
-// hide welcome-banner on admin (custom)
-.admin-area .welcome-banner {
-  display: none;
 }
 
 // Override Discourse core welcome banner wrapper padding if needed
@@ -93,389 +152,88 @@
 }
 
 // Groqsters Functional Search Widget Styling
-// .groqsters-search-banner {
-//   margin-bottom: 1rem;
-
-//   .groqsters-functional-search {
-//     background: var(--secondary);
-//     border-radius: 8px;
-//     box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
-//   }
-
-//   .groqsters-search-container {
-//     margin-top: 1.5rem;
-//     max-width: 600px;
-//     margin-left: auto;
-//     margin-right: auto;
-//   }
-
-//   .search-input-wrapper {
-//     display: flex;
-//     align-items: center;
-//     background: white;
-//     border: 2px solid #f97316;
-//     border-radius: 8px;
-//     overflow: hidden;
-//     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-//     transition: all 0.3s ease;
-
-//     &:focus-within {
-//       box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
-//       transform: translateY(-1px);
-//     }
-//   }
-
-//   .groqsters-search-input {
-//     flex: 1;
-//     border: none;
-//     padding: 0.75rem 1rem;
-//     font-size: 1rem;
-//     background: transparent;
-//     outline: none;
-//     color: #222222;
-
-//     &::placeholder {
-//       color: #9ca3af;
-//     }
-//   }
-
-//   .groqsters-search-btn,
-//   .groqsters-advanced-search {
-//     padding: 0.75rem;
-//     border: none;
-//     background: transparent;
-//     color: #f97316;
-//     cursor: pointer;
-//     display: flex;
-//     align-items: center;
-//     justify-content: center;
-//     transition: all 0.2s ease;
-//     text-decoration: none;
-
-//     &:hover {
-//       background: rgba(249, 115, 22, 0.1);
-//       color: #ea580c;
-//     }
-
-//     &:disabled {
-//       opacity: 0.5;
-//       cursor: not-allowed;
-//     }
-
-//     svg {
-//       width: 16px;
-//       height: 16px;
-//     }
-//   }
-
-//   .groqsters-search-btn {
-//     border-left: 1px solid #e5e7eb;
-//   }
-
-//   .groqsters-advanced-search {
-//     border-left: 1px solid #e5e7eb;
-//   }
-// }
-
-
-
-
-
-// Alert banner (like SSL/TLS message)
-.groqsters-alert-banner {
-  background: var(--groqsters-alert-color, #ff6a39);
-  color: white;
-  padding: 1rem 1.5rem;
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 1rem;
-
-  .alert-message {
+.groqsters-search-banner {
+  margin-bottom: 1rem;
+  
+  .groqsters-functional-search {
+    background: var(--secondary);
+    border-radius: 8px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  .groqsters-search-container {
+    margin-top: 1.5rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .search-input-wrapper {
+    display: flex;
+    align-items: center;
+    background: white;
+    border: 2px solid #f97316;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    
+    &:focus-within {
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+      transform: translateY(-1px);
+    }
+  }
+  
+  .groqsters-search-input {
     flex: 1;
+    border: none;
+    padding: 0.75rem 1rem;
     font-size: 1rem;
-    font-weight: 500;
-    line-height: 1.4;
-    margin: 0;
+    background: transparent;
+    outline: none;
+    color: #222222;
+    
+    &::placeholder {
+      color: #9ca3af;
+    }
   }
-
-  .alert-cta {
-    background: rgba(255, 255, 255, 0.2);
-    color: white;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    padding: 0.5rem 1rem;
-    border-radius: 6px;
+  
+  .groqsters-search-btn,
+  .groqsters-advanced-search {
+    padding: 0.75rem;
+    border: none;
+    background: transparent;
+    color: #f97316;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
     text-decoration: none;
-    font-weight: 600;
-    font-size: 0.9rem;
-    transition: var(--groqsters-transition);
-    flex-shrink: 0;
-
+    
     &:hover {
-      background: rgba(255, 255, 255, 0.3);
-      border-color: rgba(255, 255, 255, 0.5);
-      color: white;
-      text-decoration: none;
+      background: rgba(249, 115, 22, 0.1);
+      color: #ea580c;
+    }
+    
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+    
+    svg {
+      width: 16px;
+      height: 16px;
     }
   }
-}
-
-// Three-column feature banner - redesigned as cover images
-.groqsters-feature-banner,
-div.groqsters-feature-banner {
-  margin: 1rem 0 !important;
-  padding: 0 !important;
-  width: 100% !important;
-  display: block !important;
-
-  .banner-grid,
-  div.banner-grid {
-    display: grid !important;
-    grid-template-columns: repeat(3, 1fr) !important;
-    gap: 1rem !important;
-    margin: 0 auto !important;
-    padding: 0 !important;
-    width: 100% !important;
-    box-sizing: border-box !important;
-
-    // Tablet: 2 columns
-    @media (max-width: 768px) and (min-width: 481px) {
-      // grid-template-columns: repeat(2, 1fr) !important;
-      grid-template-columns: 1fr !important;
-      gap: 0.75rem !important;
-    }
-
-    // Mobile: 1 column
-    @media (max-width: 480px) {
-      grid-template-columns: 1fr !important;
-      gap: 0.75rem !important;
-    }
+  
+  .groqsters-search-btn {
+    border-left: 1px solid #e5e7eb;
   }
-
-  .banner-item,
-  div.banner-item {
-    position: relative !important;
-    overflow: hidden !important;
-    display: block !important;
-    height: 200px !important;
-    border-radius: 8px !important;
-    transition: var(--groqsters-transition) !important;
-
-    // Make clickable items have pointer cursor
-    &.clickable {
-      cursor: pointer !important;
-    }
-
-    // Hover effects
-    &:hover {
-      transform: translateY(-2px) !important;
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15) !important;
-    }
-
-    // Image container - now full cover
-    .banner-image,
-    div.banner-image {
-      position: absolute !important;
-      top: 0 !important;
-      left: 0 !important;
-      width: 100% !important;
-      height: 100% !important;
-      border-radius: 8px !important;
-      overflow: hidden !important;
-
-      // Actual image styling - full cover
-      img {
-        width: 100% !important;
-        height: 100% !important;
-        object-fit: cover !important;
-        object-position: center !important;
-        border-radius: 8px !important;
-        transition: var(--groqsters-transition) !important;
-
-        &:hover {
-          transform: scale(1.02) !important;
-        }
-      }
-
-      // Show placeholder when image fails or is not present
-      &.no-image {
-        background: linear-gradient(135deg, var(--primary-low), var(--primary-very-low)) !important;
-
-        // Simple placeholder pattern
-        &::before {
-          content: '' !important;
-          position: absolute !important;
-          top: 50% !important;
-          left: 50% !important;
-          width: 48px !important;
-          height: 48px !important;
-          margin: -24px 0 0 -24px !important;
-          border: 3px solid var(--primary-medium) !important;
-          border-radius: 8px !important;
-          opacity: 0.3 !important;
-        }
-
-        img {
-          display: none !important;
-        }
-      }
-
-      // Loading state
-      &.loading {
-        background: linear-gradient(135deg, var(--primary-low), var(--primary-very-low)) !important;
-
-        &::after {
-          content: '' !important;
-          position: absolute !important;
-          top: 50% !important;
-          left: 50% !important;
-          width: 24px !important;
-          height: 24px !important;
-          margin: -12px 0 0 -12px !important;
-          border: 3px solid var(--primary) !important;
-          border-radius: 50% !important;
-          border-top-color: transparent !important;
-          animation: spin 1s linear infinite !important;
-          z-index: 3 !important;
-        }
-
-        &::before {
-          display: none !important;
-        }
-      }
-    }
-
-    // Title styling - positioned at bottom left
-    h3 {
-      position: absolute !important;
-      bottom: 0 !important;
-      left: 0 !important;
-      right: 0 !important;
-      margin: 0 !important;
-      padding: 1rem !important;
-      font-size: 1rem !important;
-      font-weight: 600 !important;
-      color: white !important;
-      text-align: left !important;
-      background: linear-gradient(transparent, rgba(0, 0, 0, 0.7)) !important;
-      border-radius: 0 0 8px 8px !important;
-      z-index: 2 !important;
-
-      // Allow text wrapping
-      white-space: normal !important;
-      overflow: visible !important;
-      text-overflow: unset !important;
-      line-height: 1.3 !important;
-      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5) !important;
-    }
+  
+  .groqsters-advanced-search {
+    border-left: 1px solid #e5e7eb;
   }
-}
-
-
-// Dark mode adjustments for custom search banner
-.dark-mode .custom-search-banner {
-  color: #a6a6a6;
-
-  .custom-search-banner-headline {
-    color: #a6a6a6;
-  }
-
-  p {
-    color: #a6a6a6;
-  }
-}
-
-.dark-mode .welcome-banner__inner-wrapper {
-  .custom-search-banner-headline {
-    color: #a6a6a6;
-  }
-
-  p {
-    color: #a6a6a6;
-  }
-}
-
-
-
-
-
-
-// Custom header styling
-// .d-header {
-//   .custom-header-text {
-//     font-weight: 600;
-//     color: var(--header_primary);
-//     margin-left: 1em;
-//   }
-// }
-
-// Header nav styling for welcome banner
-// .header-nav {
-//   width: 100%;
-
-//   // Fallback styles for simple auth buttons
-//   .user-menu-wrapper {
-//     display: flex;
-//     align-items: center;
-//     justify-content: center;
-//     padding: 1rem;
-
-//     .welcome-text {
-//       font-size: 1.1rem;
-//       font-weight: 500;
-//       color: var(--primary);
-//     }
-//   }
-
-//   .guest-actions {
-//     display: flex;
-//     gap: 1rem;
-//     justify-content: center;
-//     padding: 1rem;
-
-//     .btn {
-//       padding: 0.75rem 1.5rem;
-//       border-radius: 8px;
-//       text-decoration: none;
-//       font-weight: 600;
-//       transition: var(--groqsters-transition);
-
-//       &.login-button {
-//         background: var(--primary);
-//         color: white;
-//         border: 2px solid var(--primary);
-
-//         &:hover {
-//           background: var(--primary-high);
-//           transform: translateY(-2px);
-//         }
-//       }
-
-//       &.signup-button {
-//         background: transparent;
-//         color: var(--primary);
-//         border: 2px solid var(--primary);
-
-//         &:hover {
-//           background: var(--primary);
-//           color: white;
-//           transform: translateY(-2px);
-//         }
-//       }
-//     }
-//   }
-// }
-
-
-
-
-
-// Import theme settings
-:root {
-  --groqsters-primary: #{$primary_brand_color};
-  --groqsters-transition: all 0.3s ease;
 }
 
 
@@ -732,6 +490,198 @@ div.groqsters-feature-banner {
   }
 }
 
+// Alert banner (like SSL/TLS message)
+.groqsters-alert-banner {
+  background: var(--groqsters-alert-color, #ff6a39);
+  color: white;
+  padding: 1rem 1.5rem;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  
+  .alert-message {
+    flex: 1;
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1.4;
+    margin: 0;
+  }
+  
+  .alert-cta {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: var(--groqsters-transition);
+    flex-shrink: 0;
+    
+    &:hover {
+      background: rgba(255, 255, 255, 0.3);
+      border-color: rgba(255, 255, 255, 0.5);
+      color: white;
+      text-decoration: none;
+    }
+  }
+}
+
+// Three-column feature banner - redesigned as cover images
+.groqsters-feature-banner,
+div.groqsters-feature-banner {
+  margin: 1rem 0 !important;
+  padding: 0 !important;
+  width: 100% !important;
+  display: block !important;
+  
+  .banner-grid,
+  div.banner-grid {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 1rem !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    
+    // Tablet: 2 columns
+    @media (max-width: 768px) and (min-width: 481px) {
+      // grid-template-columns: repeat(2, 1fr) !important;
+      grid-template-columns: 1fr !important;
+      gap: 0.75rem !important;
+    }
+    
+    // Mobile: 1 column
+    @media (max-width: 480px) {
+      grid-template-columns: 1fr !important;
+      gap: 0.75rem !important;
+    }
+  }
+  
+  .banner-item,
+  div.banner-item {
+    position: relative !important;
+    overflow: hidden !important;
+    display: block !important;
+    height: 200px !important;
+    border-radius: 8px !important;
+    transition: var(--groqsters-transition) !important;
+    
+    // Make clickable items have pointer cursor
+    &.clickable {
+      cursor: pointer !important;
+    }
+    
+    // Hover effects
+    &:hover {
+      transform: translateY(-2px) !important;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15) !important;
+    }
+    
+    // Image container - now full cover
+    .banner-image,
+    div.banner-image {
+      position: absolute !important;
+      top: 0 !important;
+      left: 0 !important;
+      width: 100% !important;
+      height: 100% !important;
+      border-radius: 8px !important;
+      overflow: hidden !important;
+      
+      // Actual image styling - full cover
+      img {
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover !important;
+        object-position: center !important;
+        border-radius: 8px !important;
+        transition: var(--groqsters-transition) !important;
+        
+        &:hover {
+          transform: scale(1.02) !important;
+        }
+      }
+      
+      // Show placeholder when image fails or is not present
+      &.no-image {
+        background: linear-gradient(135deg, var(--primary-low), var(--primary-very-low)) !important;
+        
+        // Simple placeholder pattern
+        &::before {
+          content: '' !important;
+          position: absolute !important;
+          top: 50% !important;
+          left: 50% !important;
+          width: 48px !important;
+          height: 48px !important;
+          margin: -24px 0 0 -24px !important;
+          border: 3px solid var(--primary-medium) !important;
+          border-radius: 8px !important;
+          opacity: 0.3 !important;
+        }
+        
+        img {
+          display: none !important;
+        }
+      }
+      
+      // Loading state
+      &.loading {
+        background: linear-gradient(135deg, var(--primary-low), var(--primary-very-low)) !important;
+        
+        &::after {
+          content: '' !important;
+          position: absolute !important;
+          top: 50% !important;
+          left: 50% !important;
+          width: 24px !important;
+          height: 24px !important;
+          margin: -12px 0 0 -12px !important;
+          border: 3px solid var(--primary) !important;
+          border-radius: 50% !important;
+          border-top-color: transparent !important;
+          animation: spin 1s linear infinite !important;
+          z-index: 3 !important;
+        }
+        
+        &::before {
+          display: none !important;
+        }
+      }
+    }
+    
+    // Title styling - positioned at bottom left
+    h3 {
+      position: absolute !important;
+      bottom: 0 !important;
+      left: 0 !important;
+      right: 0 !important;
+      margin: 0 !important;
+      padding: 1rem !important;
+      font-size: 1rem !important;
+      font-weight: 600 !important;
+      color: white !important;
+      text-align: left !important;
+      background: linear-gradient(transparent, rgba(0, 0, 0, 0.7)) !important;
+      border-radius: 0 0 8px 8px !important;
+      z-index: 2 !important;
+      
+      // Allow text wrapping
+      white-space: normal !important;
+      overflow: visible !important;
+      text-overflow: unset !important;
+      line-height: 1.3 !important;
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5) !important;
+    }
+  }
+}
+
 // Loading spinner animation
 @keyframes spin {
   0% { transform: rotate(0deg); }
@@ -785,6 +735,20 @@ div.groqsters-feature-banner {
   .post-menu-area {
     opacity: 0.7;
     transition: var(--groqsters-transition);
+  }
+}
+
+// Custom footer
+.custom-footer {
+  background-color: var(--secondary);
+  padding: 1rem;
+  text-align: center;
+  border-top: 1px solid var(--primary-low);
+  margin-top: 2rem;
+  
+  .footer-text {
+    color: var(--primary-medium);
+    font-size: 0.9rem;
   }
 }
 
@@ -1332,6 +1296,494 @@ body.groqsters-categories-page,
   }
 }
 
+// ============================================
+// COMPREHENSIVE FOOTER STYLES
+// ============================================
+
+.groqsters-footer {
+  background: var(--secondary);
+  border-top: 1px solid var(--primary-low);
+  padding: 0;
+  
+  // Ensure footer spans full width, breaking out of sidebar layout
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  width: 100vw;
+  
+  // Alternative approach for sidebar layouts
+  .has-sidebar-page & {
+    position: relative;
+    left: 0;
+    right: 0;
+    margin-left: 0;
+    margin-right: 0;
+    width: 100%;
+    margin-top: 2rem;
+    grid-column: 1 / -1; // Span full grid width
+  }
+
+  // Ensure footer appears outside main content wrapper
+  #main-outlet-wrapper + &,
+  #main-outlet + & {
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    width: 100vw;
+    margin-top: 2rem;
+  }
+
+  // Special handling for pages with discovery layout
+  .navigation-container + * & {
+    position: relative;
+    width: 100%;
+    left: auto;
+    right: auto;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .site-footer__contents {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 3rem 2rem 2rem;
+    position: relative;
+    z-index: 1;
+  }
+  
+  // Community links row (now in right section)
+  .community-links-row {
+    // Default styles (already handled in .footer-right-section above)
+    
+    .community-title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--primary);
+      margin: 0 0 1rem 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      text-align: left;
+    }
+    
+    .community-links {
+      display: flex;
+      justify-content: flex-start;
+      gap: 2rem;
+      flex-wrap: wrap;
+      
+      .community-link {
+        color: var(--primary-medium);
+        text-decoration: none;
+        font-size: 0.9rem;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        
+        &:hover {
+          color: var(--primary);
+          text-decoration: underline;
+        }
+      }
+    }
+    
+    @media (max-width: 767px) {
+      .community-links {
+        gap: 1rem;
+        
+        .community-link {
+          font-size: 0.85rem;
+          padding: 0;
+        }
+      }
+    }
+  }
+
+  // Main footer layout - branding left, content right
+  .main-footer-layout {
+    display: flex;
+    gap: 0rem;
+    margin-bottom: 2rem;
+    align-items: flex-start;
+    
+    // Desktop layout: side by side
+    @media (min-width: 768px) {
+      .footer-branding {
+        flex: 0 0 280px; // Fixed width for branding
+        max-width: 280px;
+      }
+      
+      .footer-right-section {
+        flex: 1; // Take remaining space
+      }
+    }
+    
+    // Mobile layout: stack vertically but keep logo and community links aligned
+    @media (max-width: 767px) {
+      flex-direction: column;
+      gap: 2rem;
+      
+      .footer-branding {
+        flex: none;
+      }
+      
+      .footer-right-section {
+        flex: none;
+      }
+    }
+  }
+  
+  // Right section containing community links and footer grid
+  .footer-right-section {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    width: 100%;
+    
+    .community-links-row {
+      // Remove previous styles that added borders and spacing
+      border-bottom: none;
+      margin-bottom: 0;
+      padding: 0;
+      text-align: left;
+      
+      .community-links {
+        justify-content: flex-start;
+      }
+    }
+  }
+
+  
+  // Main footer grid layout
+  .footer-grid {
+    display: grid;
+    gap: 1rem;
+    margin-bottom: 0;
+    width: 100%;
+    overflow: visible;
+    
+    // Desktop: 6 columns for link groups
+    @media (min-width: 1200px) {
+      grid-template-columns: repeat(6, 1fr);
+    }
+    
+    // Medium-large desktop: 4 columns for better spacing
+    @media (max-width: 1199px) and (min-width: 1024px) {
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+    }
+    
+    // Tablet: 3 columns
+    @media (max-width: 1023px) and (min-width: 768px) {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      text-align: left;
+    }
+    
+    // Mobile: 2 columns for better space usage
+    @media (max-width: 767px) {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem;
+      text-align: left;
+      width: 100%;
+    }
+    
+    // Very small mobile: single column
+    @media (max-width: 480px) {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+  }
+  
+  // Footer branding section
+  .footer-branding {
+    .footer-logo {
+      margin-bottom: 1rem;
+      
+      .footer-logo-img {
+        max-height: 3rem;
+        width: auto;
+      }
+      
+      .footer-site-title {
+        text-decoration: none;
+        color: var(--primary);
+        
+        h3 {
+          margin: 0;
+          font-size: 1.5rem;
+          font-weight: 700;
+          color: var(--primary);
+        }
+      }
+    }
+    
+    .footer-tagline {
+      color: var(--primary-medium);
+      font-size: 0.9rem;
+      line-height: 1.5;
+      margin: 0;
+      max-width: 280px;
+    }
+    
+    // Mobile layout: logo and tagline stacked but compact
+    @media (max-width: 767px) {
+      margin-bottom: 1rem;
+      
+      .footer-logo {
+        margin-bottom: 0.5rem;
+        
+        a svg {
+          width: 10em !important;
+          height: 3em !important;
+        }
+      }
+      
+      .footer-tagline {
+        font-size: 0.85rem;
+        max-width: none;
+      }
+    }
+  }
+  
+  // Footer link groups
+  .footer-links-group {
+    min-width: 0; // Prevent grid overflow
+    width: 100%;
+    
+    .footer-group-title {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--primary);
+      margin: 0 0 1rem 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      white-space: nowrap;
+      overflow: visible;
+    }
+    
+    .footer-links-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      width: 100%;
+      
+      li {
+        margin-bottom: 0.5rem;
+        
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+      
+      .footer-link {
+        color: var(--primary-medium);
+        text-decoration: none;
+        font-size: 0.875rem;
+        line-height: 1.5;
+        transition: color 0.2s ease;
+        display: block;
+        white-space: nowrap;
+        
+        &:hover {
+          color: var(--primary);
+          text-decoration: none;
+        }
+      }
+    }
+  }
+  
+  // Footer bottom section
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 2rem;
+    
+    @media (max-width: 767px) {
+      flex-direction: column;
+      gap: 1rem;
+      text-align: center;
+    }
+    
+    .footer-legal {
+      p {
+        margin: 0;
+        font-size: 0.8rem;
+        color: var(--primary-medium);
+        line-height: 1.4;
+        
+        &:first-child {
+          margin-bottom: 0.25rem;
+        }
+      }
+      
+      .powered-by {
+        font-size: 0.75rem;
+        
+        a {
+          color: var(--primary-medium);
+          text-decoration: none;
+          
+          &:hover {
+            color: var(--primary);
+          }
+        }
+      }
+      
+      .manage-cookies-btn {
+        background: none;
+        border: none;
+        color: var(--primary-medium);
+        font-size: 0.8rem;
+        cursor: pointer;
+        padding: 0;
+        margin-left: 1rem;
+        text-decoration: underline;
+        
+        &:hover {
+          color: var(--primary);
+        }
+        
+        @media (max-width: 767px) {
+          margin-left: 0;
+          margin-top: 0.5rem;
+          display: block;
+        }
+      }
+    }
+  }
+  
+  // Social media links
+  .footer-social {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    
+    .footer-social-link {
+      color: var(--primary-medium);
+      text-decoration: none;
+      transition: all 0.3s ease;
+      
+      &:hover {
+        color: var(--primary);
+        transform: translateY(-2px);
+        text-decoration: none;
+      }
+      
+      svg {
+        width: 1.5em;
+        height: 1.5em;
+        display: block;
+      }
+      
+      .d-icon {
+        font-size: 1.5rem;
+      }
+    }
+  }
+  
+
+}
+
+// Accessibility helper class
+.visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+// Dark mode adjustments
+.dark-mode .groqsters-footer {
+  background: var(--secondary);
+  border-top-color: var(--primary-low);
+  
+  .footer-tagline {
+    color: var(--primary-medium);
+  }
+  
+  .footer-group-title {
+    color: var(--primary-high);
+  }
+  
+  .footer-link {
+    color: var(--primary-medium);
+    
+    &:hover {
+      color: var(--primary-high);
+    }
+  }
+  
+  .footer-legal p {
+    color: var(--primary-medium);
+  }
+  
+  .footer-social-link {
+    background: var(--primary-low);
+    color: var(--primary-medium);
+    
+    &:hover {
+      background: var(--primary);
+      color: white;
+    }
+  }
+  
+  .community-links-row {
+    
+    .community-title {
+      color: var(--primary-high);
+    }
+    
+    .community-link {
+      background: var(--primary-very-low);
+      color: var(--primary-medium);
+      
+      &:hover {
+        background: var(--primary);
+        color: white;
+      }
+    }
+  }
+  
+  .manage-cookies-btn {
+    color: var(--primary-medium);
+    
+    &:hover {
+      color: var(--primary-high);
+    }
+  }
+}
+
+// Dark mode adjustments for custom search banner
+.dark-mode .custom-search-banner {
+  color: #a6a6a6;
+  
+  .custom-search-banner-headline {
+    color: #a6a6a6;
+  }
+  
+  p {
+    color: #a6a6a6;
+  }
+}
+
+.dark-mode .welcome-banner__inner-wrapper {
+  .custom-search-banner-headline {
+    color: #a6a6a6;
+  }
+  
+  p {
+    color: #a6a6a6;
+  }
+}
 
 // ============================================
 // DISCOURSE SHOW-MORE NOTIFICATION FIXES
@@ -1396,4 +1848,92 @@ body.groqsters-categories-page,
   }
 }
 
+// Groqsters Dummy Banner for below-site-header-outlet
+.groqsters-dummy-banner {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 0;
+  margin: 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  position: relative;
+  z-index: 100;
+  
+  .dummy-banner-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    padding: 1rem 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+    
+    .dummy-icon {
+      font-size: 1.5rem;
+      opacity: 0.9;
+    }
+    
+    .dummy-text {
+      font-weight: 500;
+      text-align: center;
+      flex: 1;
+      
+      @media (max-width: 768px) {
+        font-size: 0.9rem;
+      }
+    }
+    
+    .dummy-close {
+      cursor: pointer;
+      font-size: 1.5rem;
+      font-weight: bold;
+      opacity: 0.7;
+      transition: var(--groqsters-transition);
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+      
+      &:hover {
+        opacity: 1;
+        background: rgba(255, 255, 255, 0.1);
+      }
+    }
+  }
+  
+  // Responsive adjustments
+  @media (max-width: 768px) {
+    .dummy-banner-content {
+      padding: 0.75rem 1rem;
+      gap: 0.75rem;
+      
+      .dummy-icon {
+        font-size: 1.25rem;
+      }
+    }
+  }
+}
 
+// Groqsters Header Test for above-site-header outlet
+.groqsters-header-test {
+  position: relative;
+  z-index: 200;
+  font-family: var(--base-font-family);
+  
+  div {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    
+    span {
+      transition: opacity 0.2s ease;
+      
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+  }
+}
+
+// Groqsters Below Header Test for below-site-header outlet
+.groqsters-below-header-test {
+  position: relative;
+  z-index: 150;
+  font-family: var(--base-font-family);
+} 
