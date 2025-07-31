@@ -2,7 +2,8 @@
 // This file contains styles that apply to all devices
 
 
-@use "common/banners";
+@import "common/banners";
+@import "common/footer";
 
 
 // Import theme settings
@@ -10,8 +11,6 @@
   --groqsters-primary: #{$primary_brand_color};
   --groqsters-transition: all 0.3s ease;
 }
-
-@import "./footer.scss";
 
 
 // Navigation Grid Component
