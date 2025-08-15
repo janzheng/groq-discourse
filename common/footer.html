@@ -170,17 +170,23 @@
   // Ensure Alpine.js is available
   function ensureAlpine(callback){
     if (window.Alpine && typeof window.Alpine === 'object') { callback(); return; }
-    var script = document.createElement('script');
-    script.src = 'https://unpkg.com/alpinejs@3.14.1/dist/cdn.min.js';
-    script.defer = true;
-    script.onload = function(){
-      if (window.Alpine && window.Alpine.start) {
-        // Alpine auto-starts on DOMContentLoaded; ensure it's ready
-        try { window.Alpine.start(); } catch(e) {}
-      }
+    if (window.__groqsters_alpine_loading) { document.addEventListener('__groqsters_alpine_ready', callback, { once: true }); return; }
+    window.__groqsters_alpine_loading = true;
+    // Load CSP plugin first to avoid eval under strict CSP, then Alpine
+    var plugin = document.createElement('script');
+    plugin.src = 'https://unpkg.com/@alpinejs/csp@3.14.1/dist/cdn.min.js';
+    plugin.defer = true;
+    document.head.appendChild(plugin);
+
+    var alpine = document.createElement('script');
+    alpine.src = 'https://unpkg.com/alpinejs@3.14.1/dist/cdn.min.js';
+    alpine.defer = true;
+    alpine.onload = function(){
+      window.__groqsters_alpine_loading = false;
+      document.dispatchEvent(new Event('__groqsters_alpine_ready'));
       callback();
     };
-    document.head.appendChild(script);
+    document.head.appendChild(alpine);
   }
 
   // Mount points
@@ -205,7 +211,7 @@
     root.appendChild(label); root.appendChild(val); root.appendChild(inc); outer.appendChild(root);
     return outer;
   }
-  function injectCounterDemo(enabled){ if(!enabled) return; if(document.querySelector('.groqsters-counter')) return; var body=getBodyContainer(); if(!body) return; var node = buildCounter(); ensureAlpine(function(){ body.appendChild(node); if(window.Alpine && window.Alpine.initTree){ try{ window.Alpine.initTree(node); }catch(e){} } }); }
+  function injectCounterDemo(enabled){ if(!enabled) return null; if(document.querySelector('.groqsters-counter')) return null; var body=getBodyContainer(); if(!body) return null; var node = buildCounter(); body.appendChild(node); return node; }
 
   // Gallery (Alpine.js)
   function injectGallery(s){
@@ -223,7 +229,8 @@
     container.appendChild(tpl);
     tpl.content.appendChild(img);
     var body=getBodyContainer();
-    if(body && body.parentNode){ ensureAlpine(function(){ body.parentNode.insertBefore(container, body.nextSibling); if(window.Alpine && window.Alpine.initTree){ try{ window.Alpine.initTree(container); }catch(e){} } }); }
+    if(body && body.parentNode){ body.parentNode.insertBefore(container, body.nextSibling); return container; }
+    return null;
   }
 
   // Behavior
@@ -241,11 +248,14 @@
     var spaSelector = cfg ? readStr(cfg, 'spaSelector', '.groqsters-published-menu a') : '.groqsters-published-menu a';
 
     applyHiding(hideHeader);
-    injectMenu(parseLinksSetting(linksStr));
-    injectCounterDemo(counter);
-    injectGallery(galleryStr);
-    wireSpaNavigation(spaEnabled, spaSelector);
-    console.log('[groqsters] published page enhancements applied (footer injector)');
+    ensureAlpine(function(){
+      injectMenu(parseLinksSetting(linksStr));
+      var node1 = injectCounterDemo(counter);
+      var node2 = injectGallery(galleryStr);
+      if (window.Alpine && window.Alpine.initTree){ try{ if(node1) window.Alpine.initTree(node1); if(node2) window.Alpine.initTree(node2); } catch(e){} }
+      wireSpaNavigation(spaEnabled, spaSelector);
+      console.log('[groqsters] published page enhancements applied (footer injector + Alpine)');
+    });
   }
 
   onReady(run);
