@@ -139,7 +139,6 @@ groqsters/
 │       ├── lib/
 │       │   └── groqsters-utilities.js  # Utility functions
 │       └── components/
-│           └── groqsters-custom-widget.js # Custom widget component
 ├── templates/
 │   ├── header.hbs                      # Custom header template
 │   ├── footer.hbs                      # Custom footer template

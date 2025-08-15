@@ -1,0 +1,20 @@
+{
+  "name": "groqsters",
+  "version": "1.0.0",
+  "description": "A modern, customizable Discourse theme designed for enhanced user experience and developer flexibility.",
+  "homepage": "https://github.com/janzheng/groq-discourse#readme",
+  "bugs": {
+    "url": "https://github.com/janzheng/groq-discourse/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/janzheng/groq-discourse.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "git": "git add . && git commit -m 'update' && git push"
+  }
+}
