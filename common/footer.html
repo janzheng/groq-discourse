@@ -201,7 +201,7 @@
     root.setAttribute('x-data', '{ count: 0 }');
     var label=document.createElement('span'); label.textContent='Counter:';
     var val=document.createElement('strong'); val.setAttribute('x-text', 'count'); val.setAttribute('aria-live','polite');
-    var inc=document.createElement('button'); inc.type='button'; inc.textContent='+'; inc.setAttribute('@click','count++');
+    var inc=document.createElement('button'); inc.type='button'; inc.textContent='+'; inc.setAttribute('x-on:click','count++');
     root.appendChild(label); root.appendChild(val); root.appendChild(inc); outer.appendChild(root);
     return outer;
   }
@@ -218,8 +218,8 @@
     var tpl=document.createElement('template');
     tpl.setAttribute('x-for','(imgUrl, idx) in images');
     var img=document.createElement('img');
-    img.setAttribute(':src','imgUrl');
-    img.setAttribute(':alt',"'Gallery image ' + (idx + 1)");
+    img.setAttribute('x-bind:src','imgUrl');
+    img.setAttribute('x-bind:alt',"'Gallery image ' + (idx + 1)");
     container.appendChild(tpl);
     tpl.content.appendChild(img);
     var body=getBodyContainer();
