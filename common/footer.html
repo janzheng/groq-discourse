@@ -149,3 +149,30 @@
 
   </div>
 </footer>
+<div id="groqsters-pub-config"
+  hidden
+  data-enabled="{{theme-setting 'published_enable_customizations'}}"
+  data-hide-header="{{theme-setting 'published_hide_default_header'}}"
+  data-menu-links="{{theme-setting 'published_menu_links'}}"
+  data-counter="{{theme-setting 'published_enable_counter_demo'}}"
+  data-gallery-images="{{theme-setting 'published_gallery_images'}}"
+  data-spa-enabled="{{theme-setting 'published_spa_enabled'}}"
+  data-spa-selector="{{theme-setting 'published_spa_link_selector'}}"
+></div>
+<script>
+(function () {
+  function onReady(fn){ if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',fn);} else { fn(); } }
+  function isTrue(val){ return String(val).toLowerCase()==='true'; }
+  function parseLinksSetting(s){ var out=[]; if(!s) return out; s.split(',').forEach(function(e){ var p=e.split('|'); if(p.length>=2){ var t=(p[0]||'').trim(); var h=(p[1]||'').trim(); if(t&&h) out.push({text:t,href:h}); } }); return out; }
+  function buildMenu(links){ var existing=document.querySelector('.groqsters-published-menu'); if(existing) return existing; var nav=document.createElement('nav'); nav.className='groqsters-published-menu'; var inner=document.createElement('div'); inner.className='groqsters-published-menu-inner'; nav.appendChild(inner); links.forEach(function(it){ var a=document.createElement('a'); a.href=it.href; a.textContent=it.text; a.target=it.href.indexOf('http')===0?'_blank':'_self'; inner.appendChild(a); }); return nav; }
+  function injectMenu(links){ if(!links||!links.length) return; var menu=buildMenu(links); if(!menu) return; var header=document.querySelector('.published-page-header'); if(header){ if(!header.nextSibling || header.nextSibling!==menu){ header.parentNode.insertBefore(menu, header.nextSibling); } } else { var wrap=document.querySelector('.wrap, .container, body'); if(wrap && !document.querySelector('.groqsters-published-menu')){ wrap.insertBefore(menu, wrap.firstChild); } } }
+  function injectCounterDemo(enabled){ if(!enabled) return; if(document.querySelector('.groqsters-counter')) return; var target=document.querySelector('.published-page-header-wrapper, .wrap, .container, body'); if(!target) return; var wrap=document.createElement('div'); wrap.style.margin='0.5rem 1rem'; var c=document.createElement('div'); c.className='groqsters-counter'; var label=document.createElement('span'); label.textContent='Counter:'; var val=document.createElement('strong'); val.textContent='0'; val.setAttribute('aria-live','polite'); var inc=document.createElement('button'); inc.type='button'; inc.textContent='+'; inc.addEventListener('click', function(){ var cur=parseInt(val.textContent||'0',10)||0; val.textContent=String(cur+1); }); c.appendChild(label); c.appendChild(val); c.appendChild(inc); wrap.appendChild(c); target.appendChild(wrap); }
+  function injectGallery(s){ var str=(s||'').trim(); if(!str) return; if(document.querySelector('.groqsters-gallery')) return; var urls=str.split(',').map(function(u){return u.trim();}).filter(Boolean); if(!urls.length) return; var g=document.createElement('div'); g.className='groqsters-gallery'; urls.forEach(function(src,i){ var img=document.createElement('img'); img.src=src; img.alt='Gallery image '+(i+1); g.appendChild(img); }); var header=document.querySelector('.published-page-header'); if(header && header.parentNode){ header.parentNode.insertBefore(g, header.nextSibling); return; } var content=document.querySelector('.wrap, .container, body'); if(content) content.insertBefore(g, content.firstChild); }
+  function applyHiding(hide){ if(!hide) return; var header=document.querySelector('.published-page-header'); if(header) header.style.display='none'; }
+  function wireSpaNavigation(enabled, selector){ if(!enabled) return; var sel=selector||'.groqsters-published-menu a'; document.addEventListener('click', function(ev){ var path=ev.composedPath?ev.composedPath():[]; var a=null; for(var i=0;i<path.length;i++){ var el=path[i]; if(el && el.tagName==='A'){ a=el; break; } } if(!a){ var t=ev.target; if(t && t.closest) a=t.closest(sel); }
+    if(!a || !a.matches(sel)) return; var href=a.getAttribute('href'); if(!href) return; if(href.indexOf('http')===0) return; ev.preventDefault(); window.history.pushState({},'',href); var evt=new CustomEvent('groqsters:spa:navigate',{detail:{href:href}}); window.dispatchEvent(evt);
+  }, true); }
+  function run(){ if(!document.body || !document.body.classList.contains('published-page')) return; var cfg=document.getElementById('groqsters-pub-config'); if(!cfg) return; if(!isTrue(cfg.dataset.enabled)) return; applyHiding(isTrue(cfg.dataset.hideHeader)); injectMenu(parseLinksSetting(cfg.dataset.menuLinks||'')); injectCounterDemo(isTrue(cfg.dataset.counter)); injectGallery(cfg.dataset.galleryImages||''); wireSpaNavigation(isTrue(cfg.dataset.spaEnabled), cfg.dataset.spaSelector||'.groqsters-published-menu a'); console.log('[groqsters] published page enhancements applied (footer injector)'); }
+  onReady(run);
+})();
+</script>
