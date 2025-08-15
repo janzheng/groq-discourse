@@ -173,6 +173,25 @@
     if(!a || !a.matches(sel)) return; var href=a.getAttribute('href'); if(!href) return; if(href.indexOf('http')===0) return; ev.preventDefault(); window.history.pushState({},'',href); var evt=new CustomEvent('groqsters:spa:navigate',{detail:{href:href}}); window.dispatchEvent(evt);
   }, true); }
   function run(){ if(!document.body || !document.body.classList.contains('published-page')) return; var cfg=document.getElementById('groqsters-pub-config'); if(!cfg) return; if(!isTrue(cfg.dataset.enabled)) return; applyHiding(isTrue(cfg.dataset.hideHeader)); injectMenu(parseLinksSetting(cfg.dataset.menuLinks||'')); injectCounterDemo(isTrue(cfg.dataset.counter)); injectGallery(cfg.dataset.galleryImages||''); wireSpaNavigation(isTrue(cfg.dataset.spaEnabled), cfg.dataset.spaSelector||'.groqsters-published-menu a'); console.log('[groqsters] published page enhancements applied (footer injector)'); }
+  function readStr(cfg, key, fallback){ try{ var v = (cfg && cfg.dataset && cfg.dataset[key]) || ''; if (!v || v.indexOf('{{') === 0) return fallback; return v; } catch(e){ return fallback; } }
+  function readBool(cfg, key, fallback){ var v = readStr(cfg, key, ''); if(!v) return fallback; if(v.indexOf('{{')===0) return fallback; var s = String(v).toLowerCase(); if(s==='true' || s==='1' || s==='yes') return true; if(s==='false' || s==='0' || s==='no') return false; return fallback; }
+  function run(){ if(!document.body || !document.body.classList.contains('published-page')) return; var cfg=document.getElementById('groqsters-pub-config');
+    // Fall back to sensible defaults if theme settings aren't interpolated on published pages
+    var enabled = cfg ? readBool(cfg, 'enabled', true) : true;
+    if(!enabled) return;
+    var hideHeader = cfg ? readBool(cfg, 'hideHeader', false) : false;
+    var linksStr = cfg ? readStr(cfg, 'menuLinks', 'Home|/, Forum|/latest, Docs|/docs') : 'Home|/, Forum|/latest, Docs|/docs';
+    var counter = cfg ? readBool(cfg, 'counter', true) : true;
+    var galleryStr = cfg ? readStr(cfg, 'galleryImages', '') : '';
+    var spaEnabled = cfg ? readBool(cfg, 'spaEnabled', false) : false;
+    var spaSelector = cfg ? readStr(cfg, 'spaSelector', '.groqsters-published-menu a') : '.groqsters-published-menu a';
+    applyHiding(hideHeader);
+    injectMenu(parseLinksSetting(linksStr));
+    injectCounterDemo(counter);
+    injectGallery(galleryStr);
+    wireSpaNavigation(spaEnabled, spaSelector);
+    console.log('[groqsters] published page enhancements applied (footer injector)');
+  }
   onReady(run);
 })();
 </script>

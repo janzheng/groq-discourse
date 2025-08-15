@@ -290,21 +290,6 @@ community_privacy_url:
   default: "/privacy"
   description: "URL for Privacy link in community footer section"
 
-# Additional Social Media Links
-footer_discord_url:
-  type: string
-  default: ""
-  description: "Discord URL for footer social links (leave empty to hide)"
-
-footer_linkedin_url:
-  type: string
-  default: ""
-  description: "LinkedIn URL for footer social links (leave empty to use default Groq LinkedIn)"
-
-footer_youtube_url:
-  type: string
-  default: ""
-  description: "YouTube URL for footer social links (leave empty to use default Groq YouTube)" 
 
 # Published Page Enhancements
 published_enable_customizations:
