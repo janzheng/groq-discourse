@@ -58,11 +58,11 @@ body.published-page {
   }
 
   // Content container normalization
-  .container, .wrap { // Discourse published layout containers
-    max-width: var(--published-max-width);
-    margin: 0 auto;
-    padding: 1rem;
-  }
+  // .container, .wrap { // Discourse published layout containers
+  //   max-width: var(--published-max-width);
+  //   margin: 0 auto;
+  //   padding: 1rem;
+  // }
 
   // Simple gallery
   .groqsters-gallery {

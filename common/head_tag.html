@@ -1,0 +1,201 @@
+<meta id="groqsters-pub-config"
+  data-enabled="{{theme-setting 'published_enable_customizations'}}"
+  data-hide-header="{{theme-setting 'published_hide_default_header'}}"
+  data-menu-links="{{theme-setting 'published_menu_links'}}"
+  data-counter="{{theme-setting 'published_enable_counter_demo'}}"
+  data-gallery-images="{{theme-setting 'published_gallery_images'}}"
+  data-spa-enabled="{{theme-setting 'published_spa_enabled'}}"
+  data-spa-selector="{{theme-setting 'published_spa_link_selector'}}"
+>
+
+<script>
+(function () {
+  function isTrue(val) {
+    return String(val).toLowerCase() === 'true';
+  }
+
+  function parseLinksSetting(linksSetting) {
+    var links = [];
+    if (!linksSetting) return links;
+    linksSetting.split(',').forEach(function (entry) {
+      var parts = entry.split('|');
+      if (parts.length >= 2) {
+        var text = (parts[0] || '').trim();
+        var href = (parts[1] || '').trim();
+        if (text && href) links.push({ text: text, href: href });
+      }
+    });
+    return links;
+  }
+
+  function buildMenu(links) {
+    var existing = document.querySelector('.groqsters-published-menu');
+    if (existing) return existing;
+
+    var container = document.createElement('nav');
+    container.className = 'groqsters-published-menu';
+
+    var inner = document.createElement('div');
+    inner.className = 'groqsters-published-menu-inner';
+    container.appendChild(inner);
+
+    links.forEach(function (item) {
+      var a = document.createElement('a');
+      a.href = item.href;
+      a.textContent = item.text;
+      a.target = item.href.indexOf('http') === 0 ? '_blank' : '_self';
+      inner.appendChild(a);
+    });
+
+    return container;
+  }
+
+  function injectMenu(links) {
+    if (!links || !links.length) return;
+    var menu = buildMenu(links);
+    if (!menu) return;
+
+    var header = document.querySelector('.published-page-header');
+    if (header) {
+      if (!header.nextSibling || header.nextSibling !== menu) {
+        header.parentNode.insertBefore(menu, header.nextSibling);
+      }
+    } else {
+      var mainWrap = document.querySelector('.wrap, .container, body');
+      if (mainWrap && !document.querySelector('.groqsters-published-menu')) {
+        mainWrap.insertBefore(menu, mainWrap.firstChild);
+      }
+    }
+  }
+
+  function injectCounterDemo(enabled) {
+    if (!enabled) return;
+    if (document.querySelector('.groqsters-counter')) return;
+
+    var target = document.querySelector('.published-page-header-wrapper, .wrap, .container, body');
+    if (!target) return;
+
+    var wrapper = document.createElement('div');
+    wrapper.style.margin = '0.5rem 1rem';
+
+    var counter = document.createElement('div');
+    counter.className = 'groqsters-counter';
+
+    var label = document.createElement('span');
+    label.textContent = 'Counter:';
+
+    var value = document.createElement('strong');
+    value.textContent = '0';
+    value.setAttribute('aria-live', 'polite');
+
+    var inc = document.createElement('button');
+    inc.type = 'button';
+    inc.textContent = '+';
+    inc.addEventListener('click', function () {
+      var current = parseInt(value.textContent || '0', 10) || 0;
+      value.textContent = String(current + 1);
+    });
+
+    counter.appendChild(label);
+    counter.appendChild(value);
+    counter.appendChild(inc);
+    wrapper.appendChild(counter);
+
+    target.appendChild(wrapper);
+  }
+
+  function injectGallery(imagesSetting) {
+    var str = (imagesSetting || '').trim();
+    if (!str) return;
+    if (document.querySelector('.groqsters-gallery')) return;
+    var urls = str.split(',').map(function (u) { return u.trim(); }).filter(Boolean);
+    if (!urls.length) return;
+
+    var gallery = document.createElement('div');
+    gallery.className = 'groqsters-gallery';
+    urls.forEach(function (src, idx) {
+      var img = document.createElement('img');
+      img.src = src;
+      img.alt = 'Gallery image ' + (idx + 1);
+      gallery.appendChild(img);
+    });
+
+    var afterHeader = document.querySelector('.published-page-header');
+    if (afterHeader && afterHeader.parentNode) {
+      afterHeader.parentNode.insertBefore(gallery, afterHeader.nextSibling);
+      return;
+    }
+    var content = document.querySelector('.wrap, .container, body');
+    if (content) content.insertBefore(gallery, content.firstChild);
+  }
+
+  function applyHiding(hideHeader) {
+    if (!hideHeader) return;
+    var header = document.querySelector('.published-page-header');
+    if (header) header.style.display = 'none';
+  }
+
+  function wireSpaNavigation(enabled, selector) {
+    if (!enabled) return;
+    var sel = selector || '.groqsters-published-menu a';
+    document.addEventListener('click', function (event) {
+      var path = event.composedPath ? event.composedPath() : [];
+      var anchor = null;
+      for (var i = 0; i < path.length; i++) {
+        var el = path[i];
+        if (el && el.tagName === 'A') { anchor = el; break; }
+      }
+      if (!anchor) {
+        var t = event.target;
+        if (t && t.closest) anchor = t.closest(sel);
+      }
+      if (!anchor || !anchor.matches(sel)) return;
+
+      var href = anchor.getAttribute('href');
+      if (!href) return;
+      if (href.indexOf('http') === 0) return; // external
+
+      event.preventDefault();
+      window.history.pushState({}, '', href);
+      var navEvent = new CustomEvent('groqsters:spa:navigate', { detail: { href: href } });
+      window.dispatchEvent(navEvent);
+    }, true);
+  }
+
+  function run() {
+    if (!document.body || !document.body.classList.contains('published-page')) return;
+
+    var el = document.getElementById('groqsters-pub-config');
+    if (!el) return;
+
+    var enabled = isTrue(el.dataset.enabled);
+    if (!enabled) return;
+
+    var hideHeader = isTrue(el.dataset.hideHeader);
+    var links = parseLinksSetting(el.dataset.menuLinks || '');
+    var counter = isTrue(el.dataset.counter);
+    var galleryImages = el.dataset.galleryImages || '';
+    var spaEnabled = isTrue(el.dataset.spaEnabled);
+    var spaSelector = el.dataset.spaSelector || '.groqsters-published-menu a';
+
+    try {
+      applyHiding(hideHeader);
+      injectMenu(links);
+      injectCounterDemo(counter);
+      injectGallery(galleryImages);
+      wireSpaNavigation(spaEnabled, spaSelector);
+      // Minimal debug for verification
+      console.log('[groqsters] published page enhancements applied');
+    } catch (e) {
+      console.error('[groqsters] published init error', e);
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', run);
+  } else {
+    run();
+  }
+})();
+</script>
+
