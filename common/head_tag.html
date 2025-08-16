@@ -14,7 +14,10 @@
   document.addEventListener('alpine:init', () => {
     Alpine.data('footerCounter', () => ({
       count: 0,
-      inc() { this.count++ }
+      inc() { 
+        this.count++ 
+        console.log('count', this.count)
+      }
     }));
   });
 </script>
