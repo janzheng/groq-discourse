@@ -1,3 +1,20 @@
+<script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/csp@3.x.x/dist/cdn.min.js"></script>
+
+<script defer>
+  document.addEventListener('alpine:init', () => {
+    Alpine.data('footerCounter', () => ({
+      count: 0,
+      inc() {
+        this.count++
+        console.log('count', this.count)
+      }
+    }));
+  });
+</script>
+
+
+
+
 <footer class="site-footer groqsters-footer" role="contentinfo">
   <div class="site-footer__contents container">
 
