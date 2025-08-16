@@ -9,20 +9,34 @@
   })
 </script>
 
-
-<script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/csp@3.x.x/dist/cdn.min.js"></script>
-
-<script defer>
-  document.addEventListener('alpine:init', () => {
-    Alpine.data('footerCounter', () => ({
-      count: 0,
-      inc() {
-        this.count++
-        console.log('count', this.count)
-      }
-    }));
-  });
+<!-- Load Alpine (non-CSP build) for BONK test only -->
+<script>
+(function(){
+  try {
+    var s=document.createElement('script');
+    s.src='https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/cdn.min.js';
+    s.defer=true;
+    document.head.appendChild(s);
+  } catch(e) {}
+})();
 </script>
+
+<!-- Optional runtime overrides for published pages (no Ember/theme-setting interpolation) -->
+<script>
+  window.groqstersPublishedConfig = window.groqstersPublishedConfig || {
+    // Example:
+    // enabled: true,
+    // hideHeader: false,
+    // menuLinks: 'Home|/, Forum|/latest, Docs|/docs',
+    // counter: true,
+    // galleryImages: '',
+    // spaEnabled: false,
+    // spaSelector: '.groqsters-published-menu a',
+    // posthog: { enabled: false, apiKey: '', host: 'https://app.posthog.com', capturePageview: true }
+  };
+</script>
+
+<!-- No Alpine.data registration needed for non-CSP build test -->
 
 
 
@@ -32,8 +46,8 @@
 
     BONK
 
-    <div x-data="footerCounter" class="footer-counter">
-      <button @click="inc">+</button>
+    <div x-data="{ count: 0 }" class="footer-counter">
+      <button x-on:click="count++">+</button>
       <span x-text="count"></span>
     </div>
     
@@ -190,14 +204,6 @@
   data-enabled="{{theme-setting 'published_enable_customizations'}}"
   data-hide-header="{{theme-setting 'published_hide_default_header'}}"
   data-menu-links="{{theme-setting 'published_menu_links'}}"
-  data-counter="{{theme-setting 'published_enable_counter_demo'}}"
-  data-gallery-images="{{theme-setting 'published_gallery_images'}}"
-  data-spa-enabled="{{theme-setting 'published_spa_enabled'}}"
-  data-spa-selector="{{theme-setting 'published_spa_link_selector'}}"
-  data-posthog-enabled="{{theme-setting 'posthog_enabled'}}"
-  data-posthog-key="{{theme-setting 'posthog_api_key'}}"
-  data-posthog-host="{{theme-setting 'posthog_host'}}"
-  data-posthog-pageview="{{theme-setting 'posthog_capture_pageview'}}"
 ></div>
 
 <script>
@@ -234,61 +240,26 @@
   }
   function injectCounterDemo(enabled){ if(!enabled) return null; if(document.querySelector('.groqsters-counter')) return null; var body=getBodyContainer(); if(!body) return null; var node = buildCounter(); body.appendChild(node); return node; }
 
-  // Gallery (vanilla)
-  function injectGallery(s){
-    var str=(s||'').trim(); if(!str) return null; if(document.querySelector('.groqsters-gallery')) return null;
-    var urls=str.split(',').map(function(u){return u.trim();}).filter(Boolean); if(!urls.length) return null;
-    var container=document.createElement('div');
-    container.className='groqsters-gallery';
-    urls.forEach(function(src, i){ var img=document.createElement('img'); img.src=src; img.alt='Gallery image '+(i+1); container.appendChild(img); });
-    var body=getBodyContainer();
-    if(body && body.parentNode){ body.parentNode.insertBefore(container, body.nextSibling); return container; }
-    return null;
-  }
-
   // Behavior
   function applyHiding(hide){ if(!hide) return; var header=getHeader(); if(header) header.style.display='none'; }
   function wireSpaNavigation(enabled, selector){ if(!enabled) return; var sel=selector||'.groqsters-published-menu a'; document.addEventListener('click', function(ev){ var path=ev.composedPath?ev.composedPath():[]; var a=null; for(var i=0;i<path.length;i++){ var el=path[i]; if(el && el.tagName==='A'){ a=el; break; } } if(!a){ var t=ev.target; if(t && t.closest) a=t.closest(sel); } if(!a || !a.matches(sel)) return; var href=a.getAttribute('href'); if(!href) return; if(href.indexOf('http')===0) return; ev.preventDefault(); window.history.pushState({},'',href); var evt=new CustomEvent('groqsters:spa:navigate',{detail:{href:href}}); window.dispatchEvent(evt); }, true); }
 
-  // PostHog loader (CSP-friendly, no eval)
-  function loadPosthog(){
-    try {
-      var cfg = document.getElementById('groqsters-pub-config');
-      if (!cfg) return;
-      var enabled = (cfg.getAttribute('data-posthog-enabled')||'').toLowerCase()==='true';
-      if (!enabled) return;
-      var apiKey = cfg.getAttribute('data-posthog-key')||'';
-      var host = cfg.getAttribute('data-posthog-host')||'https://app.posthog.com';
-      if (!apiKey) return;
-      if (window.posthog && window.posthog.__loaded) return;
-
-      // snippet adapted to avoid eval and respect CSP
-      !function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.async=!0,p.src=s.api_host+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"};var c="capture identify alias people.set people.set_once people.unset reset group setPersonProperties setPersonPropertiesOnce setGroup identifyGroup groupIdentify getDistinctId getGroups getSessionId opt_in_capturing opt_out_capturing has_opted_in_capturing has_opted_out_capturing clear_opt_in_out_capturing onFeatureFlags reloadFeatureFlags shutdown".split(" ");for(o=0;o<c.length;o++)g(u,c[o]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
-      window.posthog.init(apiKey, { api_host: host });
-
-      var capturePageview = (cfg.getAttribute('data-posthog-pageview')||'').toLowerCase()==='true';
-      if (capturePageview && window.posthog && window.posthog.capture) {
-        window.posthog.capture('$pageview');
-      }
-    } catch (e) { /* ignore */ }
-  }
-
+  
   function run(){ if(!document.body || !document.body.classList.contains('published-page')) return; var cfg=document.getElementById('groqsters-pub-config');
     // Fall back to sensible defaults if theme settings aren't interpolated on published pages
-    var enabled = cfg ? readBool(cfg, 'enabled', true) : true; if(!enabled) return;
-    var hideHeader = cfg ? readBool(cfg, 'hideHeader', false) : false;
-    var linksStr = cfg ? readStr(cfg, 'menuLinks', 'Home|/, Forum|/latest, Docs|/docs') : 'Home|/, Forum|/latest, Docs|/docs';
-    var counter = cfg ? readBool(cfg, 'counter', true) : true;
-    var galleryStr = cfg ? readStr(cfg, 'galleryImages', '') : '';
-    var spaEnabled = cfg ? readBool(cfg, 'spaEnabled', false) : false;
-    var spaSelector = cfg ? readStr(cfg, 'spaSelector', '.groqsters-published-menu a') : '.groqsters-published-menu a';
+    var cfgWin = window.groqstersPublishedConfig || {};
+    var enabled = (typeof cfgWin.enabled === 'boolean') ? cfgWin.enabled : (cfg ? readBool(cfg, 'enabled', true) : true); if(!enabled) return;
+    var hideHeader = (typeof cfgWin.hideHeader === 'boolean') ? cfgWin.hideHeader : (cfg ? readBool(cfg, 'hideHeader', false) : false);
+    var linksStr = (typeof cfgWin.menuLinks === 'string') ? cfgWin.menuLinks : (cfg ? readStr(cfg, 'menuLinks', 'Home|/, Forum|/latest, Docs|/docs') : 'Home|/, Forum|/latest, Docs|/docs');
+    var counter = (typeof cfgWin.counter === 'boolean') ? cfgWin.counter : (cfg ? readBool(cfg, 'counter', true) : true);
+    var galleryStr = (typeof cfgWin.galleryImages === 'string') ? cfgWin.galleryImages : (cfg ? readStr(cfg, 'galleryImages', '') : '');
+    var spaEnabled = (typeof cfgWin.spaEnabled === 'boolean') ? cfgWin.spaEnabled : (cfg ? readBool(cfg, 'spaEnabled', false) : false);
+    var spaSelector = (typeof cfgWin.spaSelector === 'string') ? cfgWin.spaSelector : (cfg ? readStr(cfg, 'spaSelector', '.groqsters-published-menu a') : '.groqsters-published-menu a');
 
     applyHiding(hideHeader);
     injectMenu(parseLinksSetting(linksStr));
     injectCounterDemo(counter);
-    injectGallery(galleryStr);
     wireSpaNavigation(spaEnabled, spaSelector);
-    loadPosthog();
     console.log('[groqsters] published page enhancements applied (footer injector)');
   }
 
