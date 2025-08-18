@@ -296,6 +296,20 @@ div.groqsters-feature-banner {
     }
   }
 
+  // Tablet & mobile: stack as single column like categories layout
+  @media (max-width: 1024px) {
+    .feature-cards-row,
+    div.feature-cards-row {
+      flex-direction: column !important;
+    }
+
+    .feature-card,
+    a.feature-card,
+    div.feature-card {
+      flex: 1 1 100% !important;
+    }
+  }
+
   .feature-card,
   a.feature-card,
   div.feature-card {
