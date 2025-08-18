@@ -110,48 +110,58 @@ export default {
             const featureCardsRow = document.createElement('div');
             featureCardsRow.className = 'feature-cards-row';
             
-            // Create three feature cards
+            // Create up to three feature cards, honoring per-item enable toggles
+            let enabledCount = 0;
             for (let i = 1; i <= 3; i++) {
+              const enabledSettingName = `feature_banner_item_${i}_enabled`;
+              const isEnabled = settings[enabledSettingName] !== false;
+              if (!isEnabled) continue;
+
               const imageUrl = settings[`feature_banner_item_${i}_image`];
-              const title = settings[`feature_banner_item_${i}_title`] || 
-                          (i === 1 ? "Fast & Powerful" : i === 2 ? "Community Driven" : "Always Learning");
+              const title = settings[`feature_banner_item_${i}_title`] ||
+                (i === 1 ? "Fast & Powerful" : i === 2 ? "Community Driven" : "Always Learning");
               const url = settings[`feature_banner_item_${i}_url`] || "#";
-              
+
               // Create either a link or div depending on URL
-              const featureCard = url && url !== "#" ? 
-                document.createElement('a') : 
+              const featureCard = url && url !== "#" ?
+                document.createElement('a') :
                 document.createElement('div');
-              
+
               featureCard.className = 'feature-card';
-              
+
               if (url && url !== "#") {
                 featureCard.href = url;
                 featureCard.target = url.startsWith('http') ? '_blank' : '_self';
               }
-              
+
               // Create image container
               const imageContainer = document.createElement('div');
               imageContainer.className = 'feature-card-image';
-              
+
               const imageElement = createBannerImage(imageUrl, i);
               imageContainer.appendChild(imageElement);
-              
+
               // Create text container
               const textContainer = document.createElement('div');
               textContainer.className = 'feature-card-text';
-              
+
               const titleElement = document.createElement('h3');
               titleElement.className = 'feature-card-title';
               titleElement.textContent = title;
               textContainer.appendChild(titleElement);
-              
+
               featureCard.appendChild(imageContainer);
               featureCard.appendChild(textContainer);
               featureCardsRow.appendChild(featureCard);
+              enabledCount++;
             }
             
-            featureBanner.appendChild(featureCardsRow);
-            bannerContainer.appendChild(featureBanner);
+            if (featureCardsRow.children.length > 0) {
+              // Expose count for CSS if needed
+              featureCardsRow.setAttribute('data-count', String(enabledCount));
+              featureBanner.appendChild(featureCardsRow);
+              bannerContainer.appendChild(featureBanner);
+            }
           }
 
           // Add navigation grid if enabled

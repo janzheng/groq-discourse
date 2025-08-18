@@ -253,24 +253,46 @@ div.groqsters-feature-banner {
 
   .feature-cards-row,
   div.feature-cards-row {
-    display: grid !important;
-    grid-template-columns: repeat(3, 1fr) !important;
+    display: flex !important;
+    flex-wrap: wrap !important;
     gap: 1rem !important;
     margin: 0 auto !important;
     padding: 0 !important;
     width: 100% !important;
     box-sizing: border-box !important;
 
-    // Tablet: 2 columns
-    @media (max-width: 768px) and (min-width: 481px) {
-      grid-template-columns: repeat(2, 1fr) !important;
-      gap: 0.75rem !important;
+    // Default: 3-up
+    .feature-card,
+    a.feature-card,
+    div.feature-card {
+      flex: 1 1 33.333% !important;
     }
 
-    // Mobile: 1 column
-    @media (max-width: 480px) {
-      grid-template-columns: 1fr !important;
-      gap: 0.75rem !important;
+    // When only one is enabled
+    &[data-count="1"] {
+      .feature-card,
+      a.feature-card,
+      div.feature-card {
+        flex: 1 1 100% !important;
+      }
+    }
+
+    // When two are enabled
+    &[data-count="2"] {
+      .feature-card,
+      a.feature-card,
+      div.feature-card {
+        flex: 1 1 50% !important;
+      }
+    }
+
+    // Mobile stack
+    @media (max-width: 600px) {
+      .feature-card,
+      a.feature-card,
+      div.feature-card {
+        flex: 1 1 100% !important;
+      }
     }
   }
 
@@ -310,9 +332,10 @@ div.groqsters-feature-banner {
     img {
       width: 100% !important;
       height: 100% !important;
-      object-fit: cover !important;
+      object-fit: contain !important;
       object-position: center !important;
       transition: var(--groqsters-transition) !important;
+      background-color: transparent !important;
     }
 
     // Handle the banner-image wrapper created by JavaScript
