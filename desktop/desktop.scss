@@ -141,6 +141,10 @@
 .category-boxes-with-topics {
   grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)) !important;
   gap: 2rem !important;
+
+  .description {
+    margin-bottom: 0;
+  }
   
   .category-box {
     // padding: 2rem !important;
