@@ -176,8 +176,10 @@ export default {
             const navigationGrid = document.createElement('div');
             navigationGrid.className = 'navigation-grid';
             
-            // Create navigation items
+            // Create navigation items honoring per-item enable toggles
             for (let i = 1; i <= 4; i++) {
+              const enabled = !!settings[`nav_item_${i}_enabled`];
+              if (!enabled) continue;
               const icon = settings[`nav_item_${i}_icon`];
               const title = settings[`nav_item_${i}_title`];
               const description = settings[`nav_item_${i}_description`];
