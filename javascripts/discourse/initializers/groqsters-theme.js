@@ -442,6 +442,12 @@ export default {
               const link3 = `<a href="${settings.sidebar_intro_link_3_url}">${settings.sidebar_intro_link_3_text}</a>`;
               text = text.replace('{share_link}', link3);
             }
+            // Support line breaks: convert both literal \n and actual newlines
+            text = text
+              .replaceAll('\\n\\n', '<br><br>')
+              .replaceAll('\\n', '<br>')
+              .replace(/\n\n/g, '<br><br>')
+              .replace(/\n/g, '<br>');
             
             introText.innerHTML = text;
             introSection.appendChild(introText);
@@ -472,8 +478,8 @@ export default {
           sidebar.appendChild(introSection);
         }
 
-        // Create detailed sections
-        for (let i = 1; i <= 3; i++) {
+        // Create detailed sections (now up to 5)
+        for (let i = 1; i <= 5; i++) {
           const title = settings[`sidebar_section_${i}_title`];
           const description = settings[`sidebar_section_${i}_description`];
           const url = settings[`sidebar_section_${i}_url`];

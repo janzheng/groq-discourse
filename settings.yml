@@ -313,6 +313,35 @@ sidebar_section_3_url:
   default: "/docs"
   description: "URL for the third sidebar section"
 
+sidebar_section_4_title:
+  type: string
+  default: ""
+  description: "Title for the fourth sidebar section"
+
+sidebar_section_4_description:
+  type: string
+  default: ""
+  description: "Description for the fourth sidebar section"
+
+sidebar_section_4_url:
+  type: string
+  default: ""
+  description: "URL for the fourth sidebar section"
+
+sidebar_section_5_title:
+  type: string
+  default: ""
+  description: "Title for the fifth sidebar section"
+
+sidebar_section_5_description:
+  type: string
+  default: ""
+  description: "Description for the fifth sidebar section"
+
+sidebar_section_5_url:
+  type: string
+  default: ""
+  description: "URL for the fifth sidebar section"
 # Footer Settings
 show_powered_by:
   type: bool
