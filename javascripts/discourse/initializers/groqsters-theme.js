@@ -114,7 +114,7 @@ export default {
             let enabledCount = 0;
             for (let i = 1; i <= 3; i++) {
               const enabledSettingName = `feature_banner_item_${i}_enabled`;
-              const isEnabled = settings[enabledSettingName] !== false;
+              const isEnabled = !!settings[enabledSettingName];
               if (!isEnabled) continue;
 
               const imageUrl = settings[`feature_banner_item_${i}_image`];
