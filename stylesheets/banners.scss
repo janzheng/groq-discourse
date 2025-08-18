@@ -266,9 +266,9 @@ div.groqsters-feature-banner {
     .feature-card,
     a.feature-card,
     div.feature-card {
-      flex: 0 0 345px !important; // basis and no grow
-      width: 345px !important;
-      max-width: 345px !important;
+      flex: 0 0 343px !important; // basis and no grow
+      width: 343px !important;
+      max-width: 343px !important;
     }
 
     // Tiny screens: prevent horizontal overflow
