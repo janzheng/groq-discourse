@@ -381,6 +381,54 @@ export default {
 
       // Footer is now handled by Discourse connectors
 
+      // Attempt to autofocus the official Advanced Search Banner input when present
+      api.onPageChange(() => {
+        if (!settings.autofocus_search_banner) return;
+
+        // Do not steal focus if the user is already typing somewhere meaningful
+        const active = document.activeElement;
+        if (active && (active.tagName === 'INPUT' || active.tagName === 'TEXTAREA' || active.isContentEditable)) {
+          return;
+        }
+
+        // Wait briefly for the banner to render, then poll for a short time
+        setTimeout(() => {
+          let attempts = 0;
+          const maxAttempts = 20; // ~2s total
+
+          const tryFocus = () => {
+            attempts++;
+            const input = document.querySelector(
+              [
+                '.search-banner input[type="search"]',
+                '.search-banner input[type="text"]',
+                '.custom-search-banner input[type="search"]',
+                '.custom-search-banner input[type="text"]',
+                '.search-input input[type="search"]',
+                '.search-input input[type="text"]'
+              ].join(', ')
+            );
+
+            if (input) {
+              if (document.activeElement !== input) {
+                try { input.focus({ preventScroll: true }); } catch(e) { /* no-op */ }
+                if (typeof input.select === 'function') {
+                  try { input.select(); } catch(e) { /* no-op */ }
+                }
+              }
+              clearInterval(timerId);
+              return;
+            }
+
+            if (attempts >= maxAttempts) {
+              clearInterval(timerId);
+            }
+          };
+
+          const timerId = setInterval(tryFocus, 100);
+        }, 100);
+      });
+
       // Replace banner placeholders with actual images
       this.replaceBannerPlaceholders = () => {
         const placeholders = document.querySelectorAll('.banner-image-placeholder');

@@ -3,6 +3,11 @@ enable_custom_js:
   default: true
   description: "Enable custom JavaScript functionality"
 
+autofocus_search_banner:
+  type: bool
+  default: true
+  description: "Auto-focus the search input in the Advanced Search Banner when present"
+
 primary_brand_color:
   type: string
   default: "#1f8dd6"
