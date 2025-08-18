@@ -275,10 +275,10 @@ export default {
             }
             
             // Hide Latest section on Categories tab
-            const latestSections = document.querySelectorAll('.latest-topic-list, .latest-topic-list-container, .latest-topic-list-item');
-            latestSections.forEach(section => {
-              section.style.display = 'none';
-            });
+            // const latestSections = document.querySelectorAll('.latest-topic-list, .latest-topic-list-container, .latest-topic-list-item');
+            // latestSections.forEach(section => {
+            //   section.style.display = 'none';
+            // });
             
             // Apply Cloudflare-style grid layout
             const categoryList = document.querySelector('.category-list');
