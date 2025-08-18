@@ -10,17 +10,6 @@
   })
 </script>
 
-<!-- Load Alpine (non-CSP build) for BONK test only -->
-<script>
-(function(){
-  try {
-    var s=document.createElement('script');
-    s.src='https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/cdn.min.js';
-    s.defer=true;
-    document.head.appendChild(s);
-  } catch(e) {}
-})();
-</script>
 
 <!-- Optional runtime overrides for published pages (no Ember/theme-setting interpolation) -->
 <script>
@@ -45,13 +34,6 @@
 <footer class="site-footer groqsters-footer" role="contentinfo">
   <div class="site-footer__contents container">
 
-    BONK
-
-    <div x-data="{ count: 0 }" class="footer-counter">
-      <button x-on:click="count++">+</button>
-      <span x-text="count"></span>
-    </div>
-    
     <!-- Main Footer Layout -->
     <div class="main-footer-layout">
       
