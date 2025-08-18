@@ -254,31 +254,44 @@ div.groqsters-feature-banner {
   .feature-cards-row,
   div.feature-cards-row {
     display: flex !important;
-    flex-wrap: wrap !important; // allow multiple rows
-    justify-content: flex-start !important; // align left
+    // flex-wrap: wrap !important;
     gap: 1rem !important;
     margin: 0 auto !important;
     padding: 0 !important;
     width: 100% !important;
     box-sizing: border-box !important;
 
-    // Fixed card width layout (~345px). Cards wrap and align left.
+    // Default: 3-up
     .feature-card,
     a.feature-card,
     div.feature-card {
-      flex: 0 0 343px !important; // basis and no grow
-      width: 343px !important;
-      max-width: 343px !important;
+      flex: 1 1 33.333% !important;
     }
 
-    // Tiny screens: prevent horizontal overflow
-    @media (max-width: 344px) {
+    // When only one is enabled
+    &[data-count="1"] {
       .feature-card,
       a.feature-card,
       div.feature-card {
         flex: 1 1 100% !important;
-        width: 100% !important;
-        max-width: 345px !important;
+      }
+    }
+
+    // When two are enabled
+    &[data-count="2"] {
+      .feature-card,
+      a.feature-card,
+      div.feature-card {
+        flex: 1 1 50% !important;
+      }
+    }
+
+    // Mobile stack
+    @media (max-width: 600px) {
+      .feature-card,
+      a.feature-card,
+      div.feature-card {
+        flex: 1 1 100% !important;
       }
     }
   }
