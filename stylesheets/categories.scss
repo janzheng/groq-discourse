@@ -105,10 +105,10 @@
       }
 
       // Hide featured topics and stats for clean look
-      .featured-topics,
-      .category-stat {
-        display: none !important;
-      }
+      // .featured-topics,
+      // .category-stat {
+      //   display: none !important;
+      // }
     }
   }
 
@@ -267,11 +267,11 @@ body.groqsters-categories-page,
   }
 
   // Hide Latest section on Categories tab
-  .latest-topic-list,
-  .latest-topic-list-container,
-  .latest-topic-list-item {
-    display: none !important;
-  }
+  // .latest-topic-list,
+  // .latest-topic-list-container,
+  // .latest-topic-list-item {
+  //   display: none !important;
+  // }
 
   // Target the specific table structure but don't hide it completely
   .category-list {
