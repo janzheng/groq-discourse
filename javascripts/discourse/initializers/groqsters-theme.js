@@ -137,6 +137,10 @@ export default {
               // Create image container
               const imageContainer = document.createElement('div');
               imageContainer.className = 'feature-card-image';
+              const bgSetting = settings[`feature_banner_item_${i}_bg`];
+              if (bgSetting) {
+                imageContainer.style.backgroundColor = bgSetting;
+              }
 
               const imageElement = createBannerImage(imageUrl, i);
               imageContainer.appendChild(imageElement);

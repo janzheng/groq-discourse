@@ -63,6 +63,11 @@ feature_banner_item_1_image:
   default: ""
   description: "Image URL for the first feature banner item (use relative path like 'assets/feature1.png' for local assets or full URL for external images)"
 
+feature_banner_item_1_bg:
+  type: string
+  default: "#ffffff"
+  description: "Background color for the first feature banner image area"
+
 feature_banner_item_1_url:
   type: string
   default: ""
@@ -78,6 +83,11 @@ feature_banner_item_2_image:
   default: ""
   description: "Image URL for the second feature banner item (use relative path like 'assets/feature2.png' for local assets or full URL for external images)"
 
+feature_banner_item_2_bg:
+  type: string
+  default: "#ffffff"
+  description: "Background color for the second feature banner image area"
+
 feature_banner_item_2_url:
   type: string
   default: ""
@@ -92,6 +102,11 @@ feature_banner_item_3_image:
   type: string
   default: ""
   description: "Image URL for the third feature banner item (use relative path like 'assets/feature3.png' for local assets or full URL for external images)"
+
+feature_banner_item_3_bg:
+  type: string
+  default: "#ffffff"
+  description: "Background color for the third feature banner image area"
 
 feature_banner_item_3_url:
   type: string
