@@ -305,6 +305,10 @@ body.groqsters-categories-page,
       min-height: 120px !important;
       box-sizing: border-box !important;
 
+      .badge-category__name {
+        color: var(--d-link-color) !important;
+      }
+
       // Add left border accent like Cloudflare
       &::before {
         content: '' !important;
