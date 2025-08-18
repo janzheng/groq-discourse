@@ -3,7 +3,7 @@
 
 // Import theme settings
 :root {
-  --groqsters-primary: #{$primary_brand_color};
+  --groqsters-primary: #{theme-setting('primary_brand_color')};
   --groqsters-transition: all 0.3s ease;
 }
 

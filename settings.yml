@@ -219,28 +219,28 @@ nav_item_4_url:
   description: "URL for the fourth navigation item"
 
 nav_item_1_span:
-  type: number
+  type: integer
   default: 1
   min: 1
   max: 4
   description: "Grid column span for the first navigation item (1-4)"
 
 nav_item_2_span:
-  type: number
+  type: integer
   default: 1
   min: 1
   max: 4
   description: "Grid column span for the second navigation item (1-4)"
 
 nav_item_3_span:
-  type: number
+  type: integer
   default: 1
   min: 1
   max: 4
   description: "Grid column span for the third navigation item (1-4)"
 
 nav_item_4_span:
-  type: number
+  type: integer
   default: 1
   min: 1
   max: 4
