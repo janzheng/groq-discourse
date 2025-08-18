@@ -176,7 +176,7 @@ export default {
             const navigationGrid = document.createElement('div');
             navigationGrid.className = 'navigation-grid';
             
-            // Create navigation items honoring per-item enable toggles
+            // Create navigation items honoring per-item enable toggles and spans
             for (let i = 1; i <= 4; i++) {
               const enabled = !!settings[`nav_item_${i}_enabled`];
               if (!enabled) continue;
@@ -184,6 +184,10 @@ export default {
               const title = settings[`nav_item_${i}_title`];
               const description = settings[`nav_item_${i}_description`];
               const url = settings[`nav_item_${i}_url`];
+              const rawSpan = settings[`nav_item_${i}_span`];
+              let span = parseInt(rawSpan == null ? 1 : rawSpan, 10);
+              if (!Number.isFinite(span) || span < 1) span = 1;
+              if (span > 4) span = 4;
               
               // Only add item if it has at least a title and URL
               if (title && url) {
@@ -191,6 +195,7 @@ export default {
                 navItem.className = 'nav-item';
                 navItem.href = url;
                 navItem.target = url.startsWith('http') ? '_blank' : '_self';
+                navItem.style.gridColumn = `span ${span}`;
                 
                 const header = document.createElement('div');
                 header.className = 'nav-item-header';
