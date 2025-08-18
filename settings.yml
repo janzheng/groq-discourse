@@ -123,6 +123,21 @@ nav_item_1_enabled:
   default: true
   description: "Show the first navigation item"
 
+nav_item_2_enabled:
+  type: bool
+  default: true
+  description: "Show the second navigation item"
+
+nav_item_3_enabled:
+  type: bool
+  default: true
+  description: "Show the third navigation item"
+
+nav_item_4_enabled:
+  type: bool
+  default: true
+  description: "Show the fourth navigation item"
+
 nav_item_1_icon:
   type: string
   default: "💬"
@@ -142,11 +157,6 @@ nav_item_1_url:
   type: string
   default: "/latest"
   description: "URL for the first navigation item"
-
-nav_item_2_enabled:
-  type: bool
-  default: true
-  description: "Show the second navigation item"
 
 nav_item_2_icon:
   type: string
@@ -168,11 +178,6 @@ nav_item_2_url:
   default: "/c/tutorials"
   description: "URL for the second navigation item"
 
-nav_item_3_enabled:
-  type: bool
-  default: true
-  description: "Show the third navigation item"
-
 nav_item_3_icon:
   type: string
   default: "📚"
@@ -192,11 +197,6 @@ nav_item_3_url:
   type: string
   default: "/c/help"
   description: "URL for the third navigation item"
-
-nav_item_4_enabled:
-  type: bool
-  default: true
-  description: "Show the fourth navigation item"
 
 nav_item_4_icon:
   type: string
