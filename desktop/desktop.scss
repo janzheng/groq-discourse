@@ -140,7 +140,7 @@
 .category-boxes,
 .category-boxes-with-topics {
   grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)) !important;
-  gap: 2rem !important;
+  gap: 1rem !important;
 
   .description {
     margin-bottom: 0;
