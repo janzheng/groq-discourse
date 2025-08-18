@@ -88,7 +88,7 @@
   .category-list {
     // Use more columns on larger screens
     grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)) !important;
-    gap: 2rem !important;
+    gap: 1rem !important;
     
     .category-list-item {
       padding: 2rem !important;
