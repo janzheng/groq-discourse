@@ -203,8 +203,10 @@ export default {
           }
 
           // Custom posts rendering deferred below navigation grid
+          let deferCustomPosts = false;
           if (settings.show_custom_posts) {
-            // rendering is handled after navigation grid
+            const anyEnabled = [1, 2, 3, 4].some(function (i) { return !!settings['custom_post_' + i + '_enabled']; });
+            if (anyEnabled) { deferCustomPosts = true; }
           }
 
           // Add navigation grid if enabled
