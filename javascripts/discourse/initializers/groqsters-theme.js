@@ -73,6 +73,14 @@ export default {
         }).catch(() => { /* no-op */ });
       };
 
+      let siteCategories = null;
+      getSiteInfo().then(site => {
+        try {
+          const cats = (site && site.categories) || [];
+          siteCategories = cats.reduce(function(acc, c) { acc[c.id] = c.name; return acc; }, {});
+        } catch(e) { siteCategories = null; }
+      }).catch(() => { siteCategories = null; });
+
 
 
 
@@ -306,6 +314,7 @@ export default {
               const subtitleEmoji = settings['custom_post_' + i + '_subtitle_emoji'];
               const userSetting = settings['custom_post_' + i + '_user'];
               const avatarUrlSetting = settings['custom_post_' + i + '_avatar_url'];
+              const preferJson = !!settings['custom_posts_prefer_json'];
 
               const row = document.createElement('a');
               row.className = 'custom-post-row';
@@ -380,7 +389,28 @@ export default {
                       const firstPost = data.post_stream && data.post_stream.posts && data.post_stream.posts[0];
                       if (firstPost && firstPost.avatar_template) avatarTemplate = firstPost.avatar_template;
                     }
-                    if (!titleSetting && titleFromJson) { titleEl.textContent = titleFromJson; }
+                    const categoryName = data.category_id && siteCategories && siteCategories[data.category_id] ? siteCategories[data.category_id] : null;
+
+                    if (preferJson) {
+                      if (titleFromJson) { titleEl.textContent = titleFromJson; }
+                    } else if (!titleSetting && titleFromJson) {
+                      titleEl.textContent = titleFromJson;
+                    }
+
+                    if (preferJson && categoryName) {
+                      // replace or append subtitle text with category
+                      let subtitleEl = content.querySelector('.custom-post-subtitle');
+                      if (!subtitleEl) {
+                        subtitleEl = document.createElement('div');
+                        subtitleEl.className = 'custom-post-subtitle';
+                        content.appendChild(subtitleEl);
+                      }
+                      const textSpan = document.createElement('span');
+                      textSpan.className = 'subtitle-text';
+                      textSpan.textContent = categoryName;
+                      subtitleEl.appendChild(textSpan);
+                    }
+
                     if (settings.custom_posts_show_avatars && avatarTemplate) {
                       const resolved = resolveAvatarFromTemplate(avatarTemplate, 45);
                       if (resolved) {
