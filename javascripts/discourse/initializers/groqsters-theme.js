@@ -221,16 +221,19 @@ export default {
 
           // Defer custom posts rendering until after navigation grid
           let deferCustomPosts = false;
-          const anyEligible = [1, 2, 3, 4].some(function (i) {
-            const enabledSetting = settings['featured_post_' + i + '_enabled'];
-            const legacyEnabled = settings['custom_post_' + i + '_enabled'];
-            const enabled = (enabledSetting === undefined && legacyEnabled === undefined)
-              ? true
-              : !!(enabledSetting ?? legacyEnabled);
-            const url = settings['featured_post_' + i + '_url'] || settings['custom_post_' + i + '_url'];
-            return !!url && enabled;
-          });
-          if (anyEligible) { deferCustomPosts = true; }
+          const masterEnabled = (settings.show_featured_posts === true) || (!!settings.show_custom_posts);
+          if (masterEnabled) {
+            const anyEligible = [1, 2, 3, 4].some(function (i) {
+              const enabledSetting = settings['featured_post_' + i + '_enabled'];
+              const legacyEnabled = settings['custom_post_' + i + '_enabled'];
+              const enabled = (enabledSetting === undefined && legacyEnabled === undefined)
+                ? true
+                : !!(enabledSetting ?? legacyEnabled);
+              const url = settings['featured_post_' + i + '_url'] || settings['custom_post_' + i + '_url'];
+              return !!url && enabled;
+            });
+            if (anyEligible) { deferCustomPosts = true; }
+          }
 
           // Add navigation grid if enabled
           if (settings.show_navigation_grid) {
