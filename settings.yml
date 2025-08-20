@@ -5,7 +5,7 @@ enable_custom_js:
 
 autofocus_search_banner:
   type: bool
-  default: true
+  default: false
   description: "Auto-focus the search input in the Advanced Search Banner when present"
 
 primary_brand_color:

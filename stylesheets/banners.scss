@@ -85,6 +85,9 @@
   font-family: var(--heading-font-family) !important;
 }
 
+.welcome-banner__title {
+  max-width: 850px;
+}
 
 // Dark mode adjustments for custom search banner
 .dark-mode .custom-search-banner {
