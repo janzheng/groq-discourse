@@ -221,13 +221,16 @@ export default {
 
           // Defer custom posts rendering until after navigation grid
           let deferCustomPosts = false;
-          const showFeatured = (settings.show_featured_posts === true) || (!!settings.show_custom_posts);
-          if (showFeatured) {
-            const anyEnabled = [1, 2, 3, 4].some(function (i) {
-              return !!(settings['featured_post_' + i + '_enabled'] || settings['custom_post_' + i + '_enabled']);
-            });
-            if (anyEnabled) { deferCustomPosts = true; }
-          }
+          const anyEligible = [1, 2, 3, 4].some(function (i) {
+            const enabledSetting = settings['featured_post_' + i + '_enabled'];
+            const legacyEnabled = settings['custom_post_' + i + '_enabled'];
+            const enabled = (enabledSetting === undefined && legacyEnabled === undefined)
+              ? true
+              : !!(enabledSetting ?? legacyEnabled);
+            const url = settings['featured_post_' + i + '_url'] || settings['custom_post_' + i + '_url'];
+            return !!url && enabled;
+          });
+          if (anyEligible) { deferCustomPosts = true; }
 
           // Add navigation grid if enabled
           if (settings.show_navigation_grid) {
@@ -319,9 +322,15 @@ export default {
             list.className = 'custom-posts-list';
 
             const renderRow = function(i) {
-              if (!(settings['featured_post_' + i + '_enabled'] || settings['custom_post_' + i + '_enabled'])) return;
+              const enabledSetting = settings['featured_post_' + i + '_enabled'];
+              const legacyEnabled = settings['custom_post_' + i + '_enabled'];
+              const enabled = (enabledSetting === undefined && legacyEnabled === undefined)
+                ? true
+                : !!(enabledSetting ?? legacyEnabled);
 
               let configuredUrl = settings['featured_post_' + i + '_url'] || settings['custom_post_' + i + '_url'];
+              if (!configuredUrl || !enabled) return;
+
               const normalizeTopicUrl = function(u) {
                 if (!u) return '';
                 let s = String(u).trim();
