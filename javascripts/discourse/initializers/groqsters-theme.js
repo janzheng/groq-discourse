@@ -317,77 +317,45 @@ export default {
             const renderRow = function(i) {
               if (!settings['custom_post_' + i + '_enabled']) return;
 
-              const configuredUrl = settings['custom_post_' + i + '_url'];
-              const titleSetting = settings['custom_post_' + i + '_title'];
-              const subtitle = settings['custom_post_' + i + '_subtitle'];
-              const subtitleEmoji = settings['custom_post_' + i + '_subtitle_emoji'];
-              const userSetting = settings['custom_post_' + i + '_user'];
-              const avatarUrlSetting = settings['custom_post_' + i + '_avatar_url'];
-              const preferJson = !!settings['custom_posts_prefer_json'];
+              let configuredUrl = settings['custom_post_' + i + '_url'];
+              const normalizeTopicUrl = function(u) {
+                if (!u) return '';
+                let s = String(u).trim();
+                // Accept short forms like "t/slug/id" or "t/slug/id/post"
+                if (s.startsWith('t/')) s = '/' + s;
+                // If still relative (no http/https), make it absolute to current origin
+                if (!/^https?:\/\//i.test(s)) {
+                  try { s = new URL(s, window.location.origin).toString(); } catch(e) {}
+                }
+                return s;
+              };
+              configuredUrl = normalizeTopicUrl(configuredUrl);
 
               const row = document.createElement('a');
               row.className = 'custom-post-row';
-              const href = configuredUrl && configuredUrl.trim() ? configuredUrl.trim() : '#';
+              const href = configuredUrl || '#';
               row.href = href;
               row.target = href.startsWith('http') ? '_blank' : '_self';
 
-              let avatarContainer = null;
-              if (settings.custom_posts_show_avatars) {
-                avatarContainer = document.createElement('div');
-                avatarContainer.className = 'custom-post-avatar';
-                if (avatarUrlSetting && avatarUrlSetting.trim()) {
-                  const img = document.createElement('img');
-                  img.src = avatarUrlSetting.trim();
-                  img.alt = userSetting ? (userSetting + ' avatar') : 'avatar';
-                  avatarContainer.appendChild(img);
-                } else if (userSetting && userSetting.trim()) {
-                  const letter = document.createElement('span');
-                  letter.className = 'avatar-letter';
-                  letter.textContent = userSetting.trim().charAt(0).toUpperCase();
-                  avatarContainer.appendChild(letter);
-                }
-                row.appendChild(avatarContainer);
-              }
+              // Always show avatar (from JSON, fallback to first-letter until fetched)
+              let avatarContainer = document.createElement('div');
+              avatarContainer.className = 'custom-post-avatar';
+              row.appendChild(avatarContainer);
 
               const content = document.createElement('div');
               content.className = 'custom-post-content';
               const titleEl = document.createElement('div');
               titleEl.className = 'custom-post-title';
-              titleEl.textContent = titleSetting || configuredUrl || '';
+              titleEl.textContent = configuredUrl || '';
               content.appendChild(titleEl);
-
-              if (!preferJson && ((subtitle && String(subtitle).trim()) || (subtitleEmoji && String(subtitleEmoji).trim()))) {
-                const subtitleEl = document.createElement('div');
-                subtitleEl.className = 'custom-post-subtitle';
-                if (subtitleEmoji && String(subtitleEmoji).trim()) {
-                  const emojiSpan = document.createElement('span');
-                  emojiSpan.className = 'subtitle-emoji';
-                  emojiSpan.textContent = String(subtitleEmoji);
-                  subtitleEl.appendChild(emojiSpan);
-                  const sn = String(subtitleEmoji).trim();
-                  if (/^[a-z0-9_]+$/.test(sn)) {
-                    renderEmojiInto(emojiSpan, sn);
-                  }
-                }
-                if (subtitle && String(subtitle).trim()) {
-                  const textSpan = document.createElement('span');
-                  textSpan.className = 'subtitle-text';
-                  textSpan.textContent = String(subtitle);
-                  subtitleEl.appendChild(textSpan);
-                }
-                content.appendChild(subtitleEl);
-              }
-
               row.appendChild(content);
-              list.appendChild(row);
 
               // Enrich from topic .json endpoint if applicable
               if (configuredUrl && configuredUrl.includes('/t/')) {
                 let jsonUrl = configuredUrl;
                 if (!jsonUrl.endsWith('.json')) jsonUrl = jsonUrl.replace(/\/?$/, '') + '.json';
-                jsonUrl = buildAbsoluteUrl(jsonUrl);
-
                 const cached = customPostCache.get(jsonUrl);
+
                 const applyData = function(data) {
                   if (!data) return;
                   try {
@@ -400,20 +368,16 @@ export default {
                     }
                     const catObj = (data.category_id && siteCategories) ? siteCategories[data.category_id] : null;
 
-                    if (preferJson) {
-                      if (titleFromJson) { titleEl.textContent = titleFromJson; }
-                    } else if (!titleSetting && titleFromJson) {
-                      titleEl.textContent = titleFromJson;
-                    }
+                    if (titleFromJson) { titleEl.textContent = titleFromJson; }
 
-                    if (preferJson && catObj && catObj.name) {
+                    // Replace subtitle entirely with category details
+                    if (catObj && catObj.name) {
                       let subtitleEl = content.querySelector('.custom-post-subtitle');
                       if (!subtitleEl) {
                         subtitleEl = document.createElement('div');
                         subtitleEl.className = 'custom-post-subtitle';
                         content.appendChild(subtitleEl);
                       }
-                      // Replace any existing subtitle content
                       subtitleEl.innerHTML = '';
                       if (catObj.style_type === 'emoji' && catObj.emoji) {
                         const emojiWrap = document.createElement('span');
@@ -427,14 +391,10 @@ export default {
                       subtitleEl.appendChild(textSpan);
                     }
 
-                    if (settings.custom_posts_show_avatars && avatarTemplate) {
+                    // Update avatar image
+                    if (avatarTemplate) {
                       const resolved = resolveAvatarFromTemplate(avatarTemplate, 45);
                       if (resolved) {
-                        if (!avatarContainer) {
-                          avatarContainer = document.createElement('div');
-                          avatarContainer.className = 'custom-post-avatar';
-                          row.insertBefore(avatarContainer, row.firstChild);
-                        }
                         avatarContainer.innerHTML = '';
                         const img = document.createElement('img');
                         img.src = resolved;
@@ -453,6 +413,8 @@ export default {
                   }).catch(function() { /* no-op */ });
                 }
               }
+
+              list.appendChild(row);
             };
 
             for (var j = 1; j <= 4; j++) { renderRow(j); }

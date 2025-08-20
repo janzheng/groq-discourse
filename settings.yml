@@ -262,16 +262,6 @@ custom_posts_title:
   default: "Featured Posts"
   description: "Optional title displayed above the custom posts list"
 
-custom_posts_show_avatars:
-  type: bool
-  default: true
-  description: "Show user avatars next to each custom post"
-
-custom_posts_prefer_json:
-  type: bool
-  default: true
-  description: "Prefer topic .json data for title, avatar, and category subtitle over manual settings when available"
-
 custom_post_1_enabled:
   type: bool
   default: true
