@@ -168,6 +168,102 @@ export default {
             }
           }
 
+          // Add curated custom posts if enabled
+          if (settings.show_custom_posts) {
+            const anyEnabled = [1, 2, 3, 4].some(function(i) { return !!settings['custom_post_' + i + '_enabled']; });
+            if (anyEnabled) {
+              const postsSection = document.createElement('div');
+              postsSection.className = 'groqsters-custom-posts';
+
+              if (settings.custom_posts_title) {
+                const header = document.createElement('h3');
+                header.className = 'custom-posts-title';
+                header.textContent = settings.custom_posts_title;
+                postsSection.appendChild(header);
+              }
+
+              const list = document.createElement('div');
+              list.className = 'custom-posts-list';
+
+              const createAvatarElement = function(username, avatarUrl) {
+                const avatar = document.createElement('div');
+                avatar.className = 'custom-post-avatar';
+                if (avatarUrl && avatarUrl.trim()) {
+                  const img = document.createElement('img');
+                  img.src = avatarUrl;
+                  img.alt = username ? (username + ' avatar') : 'avatar';
+                  avatar.appendChild(img);
+                } else if (username && username.trim()) {
+                  const letter = document.createElement('span');
+                  letter.className = 'avatar-letter';
+                  letter.textContent = username.trim().charAt(0).toUpperCase();
+                  avatar.appendChild(letter);
+                }
+                return avatar;
+              };
+
+              for (var i = 1; i <= 4; i++) {
+                if (!settings['custom_post_' + i + '_enabled']) continue;
+
+                const title = settings['custom_post_' + i + '_title'];
+                const url = settings['custom_post_' + i + '_url'];
+                const subtitle = settings['custom_post_' + i + '_subtitle'];
+                const subtitleEmoji = settings['custom_post_' + i + '_subtitle_emoji'];
+                const user = settings['custom_post_' + i + '_user'];
+                const avatarUrl = settings['custom_post_' + i + '_avatar_url'];
+
+                if (!title && !url) continue;
+
+                const row = document.createElement('a');
+                row.className = 'custom-post-row';
+                if (url && url.trim()) {
+                  row.href = url;
+                  row.target = url.startsWith('http') ? '_blank' : '_self';
+                } else {
+                  row.href = '#';
+                }
+
+                if (settings.custom_posts_show_avatars) {
+                  row.appendChild(createAvatarElement(user, avatarUrl));
+                }
+
+                const content = document.createElement('div');
+                content.className = 'custom-post-content';
+
+                const titleEl = document.createElement('div');
+                titleEl.className = 'custom-post-title';
+                titleEl.textContent = title || url || '';
+                content.appendChild(titleEl);
+
+                if ((subtitle && String(subtitle).trim()) || (subtitleEmoji && String(subtitleEmoji).trim())) {
+                  const subtitleEl = document.createElement('div');
+                  subtitleEl.className = 'custom-post-subtitle';
+                  if (subtitleEmoji && String(subtitleEmoji).trim()) {
+                    const emojiSpan = document.createElement('span');
+                    emojiSpan.className = 'subtitle-emoji';
+                    emojiSpan.textContent = String(subtitleEmoji);
+                    subtitleEl.appendChild(emojiSpan);
+                  }
+                  if (subtitle && String(subtitle).trim()) {
+                    const textSpan = document.createElement('span');
+                    textSpan.className = 'subtitle-text';
+                    textSpan.textContent = String(subtitle);
+                    subtitleEl.appendChild(textSpan);
+                  }
+                  content.appendChild(subtitleEl);
+                }
+
+                row.appendChild(content);
+                list.appendChild(row);
+              }
+
+              if (list.children.length > 0) {
+                postsSection.appendChild(list);
+                bannerContainer.appendChild(postsSection);
+              }
+            }
+          }
+
           // Add navigation grid if enabled
           if (settings.show_navigation_grid) {
             const navigationContainer = document.createElement('div');
