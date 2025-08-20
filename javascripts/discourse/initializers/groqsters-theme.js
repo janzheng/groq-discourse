@@ -57,9 +57,9 @@ export default {
 
         // Wait a bit for the page to render
         setTimeout(() => {
-          // Check if banners already exist to avoid duplicates
-          if (document.querySelector('.groqsters-feature-banner') || document.querySelector('.groqsters-alert-banner')) {
-            // Replace placeholders with actual image elements
+          // If our container already exists, update placeholders and skip reinserting
+          const existingBannerContainer = document.querySelector('.groqsters-banners-container');
+          if (existingBannerContainer) {
             setTimeout(() => this.replaceBannerPlaceholders(), 100);
             return;
           }
