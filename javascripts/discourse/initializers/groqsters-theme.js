@@ -39,6 +39,40 @@ export default {
         }
       };
 
+      // Emoji helpers
+      const getSiteInfo = (() => {
+        let cached = null;
+        let pending = null;
+        return () => {
+          if (cached) return Promise.resolve(cached);
+          if (pending) return pending;
+          pending = fetch('/site.json')
+            .then(r => (r && r.ok ? r.json() : null))
+            .then(json => { cached = json; return cached; })
+            .catch(() => null)
+            .finally(() => { pending = null; });
+          return pending;
+        };
+      })();
+
+      const renderEmojiInto = (container, shortname) => {
+        if (!container || !shortname) return;
+        getSiteInfo().then(site => {
+          const set = site && site.site_settings && site.site_settings.emoji_set ? site.site_settings.emoji_set : 'twitter';
+          const src = 'https://emoji.discourse-cdn.com/' + set + '/' + encodeURIComponent(shortname) + '.png';
+          const img = document.createElement('img');
+          img.className = 'emoji';
+          img.width = 20;
+          img.height = 20;
+          img.alt = shortname;
+          img.title = shortname;
+          img.src = src;
+          container.classList.add('--style-emoji');
+          container.textContent = '';
+          container.appendChild(img);
+        }).catch(() => { /* no-op */ });
+      };
+
 
 
 
@@ -168,100 +202,9 @@ export default {
             }
           }
 
-          // Add curated custom posts if enabled
+          // Custom posts rendering deferred below navigation grid
           if (settings.show_custom_posts) {
-            const anyEnabled = [1, 2, 3, 4].some(function(i) { return !!settings['custom_post_' + i + '_enabled']; });
-            if (anyEnabled) {
-              const postsSection = document.createElement('div');
-              postsSection.className = 'groqsters-custom-posts';
-
-              if (settings.custom_posts_title) {
-                const header = document.createElement('h3');
-                header.className = 'custom-posts-title';
-                header.textContent = settings.custom_posts_title;
-                postsSection.appendChild(header);
-              }
-
-              const list = document.createElement('div');
-              list.className = 'custom-posts-list';
-
-              const createAvatarElement = function(username, avatarUrl) {
-                const avatar = document.createElement('div');
-                avatar.className = 'custom-post-avatar';
-                if (avatarUrl && avatarUrl.trim()) {
-                  const img = document.createElement('img');
-                  img.src = avatarUrl;
-                  img.alt = username ? (username + ' avatar') : 'avatar';
-                  avatar.appendChild(img);
-                } else if (username && username.trim()) {
-                  const letter = document.createElement('span');
-                  letter.className = 'avatar-letter';
-                  letter.textContent = username.trim().charAt(0).toUpperCase();
-                  avatar.appendChild(letter);
-                }
-                return avatar;
-              };
-
-              for (var i = 1; i <= 4; i++) {
-                if (!settings['custom_post_' + i + '_enabled']) continue;
-
-                const title = settings['custom_post_' + i + '_title'];
-                const url = settings['custom_post_' + i + '_url'];
-                const subtitle = settings['custom_post_' + i + '_subtitle'];
-                const subtitleEmoji = settings['custom_post_' + i + '_subtitle_emoji'];
-                const user = settings['custom_post_' + i + '_user'];
-                const avatarUrl = settings['custom_post_' + i + '_avatar_url'];
-
-                if (!title && !url) continue;
-
-                const row = document.createElement('a');
-                row.className = 'custom-post-row';
-                if (url && url.trim()) {
-                  row.href = url;
-                  row.target = url.startsWith('http') ? '_blank' : '_self';
-                } else {
-                  row.href = '#';
-                }
-
-                if (settings.custom_posts_show_avatars) {
-                  row.appendChild(createAvatarElement(user, avatarUrl));
-                }
-
-                const content = document.createElement('div');
-                content.className = 'custom-post-content';
-
-                const titleEl = document.createElement('div');
-                titleEl.className = 'custom-post-title';
-                titleEl.textContent = title || url || '';
-                content.appendChild(titleEl);
-
-                if ((subtitle && String(subtitle).trim()) || (subtitleEmoji && String(subtitleEmoji).trim())) {
-                  const subtitleEl = document.createElement('div');
-                  subtitleEl.className = 'custom-post-subtitle';
-                  if (subtitleEmoji && String(subtitleEmoji).trim()) {
-                    const emojiSpan = document.createElement('span');
-                    emojiSpan.className = 'subtitle-emoji';
-                    emojiSpan.textContent = String(subtitleEmoji);
-                    subtitleEl.appendChild(emojiSpan);
-                  }
-                  if (subtitle && String(subtitle).trim()) {
-                    const textSpan = document.createElement('span');
-                    textSpan.className = 'subtitle-text';
-                    textSpan.textContent = String(subtitle);
-                    subtitleEl.appendChild(textSpan);
-                  }
-                  content.appendChild(subtitleEl);
-                }
-
-                row.appendChild(content);
-                list.appendChild(row);
-              }
-
-              if (list.children.length > 0) {
-                postsSection.appendChild(list);
-                bannerContainer.appendChild(postsSection);
-              }
-            }
+            // rendering is handled after navigation grid
           }
 
           // Add navigation grid if enabled
@@ -320,6 +263,155 @@ export default {
             if (navigationGrid.children.length > 0) {
               navigationContainer.appendChild(navigationGrid);
               bannerContainer.appendChild(navigationContainer);
+            }
+          }
+
+          // Render custom posts after navigation grid
+          if (deferCustomPosts) {
+            const customPostCache = window.__groqstersCustomPostCache || (window.__groqstersCustomPostCache = new Map());
+
+            const buildAbsoluteUrl = function(pathOrUrl) {
+              if (!pathOrUrl) return '';
+              if (pathOrUrl.startsWith('http://') || pathOrUrl.startsWith('https://')) return pathOrUrl;
+              try { return new URL(pathOrUrl, window.location.origin).toString(); } catch(e) { return pathOrUrl; }
+            };
+
+            const resolveAvatarFromTemplate = function(template, size) {
+              if (!template) return '';
+              const url = template.replace('{size}', String(size || 45));
+              return url.startsWith('/') ? (window.location.origin + url) : url;
+            };
+
+            const postsSection = document.createElement('div');
+            postsSection.className = 'groqsters-custom-posts';
+
+            if (settings.custom_posts_title) {
+              const header = document.createElement('h3');
+              header.className = 'custom-posts-title';
+              header.textContent = settings.custom_posts_title;
+              postsSection.appendChild(header);
+            }
+
+            const list = document.createElement('div');
+            list.className = 'custom-posts-list';
+
+            const renderRow = function(i) {
+              if (!settings['custom_post_' + i + '_enabled']) return;
+
+              const configuredUrl = settings['custom_post_' + i + '_url'];
+              const titleSetting = settings['custom_post_' + i + '_title'];
+              const subtitle = settings['custom_post_' + i + '_subtitle'];
+              const subtitleEmoji = settings['custom_post_' + i + '_subtitle_emoji'];
+              const userSetting = settings['custom_post_' + i + '_user'];
+              const avatarUrlSetting = settings['custom_post_' + i + '_avatar_url'];
+
+              const row = document.createElement('a');
+              row.className = 'custom-post-row';
+              const href = configuredUrl && configuredUrl.trim() ? configuredUrl.trim() : '#';
+              row.href = href;
+              row.target = href.startsWith('http') ? '_blank' : '_self';
+
+              let avatarContainer = null;
+              if (settings.custom_posts_show_avatars) {
+                avatarContainer = document.createElement('div');
+                avatarContainer.className = 'custom-post-avatar';
+                if (avatarUrlSetting && avatarUrlSetting.trim()) {
+                  const img = document.createElement('img');
+                  img.src = avatarUrlSetting.trim();
+                  img.alt = userSetting ? (userSetting + ' avatar') : 'avatar';
+                  avatarContainer.appendChild(img);
+                } else if (userSetting && userSetting.trim()) {
+                  const letter = document.createElement('span');
+                  letter.className = 'avatar-letter';
+                  letter.textContent = userSetting.trim().charAt(0).toUpperCase();
+                  avatarContainer.appendChild(letter);
+                }
+                row.appendChild(avatarContainer);
+              }
+
+              const content = document.createElement('div');
+              content.className = 'custom-post-content';
+              const titleEl = document.createElement('div');
+              titleEl.className = 'custom-post-title';
+              titleEl.textContent = titleSetting || configuredUrl || '';
+              content.appendChild(titleEl);
+
+              if ((subtitle && String(subtitle).trim()) || (subtitleEmoji && String(subtitleEmoji).trim())) {
+                const subtitleEl = document.createElement('div');
+                subtitleEl.className = 'custom-post-subtitle';
+                if (subtitleEmoji && String(subtitleEmoji).trim()) {
+                  const emojiSpan = document.createElement('span');
+                  emojiSpan.className = 'subtitle-emoji';
+                  emojiSpan.textContent = String(subtitleEmoji);
+                  subtitleEl.appendChild(emojiSpan);
+                  const sn = String(subtitleEmoji).trim();
+                  if (/^[a-z0-9_]+$/.test(sn)) {
+                    renderEmojiInto(emojiSpan, sn);
+                  }
+                }
+                if (subtitle && String(subtitle).trim()) {
+                  const textSpan = document.createElement('span');
+                  textSpan.className = 'subtitle-text';
+                  textSpan.textContent = String(subtitle);
+                  subtitleEl.appendChild(textSpan);
+                }
+                content.appendChild(subtitleEl);
+              }
+
+              row.appendChild(content);
+              list.appendChild(row);
+
+              // Enrich from topic .json endpoint if applicable
+              if (configuredUrl && configuredUrl.includes('/t/')) {
+                let jsonUrl = configuredUrl;
+                if (!jsonUrl.endsWith('.json')) jsonUrl = jsonUrl.replace(/\/?$/, '') + '.json';
+                jsonUrl = buildAbsoluteUrl(jsonUrl);
+
+                const cached = customPostCache.get(jsonUrl);
+                const applyData = function(data) {
+                  if (!data) return;
+                  try {
+                    const titleFromJson = data.title || data.fancy_title || null;
+                    const createdBy = data.details && data.details.created_by;
+                    let avatarTemplate = createdBy && createdBy.avatar_template;
+                    if (!avatarTemplate) {
+                      const firstPost = data.post_stream && data.post_stream.posts && data.post_stream.posts[0];
+                      if (firstPost && firstPost.avatar_template) avatarTemplate = firstPost.avatar_template;
+                    }
+                    if (!titleSetting && titleFromJson) { titleEl.textContent = titleFromJson; }
+                    if (settings.custom_posts_show_avatars && avatarTemplate) {
+                      const resolved = resolveAvatarFromTemplate(avatarTemplate, 45);
+                      if (resolved) {
+                        if (!avatarContainer) {
+                          avatarContainer = document.createElement('div');
+                          avatarContainer.className = 'custom-post-avatar';
+                          row.insertBefore(avatarContainer, row.firstChild);
+                        }
+                        avatarContainer.innerHTML = '';
+                        const img = document.createElement('img');
+                        img.src = resolved;
+                        img.alt = createdBy && createdBy.username ? (createdBy.username + ' avatar') : 'avatar';
+                        avatarContainer.appendChild(img);
+                      }
+                    }
+                  } catch(e) { /* no-op */ }
+                };
+
+                if (cached) {
+                  applyData(cached);
+                } else {
+                  fetch(jsonUrl).then(function(resp) { return resp.ok ? resp.json() : null; }).then(function(json) {
+                    if (json) { customPostCache.set(jsonUrl, json); applyData(json); }
+                  }).catch(function() { /* no-op */ });
+                }
+              }
+            };
+
+            for (var j = 1; j <= 4; j++) { renderRow(j); }
+
+            if (list.children.length > 0) {
+              postsSection.appendChild(list);
+              bannerContainer.appendChild(postsSection);
             }
           }
 
