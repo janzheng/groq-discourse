@@ -277,140 +277,40 @@ custom_post_1_enabled:
   default: true
   description: "Show the first custom post"
 
-custom_post_1_title:
-  type: string
-  default: "Welcome to our Community"
-  description: "Title text for the first custom post"
-
-custom_post_1_subtitle:
-  type: string
-  default: "Announcements"
-  description: "Subtitle (e.g., category name or short context) for the first custom post"
-
-custom_post_1_subtitle_emoji:
-  type: string
-  default: "💬"
-  description: "Optional emoji shown before the subtitle (approximation of Discourse category emoji style)"
-
 custom_post_1_url:
   type: string
   default: "/t/welcome/1"
-  description: "URL to navigate to when clicking the first custom post"
-
-custom_post_1_user:
-  type: string
-  default: "system"
-  description: "Discourse username used to render an avatar; ignored if avatar URL is provided"
-
-custom_post_1_avatar_url:
-  type: string
-  default: ""
-  description: "Optional avatar image URL to override the user's avatar for the first custom post"
+  description: "Topic URL for the first custom post (details fetched automatically from .json)"
 
 custom_post_2_enabled:
   type: bool
   default: true
   description: "Show the second custom post"
 
-custom_post_2_title:
-  type: string
-  default: "Getting Started Guide"
-  description: "Title text for the second custom post"
-
-custom_post_2_subtitle:
-  type: string
-  default: "Guides"
-  description: "Subtitle (e.g., category name or short context) for the second custom post"
-
-custom_post_2_subtitle_emoji:
-  type: string
-  default: "📚"
-  description: "Optional emoji shown before the subtitle for the second custom post"
-
 custom_post_2_url:
   type: string
   default: "/t/getting-started/2"
-  description: "URL to navigate to when clicking the second custom post"
-
-custom_post_2_user:
-  type: string
-  default: "system"
-  description: "Discourse username used to render an avatar; ignored if avatar URL is provided"
-
-custom_post_2_avatar_url:
-  type: string
-  default: ""
-  description: "Optional avatar image URL to override the user's avatar for the second custom post"
+  description: "Topic URL for the second custom post (details fetched automatically from .json)"
 
 custom_post_3_enabled:
   type: bool
   default: false
   description: "Show the third custom post"
 
-custom_post_3_title:
-  type: string
-  default: "API Changelog"
-  description: "Title text for the third custom post"
-
-custom_post_3_subtitle:
-  type: string
-  default: "News"
-  description: "Subtitle (e.g., category name or short context) for the third custom post"
-
-custom_post_3_subtitle_emoji:
-  type: string
-  default: "📰"
-  description: "Optional emoji shown before the subtitle for the third custom post"
-
 custom_post_3_url:
   type: string
   default: "/t/api-changelog/3"
-  description: "URL to navigate to when clicking the third custom post"
-
-custom_post_3_user:
-  type: string
-  default: "system"
-  description: "Discourse username used to render an avatar; ignored if avatar URL is provided"
-
-custom_post_3_avatar_url:
-  type: string
-  default: ""
-  description: "Optional avatar image URL to override the user's avatar for the third custom post"
+  description: "Topic URL for the third custom post (details fetched automatically from .json)"
 
 custom_post_4_enabled:
   type: bool
   default: false
   description: "Show the fourth custom post"
 
-custom_post_4_title:
-  type: string
-  default: "Community Showcase"
-  description: "Title text for the fourth custom post"
-
-custom_post_4_subtitle:
-  type: string
-  default: "Showcase"
-  description: "Subtitle (e.g., category name or short context) for the fourth custom post"
-
-custom_post_4_subtitle_emoji:
-  type: string
-  default: "✨"
-  description: "Optional emoji shown before the subtitle for the fourth custom post"
-
 custom_post_4_url:
   type: string
   default: "/t/showcase/4"
-  description: "URL to navigate to when clicking the fourth custom post"
-
-custom_post_4_user:
-  type: string
-  default: "system"
-  description: "Discourse username used to render an avatar; ignored if avatar URL is provided"
-
-custom_post_4_avatar_url:
-  type: string
-  default: ""
-  description: "Optional avatar image URL to override the user's avatar for the fourth custom post"
+  description: "Topic URL for the fourth custom post (details fetched automatically from .json)"
 
 show_categories_sidebar:
   type: bool

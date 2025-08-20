@@ -77,7 +77,16 @@ export default {
       getSiteInfo().then(site => {
         try {
           const cats = (site && site.categories) || [];
-          siteCategories = cats.reduce(function(acc, c) { acc[c.id] = c.name; return acc; }, {});
+          siteCategories = cats.reduce(function(acc, c) {
+            acc[c.id] = {
+              name: c.name,
+              emoji: c.emoji,
+              style_type: c.style_type,
+              color: c.color,
+              text_color: c.text_color
+            };
+            return acc;
+          }, {});
         } catch(e) { siteCategories = null; }
       }).catch(() => { siteCategories = null; });
 
@@ -347,7 +356,7 @@ export default {
               titleEl.textContent = titleSetting || configuredUrl || '';
               content.appendChild(titleEl);
 
-              if ((subtitle && String(subtitle).trim()) || (subtitleEmoji && String(subtitleEmoji).trim())) {
+              if (!preferJson && ((subtitle && String(subtitle).trim()) || (subtitleEmoji && String(subtitleEmoji).trim()))) {
                 const subtitleEl = document.createElement('div');
                 subtitleEl.className = 'custom-post-subtitle';
                 if (subtitleEmoji && String(subtitleEmoji).trim()) {
@@ -389,7 +398,7 @@ export default {
                       const firstPost = data.post_stream && data.post_stream.posts && data.post_stream.posts[0];
                       if (firstPost && firstPost.avatar_template) avatarTemplate = firstPost.avatar_template;
                     }
-                    const categoryName = data.category_id && siteCategories && siteCategories[data.category_id] ? siteCategories[data.category_id] : null;
+                    const catObj = (data.category_id && siteCategories) ? siteCategories[data.category_id] : null;
 
                     if (preferJson) {
                       if (titleFromJson) { titleEl.textContent = titleFromJson; }
@@ -397,17 +406,24 @@ export default {
                       titleEl.textContent = titleFromJson;
                     }
 
-                    if (preferJson && categoryName) {
-                      // replace or append subtitle text with category
+                    if (preferJson && catObj && catObj.name) {
                       let subtitleEl = content.querySelector('.custom-post-subtitle');
                       if (!subtitleEl) {
                         subtitleEl = document.createElement('div');
                         subtitleEl.className = 'custom-post-subtitle';
                         content.appendChild(subtitleEl);
                       }
+                      // Replace any existing subtitle content
+                      subtitleEl.innerHTML = '';
+                      if (catObj.style_type === 'emoji' && catObj.emoji) {
+                        const emojiWrap = document.createElement('span');
+                        emojiWrap.className = 'subtitle-emoji';
+                        subtitleEl.appendChild(emojiWrap);
+                        renderEmojiInto(emojiWrap, catObj.emoji);
+                      }
                       const textSpan = document.createElement('span');
                       textSpan.className = 'subtitle-text';
-                      textSpan.textContent = categoryName;
+                      textSpan.textContent = catObj.name;
                       subtitleEl.appendChild(textSpan);
                     }
 
