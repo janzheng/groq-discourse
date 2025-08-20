@@ -251,56 +251,56 @@ nav_item_4_span:
   max: 4
   description: "Grid column span for the fourth navigation item (1-4)"
 
-# Custom Posts (curated topic-like rows)
-show_custom_posts:
+# Featured Posts (curated topic-like rows)
+show_featured_posts:
   type: bool
   default: false
-  description: "Show a curated list of up to 4 custom posts styled like topic rows"
+  description: "Show a curated list of up to 4 featured posts styled like topic rows"
 
-custom_posts_title:
+featured_posts_title:
   type: string
   default: "Featured Posts"
-  description: "Optional title displayed above the custom posts list"
+  description: "Optional title displayed above the featured posts list"
 
-custom_post_1_enabled:
+featured_post_1_enabled:
   type: bool
   default: true
-  description: "Show the first custom post"
+  description: "Show the first featured post"
 
-custom_post_1_url:
+featured_post_1_url:
   type: string
   default: "/t/welcome/1"
-  description: "Topic URL for the first custom post (details fetched automatically from .json)"
+  description: "Topic URL for the first featured post (details fetched automatically from .json)"
 
-custom_post_2_enabled:
+featured_post_2_enabled:
   type: bool
   default: true
-  description: "Show the second custom post"
+  description: "Show the second featured post"
 
-custom_post_2_url:
+featured_post_2_url:
   type: string
   default: "/t/getting-started/2"
-  description: "Topic URL for the second custom post (details fetched automatically from .json)"
+  description: "Topic URL for the second featured post (details fetched automatically from .json)"
 
-custom_post_3_enabled:
+featured_post_3_enabled:
   type: bool
   default: false
-  description: "Show the third custom post"
+  description: "Show the third featured post"
 
-custom_post_3_url:
+featured_post_3_url:
   type: string
   default: "/t/api-changelog/3"
-  description: "Topic URL for the third custom post (details fetched automatically from .json)"
+  description: "Topic URL for the third featured post (details fetched automatically from .json)"
 
-custom_post_4_enabled:
+featured_post_4_enabled:
   type: bool
   default: false
-  description: "Show the fourth custom post"
+  description: "Show the fourth featured post"
 
-custom_post_4_url:
+featured_post_4_url:
   type: string
   default: "/t/showcase/4"
-  description: "Topic URL for the fourth custom post (details fetched automatically from .json)"
+  description: "Topic URL for the fourth featured post (details fetched automatically from .json)"
 
 show_categories_sidebar:
   type: bool

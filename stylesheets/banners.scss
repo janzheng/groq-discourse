@@ -893,8 +893,9 @@ div.groqsters-feature-banner {
 //   }
 // }
 
-// Custom posts styled like topic rows
-.groqsters-custom-posts {
+// Custom/Featured posts styled like topic rows
+.groqsters-custom-posts,
+.groqsters-featured-posts {
   margin: 1rem 0 !important;
   padding: 0 !important;
   width: 100% !important;
