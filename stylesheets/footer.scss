@@ -421,48 +421,33 @@
 }
 
 // Dark mode adjustments
-.dark-mode .groqsters-footer {
-  background: var(--secondary);
-  border-top-color: var(--primary-low);
+@media (prefers-color-scheme: dark) {
+  .groqsters-footer {
+    background: var(--secondary);
+    border-top-color: var(--primary-low);
 
-  .footer-tagline {
-    color: var(--primary-medium);
-  }
-
-  .footer-group-title {
-    color: var(--primary-high);
-  }
-
-  .footer-link {
-    color: var(--primary-medium);
-
-    &:hover {
-      color: var(--primary-high);
+    .footer-tagline {
+      color: var(--primary-medium);
     }
-  }
 
-  .footer-legal p {
-    color: var(--primary-medium);
-  }
-
-  .footer-social-link {
-    background: var(--primary-low);
-    color: var(--primary-medium);
-
-    &:hover {
-      background: var(--primary);
-      color: white;
-    }
-  }
-
-  .community-links-row {
-
-    .community-title {
+    .footer-group-title {
       color: var(--primary-high);
     }
 
-    .community-link {
-      background: var(--primary-very-low);
+    .footer-link {
+      color: var(--primary-medium);
+
+      &:hover {
+        color: var(--primary-high);
+      }
+    }
+
+    .footer-legal p {
+      color: var(--primary-medium);
+    }
+
+    .footer-social-link {
+      background: var(--primary-low);
       color: var(--primary-medium);
 
       &:hover {
@@ -470,13 +455,30 @@
         color: white;
       }
     }
-  }
 
-  .manage-cookies-btn {
-    color: var(--primary-medium);
+    .community-links-row {
 
-    &:hover {
-      color: var(--primary-high);
+      .community-title {
+        color: var(--primary-high);
+      }
+
+      .community-link {
+        background: var(--primary-very-low);
+        color: var(--primary-medium);
+
+        &:hover {
+          background: var(--primary);
+          color: white;
+        }
+      }
+    }
+
+    .manage-cookies-btn {
+      color: var(--primary-medium);
+
+      &:hover {
+        color: var(--primary-high);
+      }
     }
   }
 }

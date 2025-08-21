@@ -90,25 +90,29 @@
 }
 
 // Dark mode adjustments for custom search banner
-.dark-mode .custom-search-banner {
-  color: #a6a6a6;
-
-  .custom-search-banner-headline {
+@media (prefers-color-scheme: dark) {
+  .custom-search-banner {
     color: #a6a6a6;
-  }
 
-  p {
-    color: #a6a6a6;
+    .custom-search-banner-headline {
+      color: #a6a6a6;
+    }
+
+    p {
+      color: #a6a6a6;
+    }
   }
 }
 
-.dark-mode .welcome-banner__inner-wrapper {
-  .custom-search-banner-headline {
-    color: #a6a6a6;
-  }
+@media (prefers-color-scheme: dark) {
+  .welcome-banner__inner-wrapper {
+    .custom-search-banner-headline {
+      color: #a6a6a6;
+    }
 
-  p {
-    color: #a6a6a6;
+    p {
+      color: #a6a6a6;
+    }
   }
 }
 
@@ -444,51 +448,57 @@ div.groqsters-feature-banner {
 }
 
 // Dark mode adjustments for feature cards
-.dark-mode .groqsters-feature-banner {
-  .feature-card,
-  a.feature-card,
-  div.feature-card {
-    background-color: var(--secondary) !important;
-    border-color: var(--primary-low) !important;
-    
-    &:hover {
-      background-color: var(--tertiary-low) !important;
+@media (prefers-color-scheme: dark) {
+  .groqsters-feature-banner {
+    .feature-card,
+    a.feature-card,
+    div.feature-card {
+      background-color: var(--secondary) !important;
+      border-color: var(--primary-low) !important;
+      
+      &:hover {
+        background-color: var(--tertiary-low) !important;
+      }
     }
-  }
 
-  .feature-card-text,
-  div.feature-card-text {
-    background-color: var(--primary-very-low) !important;
+    .feature-card-text,
+    div.feature-card-text {
+      background-color: var(--primary-very-low) !important;
 
-    .feature-card-title,
-    h3.feature-card-title,
-    h3 {
-      color: var(--primary) !important;
+      .feature-card-title,
+      h3.feature-card-title,
+      h3 {
+        color: var(--primary) !important;
+      }
     }
   }
 }
 
 
 // Dark mode adjustments for custom search banner
-.dark-mode .custom-search-banner {
-  color: #a6a6a6;
-
-  .custom-search-banner-headline {
+@media (prefers-color-scheme: dark) {
+  .custom-search-banner {
     color: #a6a6a6;
-  }
 
-  p {
-    color: #a6a6a6;
+    .custom-search-banner-headline {
+      color: #a6a6a6;
+    }
+
+    p {
+      color: #a6a6a6;
+    }
   }
 }
 
-.dark-mode .welcome-banner__inner-wrapper {
-  .custom-search-banner-headline {
-    color: #a6a6a6;
-  }
+@media (prefers-color-scheme: dark) {
+  .welcome-banner__inner-wrapper {
+    .custom-search-banner-headline {
+      color: #a6a6a6;
+    }
 
-  p {
-    color: #a6a6a6;
+    p {
+      color: #a6a6a6;
+    }
   }
 }
 
