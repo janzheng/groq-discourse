@@ -351,7 +351,12 @@ export default {
               row.className = 'custom-post-row';
               const href = configuredUrl || '#';
               row.href = href;
-              row.target = href.startsWith('http') ? '_blank' : '_self';
+              try {
+                var urlObj = new URL(href);
+                row.target = (urlObj.origin === window.location.origin) ? '_self' : '_blank';
+              } catch (e) {
+                row.target = '_self';
+              }
 
               // Always show avatar (from JSON, fallback to first-letter until fetched)
               let avatarContainer = document.createElement('div');
