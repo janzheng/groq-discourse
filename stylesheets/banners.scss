@@ -18,6 +18,10 @@
   border-radius: 8px;
   z-index: 10;
 
+  @media (prefers-color-scheme: dark) {
+    color: #a6a6a6;
+  }
+
   h1 {
     font-family: var(--heading-font-family); // Use heading font family
     margin: 0 0 0.75rem 0;
