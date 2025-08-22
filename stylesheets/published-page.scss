@@ -1,3 +1,56 @@
+/* Published page enhanced layout: keep wrapper narrow, allow cards grid to span wider via CSS only */
+body.published-page {
+  /* If Discourse sets this variable, we reuse; default to 1040px but keep it adjustable */
+  --published-max-width: var(--published-max-width, 1040px);
+}
+
+.published-page-content-wrapper {
+  max-width: var(--published-max-width);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Make our injected menu align with header width */
+.groqsters-published-menu {
+  width: 100%;
+}
+.groqsters-published-menu-inner {
+  max-width: var(--published-max-width);
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0.5rem 0 1rem 0;
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+/* Wider-than-body demo cards: pure CSS responsive approach */
+.groqsters-demo-cards-grid {
+  /* default aligns to wrapper */
+  max-width: var(--published-max-width);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* On large screens, gently expand beyond wrapper using viewport space */
+@media (min-width: 1000px) {
+  .groqsters-demo-cards-grid {
+    /* Expand up to 10vw on each side but cap to viewport with padding */
+    max-width: calc(var(--published-max-width) + 20vw);
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
+/* On small screens, ensure full bleed fits and cards stack nicely */
+@media (max-width: 700px) {
+  .groqsters-demo-cards-grid {
+    max-width: 100%;
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+    grid-template-columns: 1fr !important;
+  }
+}
 // Styles specific to Discourse Published Pages (body.published-page)
 
 body.published-page {
