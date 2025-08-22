@@ -116,19 +116,19 @@
   .latest-topic-list-item,
   .topic-list {
     order: 2 !important;
-    margin-top: 3rem !important;
+    // margin-top: 3rem !important;
 
     // Add a header for the latest topics section
-    &::before {
-      content: "Latest Topics" !important;
-      display: block !important;
-      font-size: 1.5rem !important;
-      font-weight: 600 !important;
-      color: var(--primary) !important;
-      margin-bottom: 1.5rem !important;
-      padding-bottom: 0.5rem !important;
-      border-bottom: 2px solid var(--primary-low) !important;
-    }
+    // &::before {
+    //   content: "Latest Topics" !important;
+    //   display: block !important;
+    //   font-size: 1.5rem !important;
+    //   font-weight: 600 !important;
+    //   color: var(--primary) !important;
+    //   margin-bottom: 1.5rem !important;
+    //   padding-bottom: 0.5rem !important;
+    //   border-bottom: 2px solid var(--primary-low) !important;
+    // }
   }
 }
 
