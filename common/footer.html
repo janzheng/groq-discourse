@@ -212,16 +212,30 @@
   function buildMenu(links){ var existing=document.querySelector('.groqsters-published-menu'); if(existing) return existing; var nav=document.createElement('nav'); nav.className='groqsters-published-menu'; var inner=document.createElement('div'); inner.className='groqsters-published-menu-inner'; nav.appendChild(inner); links.forEach(function(it){ var a=document.createElement('a'); a.href=it.href; a.textContent=it.text; a.target=it.href.indexOf('http')===0?'_blank':'_self'; inner.appendChild(a); }); return nav; }
   function injectMenu(links){ if(!links||!links.length) return; var menu=buildMenu(links); if(!menu) return; var header=getHeader(); if(header){ if(!header.nextSibling || header.nextSibling!==menu){ header.parentNode.insertBefore(menu, header.nextSibling); } } }
 
-  // Counter demo (vanilla)
+  // Counter demo (vanilla) with localStorage persistence (scoped per page where possible)
   function buildCounter(){
+    function deriveKey(){
+      try{
+        var suffix='global';
+        if(document && document.body){
+          var m = (document.body.className||'').match(/topic-(\d+)/);
+          if(m && m[1]) suffix='topic-'+m[1]; else suffix=(location && location.pathname) ? location.pathname : 'global';
+        }
+        return 'groqsters:counter:'+suffix;
+      }catch(e){ return 'groqsters:counter:global'; }
+    }
+    var storageKey = deriveKey();
+    function readStored(){ try{ var v = window.localStorage ? window.localStorage.getItem(storageKey) : null; var n = parseInt(v||'0',10); return isNaN(n)?0:n; }catch(e){ return 0; } }
+    function writeStored(n){ try{ if(window.localStorage) window.localStorage.setItem(storageKey, String(n)); }catch(e){} }
+
     var outer=document.createElement('div');
     outer.style.margin='1rem 0';
     var root=document.createElement('div');
     root.className='groqsters-counter';
     var label=document.createElement('span'); label.textContent='Counter:';
-    var val=document.createElement('strong'); val.textContent='0'; val.setAttribute('aria-live','polite');
+    var val=document.createElement('strong'); val.setAttribute('aria-live','polite'); val.textContent=String(readStored());
     var inc=document.createElement('button'); inc.type='button'; inc.textContent='+';
-    inc.addEventListener('click', function(){ var cur=parseInt(val.textContent||'0',10)||0; val.textContent=String(cur+1); });
+    inc.addEventListener('click', function(){ var cur=parseInt(val.textContent||'0',10)||0; var next=cur+1; val.textContent=String(next); writeStored(next); try{ window.dispatchEvent(new CustomEvent('groqsters:counter:changed',{detail:{value:next,key:storageKey}})); }catch(e){} });
     root.appendChild(label); root.appendChild(val); root.appendChild(inc); outer.appendChild(root);
     return outer;
   }
@@ -230,12 +244,12 @@
   // Demo Cards Grid (3-col) with fake data source
   function getDemoCards(){
     var fallback = [
-      { title: 'Demo App Alpha', description: 'Explore ultra-fast text-to-speech with streaming output.', image: 'https://picsum.photos/seed/groq1/800/480', imageFit: 'cover', username: 'alice', avatarUrl: 'https://i.pravatar.cc/24?img=1' },
-      { title: 'Vision Pipeline', description: 'Build a vision-to-text chain using multi-modal inputs.', image: 'https://picsum.photos/seed/groq2/800/480', imageFit: 'contain', username: 'bob', avatarUrl: 'https://i.pravatar.cc/24?img=2' },
-      { title: 'Chat Agent', description: 'A compact agent with memory and tools.', image: 'https://picsum.photos/seed/groq3/800/480', imageFit: 'cover', username: 'charlie', avatarUrl: 'https://i.pravatar.cc/24?img=3' },
-      { title: 'Realtime UI', description: 'Reactive UI powered by streaming tokens.', image: 'https://picsum.photos/seed/groq7/800/480', imageFit: 'contain', username: 'diana', avatarUrl: 'https://i.pravatar.cc/24?img=4' },
-      { title: 'Summarizer', description: 'Summarize long-form docs with citations.', image: 'https://picsum.photos/seed/woof/800/480', imageFit: 'cover' },
-      { title: 'Code Helper', description: 'Inline code suggestions and explanations.', image: 'https://picsum.photos/seed/groq6/800/480', imageFit: 'contain' }
+      { title: 'Demo App Alpha', description: 'Explore ultra-fast text-to-speech with streaming output.', image: 'https://picsum.photos/seed/groq1/800/480', imageFit: 'cover', username: 'alice', avatarUrl: 'https://i.pravatar.cc/24?img=1', github: 'https://github.com/groq/demo-alpha', demo: 'https://demo.groq.com/alpha' },
+      { title: 'Vision Pipeline', description: 'Build a vision-to-text chain using multi-modal inputs.', image: 'https://picsum.photos/seed/groq2/800/480', imageFit: 'contain', username: 'bob', avatarUrl: 'https://i.pravatar.cc/24?img=2', demo: 'https://demo.groq.com/vision' },
+      { title: 'Chat Agent', description: 'A compact agent with memory and tools.', image: 'https://picsum.photos/seed/groq3/800/480', imageFit: 'cover', username: 'charlie', avatarUrl: 'https://i.pravatar.cc/24?img=3', github: 'https://github.com/groq/chat-agent' },
+      { title: 'Realtime UI', description: 'Reactive UI powered by streaming tokens.', image: 'https://picsum.photos/seed/groq7/800/480', imageFit: 'contain', username: 'diana', avatarUrl: 'https://i.pravatar.cc/24?img=4', demo: 'https://demo.groq.com/realtime' },
+      { title: 'Summarizer', description: 'Summarize long-form docs with citations.', image: 'https://picsum.photos/seed/woof/800/480', imageFit: 'cover', github: 'https://github.com/groq/summarizer' },
+      { title: 'Code Helper', description: 'Inline code suggestions and explanations.', image: 'https://picsum.photos/seed/groq6/800/480', imageFit: 'contain', demo: 'https://demo.groq.com/code-helper' }
     ];
     try {
       var ext = (window.groqstersDemoCards && Array.isArray(window.groqstersDemoCards)) ? window.groqstersDemoCards : null;
@@ -299,6 +313,47 @@
 
       body.appendChild(h);
       body.appendChild(p);
+      // Optional action icons (GitHub, Live Demo)
+      var hasGithub = item && typeof item.github === 'string' && item.github;
+      var hasDemo = item && typeof item.demo === 'string' && item.demo;
+      if (hasGithub || hasDemo) {
+        var actions = document.createElement('div');
+        actions.style.display = 'flex';
+        actions.style.gap = '10px';
+        actions.style.marginTop = '10px';
+
+        function createIconLink(url, label, svgPath){
+          var a = document.createElement('a');
+          a.href = url;
+          a.title = label;
+          a.setAttribute('aria-label', label);
+          if (url.indexOf('http') === 0) { a.target = '_blank'; a.rel = 'noopener noreferrer'; }
+          a.style.color = '#666';
+          a.style.display = 'inline-flex';
+          a.style.alignItems = 'center';
+          a.style.justifyContent = 'center';
+          a.style.width = '24px';
+          a.style.height = '24px';
+          var svg = document.createElementNS('http://www.w3.org/2000/svg','svg');
+          svg.setAttribute('viewBox','0 0 24 24');
+          svg.setAttribute('width','20');
+          svg.setAttribute('height','20');
+          svg.setAttribute('fill','currentColor');
+          var path = document.createElementNS('http://www.w3.org/2000/svg','path');
+          path.setAttribute('d', svgPath);
+          svg.appendChild(path);
+          a.appendChild(svg);
+          return a;
+        }
+
+        // MDI-light style paths
+        var GITHUB_PATH = 'M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.091.681-.217.681-.482 0-.236-.009-.866-.014-1.701-2.782.605-3.369-1.343-3.369-1.343-.454-1.156-1.109-1.465-1.109-1.465-.908-.62.069-.608.069-.608 1.004.071 1.532 1.038 1.532 1.038.892 1.53 2.341 1.088 2.91.833.091-.653.349-1.088.636-1.339-2.221-.255-4.555-1.137-4.555-5.059 0-1.117.39-2.03 1.029-2.747-.103-.255-.447-1.281.097-2.671 0 0 .84-.269 2.75 1.048A9.564 9.564 0 0 1 12 6.844c.851.004 1.707.115 2.507.337 1.909-1.317 2.748-1.048 2.748-1.048.546 1.39.202 2.416.1 2.671.64.717 1.027 1.63 1.027 2.747 0 3.931-2.337 4.801-4.566 5.052.359.312.678.927.678 1.868 0 1.349-.012 2.438-.012 2.771 0 .268.18.579.688.48C19.138 20.162 22 16.416 22 12 22 6.477 17.523 2 12 2Z';
+        var GLOBE_PATH = 'M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm0 2c2.21 0 4.21.9 5.66 2.34C16.69 6.84 14.46 7.5 12 7.5S7.31 6.84 6.34 6.34A7.97 7.97 0 0 1 12 4Zm0 16c-2.21 0-4.21-.9-5.66-2.34.97-.5 3.2-1.16 5.66-1.16s4.69.66 5.66 1.16A7.97 7.97 0 0 1 12 20Zm6.32-3.22C17.19 15.85 14.79 15 12 15s-5.19.85-6.32 1.78A8 8 0 0 1 4 12c0-.83.14-1.63.39-2.36C5.81 10.15 8.21 11 12 11s6.19-.85 7.61-1.36c.25.73.39 1.53.39 2.36 0 1.42-.37 2.75-1.1 3.78ZM12 9c-3.04 0-5.66-.69-7.23-1.25A7.98 7.98 0 0 1 12 4c2.9 0 5.33 1.55 6.72 3.29C17.66 8.31 15.04 9 12 9Z';
+
+        if (hasGithub) actions.appendChild(createIconLink(item.github, 'GitHub repository', GITHUB_PATH));
+        if (hasDemo) actions.appendChild(createIconLink(item.demo, 'Live demo', GLOBE_PATH));
+        body.appendChild(actions);
+      }
 
       var hasFooter = item && (item.username || item.avatarUrl);
       if(hasFooter){
