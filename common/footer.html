@@ -474,6 +474,20 @@
     return { registry: registry, links: linkMap, register: register, unregister: unregister, map: map, unmap: unmap, resolve: resolve, scan: scan, unmount: unmount, disable: disable };
   })();
 
+  // Ensure Iconify is loaded on published pages (head_tag may not run on published)
+  function ensureIconifyLoaded(callback){
+    try{
+      if(window.Iconify && typeof window.Iconify.scan === 'function'){ if(callback) callback(); return; }
+      var existing = document.querySelector('script[src*="code.iconify.design/3/"]');
+      if(existing){ existing.addEventListener('load', function(){ try{ if(window.Iconify && window.Iconify.scan) window.Iconify.scan(); }catch(e){} if(callback) callback(); }); return; }
+      var s=document.createElement('script');
+      s.src='https://code.iconify.design/3/3.1.1/iconify.min.js';
+      s.defer=true; s.crossOrigin='anonymous';
+      s.addEventListener('load', function(){ try{ if(window.Iconify && window.Iconify.scan) window.Iconify.scan(); }catch(e){} if(callback) callback(); });
+      (document.head||document.body||document.documentElement).appendChild(s);
+    }catch(e){ if(callback) callback(); }
+  }
+ 
   
   function run(){ if(!document.body) return; var isPublished = document.body.classList.contains('published-page') || !!document.querySelector('.published-page-content-body'); if(!isPublished) return; var cfg=document.getElementById('groqsters-pub-config');
     // Fall back to sensible defaults if theme settings aren't interpolated on published pages
@@ -499,6 +513,8 @@
     groqstersComponents.map('https://demo-cards', 'demo-cards');
     // Also support direct scheme: <a href="component:counter">...</a>
     groqstersComponents.scan();
+    // Load Iconify and rescan so icons render
+    ensureIconifyLoaded(function(){ try{ if(window.Iconify && window.Iconify.scan) window.Iconify.scan(); }catch(e){} });
     window.addEventListener('groqsters:spa:navigate', function(){ setTimeout(function(){ groqstersComponents.scan(); }, 50); });
     console.log('[groqsters] published page enhancements applied (footer injector)');
   }
