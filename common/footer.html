@@ -182,6 +182,10 @@
 
   </div>
 </footer>
+
+
+
+<!-- discourse publishing hijacking system -->
 <div id="groqsters-pub-config"
   hidden
   data-enabled="{{theme-setting 'published_enable_customizations'}}"
@@ -227,6 +231,47 @@
   function applyHiding(hide){ if(!hide) return; var header=getHeader(); if(header) header.style.display='none'; }
   function wireSpaNavigation(enabled, selector){ if(!enabled) return; var sel=selector||'.groqsters-published-menu a'; document.addEventListener('click', function(ev){ var path=ev.composedPath?ev.composedPath():[]; var a=null; for(var i=0;i<path.length;i++){ var el=path[i]; if(el && el.tagName==='A'){ a=el; break; } } if(!a){ var t=ev.target; if(t && t.closest) a=t.closest(sel); } if(!a || !a.matches(sel)) return; var href=a.getAttribute('href'); if(!href) return; if(href.indexOf('http')===0) return; ev.preventDefault(); window.history.pushState({},'',href); var evt=new CustomEvent('groqsters:spa:navigate',{detail:{href:href}}); window.dispatchEvent(evt); }, true); }
 
+  // Component registry: replace fake links with registered components
+  var groqstersComponents = window.groqstersComponents = window.groqstersComponents || (function(){
+    var registry = {};
+    var linkMap = {};
+    function register(name, builder){ if(name && typeof builder === 'function'){ registry[name] = builder; } }
+    function map(fakeHref, name){ if(fakeHref && name){ linkMap[fakeHref] = name; } }
+    function resolve(href){
+      if(!href) return null;
+      if(href.indexOf('component:') === 0){
+        var nm = href.slice('component:'.length);
+        if(registry[nm]) return nm;
+        return linkMap[nm] || null;
+      }
+      if(registry[href]) return href;
+      if(linkMap[href]) return linkMap[href];
+      return null;
+    }
+    function scan(root){
+      var container = root || getBodyContainer();
+      if(!container) return 0;
+      var anchors = container.querySelectorAll('a[href]');
+      var replaced = 0;
+      for(var i=0;i<anchors.length;i++){
+        var a = anchors[i];
+        if(!a) continue;
+        if(a.dataset && a.dataset.groqstersComponentProcessed) continue;
+        var href = a.getAttribute('href');
+        var key = resolve(href);
+        if(!key) continue;
+        var builder = registry[key];
+        if(typeof builder !== 'function') continue;
+        var node = builder({ anchor: a, href: href, name: key }) || null;
+        if(!node) continue;
+        a.dataset.groqstersComponentProcessed = '1';
+        if(a.parentNode){ a.parentNode.replaceChild(node, a); replaced++; }
+      }
+      return replaced;
+    }
+    return { registry: registry, links: linkMap, register: register, map: map, resolve: resolve, scan: scan };
+  })();
+
   
   function run(){ if(!document.body || !document.body.classList.contains('published-page')) return; var cfg=document.getElementById('groqsters-pub-config');
     // Fall back to sensible defaults if theme settings aren't interpolated on published pages
@@ -243,6 +288,13 @@
     injectMenu(parseLinksSetting(linksStr));
     injectCounterDemo(counter);
     wireSpaNavigation(spaEnabled, spaSelector);
+    // Register default components and mappings, then scan for fake-link placeholders
+    groqstersComponents.register('counter', function(){ return buildCounter(); });
+    groqstersComponents.map('counter-component', 'counter');
+    groqstersComponents.map('https://some-fake-link', 'counter');
+    // Also support direct scheme: <a href="component:counter">...</a>
+    groqstersComponents.scan();
+    window.addEventListener('groqsters:spa:navigate', function(){ setTimeout(function(){ groqstersComponents.scan(); }, 50); });
     console.log('[groqsters] published page enhancements applied (footer injector)');
   }
 
