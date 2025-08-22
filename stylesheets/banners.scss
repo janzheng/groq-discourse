@@ -1,5 +1,11 @@
 // These are for the home page / custom banners and Categories / Sidebar etc
 
+/* popup notices */
+.global-notice,
+#banner {
+  border-radius: 8px;
+}
+
 // Banner container
 .groqsters-banners-container {
   width: 100%;

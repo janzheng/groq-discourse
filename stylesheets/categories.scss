@@ -520,21 +520,21 @@ body.groqsters-categories-page,
 }
 
 // Force hide any remaining Latest sections
-.navigation-categories {
+// .navigation-categories {
 
-  .latest-topic-list,
-  .latest-topic-list-item,
-  .topic-list {
+//   .latest-topic-list,
+//   .latest-topic-list-item,
+//   .topic-list {
 
-    // Remove our custom "Latest Topics" header
-    &::before {
-      display: none !important;
-    }
+//     // Remove our custom "Latest Topics" header
+//     &::before {
+//       display: none !important;
+//     }
 
-    // Hide the entire Latest section on Categories tab
-    display: none !important;
-  }
-}
+//     // Hide the entire Latest section on Categories tab
+//     display: none !important;
+//   }
+// }
 
 
 /* overrides */
