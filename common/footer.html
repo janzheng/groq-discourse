@@ -336,8 +336,8 @@
           var av = document.createElement('img');
           av.src = item.avatarUrl;
           av.alt = (item.username ? item.username + ' avatar' : 'avatar');
-          av.style.width = '20px';
-          av.style.height = '20px';
+          av.style.width = '30px';
+          av.style.height = '30px';
           av.style.borderRadius = '50%';
           av.style.objectFit = 'cover';
           left.appendChild(av);
@@ -345,7 +345,7 @@
         if(item.username){
           var user = document.createElement('span');
           user.textContent = item.username;
-          user.style.fontSize = '12px';
+          user.style.fontSize = '14px';
           user.style.color = '#666';
           user.style.whiteSpace = 'nowrap';
           user.style.overflow = 'hidden';
@@ -368,7 +368,7 @@
           span.className = 'iconify';
           span.setAttribute('data-icon', icon);
           span.setAttribute('aria-hidden', 'true');
-          span.style.fontSize = '18px';
+          span.style.fontSize = '26px';
           span.style.color = '#666';
           a.appendChild(span);
           return a;
