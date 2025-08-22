@@ -236,7 +236,9 @@
     var registry = {};
     var linkMap = {};
     function register(name, builder){ if(name && typeof builder === 'function'){ registry[name] = builder; } }
+    function unregister(name){ if(name && registry[name]){ delete registry[name]; } }
     function map(fakeHref, name){ if(fakeHref && name){ linkMap[fakeHref] = name; } }
+    function unmap(fakeHref){ if(fakeHref && linkMap[fakeHref]){ delete linkMap[fakeHref]; } }
     function resolve(href){
       if(!href) return null;
       if(href.indexOf('component:') === 0){
@@ -264,12 +266,43 @@
         if(typeof builder !== 'function') continue;
         var node = builder({ anchor: a, href: href, name: key }) || null;
         if(!node) continue;
+        // mark inserted node for later unmount, and preserve minimal original info
+        try{
+          if(node.setAttribute){
+            node.setAttribute('data-groqsters-component', key);
+            node.setAttribute('data-groqsters-original-href', href || '');
+            var text = (a.textContent || '').trim();
+            node.setAttribute('data-groqsters-original-text', text);
+          }
+        } catch(e){}
         a.dataset.groqstersComponentProcessed = '1';
         if(a.parentNode){ a.parentNode.replaceChild(node, a); replaced++; }
       }
       return replaced;
     }
-    return { registry: registry, links: linkMap, register: register, map: map, resolve: resolve, scan: scan };
+    function unmount(name){
+      var selector = name ? '[data-groqsters-component="' + name + '"]' : '[data-groqsters-component]';
+      var nodes = document.querySelectorAll(selector);
+      var count = 0;
+      for(var j=0;j<nodes.length;j++){
+        var node = nodes[j];
+        if(!node || !node.parentNode) continue;
+        var href = node.getAttribute('data-groqsters-original-href') || '#';
+        var text = node.getAttribute('data-groqsters-original-text') || href;
+        var a = document.createElement('a');
+        a.href = href;
+        a.textContent = text;
+        node.parentNode.replaceChild(a, node);
+        count++;
+      }
+      return count;
+    }
+    function disable(){
+      // clear maps and registry (non-destructive to DOM); call unmount() beforehand if you want to restore anchors
+      registry = {};
+      linkMap = {};
+    }
+    return { registry: registry, links: linkMap, register: register, unregister: unregister, map: map, unmap: unmap, resolve: resolve, scan: scan, unmount: unmount, disable: disable };
   })();
 
   
@@ -290,7 +323,7 @@
     wireSpaNavigation(spaEnabled, spaSelector);
     // Register default components and mappings, then scan for fake-link placeholders
     groqstersComponents.register('counter', function(){ return buildCounter(); });
-    // groqstersComponents.map('counter-component', 'counter');
+    groqstersComponents.map('counter-component', 'counter');
     groqstersComponents.map('https://some-fake-link', 'counter');
     // Also support direct scheme: <a href="component:counter">...</a>
     groqstersComponents.scan();
