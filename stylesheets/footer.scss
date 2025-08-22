@@ -462,15 +462,15 @@
         color: var(--primary-high);
       }
 
-      .community-link {
-        background: var(--primary-very-low);
-        color: var(--primary-medium);
+      // .community-link {
+      //   background: var(--primary-very-low);
+      //   color: var(--primary-medium);
 
-        &:hover {
-          background: var(--primary);
-          color: white;
-        }
-      }
+      //   &:hover {
+      //     background: var(--primary);
+      //     color: white;
+      //   }
+      // }
     }
 
     .manage-cookies-btn {
