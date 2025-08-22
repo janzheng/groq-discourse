@@ -938,6 +938,22 @@ div.groqsters-feature-banner {
   }
 }
 
+// Light mode only: make login icon orange
+@media (prefers-color-scheme: light) {
+  .d-header {
+    .header-buttons,
+    .panel {
+      .auth-buttons {
+        .btn.login-button .d-icon,
+        a.login-button .d-icon {
+          color: #F55036 !important;
+          fill: currentColor;
+        }
+      }
+    }
+  }
+}
+
 // Header nav styling for welcome banner
 // .header-nav {
 //   width: 100%;
