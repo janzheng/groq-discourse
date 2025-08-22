@@ -235,6 +235,30 @@
     if(wrapper){ wrapper.style.maxWidth = 'var(--published-max-width)'; }
   }
 
+  // Make demo cards grid wider than the body using negative side margins
+  function updateDemoCardsWidths(){
+    try{
+      var base = computeWrapperMaxWidthPx();
+      if(!base || base <= 0) return;
+      var viewport = Math.max(320, (window.innerWidth || document.documentElement.clientWidth || base));
+      var desired = Math.floor(base * 1.2); // 20% wider than body
+      var cap = Math.max(base, viewport - 32); // keep within viewport with a small gutter
+      if(desired > cap) desired = cap;
+      if(desired <= base) desired = base; // fallback
+      var delta = Math.max(0, desired - base);
+      var offset = Math.floor(delta / 2);
+      var grids = document.querySelectorAll('.groqsters-demo-cards-grid');
+      for(var i=0;i<grids.length;i++){
+        var g = grids[i];
+        g.style.boxSizing = 'border-box';
+        g.style.width = desired + 'px';
+        g.style.maxWidth = desired + 'px';
+        g.style.marginLeft = (-offset) + 'px';
+        g.style.marginRight = (-offset) + 'px';
+      }
+    }catch(e){}
+  }
+
   // Menu
   function parseLinksSetting(s){ var out=[]; if(!s) return out; s.split(',').forEach(function(e){ var p=e.split('|'); if(p.length>=2){ var t=(p[0]||'').trim(); var h=(p[1]||'').trim(); if(t&&h) out.push({text:t,href:h}); } }); return out; }
   function buildMenu(links){ var existing=document.querySelector('.groqsters-published-menu'); if(existing) return existing; var nav=document.createElement('nav'); nav.className='groqsters-published-menu'; nav.style.display='block'; nav.style.width='100%'; var inner=document.createElement('div'); inner.className='groqsters-published-menu-inner'; inner.style.maxWidth='var(--published-max-width)'; inner.style.margin='0 auto'; inner.style.padding='0.5rem 0 1rem 0'; inner.style.display='flex'; inner.style.gap='1rem'; inner.style.flexWrap='wrap'; nav.appendChild(inner); links.forEach(function(it){ var a=document.createElement('a'); a.href=it.href; a.textContent=it.text; a.target=it.href.indexOf('http')===0?'_blank':'_self'; inner.appendChild(a); }); return nav; }
@@ -272,12 +296,16 @@
   // Demo Cards Grid (3-col) with fake data source
   function getDemoCards(){
     var fallback = [
-      { title: 'Demo App Alpha', description: 'Explore ultra-fast text-to-speech with streaming output.', image: 'https://picsum.photos/seed/groq1/800/480', imageFit: 'cover', username: 'alice', avatarUrl: 'https://i.pravatar.cc/24?img=1', github: 'https://github.com/groq/demo-alpha', demo: 'https://demo.groq.com/alpha' },
-      { title: 'Vision Pipeline', description: 'Build a vision-to-text chain using multi-modal inputs.', image: 'https://picsum.photos/seed/groq2/800/480', imageFit: 'contain', username: 'bob', avatarUrl: 'https://i.pravatar.cc/24?img=2', demo: 'https://demo.groq.com/vision' },
-      { title: 'Chat Agent', description: 'A compact agent with memory and tools.', image: 'https://picsum.photos/seed/groq3/800/480', imageFit: 'cover', username: 'charlie', avatarUrl: 'https://i.pravatar.cc/24?img=3', github: 'https://github.com/groq/chat-agent' },
-      { title: 'Realtime UI', description: 'Reactive UI powered by streaming tokens.', image: 'https://picsum.photos/seed/groq7/800/480', imageFit: 'contain', username: 'diana', avatarUrl: 'https://i.pravatar.cc/24?img=4', demo: 'https://demo.groq.com/realtime' },
-      { title: 'Summarizer', description: 'Summarize long-form docs with citations.', image: 'https://picsum.photos/seed/woof/800/480', imageFit: 'cover', github: 'https://github.com/groq/summarizer' },
-      { title: 'Code Helper', description: 'Inline code suggestions and explanations.', image: 'https://picsum.photos/seed/groq6/800/480', imageFit: 'contain', demo: 'https://demo.groq.com/code-helper' }
+      { title: 'Stock Bot', description: 'AI chatbot that provides real-time stock data, charts, financials and market insights.', image: '/templates/stockbot.png', imageFit: 'cover', username: 'Benjamin Klieger', avatarUrl: '/groq-circle.png', github: 'https://github.com/bklieger-groq/stockbot-on-groq', demo: 'https://groq-stockbot.vercel.app/' },
+      { title: 'Starter Chatbot', description: 'Open-source AI chatbot app template built with Next.js, the AI SDK by Vercel, and Groq.', image: '/templates/ai-sdk-starter-groq.png', imageFit: 'cover', username: 'Vercel', github: 'https://github.com/vercel-labs/ai-sdk-starter-groq', demo: 'https://ai-sdk-starter-groq.vercel.app/' },
+      { title: 'Blog Generator from Audio', description: "Generate structured blog posts from audio or video content using Groq's Whisper and Llama3 models.", image: '/templates/blogwizard.png', imageFit: 'cover', username: 'Benjamin Klieger', avatarUrl: '/groq-circle.png', github: 'https://github.com/groq/blogwizard', demo: 'https://blogwizard.groqlabs.com/' },
+      { title: 'Groq App Generator', description: 'An interactive web application that generates and modifies web applications in microseconds.', image: '/showcase-applications/appgen.png', imageFit: 'cover', username: 'Rick Lamers, Jose Menendez, Benjamin Klieger', avatarUrl: '/groq-circle.png', github: 'https://github.com/groq/groq-appgen', demo: 'https://appgen.groqlabs.com/' },
+      { title: 'Groq x Gradio Voice Assistant', description: 'Voice-powered AI application using Groq for realtime speech recognition and Gradio.', image: '/showcase-applications/voiceapp.png', imageFit: 'cover', username: 'Hatice Ozen', avatarUrl: '/groq-circle.png', github: 'https://github.com/groq/groq-api-cookbook/blob/main/tutorials/groq-gradio/groq-gradio-tutorial.ipynb' },
+      { title: 'Magic Spell', description: 'AI-powered text editor built with Next.js, Vercel AI SDK and Groq. Deploy your own AI text editor.', image: '/showcase-applications/magic-spell.png', imageFit: 'cover', username: 'Ai-ng and Nick Oates', github: 'https://github.com/ai-ng/magic-spell', demo: 'https://magic-spell.vercel.app/' },
+      { title: 'Groq MCP Server', description: 'Query Groq models from Claude and other MCP clients through Model Context Protocol.', image: '/showcase-applications/groq-mcp-server.png', imageFit: 'cover', username: 'Jan Zheng', avatarUrl: '/groq-circle.png', github: 'https://github.com/groq/groq-mcp-server' },
+      { title: 'Groq Compound CLI', description: "An interactive command line interface for interacting with Groq's compound-beta system.", image: '/showcase-applications/compound-cli.png', imageFit: 'cover', username: 'Benjamin Klieger', avatarUrl: '/groq-circle.png', github: 'https://github.com/bklieger-groq/compound-cli' },
+      { title: 'Groq Desktop', description: "Local MCP client with MCP server support for all function calling capable models hosted on Groq.", image: '/showcase-applications/groq-desktop-beta.png', imageFit: 'cover', username: 'Rick Lamers', avatarUrl: '/groq-circle.png', github: 'https://github.com/groq/groq-desktop-beta' },
+      { title: 'Groq Compound MCP Server', description: 'MCP server for interacting with Groq models, including compound-beta and Llama 4 models.', image: '/showcase-applications/groq-compound-mcp-server.png', imageFit: 'cover', username: 'Rick Lamers, John Barrus', avatarUrl: '/groq-circle.png', github: 'https://github.com/groq/compound-mcp-server' }
     ];
     try {
       var ext = (window.groqstersDemoCards && Array.isArray(window.groqstersDemoCards)) ? window.groqstersDemoCards : null;
@@ -421,6 +449,8 @@
       var item = list[i];
       grid.appendChild(createCard(item));
     }
+    // Expand width beyond body
+    updateDemoCardsWidths();
     return grid;
   }
 
@@ -543,10 +573,11 @@
     groqstersComponents.map('https://demo-cards', 'demo-cards');
     // Also support direct scheme: <a href="component:counter">...</a>
     groqstersComponents.scan();
+    updateDemoCardsWidths();
     // Load Iconify and rescan so icons render
     ensureIconifyLoaded(function(){ try{ if(window.Iconify && window.Iconify.scan) window.Iconify.scan(); }catch(e){} });
-    window.addEventListener('groqsters:spa:navigate', function(){ setTimeout(function(){ groqstersComponents.scan(); syncPublishedMaxWidth(); }, 50); });
-    window.addEventListener('resize', function(){ clearTimeout(window.__groqstersWTimer); window.__groqstersWTimer = setTimeout(syncPublishedMaxWidth, 100); });
+    window.addEventListener('groqsters:spa:navigate', function(){ setTimeout(function(){ groqstersComponents.scan(); syncPublishedMaxWidth(); updateDemoCardsWidths(); }, 50); });
+    window.addEventListener('resize', function(){ clearTimeout(window.__groqstersWTimer); window.__groqstersWTimer = setTimeout(function(){ syncPublishedMaxWidth(); updateDemoCardsWidths(); }, 100); });
     console.log('[groqsters] published page enhancements applied (footer injector)');
   }
 
