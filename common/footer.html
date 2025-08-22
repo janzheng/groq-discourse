@@ -290,7 +290,7 @@
     wireSpaNavigation(spaEnabled, spaSelector);
     // Register default components and mappings, then scan for fake-link placeholders
     groqstersComponents.register('counter', function(){ return buildCounter(); });
-    groqstersComponents.map('counter-component', 'counter');
+    // groqstersComponents.map('counter-component', 'counter');
     groqstersComponents.map('https://some-fake-link', 'counter');
     // Also support direct scheme: <a href="component:counter">...</a>
     groqstersComponents.scan();
