@@ -22,6 +22,7 @@
 
 <script>
 (function(){
+  console.log('groqster is locked and loaded');
   function onReady(fn){ if(document.readyState==='loading'){ document.addEventListener('DOMContentLoaded', fn); } else { fn(); } }
   function isPublished(){ return !!(document.body && (document.body.classList.contains('published-page') || document.querySelector('.published-page-content-body'))); }
   function getCfgEl(){ var el=document.getElementById('groqsters-pub-config'); if(el) return el; var head=document.head||document.getElementsByTagName('head')[0]||document.documentElement; var meta=document.createElement('meta'); meta.id='groqsters-pub-config'; var win=window.groqstersPublishedConfig||{}; try{ if(typeof win.enabled==='boolean') meta.dataset.enabled=String(win.enabled); if(typeof win.hideHeader==='boolean') meta.dataset.hideHeader=String(win.hideHeader); if(typeof win.menuLinks==='string') meta.dataset.menuLinks=win.menuLinks; if(typeof win.counter==='boolean') meta.dataset.counter=String(win.counter); if(typeof win.galleryImages==='string') meta.dataset.galleryImages=win.galleryImages; if(typeof win.spaEnabled==='boolean') meta.dataset.spaEnabled=String(win.spaEnabled); if(typeof win.spaSelector==='string') meta.dataset.spaSelector=win.spaSelector; }catch(e){} if(head) head.appendChild(meta); return meta; }
