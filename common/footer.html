@@ -206,10 +206,38 @@
   // Mount points
   function getHeader(){ return document.querySelector('.published-page-header'); }
   function getBodyContainer(){ return document.querySelector('.published-page-content-body'); }
+  function getWrapper(){ return document.querySelector('.published-page-content-wrapper'); }
+
+  // Compute and sync a consistent max width across header, wrapper, and injected menu
+  function computeWrapperMaxWidthPx(){
+    try{
+      var wrapper = getWrapper();
+      if(!wrapper) return 0;
+      var cs = window.getComputedStyle(wrapper);
+      var mw = cs && cs.maxWidth ? cs.maxWidth : '';
+      if(!mw) return 0;
+      if(/px$/.test(mw)) return Math.max(0, parseFloat(mw));
+      // Fallback: measure a temporary element with the same width expression
+      var probe = document.createElement('div');
+      probe.style.position='absolute';
+      probe.style.visibility='hidden';
+      probe.style.width = mw;
+      (document.body||document.documentElement).appendChild(probe);
+      var px = probe.getBoundingClientRect().width;
+      probe.parentNode.removeChild(probe);
+      return Math.max(0, Math.round(px));
+    }catch(e){ return 0; }
+  }
+  function syncPublishedMaxWidth(){
+    var px = computeWrapperMaxWidthPx();
+    if(px > 0){ try{ document.body.style.setProperty('--published-max-width', px + 'px'); }catch(e){} }
+    var wrapper = getWrapper();
+    if(wrapper){ wrapper.style.maxWidth = 'var(--published-max-width)'; }
+  }
 
   // Menu
   function parseLinksSetting(s){ var out=[]; if(!s) return out; s.split(',').forEach(function(e){ var p=e.split('|'); if(p.length>=2){ var t=(p[0]||'').trim(); var h=(p[1]||'').trim(); if(t&&h) out.push({text:t,href:h}); } }); return out; }
-  function buildMenu(links){ var existing=document.querySelector('.groqsters-published-menu'); if(existing) return existing; var nav=document.createElement('nav'); nav.className='groqsters-published-menu'; var inner=document.createElement('div'); inner.className='groqsters-published-menu-inner'; nav.appendChild(inner); links.forEach(function(it){ var a=document.createElement('a'); a.href=it.href; a.textContent=it.text; a.target=it.href.indexOf('http')===0?'_blank':'_self'; inner.appendChild(a); }); return nav; }
+  function buildMenu(links){ var existing=document.querySelector('.groqsters-published-menu'); if(existing) return existing; var nav=document.createElement('nav'); nav.className='groqsters-published-menu'; nav.style.display='block'; nav.style.width='100%'; var inner=document.createElement('div'); inner.className='groqsters-published-menu-inner'; inner.style.maxWidth='var(--published-max-width)'; inner.style.margin='0 auto'; inner.style.padding='0 1rem'; inner.style.display='flex'; inner.style.gap='1rem'; inner.style.flexWrap='wrap'; nav.appendChild(inner); links.forEach(function(it){ var a=document.createElement('a'); a.href=it.href; a.textContent=it.text; a.target=it.href.indexOf('http')===0?'_blank':'_self'; inner.appendChild(a); }); return nav; }
   function injectMenu(links){ if(!links||!links.length) return; var menu=buildMenu(links); if(!menu) return; var header=getHeader(); if(header){ if(!header.nextSibling || header.nextSibling!==menu){ header.parentNode.insertBefore(menu, header.nextSibling); } } }
 
   // Counter demo (vanilla) with localStorage persistence (scoped per page where possible)
@@ -500,6 +528,8 @@
     var spaEnabled = (typeof cfgWin.spaEnabled === 'boolean') ? cfgWin.spaEnabled : (cfg ? readBool(cfg, 'spaEnabled', false) : false);
     var spaSelector = (typeof cfgWin.spaSelector === 'string') ? cfgWin.spaSelector : (cfg ? readStr(cfg, 'spaSelector', '.groqsters-published-menu a') : '.groqsters-published-menu a');
 
+    // Sync the published width variable and enforce it on the wrapper
+    syncPublishedMaxWidth();
     applyHiding(hideHeader);
     injectMenu(parseLinksSetting(linksStr));
     // injectCounterDemo(counter);
@@ -515,7 +545,8 @@
     groqstersComponents.scan();
     // Load Iconify and rescan so icons render
     ensureIconifyLoaded(function(){ try{ if(window.Iconify && window.Iconify.scan) window.Iconify.scan(); }catch(e){} });
-    window.addEventListener('groqsters:spa:navigate', function(){ setTimeout(function(){ groqstersComponents.scan(); }, 50); });
+    window.addEventListener('groqsters:spa:navigate', function(){ setTimeout(function(){ groqstersComponents.scan(); syncPublishedMaxWidth(); }, 50); });
+    window.addEventListener('resize', function(){ clearTimeout(window.__groqstersWTimer); window.__groqstersWTimer = setTimeout(syncPublishedMaxWidth, 100); });
     console.log('[groqsters] published page enhancements applied (footer injector)');
   }
 
