@@ -3,7 +3,18 @@
 
 // Desktop-specific header adjustments
 .d-header {
-  border-bottom: 0;
+  border-bottom: 0 !important;
+  box-shadow: none !important;
+  &::before,
+  &::after {
+    box-shadow: none !important;
+    border-bottom: 0 !important;
+  }
+  .wrap,
+  .panel {
+    border-bottom: 0 !important;
+    box-shadow: none !important;
+  }
   .title {
     font-size: 1.2em;
     
