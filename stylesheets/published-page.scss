@@ -37,8 +37,8 @@ body.published-page {
   .groqsters-demo-cards-grid {
     /* Expand up to 10vw on each side but cap to viewport with padding */
     max-width: calc(var(--published-max-width) + 20vw);
-    padding-left: 1rem;
-    padding-right: 1rem;
+    // padding-left: 1rem;
+    // padding-right: 1rem;
   }
 }
 
