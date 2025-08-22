@@ -241,7 +241,7 @@
       var base = computeWrapperMaxWidthPx();
       if(!base || base <= 0) return;
       var viewport = Math.max(320, (window.innerWidth || document.documentElement.clientWidth || base));
-      var desired = Math.floor(base * 1.2); // 20% wider than body
+      var desired = Math.floor(base * 1.6); // 20% wider than body
       var cap = Math.max(base, viewport - 32); // keep within viewport with a small gutter
       if(desired > cap) desired = cap;
       if(desired <= base) desired = base; // fallback
