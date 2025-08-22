@@ -20,7 +20,7 @@
 >
 
 
-<script>
+<!-- <script>
 (function(){
   console.log('groqster is locked and loaded');
   function onReady(fn){ if(document.readyState==='loading'){ document.addEventListener('DOMContentLoaded', fn); } else { fn(); } }
@@ -31,6 +31,6 @@
   function buildConfig(){ var el=getCfgEl(); var win=window.groqstersPublishedConfig||{}; return { enabled: (typeof win.enabled==='boolean') ? win.enabled : readBool(el,'enabled',true), hideHeader: (typeof win.hideHeader==='boolean') ? win.hideHeader : readBool(el,'hideHeader',false), menuLinks: (typeof win.menuLinks==='string') ? win.menuLinks : readStr(el,'menuLinks','Home|/, Forum|/latest, Docs|/docs'), counter: (typeof win.counter==='boolean') ? win.counter : readBool(el,'counter',true), galleryImages: (typeof win.galleryImages==='string') ? win.galleryImages : readStr(el,'galleryImages',''), spaEnabled: (typeof win.spaEnabled==='boolean') ? win.spaEnabled : readBool(el,'spaEnabled',false), spaSelector: (typeof win.spaSelector==='string') ? win.spaSelector : readStr(el,'spaSelector','.groqsters-published-menu a') }; }
   function bootstrap(){ if(!isPublished()) return; var cfg=buildConfig(); window.groqstersPublished=window.groqstersPublished||{}; window.groqstersPublished.isPublished=isPublished; window.groqstersPublished.getConfig=function(){ return buildConfig(); }; try{ window.dispatchEvent(new CustomEvent('groqsters:published:config',{detail:cfg})); }catch(e){} }
   onReady(bootstrap);
-})();
+})(); -->
 </script>
 
