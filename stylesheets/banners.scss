@@ -850,6 +850,94 @@ div.groqsters-feature-banner {
 //   }
 // }
 
+// Header auth buttons (Sign Up / Log In)
+.d-header {
+  .header-buttons,
+  .panel {
+    .auth-buttons {
+      display: inline-flex;
+      gap: 0.5rem;
+      align-items: center;
+
+      // Shared layout for both buttons
+      .btn.sign-up-button,
+      .btn.signup-button,
+      .btn.login-button,
+      a.sign-up-button,
+      a.signup-button,
+      a.login-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        height: 36px; // h-9
+        min-width: 130px; // w-[130px]
+        padding: 0 12px;
+        border-radius: 18px !important; // rounded-[18px]
+        font-size: 0.875rem; // text-sm
+        line-height: 1.25rem;
+        font-weight: 400; // font-normal
+        text-align: center;
+        white-space: nowrap;
+        text-decoration: none;
+      }
+
+      // Light mode (default)
+      .btn.login-button,
+      a.login-button {
+        background: rgb(243, 243, 242) !important; // --accent
+        border: 1px solid rgb(231, 229, 228) !important; // --border
+        color: var(--primary) !important;
+      }
+
+      .btn.sign-up-button,
+      .btn.signup-button,
+      a.sign-up-button,
+      a.signup-button {
+        background: #F55036 !important;
+        border: 1px solid #F55036 !important;
+        color: #ffffff !important;
+      }
+
+      @media (min-width: 1024px) {
+        .btn.sign-up-button,
+        .btn.signup-button,
+        .btn.login-button,
+        a.sign-up-button,
+        a.signup-button,
+        a.login-button {
+          min-width: 170px; // lg:w-[170px]
+        }
+      }
+    }
+  }
+}
+
+// Dark mode overrides
+@media (prefers-color-scheme: dark) {
+  .d-header {
+    .header-buttons,
+    .panel {
+      .auth-buttons {
+        .btn.login-button,
+        a.login-button {
+          background: transparent !important; // keep subtle bg
+          border: 1px solid rgb(107, 114, 128) !important; // gray-500
+          color: #e5e7eb !important; // near gray-200 for readability
+        }
+
+        .btn.sign-up-button,
+        .btn.signup-button,
+        a.sign-up-button,
+        a.signup-button {
+          background: #F55036 !important;
+          border: 1px solid #F55036 !important;
+          color: #ffffff !important;
+        }
+      }
+    }
+  }
+}
+
 // Header nav styling for welcome banner
 // .header-nav {
 //   width: 100%;
