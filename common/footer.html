@@ -319,7 +319,7 @@
 
     applyHiding(hideHeader);
     injectMenu(parseLinksSetting(linksStr));
-    injectCounterDemo(counter);
+    // injectCounterDemo(counter);
     wireSpaNavigation(spaEnabled, spaSelector);
     // Register default components and mappings, then scan for fake-link placeholders
     groqstersComponents.register('counter', function(){ return buildCounter(); });
