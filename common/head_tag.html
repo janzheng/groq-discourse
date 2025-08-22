@@ -78,6 +78,67 @@
     }
   }
 
+  function injectCounterDemo(enabled) {
+    if (!enabled) return;
+    if (document.querySelector('.groqsters-counter')) return;
+
+    var target = document.querySelector('.published-page-header-wrapper, .wrap, .container, body');
+    if (!target) return;
+
+    var wrapper = document.createElement('div');
+    wrapper.style.margin = '0.5rem 1rem';
+
+    var counter = document.createElement('div');
+    counter.className = 'groqsters-counter';
+
+    var label = document.createElement('span');
+    label.textContent = 'Counter:';
+
+    var value = document.createElement('strong');
+    value.textContent = '0';
+    value.setAttribute('aria-live', 'polite');
+
+    var inc = document.createElement('button');
+    inc.type = 'button';
+    inc.textContent = '+';
+    inc.addEventListener('click', function () {
+      var current = parseInt(value.textContent || '0', 10) || 0;
+      value.textContent = String(current + 1);
+    });
+
+    counter.appendChild(label);
+    counter.appendChild(value);
+    counter.appendChild(inc);
+    wrapper.appendChild(counter);
+
+    target.appendChild(wrapper);
+  }
+
+  function injectGallery(imagesSetting) {
+    var str = (imagesSetting || '').trim();
+    if (!str) return;
+    if (document.querySelector('.groqsters-gallery')) return;
+    var urls = str.split(',').map(function (u) { return u.trim(); }).filter(Boolean);
+    if (!urls.length) return;
+
+    var gallery = document.createElement('div');
+    gallery.className = 'groqsters-gallery';
+    urls.forEach(function (src, idx) {
+      var img = document.createElement('img');
+      img.src = src;
+      img.alt = 'Gallery image ' + (idx + 1);
+      gallery.appendChild(img);
+    });
+
+    var afterHeader = document.querySelector('.published-page-header');
+    if (afterHeader && afterHeader.parentNode) {
+      afterHeader.parentNode.insertBefore(gallery, afterHeader.nextSibling);
+      return;
+    }
+    var content = document.querySelector('.wrap, .container, body');
+    if (content) content.insertBefore(gallery, content.firstChild);
+  }
+
   function applyHiding(hideHeader) {
     if (!hideHeader) return;
     var header = document.querySelector('.published-page-header');

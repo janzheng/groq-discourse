@@ -426,7 +426,7 @@
   })();
 
   
-  function run(){ if(!document.body || !document.body.classList.contains('published-page')) return; var cfg=document.getElementById('groqsters-pub-config');
+  function run(){ if(!document.body) return; var isPublished = document.body.classList.contains('published-page') || !!document.querySelector('.published-page-content-body'); if(!isPublished) return; var cfg=document.getElementById('groqsters-pub-config');
     // Fall back to sensible defaults if theme settings aren't interpolated on published pages
     var cfgWin = window.groqstersPublishedConfig || {};
     var enabled = (typeof cfgWin.enabled === 'boolean') ? cfgWin.enabled : (cfg ? readBool(cfg, 'enabled', true) : true); if(!enabled) return;
@@ -445,8 +445,9 @@
     groqstersComponents.register('counter', function(){ return buildCounter(); });
     groqstersComponents.register('demo-cards', function(){ return buildDemoCardsGrid(getDemoCards()); });
     groqstersComponents.map('counter-component', 'counter');
-    groqstersComponents.map('https://some-fake-link', 'counter');
+    groqstersComponents.map('https://counter-component', 'counter');
     groqstersComponents.map('demo-cards', 'demo-cards');
+    groqstersComponents.map('https://demo-cards', 'demo-cards');
     // Also support direct scheme: <a href="component:counter">...</a>
     groqstersComponents.scan();
     window.addEventListener('groqsters:spa:navigate', function(){ setTimeout(function(){ groqstersComponents.scan(); }, 50); });
