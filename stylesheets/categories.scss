@@ -441,7 +441,7 @@ body.groqsters-categories-page,
     box-sizing: border-box !important;
 
     // Add colorful top border like Cloudflare using category colors
-    border-top: 4px solid #d1d5db !important;
+    // border-top: 4px solid #d1d5db !important;
 
     // basic b borders
     border-top: 1px solid #d1d5db !important;
@@ -450,6 +450,9 @@ body.groqsters-categories-page,
     border-left: 1px solid #d1d5db !important;
 
     &:hover {
+      // only for "basic b" mode
+      border-top-color: #9ca3af !important;
+      
       border-left-color: #9ca3af !important;
       border-right-color: #9ca3af !important;
       border-bottom-color: #9ca3af !important;
