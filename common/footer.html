@@ -227,6 +227,126 @@
   }
   function injectCounterDemo(enabled){ if(!enabled) return null; if(document.querySelector('.groqsters-counter')) return null; var body=getBodyContainer(); if(!body) return null; var node = buildCounter(); body.appendChild(node); return node; }
 
+  // Demo Cards Grid (3-col) with fake data source
+  function getDemoCards(){
+    var fallback = [
+      { title: 'Demo App Alpha', description: 'Explore ultra-fast text-to-speech with streaming output.', image: 'https://picsum.photos/seed/groq1/800/480', imageFit: 'cover', username: 'alice', avatarUrl: 'https://i.pravatar.cc/24?img=1' },
+      { title: 'Vision Pipeline', description: 'Build a vision-to-text chain using multi-modal inputs.', image: 'https://picsum.photos/seed/groq2/800/480', imageFit: 'contain', username: 'bob', avatarUrl: 'https://i.pravatar.cc/24?img=2' },
+      { title: 'Chat Agent', description: 'A compact agent with memory and tools.', image: 'https://picsum.photos/seed/groq3/800/480', imageFit: 'cover', username: 'charlie', avatarUrl: 'https://i.pravatar.cc/24?img=3' },
+      { title: 'Realtime UI', description: 'Reactive UI powered by streaming tokens.', image: 'https://picsum.photos/seed/groq4/800/480', imageFit: 'contain', username: 'diana', avatarUrl: 'https://i.pravatar.cc/24?img=4' },
+      { title: 'Summarizer', description: 'Summarize long-form docs with citations.', image: 'https://picsum.photos/seed/groq5/800/480', imageFit: 'cover' },
+      { title: 'Code Helper', description: 'Inline code suggestions and explanations.', image: 'https://picsum.photos/seed/groq6/800/480', imageFit: 'contain' }
+    ];
+    try {
+      var ext = (window.groqstersDemoCards && Array.isArray(window.groqstersDemoCards)) ? window.groqstersDemoCards : null;
+      return ext && ext.length ? ext : fallback;
+    } catch(e){ return fallback; }
+  }
+  function buildDemoCardsGrid(cards){
+    var list = Array.isArray(cards) ? cards : [];
+    var grid = document.createElement('section');
+    grid.className = 'groqsters-demo-cards-grid';
+    grid.style.display = 'grid';
+    grid.style.gridTemplateColumns = 'repeat(3, minmax(0, 1fr))';
+    grid.style.gap = '16px';
+    grid.style.margin = '1rem 0';
+
+    function createCard(item){
+      var card = document.createElement('article');
+      card.className = 'groqsters-card';
+      card.style.display = 'flex';
+      card.style.flexDirection = 'column';
+      card.style.height = '340px';
+      card.style.border = '1px solid #eee';
+      card.style.borderRadius = '8px';
+      card.style.background = '#fff';
+      card.style.overflow = 'hidden';
+      card.style.boxShadow = '0 1px 2px rgba(0,0,0,0.05)';
+
+      var media = document.createElement('div');
+      media.style.height = '140px';
+      media.style.background = '#f8f8f8';
+      media.style.display = 'flex';
+      media.style.alignItems = 'center';
+      media.style.justifyContent = 'center';
+
+      if(item && item.image){
+        var img = document.createElement('img');
+        img.src = item.image;
+        img.alt = item.title || 'Card image';
+        img.style.width = '100%';
+        img.style.height = '100%';
+        img.style.objectFit = (item.imageFit === 'contain') ? 'contain' : 'cover';
+        media.appendChild(img);
+      }
+
+      var body = document.createElement('div');
+      body.style.flex = '1 1 auto';
+      body.style.padding = '12px';
+      body.style.display = 'flex';
+      body.style.flexDirection = 'column';
+
+      var h = document.createElement('h3');
+      h.textContent = (item && item.title) ? item.title : 'Untitled';
+      h.style.fontSize = '16px';
+      h.style.margin = '0 0 6px 0';
+
+      var p = document.createElement('p');
+      p.textContent = (item && item.description) ? item.description : '';
+      p.style.fontSize = '14px';
+      p.style.color = '#444';
+      p.style.margin = '0';
+
+      body.appendChild(h);
+      body.appendChild(p);
+
+      var hasFooter = item && (item.username || item.avatarUrl);
+      if(hasFooter){
+        var footer = document.createElement('div');
+        footer.style.marginTop = 'auto';
+        footer.style.display = 'flex';
+        footer.style.alignItems = 'center';
+        footer.style.gap = '8px';
+        footer.style.padding = '10px 12px';
+        footer.style.borderTop = '1px solid #eee';
+
+        if(item.avatarUrl){
+          var av = document.createElement('img');
+          av.src = item.avatarUrl;
+          av.alt = (item.username ? item.username + ' avatar' : 'avatar');
+          av.style.width = '20px';
+          av.style.height = '20px';
+          av.style.borderRadius = '50%';
+          av.style.objectFit = 'cover';
+          footer.appendChild(av);
+        }
+        if(item.username){
+          var user = document.createElement('span');
+          user.textContent = item.username;
+          user.style.fontSize = '12px';
+          user.style.color = '#666';
+          user.style.whiteSpace = 'nowrap';
+          user.style.overflow = 'hidden';
+          user.style.textOverflow = 'ellipsis';
+          footer.appendChild(user);
+        }
+        card.appendChild(media);
+        card.appendChild(body);
+        card.appendChild(footer);
+      } else {
+        card.appendChild(media);
+        card.appendChild(body);
+      }
+      return card;
+    }
+
+    for(var i=0;i<list.length;i++){
+      var item = list[i];
+      grid.appendChild(createCard(item));
+    }
+    return grid;
+  }
+
   // Behavior
   function applyHiding(hide){ if(!hide) return; var header=getHeader(); if(header) header.style.display='none'; }
   function wireSpaNavigation(enabled, selector){ if(!enabled) return; var sel=selector||'.groqsters-published-menu a'; document.addEventListener('click', function(ev){ var path=ev.composedPath?ev.composedPath():[]; var a=null; for(var i=0;i<path.length;i++){ var el=path[i]; if(el && el.tagName==='A'){ a=el; break; } } if(!a){ var t=ev.target; if(t && t.closest) a=t.closest(sel); } if(!a || !a.matches(sel)) return; var href=a.getAttribute('href'); if(!href) return; if(href.indexOf('http')===0) return; ev.preventDefault(); window.history.pushState({},'',href); var evt=new CustomEvent('groqsters:spa:navigate',{detail:{href:href}}); window.dispatchEvent(evt); }, true); }
@@ -323,8 +443,10 @@
     wireSpaNavigation(spaEnabled, spaSelector);
     // Register default components and mappings, then scan for fake-link placeholders
     groqstersComponents.register('counter', function(){ return buildCounter(); });
+    groqstersComponents.register('demo-cards', function(){ return buildDemoCardsGrid(getDemoCards()); });
     groqstersComponents.map('counter-component', 'counter');
     groqstersComponents.map('https://some-fake-link', 'counter');
+    groqstersComponents.map('demo-cards', 'demo-cards');
     // Also support direct scheme: <a href="component:counter">...</a>
     groqstersComponents.scan();
     window.addEventListener('groqsters:spa:navigate', function(){ setTimeout(function(){ groqstersComponents.scan(); }, 50); });
