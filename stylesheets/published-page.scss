@@ -7,6 +7,7 @@ body.published-page {
   .published-page-header {
     background: var(--secondary, #f7f7f9);
     border-bottom: 1px solid var(--primary-low, #e6e6eb);
+    box-shadow: none;
   }
 
   .published-page-header-wrapper {
@@ -33,7 +34,7 @@ body.published-page {
   // Groqsters custom top menu
   .groqsters-published-menu {
     background: var(--secondary, #fff);
-    border-bottom: 1px solid var(--primary-low, #e6e6eb);
+    // border-bottom: 1px solid var(--primary-low, #e6e6eb);
   }
 
   .groqsters-published-menu-inner {
