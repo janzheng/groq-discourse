@@ -309,7 +309,7 @@
       media.style.height = '140px';
       media.style.background = '#f8f8f8';
       media.style.display = 'flex';
-      media.style.alignItems = 'center';
+      media.style.alignItems = 'baseline';
       media.style.justifyContent = 'center';
 
       if(item && item.image){
@@ -350,13 +350,13 @@
         var footer = document.createElement('div');
         footer.style.marginTop = 'auto';
         footer.style.display = 'flex';
-        footer.style.alignItems = 'center';
+        footer.style.alignItems = 'baseline';
         footer.style.padding = '10px 12px';
         footer.style.borderTop = '1px solid #eee';
 
         var left = document.createElement('div');
         left.style.display = 'flex';
-        left.style.alignItems = 'center';
+        left.style.alignItems = 'baseline';
         left.style.gap = '8px';
         left.style.flex = '1 1 auto';
 
@@ -383,7 +383,7 @@
 
         var right = document.createElement('div');
         right.style.display = 'flex';
-        right.style.alignItems = 'center';
+        right.style.alignItems = 'baseline';
         right.style.gap = '8px';
 
         function createIconifyLink(url, label, icon){
