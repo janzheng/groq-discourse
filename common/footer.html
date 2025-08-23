@@ -323,8 +323,11 @@
           }
           out.push({
             key: ad.adapter || ('adapter-' + i),
+            label: ad.label || '',
             title: ad.title || (ad.adapter ? ad.adapter : 'Section ' + (i+1)),
             description: ad.description || '',
+            source: ad.source || '',
+            sourceUrl: ad.sourceUrl || '',
             items: mapped
           });
         }
@@ -387,6 +390,13 @@
       p.style.fontSize = '14px';
       p.style.color = '#444';
       p.style.margin = '0';
+      // Clamp long descriptions with ellipsis (2-3 lines)
+      p.style.overflow = 'hidden';
+      p.style.textOverflow = 'ellipsis';
+      p.style.display = '-webkit-box';
+      p.style.setProperty('-webkit-line-clamp','3');
+      p.style.setProperty('-webkit-box-orient','vertical');
+      p.style.lineHeight = '1.35';
 
       body.appendChild(h);
       body.appendChild(p);
@@ -485,7 +495,7 @@
     header.style.padding = '0 0.5rem';
 
     var h2 = document.createElement('h2');
-    h2.textContent = section.title || 'Projects';
+    h2.textContent = section.title || section.label || 'Projects';
     h2.style.fontSize = '18px';
     h2.style.margin = '0 0 4px 0';
     h2.style.fontWeight = '600';
@@ -498,6 +508,20 @@
       desc.style.color = '#666';
       desc.style.fontSize = '13px';
       header.appendChild(desc);
+    }
+
+    if(section.sourceUrl){
+      var link = document.createElement('a');
+      link.href = section.sourceUrl;
+      link.target = '_blank';
+      link.rel = 'noopener noreferrer';
+      link.textContent = section.source || 'Source';
+      link.style.fontSize = '12px';
+      link.style.color = '#666';
+      link.style.textDecoration = 'underline';
+      link.style.display = 'inline-block';
+      link.style.margin = '2px 0 6px 0';
+      header.appendChild(link);
     }
 
     var grid = buildDemoCardsGrid(section.items || []);
