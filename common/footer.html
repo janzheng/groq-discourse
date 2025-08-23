@@ -290,9 +290,10 @@
             demo: it.demo || ''
           });
         }
+        try { console.log('[groqsters] demo-cards fetch success adapter=%s count=%d', adapterName || '(all)', cards.length); } catch(e){}
         return cards;
       })
-      .catch(function(){ return []; });
+      .catch(function(err){ try { console.warn('[groqsters] demo-cards fetch failed', err); } catch(e){} return []; });
   }
   function buildDemoCardsGrid(cards){
     var list = Array.isArray(cards) ? cards : [];
@@ -441,12 +442,16 @@
     var initial = override || getDemoCardsFallback();
     var grid = buildDemoCardsGrid(initial);
     root.appendChild(grid);
+    try { console.log('[groqsters] demo-cards initial source=%s count=%d', override ? 'override' : 'fallback', (initial && initial.length) || 0); } catch(e){}
     if(!override){
       var adapter = (window.groqstersDemoCardsAdapter) || ((window.groqstersPublishedConfig && window.groqstersPublishedConfig.demoCardsAdapter) ? window.groqstersPublishedConfig.demoCardsAdapter : 'groq-console');
+      try { console.log('[groqsters] demo-cards fetching adapter=%s …', adapter); } catch(e){}
       fetchDemoProjectCards(adapter).then(function(cards){
         if(cards && cards.length){
           var newGrid = buildDemoCardsGrid(cards);
-          try{ root.replaceChild(newGrid, grid); grid = newGrid; if(window.Iconify && window.Iconify.scan) window.Iconify.scan(newGrid); }catch(e){}
+          try{ root.replaceChild(newGrid, grid); grid = newGrid; if(window.Iconify && window.Iconify.scan) window.Iconify.scan(newGrid); console.log('[groqsters] demo-cards replaced with API data count=%d', cards.length); }catch(e){}
+        } else {
+          try { console.log('[groqsters] demo-cards API returned no items; keeping initial'); } catch(e){}
         }
       });
     }
