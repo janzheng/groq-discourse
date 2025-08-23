@@ -243,6 +243,7 @@
   function injectCounterDemo(enabled){ if(!enabled) return null; if(document.querySelector('.groqsters-counter')) return null; var body=getBodyContainer(); if(!body) return null; var node = buildCounter(); body.appendChild(node); return node; }
 
   // Demo Cards Grid (3-col) with data sources
+  var DEMO_PLACEHOLDER_IMG = 'https://canada1.discourse-cdn.com/flex003/uploads/groq1/original/1X/900fb9a3f1a492df1ddfa9ff695bbc6918831754.png';
   function getDemoCardsFallback(){
     var fallback = [
       { title: 'Stock Bot', description: 'AI chatbot that provides real-time stock data, charts, financials and market insights.', image: 'https://console.groq.com/templates/stockbot.png', imageFit: 'cover', username: 'Benjamin Klieger', avatarUrl: 'https://console.groq.com/groq-circle.png', github: 'https://github.com/bklieger-groq/stockbot-on-groq', demo: 'https://groq-stockbot.vercel.app/' },
@@ -360,15 +361,15 @@
       media.style.alignItems = 'baseline';
       media.style.justifyContent = 'center';
 
-      if(item && item.image){
-        var img = document.createElement('img');
-        img.src = item.image;
-        img.alt = item.title || 'Card image';
-        img.style.width = '100%';
-        img.style.height = '100%';
-        img.style.objectFit = (item.imageFit === 'contain') ? 'contain' : 'cover';
-        media.appendChild(img);
-      }
+      var img = document.createElement('img');
+      var src = (item && item.image) ? item.image : DEMO_PLACEHOLDER_IMG;
+      img.src = src;
+      img.alt = (item && item.title) ? item.title : 'Card image';
+      img.style.width = '100%';
+      img.style.height = '100%';
+      // When no image present, force cover to avoid letterboxing
+      img.style.objectFit = (item && item.image && item.imageFit === 'contain') ? 'contain' : 'cover';
+      media.appendChild(img);
 
       var body = document.createElement('div');
       body.style.flex = '1 1 auto';
