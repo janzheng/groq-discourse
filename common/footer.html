@@ -418,6 +418,7 @@
         left.style.alignItems = 'center';
         left.style.gap = '8px';
         left.style.flex = '1 1 auto';
+        left.style.minWidth = '0';
 
         if(item.avatarUrl){
           var av = document.createElement('img');
@@ -437,6 +438,7 @@
           user.style.whiteSpace = 'nowrap';
           user.style.overflow = 'hidden';
           user.style.textOverflow = 'ellipsis';
+          user.style.maxWidth = '100%';
           left.appendChild(user);
         }
 
