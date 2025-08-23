@@ -295,6 +295,43 @@
       })
       .catch(function(err){ try { console.warn('[groqsters] demo-cards fetch failed', err); } catch(e){} return []; });
   }
+
+  function fetchAllDemoAdapters(){
+    var url = 'https://groq-api-projects.val.run/';
+    return fetch(url, { method: 'GET', credentials: 'omit', mode: 'cors' })
+      .then(function(res){ if(!res || !res.ok) return null; return res.json(); })
+      .then(function(data){
+        if(!data || !Array.isArray(data.adapters)) return [];
+        var out = [];
+        for(var i=0;i<data.adapters.length;i++){
+          var ad = data.adapters[i] || {};
+          var items = Array.isArray(ad.items) ? ad.items : [];
+          var mapped = [];
+          for(var j=0;j<items.length;j++){
+            var it = items[j] || {};
+            mapped.push({
+              title: it.title || 'Untitled',
+              description: it.description || '',
+              image: it.image || '',
+              imageFit: it.imageFit || 'cover',
+              username: it.username || '',
+              avatarUrl: it.avatarUrl || '',
+              github: it.github || '',
+              demo: it.demo || ''
+            });
+          }
+          out.push({
+            key: ad.adapter || ('adapter-' + i),
+            title: ad.title || (ad.adapter ? ad.adapter : 'Section ' + (i+1)),
+            description: ad.description || '',
+            items: mapped
+          });
+        }
+        try { console.log('[groqsters] demo-cards fetch ALL adapters=%d totalItems=%d', out.length, out.reduce(function(n,a){return n + (a.items? a.items.length:0);},0)); } catch(e){}
+        return out;
+      })
+      .catch(function(err){ try { console.warn('[groqsters] demo-cards fetch ALL failed', err); } catch(e){} return []; });
+  }
   function buildDemoCardsGrid(cards){
     var list = Array.isArray(cards) ? cards : [];
     var grid = document.createElement('section');
@@ -435,25 +472,81 @@
     return grid;
   }
 
+  function buildDemoSection(section){
+    var wrap = document.createElement('section');
+    wrap.className = 'groqsters-demo-section';
+    wrap.style.margin = '1.5rem 0 2rem 0';
+
+    var header = document.createElement('div');
+    header.className = 'groqsters-demo-section-header';
+    header.style.maxWidth = 'var(--published-max-width)';
+    header.style.margin = '0 auto 0.5rem auto';
+    header.style.padding = '0 0.5rem';
+
+    var h2 = document.createElement('h2');
+    h2.textContent = section.title || 'Projects';
+    h2.style.fontSize = '18px';
+    h2.style.margin = '0 0 4px 0';
+    h2.style.fontWeight = '600';
+    header.appendChild(h2);
+
+    if(section.description){
+      var desc = document.createElement('p');
+      desc.textContent = section.description;
+      desc.style.margin = '0 0 6px 0';
+      desc.style.color = '#666';
+      desc.style.fontSize = '13px';
+      header.appendChild(desc);
+    }
+
+    var grid = buildDemoCardsGrid(section.items || []);
+    wrap.appendChild(header);
+    wrap.appendChild(grid);
+    return wrap;
+  }
+
+  function buildAllDemoSections(adapters){
+    var root = document.createElement('div');
+    root.className = 'groqsters-demo-sections';
+    for(var i=0;i<adapters.length;i++){
+      var sec = adapters[i];
+      if(!sec || !Array.isArray(sec.items) || sec.items.length===0) continue;
+      root.appendChild(buildDemoSection(sec));
+    }
+    return root;
+  }
+
   function createDemoCardsNode(){
     var root = document.createElement('div');
     root.className = 'groqsters-demo-cards-root';
     var override = (window.groqstersDemoCards && Array.isArray(window.groqstersDemoCards) && window.groqstersDemoCards.length) ? window.groqstersDemoCards : null;
     var initial = override || getDemoCardsFallback();
-    var grid = buildDemoCardsGrid(initial);
-    root.appendChild(grid);
+    var gridOrSections = buildDemoCardsGrid(initial);
+    root.appendChild(gridOrSections);
     try { console.log('[groqsters] demo-cards initial source=%s count=%d', override ? 'override' : 'fallback', (initial && initial.length) || 0); } catch(e){}
     if(!override){
-      var adapter = (window.groqstersDemoCardsAdapter) || ((window.groqstersPublishedConfig && window.groqstersPublishedConfig.demoCardsAdapter) ? window.groqstersPublishedConfig.demoCardsAdapter : 'groq-console');
-      try { console.log('[groqsters] demo-cards fetching adapter=%s …', adapter); } catch(e){}
-      fetchDemoProjectCards(adapter).then(function(cards){
-        if(cards && cards.length){
-          var newGrid = buildDemoCardsGrid(cards);
-          try{ root.replaceChild(newGrid, grid); grid = newGrid; if(window.Iconify && window.Iconify.scan) window.Iconify.scan(newGrid); console.log('[groqsters] demo-cards replaced with API data count=%d', cards.length); }catch(e){}
-        } else {
-          try { console.log('[groqsters] demo-cards API returned no items; keeping initial'); } catch(e){}
-        }
-      });
+      var adapter = (window.groqstersDemoCardsAdapter) || ((window.groqstersPublishedConfig && window.groqstersPublishedConfig.demoCardsAdapter) ? window.groqstersPublishedConfig.demoCardsAdapter : 'all');
+      if(adapter === 'all'){
+        try { console.log('[groqsters] demo-cards fetching ALL adapters …'); } catch(e){}
+        fetchAllDemoAdapters().then(function(adapters){
+          if(adapters && adapters.length){
+            var sections = buildAllDemoSections(adapters);
+            try{ root.replaceChild(sections, gridOrSections); gridOrSections = sections; if(window.Iconify && window.Iconify.scan) window.Iconify.scan(sections); console.log('[groqsters] demo-cards replaced with ALL adapters sections=%d', adapters.length); }catch(e){}
+          } else {
+            try { console.log('[groqsters] demo-cards ALL returned no adapters; keeping initial grid'); } catch(e){}
+          }
+        });
+      } else {
+        try { console.log('[groqsters] demo-cards fetching adapter=%s …', adapter); } catch(e){}
+        fetchDemoProjectCards(adapter).then(function(cards){
+          if(cards && cards.length){
+            var newGrid = buildDemoCardsGrid(cards);
+            try{ root.replaceChild(newGrid, gridOrSections); gridOrSections = newGrid; if(window.Iconify && window.Iconify.scan) window.Iconify.scan(newGrid); console.log('[groqsters] demo-cards replaced with API data count=%d', cards.length); }catch(e){}
+          } else {
+            try { console.log('[groqsters] demo-cards API returned no items; keeping initial'); } catch(e){}
+          }
+        });
+      }
     }
     return root;
   }
