@@ -242,8 +242,8 @@
   }
   function injectCounterDemo(enabled){ if(!enabled) return null; if(document.querySelector('.groqsters-counter')) return null; var body=getBodyContainer(); if(!body) return null; var node = buildCounter(); body.appendChild(node); return node; }
 
-  // Demo Cards Grid (3-col) with fake data source
-  function getDemoCards(){
+  // Demo Cards Grid (3-col) with data sources
+  function getDemoCardsFallback(){
     var fallback = [
       { title: 'Stock Bot', description: 'AI chatbot that provides real-time stock data, charts, financials and market insights.', image: 'https://console.groq.com/templates/stockbot.png', imageFit: 'cover', username: 'Benjamin Klieger', avatarUrl: 'https://console.groq.com/groq-circle.png', github: 'https://github.com/bklieger-groq/stockbot-on-groq', demo: 'https://groq-stockbot.vercel.app/' },
       { title: 'Starter Chatbot', description: 'Open-source AI chatbot app template built with Next.js, the AI SDK by Vercel, and Groq.', image: 'https://console.groq.com/templates/ai-sdk-starter-groq.png', imageFit: 'cover', username: 'Vercel', github: 'https://github.com/vercel-labs/ai-sdk-starter-groq', demo: 'https://ai-sdk-starter-groq.vercel.app/' },
@@ -260,6 +260,39 @@
       var ext = (window.groqstersDemoCards && Array.isArray(window.groqstersDemoCards)) ? window.groqstersDemoCards : null;
       return ext && ext.length ? ext : fallback;
     } catch(e){ return fallback; }
+  }
+
+  function fetchDemoProjectCards(adapterName){
+    var url = 'https://groq-api-projects.val.run/';
+    return fetch(url, { method: 'GET', credentials: 'omit', mode: 'cors' })
+      .then(function(res){ if(!res || !res.ok) return null; return res.json(); })
+      .then(function(data){
+        if(!data || !Array.isArray(data.adapters)) return [];
+        var chosen = null;
+        if(adapterName){ for(var i=0;i<data.adapters.length;i++){ var a=data.adapters[i]; if(a && a.adapter===adapterName){ chosen=a; break; } } }
+        var items = [];
+        if(chosen && Array.isArray(chosen.items)) { items = chosen.items; }
+        else {
+          // fallback: flatten all adapters
+          for(var j=0;j<data.adapters.length;j++){ var ad=data.adapters[j]; if(ad && Array.isArray(ad.items)) items = items.concat(ad.items); }
+        }
+        var cards = [];
+        for(var k=0;k<items.length;k++){
+          var it = items[k] || {};
+          cards.push({
+            title: it.title || 'Untitled',
+            description: it.description || '',
+            image: it.image || '',
+            imageFit: it.imageFit || 'cover',
+            username: it.username || '',
+            avatarUrl: it.avatarUrl || '',
+            github: it.github || '',
+            demo: it.demo || ''
+          });
+        }
+        return cards;
+      })
+      .catch(function(){ return []; });
   }
   function buildDemoCardsGrid(cards){
     var list = Array.isArray(cards) ? cards : [];
@@ -401,6 +434,24 @@
     return grid;
   }
 
+  function createDemoCardsNode(){
+    var root = document.createElement('div');
+    root.className = 'groqsters-demo-cards-root';
+    var override = (window.groqstersDemoCards && Array.isArray(window.groqstersDemoCards) && window.groqstersDemoCards.length) ? window.groqstersDemoCards : null;
+    var initial = override || getDemoCardsFallback();
+    var grid = buildDemoCardsGrid(initial);
+    root.appendChild(grid);
+    if(!override){
+      fetchDemoProjectCards('groq-console').then(function(cards){
+        if(cards && cards.length){
+          var newGrid = buildDemoCardsGrid(cards);
+          try{ root.replaceChild(newGrid, grid); grid = newGrid; if(window.Iconify && window.Iconify.scan) window.Iconify.scan(newGrid); }catch(e){}
+        }
+      });
+    }
+    return root;
+  }
+
   // Behavior
   function applyHiding(hide){ if(!hide) return; var header=getHeader(); if(header) header.style.display='none'; }
   function wireSpaNavigation(enabled, selector){ if(!enabled) return; var sel=selector||'.groqsters-published-menu a'; document.addEventListener('click', function(ev){ var path=ev.composedPath?ev.composedPath():[]; var a=null; for(var i=0;i<path.length;i++){ var el=path[i]; if(el && el.tagName==='A'){ a=el; break; } } if(!a){ var t=ev.target; if(t && t.closest) a=t.closest(sel); } if(!a || !a.matches(sel)) return; var href=a.getAttribute('href'); if(!href) return; if(href.indexOf('http')===0) return; ev.preventDefault(); window.history.pushState({},'',href); var evt=new CustomEvent('groqsters:spa:navigate',{detail:{href:href}}); window.dispatchEvent(evt); }, true); }
@@ -511,7 +562,7 @@
     wireSpaNavigation(spaEnabled, spaSelector);
     // Register default components and mappings, then scan for fake-link placeholders
     groqstersComponents.register('counter', function(){ return buildCounter(); });
-    groqstersComponents.register('demo-cards', function(){ return buildDemoCardsGrid(getDemoCards()); });
+    groqstersComponents.register('demo-cards', function(){ return createDemoCardsNode(); });
     groqstersComponents.map('counter-component', 'counter');
     groqstersComponents.map('https://counter-component', 'counter');
     groqstersComponents.map('demo-cards', 'demo-cards');
