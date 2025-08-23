@@ -340,63 +340,31 @@
     var list = Array.isArray(cards) ? cards : [];
     var grid = document.createElement('section');
     grid.className = 'groqsters-demo-cards-grid';
-    grid.style.display = 'grid';
-    grid.style.gridTemplateColumns = 'repeat(3, minmax(0, 1fr))';
-    grid.style.gap = '16px';
-    grid.style.margin = '1rem 0';
 
     function createCard(item){
       var card = document.createElement('article');
       card.className = 'groqsters-card';
-      card.style.display = 'flex';
-      card.style.flexDirection = 'column';
-      card.style.height = '340px';
-      card.style.border = '1px solid #eee';
-      card.style.borderRadius = '8px';
-      card.style.background = '#fff';
-      card.style.overflow = 'hidden';
-      card.style.boxShadow = '0 1px 2px rgba(0,0,0,0.05)';
 
       var media = document.createElement('div');
-      media.style.height = '140px';
-      media.style.background = '#f8f8f8';
-      media.style.display = 'flex';
-      media.style.alignItems = 'baseline';
-      media.style.justifyContent = 'center';
+      media.className = 'groqsters-card-media';
 
       var img = document.createElement('img');
       var src = (item && item.image) ? item.image : DEMO_PLACEHOLDER_IMG;
       img.src = src;
       img.alt = (item && item.title) ? item.title : 'Card image';
-      img.style.width = '100%';
-      img.style.height = '100%';
-      // When no image present, force cover to avoid letterboxing
-      img.style.objectFit = (item && item.image && item.imageFit === 'contain') ? 'contain' : 'cover';
+      if (item && item.image && item.imageFit === 'contain') {
+        img.className = 'is-contain';
+      }
       media.appendChild(img);
 
       var body = document.createElement('div');
-      body.style.flex = '1 1 auto';
-      body.style.padding = '12px';
-      body.style.display = 'flex';
-      body.style.flexDirection = 'column';
+      body.className = 'groqsters-card-body';
 
       var h = document.createElement('h3');
       h.textContent = (item && item.title) ? item.title : 'Untitled';
-      h.style.fontSize = '16px';
-      h.style.margin = '0 0 6px 0';
 
       var p = document.createElement('p');
       p.textContent = (item && item.description) ? item.description : '';
-      p.style.fontSize = '14px';
-      p.style.color = '#444';
-      p.style.margin = '0';
-      // Clamp long descriptions with ellipsis (2-3 lines)
-      p.style.overflow = 'hidden';
-      p.style.textOverflow = 'ellipsis';
-      p.style.display = '-webkit-box';
-      p.style.setProperty('-webkit-line-clamp','3');
-      p.style.setProperty('-webkit-box-orient','vertical');
-      p.style.lineHeight = '1.35';
 
       body.appendChild(h);
       body.appendChild(p);
@@ -407,45 +375,26 @@
       var hasFooter = item && (item.username || item.avatarUrl || hasGithub || hasDemo);
       if(hasFooter){
         var footer = document.createElement('div');
-        footer.style.marginTop = 'auto';
-        footer.style.display = 'flex';
-        footer.style.alignItems = 'baseline';
-        footer.style.padding = '10px 12px';
-        footer.style.borderTop = '1px solid #eee';
+        footer.className = 'groqsters-card-footer';
 
         var left = document.createElement('div');
-        left.style.display = 'flex';
-        left.style.alignItems = 'center';
-        left.style.gap = '8px';
-        left.style.flex = '1 1 auto';
-        left.style.minWidth = '0';
+        left.className = 'groqsters-card-footer-left';
 
         if(item.avatarUrl){
           var av = document.createElement('img');
           av.src = item.avatarUrl;
           av.alt = (item.username ? item.username + ' avatar' : 'avatar');
-          av.style.width = '20px';
-          av.style.height = '20px';
-          av.style.borderRadius = '50%';
-          av.style.objectFit = 'cover';
           left.appendChild(av);
         }
         if(item.username){
           var user = document.createElement('span');
           user.textContent = item.username;
-          user.style.fontSize = '13px';
-          user.style.color = '#666';
-          user.style.whiteSpace = 'nowrap';
-          user.style.overflow = 'hidden';
-          user.style.textOverflow = 'ellipsis';
-          user.style.maxWidth = '100%';
+          user.className = 'groqsters-card-username';
           left.appendChild(user);
         }
 
         var right = document.createElement('div');
-        right.style.display = 'flex';
-        right.style.alignItems = 'baseline';
-        right.style.gap = '8px';
+        right.className = 'groqsters-card-footer-right';
 
         function createIconifyLink(url, label, icon){
           var a = document.createElement('a');
@@ -457,8 +406,6 @@
           span.className = 'iconify';
           span.setAttribute('data-icon', icon);
           span.setAttribute('aria-hidden', 'true');
-          span.style.fontSize = '22px';
-          span.style.color = '#666';
           a.appendChild(span);
           return a;
         }
@@ -488,27 +435,17 @@
   function buildDemoSection(section){
     var wrap = document.createElement('section');
     wrap.className = 'groqsters-demo-section';
-    wrap.style.margin = '1.5rem 0 2rem 0';
 
     var header = document.createElement('div');
     header.className = 'groqsters-demo-section-header';
-    header.style.maxWidth = 'var(--published-max-width)';
-    header.style.margin = '0 auto 0.5rem auto';
-    header.style.padding = '0 0.5rem';
 
     var h2 = document.createElement('h2');
     h2.textContent = section.title || section.label || 'Projects';
-    h2.style.fontSize = '18px';
-    h2.style.margin = '0 0 4px 0';
-    h2.style.fontWeight = '600';
     header.appendChild(h2);
 
     if(section.description){
       var desc = document.createElement('p');
       desc.textContent = section.description;
-      desc.style.margin = '0 0 6px 0';
-      desc.style.color = '#666';
-      desc.style.fontSize = '13px';
       header.appendChild(desc);
     }
 
@@ -518,11 +455,6 @@
       link.target = '_blank';
       link.rel = 'noopener noreferrer';
       link.textContent = section.source || 'Source';
-      link.style.fontSize = '12px';
-      link.style.color = '#666';
-      link.style.textDecoration = 'underline';
-      link.style.display = 'inline-block';
-      link.style.margin = '2px 0 6px 0';
       header.appendChild(link);
     }
 
