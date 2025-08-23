@@ -442,7 +442,8 @@
     var grid = buildDemoCardsGrid(initial);
     root.appendChild(grid);
     if(!override){
-      fetchDemoProjectCards('groq-console').then(function(cards){
+      var adapter = (window.groqstersDemoCardsAdapter) || ((window.groqstersPublishedConfig && window.groqstersPublishedConfig.demoCardsAdapter) ? window.groqstersPublishedConfig.demoCardsAdapter : 'groq-console');
+      fetchDemoProjectCards(adapter).then(function(cards){
         if(cards && cards.length){
           var newGrid = buildDemoCardsGrid(cards);
           try{ root.replaceChild(newGrid, grid); grid = newGrid; if(window.Iconify && window.Iconify.scan) window.Iconify.scan(newGrid); }catch(e){}
