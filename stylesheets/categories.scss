@@ -192,7 +192,6 @@
     .category-name,
     .category-title-link,
     h3 a {
-      font-weight: 500 !important;
       color: var(--groqsters-primary) !important;
     }
   }
@@ -200,6 +199,12 @@
   // Add subtle gradient backgrounds based on category colors
   &[data-category-id] {
     background: linear-gradient(135deg, var(--secondary) 0%, rgba(var(--primary-very-low), 0.5) 100%) !important;
+  }
+}
+
+.category-title-link {
+  h3 a {
+    font-weight: 500 !important;
   }
 }
 
