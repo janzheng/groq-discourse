@@ -33,6 +33,13 @@
 }
 
 
+// Dark mode overrides
+@media (prefers-color-scheme: dark) {
+  :root {
+    --primary: #909090;
+  }
+}
+
 
 
 
