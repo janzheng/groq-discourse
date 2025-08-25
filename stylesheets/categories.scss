@@ -434,7 +434,8 @@ body.groqsters-categories-page,
   tr[data-category-id] {
     background: var(--secondary) !important;
     // border: 2px solid #d1d5db !important;
-    border: 2px solid rgb(48.62, 48.62, 48.62) !important;
+    // border: 2px solid rgb(48.62, 48.62, 48.62) !important;
+    border: var(--primary-low) !important;
     border-radius: 8px !important;
     margin: 0 !important;
     padding: 0.5rem !important;
