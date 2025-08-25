@@ -95,6 +95,23 @@ export default {
 
       // Deprecated Discourse widget (home-logo:after) removed. DOM is managed via onPageChange below.
 
+      // Ensure sidebar font variable is available and applied early
+      try {
+        const root = document.documentElement;
+        const existing = root.style.getPropertyValue('--groqsters-sidebar-font');
+        if (!existing) {
+          root.style.setProperty('--groqsters-sidebar-font', "'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif");
+        }
+        const applySidebarFont = () => {
+          const sidebar = document.querySelector('.sidebar-wrapper');
+          if (sidebar) {
+            sidebar.style.fontFamily = getComputedStyle(root).getPropertyValue('--groqsters-sidebar-font') || "'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif";
+          }
+        };
+        applySidebarFont();
+        api.onPageChange(applySidebarFont);
+      } catch (e) { /* no-op */ }
+
       // Always try to update header banner on page changes
       api.onPageChange(() => {
 

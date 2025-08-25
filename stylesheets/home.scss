@@ -64,3 +64,8 @@
     z-index: 1 !important; // Above background patterns but below modals
   }
 }
+
+// Sidebar font for contexts that load home.scss
+.sidebar-wrapper {
+  font-family: var(--groqsters-sidebar-font);
+}
