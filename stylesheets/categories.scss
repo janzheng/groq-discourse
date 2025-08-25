@@ -449,18 +449,18 @@ body.groqsters-categories-page,
     // border-top: 4px solid #d1d5db !important;
 
     // basic b borders
-    border-top: 1px solid #d1d5db !important;
-    border-right: 1px solid #d1d5db !important;
-    border-bottom: 1px solid #d1d5db !important;
-    border-left: 1px solid #d1d5db !important;
+    border-top: 1px solid var(--primary-low) !important;
+    border-right: 1px solid var(--primary-low) !important;
+    border-bottom: 1px solid var(--primary-low) !important;
+    border-left: 1px solid var(--primary-low) !important;
 
     &:hover {
       // only for "basic b" mode
-      border-top-color: #9ca3af !important;
+      border-top-color: var(--primary-low-mid) !important;
       
-      border-left-color: #9ca3af !important;
-      border-right-color: #9ca3af !important;
-      border-bottom-color: #9ca3af !important;
+      border-left-color: var(--primary-low-mid) !important;
+      border-right-color: var(--primary-low-mid) !important;
+      border-bottom-color: var(--primary-low-mid) !important;
       // border-top-color: #6b7280 !important;
       transform: translateY(-2px) !important;
       box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12) !important;
