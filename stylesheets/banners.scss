@@ -932,6 +932,12 @@ div.groqsters-feature-banner {
   }
 }
 
+// Ensure the custom OIDC button connector appears inline with auth buttons
+.before-auth-buttons-outlet {
+  display: inline-flex;
+  align-items: center;
+}
+
 // Dark mode overrides
 @media (prefers-color-scheme: dark) {
   .d-header {

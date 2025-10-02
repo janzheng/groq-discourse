@@ -828,9 +828,9 @@ export default {
               e.stopPropagation();
               
               // Redirect to OIDC login
-              // Discourse's OIDC plugin uses this format: /auth/oidc
-              // You may need to adjust this URL based on your OIDC configuration
-              window.location.href = '/auth/oidc';
+              // Common routes: /session/sso, /auth/oidc, /auth/oauth2_basic
+              // Adjust this URL based on your OIDC configuration
+              window.location.href = '/session/sso';
             }, true); // Use capture phase to ensure we intercept before Discourse
           });
         }, 100);
