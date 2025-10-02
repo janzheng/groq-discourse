@@ -806,24 +806,38 @@ export default {
 
       // Search banner functionality is provided by the official discourse-search-banner component
 
+      // OIDC Direct Login: Auto-submit confirmation form
+      // Function to check and auto-submit the OIDC confirmation form
+      const autoSubmitOIDCForm = () => {
+        const simpleContainer = document.getElementById('simple-container');
+        if (simpleContainer) {
+          const heading = simpleContainer.querySelector('h2');
+          const form = simpleContainer.querySelector('form');
+          
+          // Check if this is the "Log in using Groq" confirmation page
+          if (heading && heading.textContent.includes('Log in using') && form) {
+            console.log('[Groq OIDC] Auto-submitting OIDC confirmation form');
+            form.submit();
+            return true;
+          }
+        }
+        return false;
+      };
+
+      // Try to auto-submit on page load (for direct navigation to /auth/oidc)
+      setTimeout(() => autoSubmitOIDCForm(), 100);
+      setTimeout(() => autoSubmitOIDCForm(), 500);
+      setTimeout(() => autoSubmitOIDCForm(), 1000);
+      
       // OIDC Direct Login: Intercept login/signup button clicks and redirect to OIDC
       // This bypasses the default Discourse login modal
       api.onPageChange(() => {
+        // Try auto-submit on page changes
+        if (autoSubmitOIDCForm()) return;
+        
         setTimeout(() => {
-          // Auto-submit the OIDC confirmation form if we're on that page
-          const simpleContainer = document.getElementById('simple-container');
-          if (simpleContainer) {
-            const heading = simpleContainer.querySelector('h2');
-            const form = simpleContainer.querySelector('form');
-            
-            // Check if this is the "Log in using Groq" confirmation page
-            if (heading && heading.textContent.includes('Log in using') && form) {
-              console.log('[Groq OIDC] Auto-submitting OIDC confirmation form');
-              // Auto-submit the form to continue to OIDC provider
-              setTimeout(() => form.submit(), 100);
-              return;
-            }
-          }
+          // Try again after a delay
+          if (autoSubmitOIDCForm()) return;
           
           // Get all login and signup buttons
           const loginButtons = document.querySelectorAll('.login-button, .sign-up-button, .signup-button');
