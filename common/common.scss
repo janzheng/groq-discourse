@@ -44,3 +44,42 @@
 
 
 
+/* these are from https://community.cloudflare.com/ ;) */
+
+.header-sidebar-toggle:has(button[aria-expanded="true"]) {
+  display: none;
+}
+
+.d-header-wrap {
+  top: 0;
+}
+
+.d-header {
+  box-shadow: none;
+  border-bottom: 1px solid var(--primary-low);
+
+  &>.wrap {
+    max-width: var(--d-max-width);
+    margin-inline: auto;
+  }
+}
+
+.d-header .d-header-mode .bootstrap-mode {
+  display: none;
+}
+
+// body:not(.has-sidebar-page) .d-header .title--minimized #site-logo {
+//   max-width: 4em;
+// }
+
+/* Anon Only */
+html.anon {
+
+  .header-color-scheme-toggle,
+  .header-icon-interface-language {
+    display: none;
+  }
+}
+
+
+
