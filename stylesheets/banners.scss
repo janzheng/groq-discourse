@@ -873,7 +873,8 @@ div.groqsters-feature-banner {
       .btn.login-button,
       a.sign-up-button,
       a.signup-button,
-      a.login-button {
+      a.login-button,
+      a.groq-oidc-login-button {
         display: inline-flex;
         align-items: center;
         justify-content: center;
@@ -887,6 +888,7 @@ div.groqsters-feature-banner {
         text-align: center;
         white-space: nowrap;
         text-decoration: none;
+        gap: 0.5rem;
       }
 
       // Light mode (default)
@@ -900,7 +902,8 @@ div.groqsters-feature-banner {
       .btn.sign-up-button,
       .btn.signup-button,
       a.sign-up-button,
-      a.signup-button {
+      a.signup-button,
+      a.groq-oidc-login-button {
         background: #F55036 !important;
         border: 1px solid #F55036 !important;
         color: #ffffff !important;
@@ -912,9 +915,18 @@ div.groqsters-feature-banner {
         .btn.login-button,
         a.sign-up-button,
         a.signup-button,
-        a.login-button {
+        a.login-button,
+        a.groq-oidc-login-button {
           min-width: 170px; // lg:w-[170px]
         }
+      }
+    }
+
+    // Custom Groq OIDC button styling
+    a.groq-oidc-login-button {
+      .d-icon {
+        width: 16px;
+        height: 16px;
       }
     }
   }
@@ -936,7 +948,8 @@ div.groqsters-feature-banner {
         .btn.sign-up-button,
         .btn.signup-button,
         a.sign-up-button,
-        a.signup-button {
+        a.signup-button,
+        a.groq-oidc-login-button {
           background: #F55036 !important;
           border: 1px solid #F55036 !important;
           color: #ffffff !important;

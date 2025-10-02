@@ -80,6 +80,17 @@ html.anon {
   .header-icon-interface-language {
     display: none;
   }
+
+  // Optional: Hide default login/signup buttons when custom OIDC button is present
+  // Uncomment this if you want ONLY the custom "Continue with Groq" button
+  .d-header {
+    .auth-buttons {
+      .btn.login-button,
+      .btn.sign-up-button {
+        display: none !important;
+      }
+    }
+  }
 }
 
 

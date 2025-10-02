@@ -806,6 +806,36 @@ export default {
 
       // Search banner functionality is provided by the official discourse-search-banner component
 
+      // OIDC Direct Login: Intercept login/signup button clicks and redirect to OIDC
+      // This bypasses the default Discourse login modal
+      api.onPageChange(() => {
+        setTimeout(() => {
+          // Get all login and signup buttons
+          const loginButtons = document.querySelectorAll('.login-button, .sign-up-button, .signup-button');
+          
+          loginButtons.forEach(button => {
+            // Skip if already processed
+            if (button.dataset.groqOidcProcessed) return;
+            button.dataset.groqOidcProcessed = 'true';
+            
+            // Add click event listener
+            button.addEventListener('click', (e) => {
+              // Only intercept if user is not logged in
+              const isAnon = document.documentElement.classList.contains('anon');
+              if (!isAnon) return; // Let default behavior work for logged-in users
+              
+              e.preventDefault();
+              e.stopPropagation();
+              
+              // Redirect to OIDC login
+              // Discourse's OIDC plugin uses this format: /auth/oidc
+              // You may need to adjust this URL based on your OIDC configuration
+              window.location.href = '/auth/oidc';
+            }, true); // Use capture phase to ensure we intercept before Discourse
+          });
+        }, 100);
+      });
+
     });
   }
 }; 
