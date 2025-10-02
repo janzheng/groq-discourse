@@ -10,6 +10,41 @@
   })
 </script>
 
+<script>
+  // Auto-submit OIDC confirmation form (works on non-Ember pages)
+  (function() {
+    function autoSubmitOIDCForm() {
+      var simpleContainer = document.getElementById('simple-container');
+      if (simpleContainer) {
+        var heading = simpleContainer.querySelector('h2');
+        var form = simpleContainer.querySelector('form');
+        var button = form ? form.querySelector('button[type="submit"]') : null;
+        
+        // Check if this is the OIDC confirmation page
+        if (heading && heading.textContent.indexOf('Log in using') !== -1 && button) {
+          console.log('[Groq OIDC] Auto-clicking OIDC confirmation button');
+          button.click();
+          return true;
+        }
+      }
+      return false;
+    }
+
+    // Try immediately on DOM ready
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', function() {
+        setTimeout(function() { autoSubmitOIDCForm(); }, 100);
+        setTimeout(function() { autoSubmitOIDCForm(); }, 500);
+      });
+    } else {
+      // DOM is already ready
+      setTimeout(function() { autoSubmitOIDCForm(); }, 100);
+      setTimeout(function() { autoSubmitOIDCForm(); }, 500);
+      setTimeout(function() { autoSubmitOIDCForm(); }, 1000);
+    }
+  })();
+</script>
+
 <!-- Iconify for icons in published components -->
 <script src="https://code.iconify.design/3/3.1.1/iconify.min.js"></script>
 
