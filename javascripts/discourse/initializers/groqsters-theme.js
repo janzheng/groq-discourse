@@ -100,12 +100,12 @@ export default {
         const root = document.documentElement;
         const existing = root.style.getPropertyValue('--groqsters-sidebar-font');
         if (!existing) {
-          root.style.setProperty('--groqsters-sidebar-font', "'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif");
+          root.style.setProperty('--groqsters-sidebar-font', "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif");
         }
         const applySidebarFont = () => {
           const sidebar = document.querySelector('.sidebar-wrapper');
           if (sidebar) {
-            sidebar.style.fontFamily = getComputedStyle(root).getPropertyValue('--groqsters-sidebar-font') || "'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif";
+            sidebar.style.fontFamily = getComputedStyle(root).getPropertyValue('--groqsters-sidebar-font') || "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif";
           }
         };
         applySidebarFont();
