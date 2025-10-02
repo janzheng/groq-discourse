@@ -830,7 +830,7 @@ export default {
               // Redirect to OIDC login
               // Common routes: /session/sso, /auth/oidc, /auth/oauth2_basic
               // Adjust this URL based on your OIDC configuration
-              window.location.href = '/session/sso';
+              window.location.href = '/auth/oidc';
             }, true); // Use capture phase to ensure we intercept before Discourse
           });
         }, 100);
