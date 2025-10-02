@@ -810,6 +810,21 @@ export default {
       // This bypasses the default Discourse login modal
       api.onPageChange(() => {
         setTimeout(() => {
+          // Auto-submit the OIDC confirmation form if we're on that page
+          const simpleContainer = document.getElementById('simple-container');
+          if (simpleContainer) {
+            const heading = simpleContainer.querySelector('h2');
+            const form = simpleContainer.querySelector('form');
+            
+            // Check if this is the "Log in using Groq" confirmation page
+            if (heading && heading.textContent.includes('Log in using') && form) {
+              console.log('[Groq OIDC] Auto-submitting OIDC confirmation form');
+              // Auto-submit the form to continue to OIDC provider
+              setTimeout(() => form.submit(), 100);
+              return;
+            }
+          }
+          
           // Get all login and signup buttons
           const loginButtons = document.querySelectorAll('.login-button, .sign-up-button, .signup-button');
           
@@ -824,6 +839,7 @@ export default {
               const isAnon = document.documentElement.classList.contains('anon');
               if (!isAnon) return; // Let default behavior work for logged-in users
               
+              console.log('[Groq OIDC] Intercepting login button, redirecting to /auth/oidc');
               e.preventDefault();
               e.stopPropagation();
               
