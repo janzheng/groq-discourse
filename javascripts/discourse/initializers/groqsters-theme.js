@@ -129,10 +129,24 @@ export default {
           window.location.pathname === "/top"
         );
         
-        if (!isHomePage) return;
+        // If not home page, remove any existing banners and exit
+        if (!isHomePage) {
+          const existingBanners = document.querySelectorAll('.groqsters-banners-container');
+          existingBanners.forEach(banner => banner.remove());
+          return;
+        }
 
         // Wait a bit for the page to render
         setTimeout(() => {
+          // Remove any duplicate banner containers first
+          const existingBanners = document.querySelectorAll('.groqsters-banners-container');
+          if (existingBanners.length > 1) {
+            // Keep only the first one, remove the rest
+            for (let i = 1; i < existingBanners.length; i++) {
+              existingBanners[i].remove();
+            }
+          }
+          
           // If our container already exists, update placeholders and skip reinserting
           const existingBannerContainer = document.querySelector('.groqsters-banners-container');
           if (existingBannerContainer) {
