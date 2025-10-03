@@ -930,41 +930,41 @@ div.groqsters-feature-banner {
       a.sign-up-button,
       a.signup-button,
       a.groq-oidc-login-button {
-        background: #f43e01 !important;
+        background: transparent !important; // Background is handled by ::before
         border: 1px solid #f43e01 !important;
         color: #ffffff !important;
-        box-shadow: none !important; // Remove border-like shadow
-        overflow: visible !important; // Allow button to grow beyond bounds
-        transform-origin: center center !important;
-        transform: scale(1) !important;
-        // Smooth transition on button transform
-        transition-property: transform !important;
-        transition-duration: 0.2s !important;
-        transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1) !important;
-        will-change: transform !important;
+        box-shadow: none !important;
+        overflow: hidden !important;
+        position: relative !important;
+        isolation: isolate !important; // Create stacking context
         
-        // Counter-scale the text so it stays the same size
+        // Text stays above and fixed
         .d-button-label {
-          display: inline-block !important;
+          position: relative !important;
+          z-index: 2 !important;
+        }
+        
+        // Animated background layer
+        &::before {
+          content: "" !important;
+          position: absolute !important;
+          inset: 0 !important;
+          background: #f43e01 !important;
+          border-radius: 17px !important; // Slightly smaller to account for border
+          z-index: 1 !important;
           transform: scale(1) !important;
-          transition: none !important; // No transition - instant counter-scale
+          transform-origin: center center !important;
+          transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+          will-change: transform !important;
         }
         
-        &:hover {
-          transform: scale(1.1) !important; // Button grows
-          
-          .d-button-label {
-            transform: scale(0.909) !important; // Counter-scale text (1/1.1 ≈ 0.909)
-          }
+        &:hover::before {
+          transform: scale(1.1) !important;
         }
         
-        &:active {
-          transform: scale(1.05) !important; // Slight press
+        &:active::before {
+          transform: scale(1.05) !important;
           transition-duration: 0.1s !important;
-          
-          .d-button-label {
-            transform: scale(0.952) !important; // Counter-scale (1/1.05 ≈ 0.952)
-          }
         }
       }
 
