@@ -62,7 +62,30 @@ kbd {
 }
 
 
-// Dark mode overrides - just invert the light colors
+// Dark mode overrides - use media query for system preference
+@media (prefers-color-scheme: dark) {
+  :root {
+    --primary: #f0f0f0;
+    --primary-medium: #c0c0c0;
+    --primary-low: #3d3d3d;
+    --primary-very-low: #2d2d2d;
+    
+    --secondary: #1e1e1e;
+    --secondary-medium: #2d2d2d;
+    --secondary-low: #3d3d3d;
+    --secondary-very-low: #0d0d0d;
+    --secondary-or-primary: #1e1e1e;
+    
+    --tertiary: #FF6F58;
+    --tertiary-low: #3d3d3d;
+    
+    --header_background: #1e1e1e;
+    --header_primary: #f0f0f0;
+  }
+}
+
+// Also support when user manually selects dark mode
+html[data-color-scheme="dark"],
 html.theme-dark {
   --primary: #f0f0f0;
   --primary-medium: #c0c0c0;
