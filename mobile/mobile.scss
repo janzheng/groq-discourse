@@ -41,7 +41,7 @@
   // Override background and add box shadow for mobile
   background: var(--secondary) !important;
   color: var(--primary) !important;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1) !important;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, .05) !important;
   
   // Ensure any potential title classes use heading font on mobile
   .welcome-banner__title,
