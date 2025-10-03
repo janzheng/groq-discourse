@@ -934,39 +934,40 @@ div.groqsters-feature-banner {
         border: 1px solid #f43e01 !important;
         color: #ffffff !important;
         box-shadow: none !important; // Remove border-like shadow
-        overflow: hidden !important;
+        overflow: visible !important; // Allow button to grow beyond bounds
+        transform-origin: center center !important;
+        transform: scale(1) !important;
+        // Smooth transition on button transform
+        transition-property: transform !important;
+        transition-duration: 0.2s !important;
+        transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1) !important;
+        will-change: transform !important;
         
-        // Text and content styling - keep these fixed (no transform on button itself)
-        .d-button-label,
-        .d-icon {
-          position: relative !important;
-          z-index: 2 !important; // Keep text above background
-        }
-        
-        // Background layer - this is what we'll scale
-        &::after {
-          content: "" !important;
-          background-color: #f43e01 !important;
-          border-radius: 18px !important;
-          position: absolute !important;
-          inset: 0 !important; // Modern shorthand for top/right/bottom/left: 0
-          z-index: 0 !important;
-          transform-origin: center center !important;
+        // Counter-scale the text so it stays the same size
+        .d-button-label {
+          display: inline-block !important;
           transform: scale(1) !important;
-          // Smooth transition on the background only
           transition-property: transform !important;
           transition-duration: 0.2s !important;
           transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1) !important;
-          will-change: transform !important;
         }
         
-        &:hover::after {
-          transform: scale(1.1) !important; // Only background scales up
+        &:hover {
+          transform: scale(1.1) !important; // Button grows
+          
+          .d-button-label {
+            transform: scale(0.909) !important; // Counter-scale text (1/1.1 ≈ 0.909)
+          }
         }
         
-        &:active::after {
-          transform: scale(0.95) !important; // Shrink on press
+        &:active {
+          transform: scale(1.05) !important; // Slight press
           transition-duration: 0.1s !important;
+          
+          .d-button-label {
+            transform: scale(0.952) !important; // Counter-scale (1/1.05 ≈ 0.952)
+            transition-duration: 0.1s !important;
+          }
         }
       }
 
