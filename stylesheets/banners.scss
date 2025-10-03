@@ -933,39 +933,39 @@ div.groqsters-feature-banner {
         background: #f43e01 !important;
         border: 1px solid #f43e01 !important;
         color: #ffffff !important;
-        box-shadow: 0 0 0 1px rgba(244, 62, 1, 0.3) !important;
+        box-shadow: none !important; // Remove border-like shadow
         overflow: hidden !important;
-        transform-origin: center center !important;
-        will-change: transform, box-shadow !important;
-        // Critical: Set base transform so there's something to transition FROM
-        transform: scale(1) !important;
-        // Explicit transition timing - use cubic-bezier for smoother feel
-        transition-property: transform, box-shadow !important;
-        transition-duration: 0.2s !important;
-        transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1) !important;
         
+        // Text and content styling - keep these fixed (no transform on button itself)
+        .d-button-label,
+        .d-icon {
+          position: relative !important;
+          z-index: 2 !important; // Keep text above background
+        }
+        
+        // Background layer - this is what we'll scale
         &::after {
           content: "" !important;
           background-color: #f43e01 !important;
           border-radius: 18px !important;
-          bottom: 1px !important;
-          display: block !important;
-          left: 1px !important;
-          opacity: 1 !important;
           position: absolute !important;
-          right: 1px !important;
-          top: 1px !important;
-          z-index: -1 !important;
+          inset: 0 !important; // Modern shorthand for top/right/bottom/left: 0
+          z-index: 0 !important;
           transform-origin: center center !important;
+          transform: scale(1) !important;
+          // Smooth transition on the background only
+          transition-property: transform !important;
+          transition-duration: 0.2s !important;
+          transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1) !important;
+          will-change: transform !important;
         }
         
-        &:hover {
-          box-shadow: 0 0 0 2px rgba(244, 62, 1, 0.6) !important;
-          transform: scale(1.05) !important;
+        &:hover::after {
+          transform: scale(1.1) !important; // Only background scales up
         }
         
-        &:active {
-          transform: scale(0.98) !important;
+        &:active::after {
+          transform: scale(0.95) !important; // Shrink on press
           transition-duration: 0.1s !important;
         }
       }
