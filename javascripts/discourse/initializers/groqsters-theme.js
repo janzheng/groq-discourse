@@ -857,24 +857,9 @@ export default {
               e.preventDefault();
               e.stopPropagation();
               
-              // Redirect to OIDC login with POST to skip confirmation page
-              // Create a form and submit it to bypass the GET confirmation page
-              var form = document.createElement('form');
-              form.method = 'POST';
-              form.action = '/auth/oidc';
-              
-              // Add CSRF token
-              var token = document.querySelector('meta[name="csrf-token"]');
-              if (token) {
-                var input = document.createElement('input');
-                input.type = 'hidden';
-                input.name = 'authenticity_token';
-                input.value = token.content;
-                form.appendChild(input);
-              }
-              
-              document.body.appendChild(form);
-              form.submit();
+              // Simply redirect to /auth/oidc
+              // The auto-submit script in head_tag.html will handle the confirmation page
+              window.location.href = '/auth/oidc';
             }, true); // Use capture phase to ensure we intercept before Discourse
           });
         }, 100);
