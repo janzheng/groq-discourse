@@ -49,10 +49,7 @@
   --header_background: #F3F3EE;
 }
 
-// Set site background color
-body {
-  background-color: #F3F3EE;
-}
+// Site background is controlled via --background and --secondary CSS variables above
 
 // Code and pre elements
 code,
@@ -66,9 +63,33 @@ kbd {
 
 
 // Dark mode overrides
+.theme-dark {
+  :root {
+    --primary: #f0f0f0;
+    --primary-medium: #c0c0c0;
+    --primary-low: #3d3d3d;
+    --primary-very-low: #2d2d2d;
+    --tertiary: #FF6F58;
+    --tertiary-low: #3d3d3d;
+    --tertiary-very-low: #2d2d2d;
+    --d-sidebar-admin-background: #2d2d2d;
+    --category-badge-title-color: #FF6F58;
+    --d-button-primary-bg-color--hover: #F55036;
+    --d-sidebar-active-background: #3d3d3d;
+    
+    // Background colors for dark mode
+    --background: #1e1e1e;
+    --secondary: #1e1e1e;
+    --secondary-very-high: #0d0d0d;
+    --secondary-rgb: 30, 30, 30; // RGB values for #1e1e1e
+    --header_background: #1e1e1e;
+  }
+}
+
+// Fallback for system preference (optional)
 @media (prefers-color-scheme: dark) {
   :root {
-    --primary: #909090;
+    --primary: #f0f0f0;
   }
 }
 
