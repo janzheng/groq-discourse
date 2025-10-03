@@ -990,11 +990,10 @@ div.groqsters-feature-banner {
     .header-buttons,
     .panel {
       .auth-buttons {
+        // Login button remains hidden in dark mode too
         .btn.login-button,
         a.login-button {
-          background: transparent !important; // keep subtle bg
-          border: 1px solid rgb(107, 114, 128) !important; // gray-500
-          color: #e5e7eb !important; // near gray-200 for readability
+          display: none !important;
         }
 
         .btn.sign-up-button,
