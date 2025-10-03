@@ -28,11 +28,21 @@
   // overrides for groq
   --heading-font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
   --primary: #1e1e1e;
-  --tertiary: #f43e01;
-  --background: #EEEEE7;
-  --category-badge-title-color: #f43e01;
-  --d-button-primary-bg-color--hover: #f43e01;
+  --tertiary: #F55036;
+  --category-badge-title-color: #F55036;
+  --d-button-primary-bg-color--hover: #FF6F58;
   --d-logo-height: 36px !important;
+}
+
+// Set site background color
+body {
+  background-color: #ECECE4;
+}
+
+// Also set the secondary background (content areas)
+:root {
+  --secondary: #ECECE4;
+  --secondary-very-high: #ECECE4;
 }
 
 
