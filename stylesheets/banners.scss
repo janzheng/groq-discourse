@@ -18,6 +18,14 @@
   display: block;
 }
 
+// Force hide on signup/login pages even if groqsters-categories-page class is present
+.signup-page .groqsters-banners-container,
+.login-page .groqsters-banners-container,
+body[class*="signup"] .groqsters-banners-container,
+body[class*="login"] .groqsters-banners-container {
+  display: none !important;
+}
+
 // Welcome banner positioned above main layout (including sidebar)
 // This includes the CUSTOM TOP BANNER COMPONENT at the top of the page
 .welcome-banner {

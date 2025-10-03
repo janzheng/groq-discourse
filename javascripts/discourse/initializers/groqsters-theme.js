@@ -115,11 +115,19 @@ export default {
       // Always try to update header banner on page changes
       api.onPageChange(() => {
 
+        // Explicitly exclude auth/signup pages from showing banners
+        const isAuthPage = window.location.pathname.includes("/signup") ||
+                          window.location.pathname.includes("/login") ||
+                          window.location.pathname.includes("/auth") ||
+                          document.body.classList.contains('signup-page') ||
+                          document.body.classList.contains('login-page');
         
-        const isHomePage = window.location.pathname === "/" || 
-                         window.location.pathname === "/latest" ||
-                         window.location.pathname === "/categories" ||
-                         window.location.pathname === "/top";
+        const isHomePage = !isAuthPage && (
+          window.location.pathname === "/" || 
+          window.location.pathname === "/latest" ||
+          window.location.pathname === "/categories" ||
+          window.location.pathname === "/top"
+        );
         
         if (!isHomePage) return;
 
