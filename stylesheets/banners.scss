@@ -44,15 +44,16 @@ body[class*="login"] .groqsters-banners-container {
   }
 
   h1 {
-    font-family: var(--heading-font-family); // Use heading font family
+    font-family: 'Space Grotesk', var(--heading-font-family), -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     margin: 0 0 0.75rem 0;
-    font-size: 2rem;
-    font-weight: 700;
-    line-height: 1.2;
+    font-size: clamp(1.8571428571rem, 4cqi, 2.5714285714rem); // Fluid typography
+    font-weight: 300;
+    line-height: 1.3;
+    letter-spacing: -0.02em;
   }
 
   h2 {
-    font-family: var(--heading-font-family); // Use heading font family
+    font-family: 'Space Grotesk', var(--heading-font-family), -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     margin: 0 0 1.5rem 0;
     font-size: 1.1rem;
     font-weight: 400;
@@ -929,25 +930,60 @@ div.groqsters-feature-banner {
         background: #f43e01 !important;
         border: 1px solid #f43e01 !important;
         color: #ffffff !important;
-        box-shadow: 0 0 0 1px rgba(244, 62, 1, 0.3);
+        box-shadow: 0 0 0 1px rgba(244, 62, 1, 0.3) !important;
+        overflow: hidden !important; // Ensure ::after stays within bounds
         
         &::after {
-          content: "";
-          background-color: #f43e01;
-          border-radius: 18px;
-          bottom: 1px;
-          display: block;
-          left: 1px;
-          opacity: 1;
-          position: absolute;
-          right: 1px;
-          top: 1px;
-          transition: transform 0.3s ease;
-          z-index: -1;
+          content: "" !important;
+          background-color: #f43e01 !important;
+          border-radius: 18px !important;
+          bottom: 1px !important;
+          display: block !important;
+          left: 1px !important;
+          opacity: 1 !important;
+          position: absolute !important;
+          right: 1px !important;
+          top: 1px !important;
+          transition: transform 0.3s ease !important;
+          z-index: -1 !important;
+          transform-origin: center !important;
         }
         
-        &:hover::after {
-          transform: scale(0.98);
+        &:hover {
+          // Fallback: dim the button slightly if ::after doesn't work
+          opacity: 0.9 !important;
+          box-shadow: 0 0 0 1px rgba(244, 62, 1, 0.5) !important;
+          
+          &::after {
+            transform: scale(0.98) !important;
+          }
+        }
+        
+        &:active {
+          opacity: 0.85 !important;
+          
+          &::after {
+            transform: scale(0.96) !important;
+          }
+        }
+      }
+
+      // Ensure consistent styling on mobile
+      @media (max-width: 767px) {
+        .btn.sign-up-button,
+        .btn.signup-button,
+        .btn.login-button,
+        a.sign-up-button,
+        a.signup-button,
+        a.login-button,
+        a.groq-oidc-login-button {
+          min-width: 130px !important; // Keep consistent on mobile
+          max-width: none !important;
+          height: 36px !important;
+          padding: 0.714286rem 1.142857rem !important;
+          font-size: 0.875rem !important;
+          border-radius: 18px !important;
+          white-space: nowrap !important;
         }
       }
 
