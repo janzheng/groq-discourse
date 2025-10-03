@@ -957,11 +957,12 @@ div.groqsters-feature-banner {
         }
         
         &:hover::after {
-          transform: scale(1.12, 1.25) !important;
+          transform: scale(1.075, 1.15) !important;
         }
         
         &:active::after {
-          transform: scale(1.08, 1.18) !important;
+          transform: scale(1.075,
+            1.15) !important;
         }
       }
 
