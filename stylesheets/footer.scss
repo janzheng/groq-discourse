@@ -187,22 +187,12 @@
     // Desktop: 6 columns for link groups
     @media (min-width: 1200px) {
       grid-template-columns: repeat(6, 1fr);
-      
-      // First column (Platform & Solutions) spans 2 columns
-      .footer-links-group:first-child {
-        grid-column: span 2;
-      }
     }
 
-    // Medium-large desktop: 5 columns for better spacing
+    // Medium-large desktop: 4 columns for better spacing
     @media (max-width: 1199px) and (min-width: 1024px) {
-      grid-template-columns: repeat(5, 1fr);
+      grid-template-columns: repeat(4, 1fr);
       gap: 1.5rem;
-      
-      // First column spans 2 columns
-      .footer-links-group:first-child {
-        grid-column: span 2;
-      }
     }
 
     // Tablet: 3 columns
@@ -285,7 +275,7 @@
 
     .footer-group-title {
       font-family: 'IBM Plex Mono', 'Menlo', 'Monaco', 'Courier New', monospace;
-      font-size: 0.8571428571rem;
+      font-size: 0.8rem;
       font-weight: 500;
       color: #2D2F33;
       margin: 0 0 1rem 0;
