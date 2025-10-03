@@ -907,32 +907,10 @@ div.groqsters-feature-banner {
         animation-fill-mode: forwards;
       }
 
-      // Light mode (default)
+      // Hide login button (we only want "Sign in with Groq")
       .btn.login-button,
       a.login-button {
-        background: rgb(243, 243, 242) !important; // --accent
-        border: 1px solid rgb(231, 229, 228) !important; // --border
-        color: var(--primary) !important;
-        box-shadow: 0 0 0 1px rgba(231, 229, 228, 0.5);
-        
-        &::after {
-          content: "";
-          background-color: rgb(243, 243, 242);
-          border-radius: 18px;
-          bottom: 1px;
-          display: block;
-          left: 1px;
-          opacity: 1;
-          position: absolute;
-          right: 1px;
-          top: 1px;
-          transition: transform 0.3s ease;
-          z-index: -1;
-        }
-        
-        &:hover::after {
-          transform: scale(0.98);
-        }
+        display: none !important;
       }
 
       .btn.sign-up-button,
@@ -1033,21 +1011,7 @@ div.groqsters-feature-banner {
   }
 }
 
-// Light mode only: make login icon orange
-@media (prefers-color-scheme: light) {
-  .d-header {
-    .header-buttons,
-    .panel {
-      .auth-buttons {
-        .btn.login-button .d-icon,
-        a.login-button .d-icon {
-          color: #f43e01 !important;
-          fill: currentColor;
-        }
-      }
-    }
-  }
-}
+// Login button icon styling removed since button is hidden
 
 // Header nav styling for welcome banner
 // .header-nav {
