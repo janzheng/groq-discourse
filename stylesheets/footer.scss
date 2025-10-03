@@ -23,6 +23,7 @@
   background: var(--secondary);
   border-top: 1px solid var(--primary-low);
   padding: 0;
+  font-family: 'Space Grotesk', var(--heading-font-family), -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 
   // Ensure footer spans full width, breaking out of sidebar layout
   position: relative;
