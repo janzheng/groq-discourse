@@ -1215,11 +1215,11 @@ div.groqsters-feature-banner {
         text-overflow: ellipsis !important;
         white-space: nowrap !important;
         padding-bottom: 0.25rem !important;
+        width: 70% !important; // Fixed width for skeleton only
         
         // Skeleton loader style
         position: relative !important;
         min-height: 1.3em !important;
-        max-width: 70% !important; // Constrain width for skeleton
         
         &:empty,
         &:not(:empty) {
