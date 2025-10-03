@@ -1241,11 +1241,12 @@ div.groqsters-feature-banner {
         gap: 0.25rem !important;
         font-size: 0.8rem !important;
         color: var(--primary-medium) !important;
+        overflow: hidden !important;
         
         // Skeleton loader for subtitle
         position: relative !important;
         min-height: 1em !important;
-        max-width: 40% !important;
+        width: 40% !important; // Fixed width for skeleton only
         
         &:empty {
           background: linear-gradient(
@@ -1298,13 +1299,13 @@ div.groqsters-feature-banner {
       .custom-post-title {
         animation: none !important;
         background: transparent !important;
-        max-width: none !important; // Remove width constraint when loaded
+        width: auto !important; // Reset to auto width when loaded
       }
       
       .custom-post-subtitle {
         animation: none !important;
         background: transparent !important;
-        max-width: none !important; // Remove width constraint when loaded
+        width: auto !important; // Reset to auto width when loaded
       }
     }
     
