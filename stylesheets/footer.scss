@@ -143,7 +143,7 @@
     // Mobile layout: stack vertically but keep logo and community links aligned
     @media (max-width: 767px) {
       flex-direction: column;
-      gap: 2rem;
+      gap: 1rem;
 
       .footer-branding {
         flex: none;
@@ -205,7 +205,6 @@
   // Footer branding section
   .footer-branding {
     .footer-logo {
-      margin-bottom: 1rem;
 
       .footer-logo-img {
         max-height: 3rem;

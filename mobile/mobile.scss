@@ -307,7 +307,7 @@ div.groqsters-feature-banner {
         // Smaller text on mobile
         .category-name {
           font-size: 1.1rem !important;
-          margin-bottom: 0.5rem !important;
+          // margin-bottom: 0.5rem !important;
         }
         
         .category-description {
@@ -385,14 +385,7 @@ div.groqsters-feature-banner {
     
     .footer-grid {
       gap: 2rem;
-      
-      .footer-branding {
-        .footer-tagline {
-          font-size: 1rem;
-          line-height: 1.6;
-          margin-bottom: 0.5rem;
-        }
-      }
+    
       
       .footer-links-group {
         .footer-group-title {
@@ -404,16 +397,12 @@ div.groqsters-feature-banner {
         .footer-links-list {
           text-align: left;
           
-          li {
-            margin-bottom: 0.75rem;
-          }
-          
           .footer-link {
             font-size: 1rem;
             line-height: 1.6;
             padding: 0.25rem 0;
             display: inline-block;
-            min-height: 44px; // Touch target size
+            // min-height: 44px; // Touch target size
             display: flex;
             align-items: center;
             justify-content: flex-start;
