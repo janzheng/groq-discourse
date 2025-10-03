@@ -545,7 +545,7 @@ export default {
             if (categoryList) {
               categoryList.style.display = 'grid';
               categoryList.style.gridTemplateColumns = 'repeat(auto-fit, minmax(320px, 1fr))';
-              categoryList.style.gap = '1.5rem';
+              categoryList.style.gap = '0.5rem';
               
               // Ensure the table structure supports grid
               const table = categoryList.querySelector('table');
@@ -566,7 +566,7 @@ export default {
                 item.style.background = 'var(--secondary)';
                 item.style.border = '1px solid var(--primary-low)';
                 item.style.borderRadius = '16px'; // use css instead
-                item.style.padding = '1rem'; // use css instead
+                item.style.padding = '0.5rem'; // use css instead
                 item.style.marginBottom = '0';
                 item.style.minHeight = '160px';
                 item.style.position = 'relative';
