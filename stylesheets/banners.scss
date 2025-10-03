@@ -7,9 +7,15 @@
   border-radius: 8px;
 }
 
-// Banner container
+// Banner container - only show on home/categories pages
 .groqsters-banners-container {
   width: 100%;
+  display: none; // Hidden by default
+}
+
+// Only show on home/categories pages
+.groqsters-categories-page .groqsters-banners-container {
+  display: block;
 }
 
 // Welcome banner positioned above main layout (including sidebar)
