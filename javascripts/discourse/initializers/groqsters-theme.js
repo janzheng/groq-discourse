@@ -482,11 +482,18 @@ export default {
       // Add page change handling for categories page
       api.onPageChange(() => {
         
-        const isCategoriesPage = window.location.pathname === "/" ||
-                                window.location.pathname === "/latest" ||
-                                window.location.pathname === "/top" ||
-                                window.location.pathname === "/categories" || 
-                                window.location.pathname.includes("/categories");
+        // Explicitly exclude auth/signup/login pages
+        const isAuthPage = window.location.pathname.includes("/signup") ||
+                          window.location.pathname.includes("/login") ||
+                          window.location.pathname.includes("/auth");
+        
+        const isCategoriesPage = !isAuthPage && (
+          window.location.pathname === "/" ||
+          window.location.pathname === "/latest" ||
+          window.location.pathname === "/top" ||
+          window.location.pathname === "/categories" || 
+          window.location.pathname.startsWith("/c/")
+        );
         
         if (isCategoriesPage) {
           setTimeout(() => {
