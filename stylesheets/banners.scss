@@ -40,7 +40,7 @@ body[class*="login"] .groqsters-banners-container {
   z-index: 10;
 
   @media (prefers-color-scheme: dark) {
-    color: #a6a6a6;
+    color: #ffffff;
   }
 
   h1 {
@@ -122,14 +122,14 @@ body[class*="login"] .groqsters-banners-container {
 // Dark mode adjustments for custom search banner
 @media (prefers-color-scheme: dark) {
   .custom-search-banner {
-    color: #a6a6a6;
+    color: #ffffff;
 
     .custom-search-banner-headline {
-      color: #a6a6a6;
+      color: #ffffff;
     }
 
     p {
-      color: #a6a6a6;
+      color: #ffffff;
     }
   }
 }
@@ -137,11 +137,11 @@ body[class*="login"] .groqsters-banners-container {
 @media (prefers-color-scheme: dark) {
   .welcome-banner__inner-wrapper {
     .custom-search-banner-headline {
-      color: #a6a6a6;
+      color: #ffffff;
     }
 
     p {
-      color: #a6a6a6;
+      color: #ffffff;
     }
   }
 }
@@ -508,14 +508,14 @@ div.groqsters-feature-banner {
 // Dark mode adjustments for custom search banner
 @media (prefers-color-scheme: dark) {
   .custom-search-banner {
-    color: #a6a6a6;
+    color: #ffffff;
 
     .custom-search-banner-headline {
-      color: #a6a6a6;
+      color: #ffffff;
     }
 
     p {
-      color: #a6a6a6;
+      color: #ffffff;
     }
   }
 }
@@ -523,11 +523,11 @@ div.groqsters-feature-banner {
 @media (prefers-color-scheme: dark) {
   .welcome-banner__inner-wrapper {
     .custom-search-banner-headline {
-      color: #a6a6a6;
+      color: #ffffff;
     }
 
     p {
-      color: #a6a6a6;
+      color: #ffffff;
     }
   }
 }
