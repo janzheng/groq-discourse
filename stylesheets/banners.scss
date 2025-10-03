@@ -1219,6 +1219,7 @@ div.groqsters-feature-banner {
         // Skeleton loader style
         position: relative !important;
         min-height: 1.3em !important;
+        max-width: 70% !important; // Constrain width for skeleton
         
         &:empty,
         &:not(:empty) {
@@ -1294,10 +1295,16 @@ div.groqsters-feature-banner {
   // When data is loaded, stop the shimmer animation
   .custom-post-row.loaded {
     .custom-post-content {
-      .custom-post-title,
+      .custom-post-title {
+        animation: none !important;
+        background: transparent !important;
+        max-width: none !important; // Remove width constraint when loaded
+      }
+      
       .custom-post-subtitle {
         animation: none !important;
         background: transparent !important;
+        max-width: none !important; // Remove width constraint when loaded
       }
     }
     
