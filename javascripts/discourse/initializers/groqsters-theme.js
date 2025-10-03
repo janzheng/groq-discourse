@@ -853,13 +853,21 @@ export default {
               const isAnon = document.documentElement.classList.contains('anon');
               if (!isAnon) return; // Let default behavior work for logged-in users
               
-              console.log('[Groq OIDC] Intercepting login button, redirecting to /auth/oidc');
+              console.log('[Groq OIDC] Intercepting login button, redirecting to OIDC');
               e.preventDefault();
               e.stopPropagation();
               
-              // Simply redirect to /auth/oidc
-              // The auto-submit script in head_tag.html will handle the confirmation page
-              window.location.href = '/auth/oidc';
+              // Try multiple approaches to skip confirmation page
+              // Approach 1: Check if Discourse has a direct login endpoint
+              var directLoginUrl = '/session/sso_login?return_path=' + encodeURIComponent(window.location.pathname);
+              
+              // Approach 2: Use /auth/oidc with origin parameter (some configs respect this)
+              var oidcUrl = '/auth/oidc?origin=' + encodeURIComponent(window.location.href);
+              
+              // For now, use the oidc URL - admin needs to configure:
+              // Admin → Settings → "enable_local_logins" = false
+              // Admin → Settings → "openid_connect_overrides_local" = true
+              window.location.href = oidcUrl;
             }, true); // Use capture phase to ensure we intercept before Discourse
           });
         }, 100);
