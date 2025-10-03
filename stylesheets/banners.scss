@@ -935,6 +935,7 @@ div.groqsters-feature-banner {
         color: #ffffff !important;
         box-shadow: 0 0 0 1px rgba(244, 62, 1, 0.3) !important;
         overflow: hidden !important; // Ensure ::after stays within bounds
+        transition: all 0.3s ease !important; // Smooth all transitions
         
         &::after {
           content: "" !important;
@@ -947,26 +948,31 @@ div.groqsters-feature-banner {
           position: absolute !important;
           right: 1px !important;
           top: 1px !important;
-          transition: transform 0.3s ease !important;
+          transition: all 0.3s ease !important;
           z-index: -1 !important;
-          transform-origin: center !important;
+          transform-origin: center center !important;
+          will-change: transform !important; // Hint to browser for better performance
         }
         
         &:hover {
-          // Fallback: dim the button slightly if ::after doesn't work
+          // Dim the button slightly and add subtle scale to the whole button
           opacity: 0.9 !important;
           box-shadow: 0 0 0 1px rgba(244, 62, 1, 0.5) !important;
+          transform: scale(0.99) !important; // Subtle scale on the button itself
           
           &::after {
-            transform: scale(0.98) !important;
+            transform: scale(0.96) !important; // More noticeable scale on the inner layer
+            opacity: 0.95 !important;
           }
         }
         
         &:active {
           opacity: 0.85 !important;
+          transform: scale(0.98) !important; // Press down effect
           
           &::after {
-            transform: scale(0.96) !important;
+            transform: scale(0.94) !important; // Even more pronounced on click
+            opacity: 0.9 !important;
           }
         }
       }
@@ -985,7 +991,7 @@ div.groqsters-feature-banner {
           height: 36px !important;
           padding: 0.714286rem 1.142857rem !important;
           font-size: 0.875rem !important;
-          border-radius: 18px !important;
+          border-radius: 24px !important;
           white-space: nowrap !important;
         }
       }
