@@ -968,12 +968,7 @@ div.groqsters-feature-banner {
         
         &:active {
           opacity: 0.85 !important;
-          transform: scale(0.98) !important; // Press down effect
-          
-          &::after {
-            transform: scale(0.94) !important; // Even more pronounced on click
-            opacity: 0.9 !important;
-          }
+          transform: scale(1.075, 1.15) !important; // Press down effect
         }
       }
 
