@@ -53,6 +53,16 @@ body {
   background-color: #ECECE4;
 }
 
+// Code and pre elements
+code,
+pre,
+.hljs,
+.d-editor-preview pre,
+.cooked pre,
+kbd {
+  font-family: 'IBM Plex Mono', 'Menlo', 'Monaco', 'Courier New', monospace !important;
+}
+
 
 // Dark mode overrides
 @media (prefers-color-scheme: dark) {

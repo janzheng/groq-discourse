@@ -274,12 +274,13 @@
     width: 100%;
 
     .footer-group-title {
-      font-size: 0.875rem;
-      font-weight: 600;
-      color: var(--primary);
+      font-family: 'IBM Plex Mono', 'Menlo', 'Monaco', 'Courier New', monospace;
+      font-size: 0.8571428571rem;
+      font-weight: 500;
+      color: #2D2F33;
       margin: 0 0 1rem 0;
       text-transform: uppercase;
-      letter-spacing: 0.5px;
+      letter-spacing: 0.1em;
       white-space: nowrap;
       overflow: visible;
     }
