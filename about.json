@@ -18,6 +18,19 @@
       "danger": "#e45735",
       "success": "#009900",
       "love": "#fa6c8d"
+    },
+    "Groqsters Dark": {
+      "primary": "#f0f0f0",
+      "secondary": "#1e1e1e",
+      "tertiary": "#FF6F58",
+      "quaternary": "#F55036",
+      "background": "#1e1e1e",
+      "header_background": "#1e1e1e",
+      "header_primary": "#f0f0f0",
+      "highlight": "#ffdd00",
+      "danger": "#e45735",
+      "success": "#00bb00",
+      "love": "#fa6c8d"
     }
   },
   "modifiers": {
