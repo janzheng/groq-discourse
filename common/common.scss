@@ -35,12 +35,29 @@
 }
 
 // Also target the sidebar sections container
-.sidebar-sections {
+.sidebar-sections,
+.sidebar-sections-anonymous {
   box-shadow: none !important;
   
   &::before,
   &::after {
     display: none !important;
+  }
+}
+
+// Target the specific sidebar container that has the inset shadow
+#d-sidebar {
+  box-shadow: none !important;
+}
+
+.sidebar-container {
+  box-shadow: none !important;
+}
+
+// Remove any inset shadows on all sidebar-related elements
+[class*="sidebar"] {
+  &:not(.sidebar-section-link):not(.sidebar-section-link-wrapper) {
+    box-shadow: none !important;
   }
 }
 
