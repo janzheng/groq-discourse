@@ -24,6 +24,26 @@
   font-family: var(--groqsters-sidebar-font);
 }
 
+// Remove sidebar fade/shadow
+.sidebar-wrapper {
+  box-shadow: none !important;
+  
+  &::before,
+  &::after {
+    display: none !important;
+  }
+}
+
+// Also target the sidebar sections container
+.sidebar-sections {
+  box-shadow: none !important;
+  
+  &::before,
+  &::after {
+    display: none !important;
+  }
+}
+
 :root {
   // overrides for groq
   --heading-font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
@@ -73,6 +93,13 @@ body {
   &>.wrap {
     max-width: var(--d-max-width);
     margin-inline: auto;
+  }
+
+  // Add padding to logo on desktop to align with icons
+  @media (min-width: 1024px) {
+    .home-logo-wrapper-outlet {
+      padding-left: 24px;
+    }
   }
 }
 
