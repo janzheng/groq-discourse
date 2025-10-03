@@ -958,16 +958,10 @@ div.groqsters-feature-banner {
           // Dim the button slightly and add subtle scale to the whole button
           opacity: 0.9 !important;
           box-shadow: 0 0 0 1px rgba(244, 62, 1, 0.5) !important;
-          transform: scale(0.99) !important; // Subtle scale on the button itself
-          
-          &::after {
-            transform: scale(0.96) !important; // More noticeable scale on the inner layer
-            opacity: 0.95 !important;
-          }
+          transform: scale(1.075, 1.15) !important; // Subtle scale on the button itself
         }
         
         &:active {
-          opacity: 0.85 !important;
           transform: scale(1.075, 1.15) !important; // Press down effect
         }
       }
