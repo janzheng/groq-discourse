@@ -154,18 +154,14 @@ export default {
             return;
           }
 
-          // Try to find the hero area and insert after it
-          const heroArea = document.querySelector('.above-main-container-outlet, .home-logo-wrapper-outlet, #main-outlet');
-          const navigationContainer = document.querySelector('.navigation-container, .list-controls');
+          // Find the main outlet - this is the proper container for content
+          const mainOutlet = document.getElementById('main-outlet');
+          if (!mainOutlet) return;
           
-          let insertTarget = heroArea;
-          if (navigationContainer && heroArea) {
-            insertTarget = navigationContainer.parentNode;
-          } else if (navigationContainer) {
-            insertTarget = navigationContainer;
-          }
-
-          if (!insertTarget) return;
+          // Find the list-controls/navigation container to insert before it
+          const navigationContainer = mainOutlet.querySelector('.navigation-container, .list-controls');
+          
+          if (!navigationContainer) return;
 
           // Create banner container
           const bannerContainer = document.createElement('div');
@@ -485,13 +481,9 @@ export default {
             }
           }
 
-          // Insert the banner container
+          // Insert the banner container before the navigation/list controls
           if (bannerContainer.children.length > 0) {
-            if (navigationContainer) {
-              navigationContainer.parentNode.insertBefore(bannerContainer, navigationContainer);
-            } else {
-              insertTarget.appendChild(bannerContainer);
-            }
+            mainOutlet.insertBefore(bannerContainer, navigationContainer);
           }
 
           // Replace placeholders after a short delay
