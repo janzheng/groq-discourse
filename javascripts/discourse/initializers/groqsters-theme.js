@@ -565,6 +565,8 @@ export default {
                 item.style.visibility = 'visible';
                 item.style.background = 'var(--secondary)';
                 item.style.border = '1px solid var(--primary-low)';
+                item.style.borderRadius = '16px'; // use css instead
+                item.style.padding = '1rem'; // use css instead
                 item.style.marginBottom = '0';
                 item.style.minHeight = '160px';
                 item.style.position = 'relative';
