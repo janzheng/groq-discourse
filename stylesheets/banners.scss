@@ -930,40 +930,41 @@ div.groqsters-feature-banner {
       a.sign-up-button,
       a.signup-button,
       a.groq-oidc-login-button {
-        background: #f43e01 !important;
+        background: transparent !important; // Background handled by ::after
         border: 1px solid #f43e01 !important;
         color: #ffffff !important;
         box-shadow: none !important;
-        overflow: visible !important;
+        overflow: hidden !important;
         position: relative !important;
-        transform: scale(1) !important;
-        transform-origin: center center !important;
-        transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1) !important; // Bounce easing
-        will-change: transform !important;
         
-        // Text stays fixed size
-        .d-button-label {
-          display: inline-block !important;
-          transform: scale(1) !important;
-          transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+        // Text and content - stays completely static, no z-index needed
+        .d-button-label,
+        .d-icon {
+          position: relative !important;
         }
         
-        &:hover {
-          transform: scale(1.08) !important;
-          
-          .d-button-label {
-            transform: scale(0.926) !important; // 1/1.08
-          }
+        // Background layer that scales - exactly like the other site
+        &::after {
+          content: "" !important;
+          background-color: #f43e01 !important;
+          border-radius: 18px !important;
+          bottom: 1px !important;
+          display: block !important;
+          left: 1px !important;
+          opacity: 1 !important;
+          position: absolute !important;
+          right: 1px !important;
+          top: 1px !important;
+          transition: transform 0.3s ease !important;
+          z-index: -1 !important;
         }
         
-        &:active {
-          transform: scale(1.03) !important;
-          transition-duration: 0.1s !important;
-          
-          .d-button-label {
-            transform: scale(0.971) !important; // 1/1.03
-            transition-duration: 0.1s !important;
-          }
+        &:hover::after {
+          transform: scale(1.075, 1.15) !important;
+        }
+        
+        &:active::after {
+          transform: scale(1.05, 1.1) !important;
         }
       }
 
