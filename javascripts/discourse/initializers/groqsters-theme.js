@@ -383,7 +383,7 @@ export default {
               configuredUrl = normalizeTopicUrl(configuredUrl);
 
               const row = document.createElement('a');
-              row.className = 'custom-post-row';
+              row.className = 'custom-post-row'; // Will add 'loaded' class after fetch
               const href = configuredUrl || '#';
               row.href = href;
               try {
@@ -458,6 +458,9 @@ export default {
                         avatarContainer.appendChild(img);
                       }
                     }
+                    
+                    // Mark row as loaded to stop skeleton animation
+                    row.classList.add('loaded');
                   } catch(e) { /* no-op */ }
                 };
 

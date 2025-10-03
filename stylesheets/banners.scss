@@ -1137,6 +1137,17 @@ div.groqsters-feature-banner {
     border-radius: 6px !important;
     text-decoration: none !important;
     color: inherit !important;
+    
+    // Loading state - hide ugly URLs initially
+    &:not(.loaded) {
+      .custom-post-content {
+        .custom-post-title {
+          color: transparent !important;
+          user-select: none !important;
+          pointer-events: none !important;
+        }
+      }
+    }
 
     &:hover {
       background: var(--primary-very-low) !important;
@@ -1153,6 +1164,25 @@ div.groqsters-feature-banner {
       align-items: center !important;
       justify-content: center !important;
       flex-shrink: 0 !important;
+      
+      // Skeleton shimmer animation for avatar
+      position: relative !important;
+      
+      &::before {
+        content: '' !important;
+        position: absolute !important;
+        top: 0 !important;
+        left: -100% !important;
+        width: 100% !important;
+        height: 100% !important;
+        background: linear-gradient(
+          90deg,
+          transparent 0%,
+          rgba(255, 255, 255, 0.2) 50%,
+          transparent 100%
+        ) !important;
+        animation: shimmer 1.5s infinite !important;
+      }
 
       img {
         width: 100% !important;
@@ -1172,6 +1202,7 @@ div.groqsters-feature-banner {
       display: flex !important;
       flex-direction: column !important;
       min-width: 0 !important;
+      flex: 1 !important;
 
       .custom-post-title {
         font-size: 1.15rem !important;
@@ -1184,6 +1215,23 @@ div.groqsters-feature-banner {
         text-overflow: ellipsis !important;
         white-space: nowrap !important;
         padding-bottom: 0.25rem !important;
+        
+        // Skeleton loader style
+        position: relative !important;
+        min-height: 1.3em !important;
+        
+        &:empty,
+        &:not(:empty) {
+          background: linear-gradient(
+            90deg,
+            var(--primary-low) 0%,
+            var(--primary-very-low) 50%,
+            var(--primary-low) 100%
+          ) !important;
+          background-size: 200% 100% !important;
+          animation: shimmer 1.5s infinite !important;
+          border-radius: 4px !important;
+        }
       }
 
       .custom-post-subtitle {
@@ -1192,6 +1240,24 @@ div.groqsters-feature-banner {
         gap: 0.25rem !important;
         font-size: 0.8rem !important;
         color: var(--primary-medium) !important;
+        
+        // Skeleton loader for subtitle
+        position: relative !important;
+        min-height: 1em !important;
+        max-width: 40% !important;
+        
+        &:empty {
+          background: linear-gradient(
+            90deg,
+            var(--primary-low) 0%,
+            var(--primary-very-low) 50%,
+            var(--primary-low) 100%
+          ) !important;
+          background-size: 200% 100% !important;
+          animation: shimmer 1.5s infinite !important;
+          animation-delay: 0.1s !important;
+          border-radius: 3px !important;
+        }
 
         .subtitle-emoji {
           display: inline-flex !important;
@@ -1223,5 +1289,32 @@ div.groqsters-feature-banner {
         }
       }
     }
+  }
+  
+  // When data is loaded, stop the shimmer animation
+  .custom-post-row.loaded {
+    .custom-post-content {
+      .custom-post-title,
+      .custom-post-subtitle {
+        animation: none !important;
+        background: transparent !important;
+      }
+    }
+    
+    .custom-post-avatar::before {
+      display: none !important;
+    }
+  }
+}
+
+// Shimmer animation for skeleton loading
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+    left: -100%;
+  }
+  100% {
+    background-position: -200% 0;
+    left: 100%;
   }
 }
