@@ -178,41 +178,26 @@
 
   // Main footer grid layout
   .footer-grid {
-    display: grid;
-    gap: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
     margin-bottom: 0;
     width: 100%;
     overflow: visible;
 
-    // Desktop: 6 columns for link groups
-    @media (min-width: 1200px) {
-      grid-template-columns: repeat(6, 1fr);
-    }
-
-    // Medium-large desktop: 4 columns for better spacing
-    @media (max-width: 1199px) and (min-width: 1024px) {
-      grid-template-columns: repeat(4, 1fr);
-      gap: 1.5rem;
-    }
-
-    // Tablet: 3 columns
-    @media (max-width: 1023px) and (min-width: 768px) {
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.5rem;
-      text-align: left;
+    // Desktop and tablet: let columns flow naturally
+    @media (min-width: 768px) {
+      gap: 2rem 3rem;
     }
 
     // Mobile: 2 columns for better space usage
     @media (max-width: 767px) {
-      grid-template-columns: repeat(2, 1fr);
       gap: 2rem;
       text-align: left;
-      width: 100%;
     }
 
     // Very small mobile: single column
     @media (max-width: 480px) {
-      grid-template-columns: 1fr;
       gap: 1.5rem;
     }
   }
@@ -270,8 +255,31 @@
 
   // Footer link groups
   .footer-links-group {
-    min-width: 0; // Prevent grid overflow
-    width: 100%;
+    min-width: 0; // Prevent overflow
+    flex: 0 1 auto; // Don't grow, can shrink, auto basis
+
+    // Desktop: natural column widths
+    @media (min-width: 1024px) {
+      flex: 0 1 auto;
+      min-width: 140px;
+      max-width: 200px;
+    }
+
+    // Tablet: smaller widths
+    @media (max-width: 1023px) and (min-width: 768px) {
+      flex: 0 1 auto;
+      min-width: 120px;
+    }
+
+    // Mobile: 2 columns
+    @media (max-width: 767px) and (min-width: 481px) {
+      flex: 0 1 calc(50% - 1rem);
+    }
+
+    // Very small mobile: full width
+    @media (max-width: 480px) {
+      flex: 1 1 100%;
+    }
 
     .footer-group-title {
       font-family: 'IBM Plex Mono', 'Menlo', 'Monaco', 'Courier New', monospace;
