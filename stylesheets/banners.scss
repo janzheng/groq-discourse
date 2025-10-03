@@ -947,9 +947,7 @@ div.groqsters-feature-banner {
         .d-button-label {
           display: inline-block !important;
           transform: scale(1) !important;
-          transition-property: transform !important;
-          transition-duration: 0.2s !important;
-          transition-timing-function: linear !important; // Linear so text appears frozen
+          transition: none !important; // No transition - instant counter-scale
         }
         
         &:hover {
@@ -966,8 +964,6 @@ div.groqsters-feature-banner {
           
           .d-button-label {
             transform: scale(0.952) !important; // Counter-scale (1/1.05 ≈ 0.952)
-            transition-duration: 0.1s !important;
-            transition-timing-function: linear !important; // Keep linear for instant response
           }
         }
       }
