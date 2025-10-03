@@ -103,13 +103,16 @@ body[class*="login"] .groqsters-banners-container {
   box-sizing: border-box !important;
 }
 
-// Ensure any Discourse core welcome banner title classes use heading font
+// Ensure any Discourse core welcome banner title classes use Space Grotesk
 .welcome-banner__title,
 .welcome-banner .banner-title,
 .search-banner .banner-title,
 .search-banner__title {
-  // font-family: var(--heading-font-family) !important;
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  font-family: 'Space Grotesk', var(--heading-font-family), -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+  font-weight: 300 !important;
+  font-size: clamp(1.8571428571rem, 4cqi, 2.5714285714rem) !important;
+  line-height: 1.3 !important;
+  letter-spacing: -0.02em !important;
 }
 
 .welcome-banner__title {
