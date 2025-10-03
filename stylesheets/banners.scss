@@ -931,7 +931,7 @@ div.groqsters-feature-banner {
       a.signup-button,
       a.groq-oidc-login-button {
         background: transparent !important; // Background handled by ::after
-        border: 1px solid #f43e01 !important;
+        border: 1px solid #ffffff !important; // White border
         color: #ffffff !important;
         box-shadow: none !important;
         overflow: hidden !important;
