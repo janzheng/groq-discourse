@@ -886,15 +886,25 @@ div.groqsters-feature-banner {
         justify-content: center;
         height: 36px; // h-9
         min-width: 130px; // w-[130px]
-        padding: 0 12px;
+        padding: 0.714286rem 1.142857rem; // Groq button padding
         border-radius: 18px !important; // rounded-[18px]
         font-size: 0.875rem; // text-sm
         line-height: 1.25rem;
         font-weight: 400; // font-normal
+        font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
         text-align: center;
         white-space: nowrap;
         text-decoration: none;
-        gap: 0.5rem;
+        gap: 0.5em;
+        position: relative;
+        z-index: 1;
+        cursor: pointer;
+        vertical-align: middle;
+        transition: transform 0.3s ease, opacity 0.3s ease;
+        animation: fadeIn 0.3s ease-in-out;
+        animation-delay: calc(var(--index, 0) * 0.05s);
+        opacity: 0;
+        animation-fill-mode: forwards;
       }
 
       // Light mode (default)
@@ -903,6 +913,26 @@ div.groqsters-feature-banner {
         background: rgb(243, 243, 242) !important; // --accent
         border: 1px solid rgb(231, 229, 228) !important; // --border
         color: var(--primary) !important;
+        box-shadow: 0 0 0 1px rgba(231, 229, 228, 0.5);
+        
+        &::after {
+          content: "";
+          background-color: rgb(243, 243, 242);
+          border-radius: 18px;
+          bottom: 1px;
+          display: block;
+          left: 1px;
+          opacity: 1;
+          position: absolute;
+          right: 1px;
+          top: 1px;
+          transition: transform 0.3s ease;
+          z-index: -1;
+        }
+        
+        &:hover::after {
+          transform: scale(0.98);
+        }
       }
 
       .btn.sign-up-button,
@@ -910,9 +940,29 @@ div.groqsters-feature-banner {
       a.sign-up-button,
       a.signup-button,
       a.groq-oidc-login-button {
-        background: #F55036 !important;
-        border: 1px solid #F55036 !important;
+        background: #f43e01 !important;
+        border: 1px solid #f43e01 !important;
         color: #ffffff !important;
+        box-shadow: 0 0 0 1px rgba(244, 62, 1, 0.3);
+        
+        &::after {
+          content: "";
+          background-color: #f43e01;
+          border-radius: 18px;
+          bottom: 1px;
+          display: block;
+          left: 1px;
+          opacity: 1;
+          position: absolute;
+          right: 1px;
+          top: 1px;
+          transition: transform 0.3s ease;
+          z-index: -1;
+        }
+        
+        &:hover::after {
+          transform: scale(0.98);
+        }
       }
 
       @media (min-width: 1024px) {
@@ -935,6 +985,18 @@ div.groqsters-feature-banner {
         height: 16px;
       }
     }
+  }
+}
+
+// Fade in animation for buttons
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
@@ -962,8 +1024,8 @@ div.groqsters-feature-banner {
         a.sign-up-button,
         a.signup-button,
         a.groq-oidc-login-button {
-          background: #F55036 !important;
-          border: 1px solid #F55036 !important;
+          background: #f43e01 !important;
+          border: 1px solid #f43e01 !important;
           color: #ffffff !important;
         }
       }
@@ -979,7 +1041,7 @@ div.groqsters-feature-banner {
       .auth-buttons {
         .btn.login-button .d-icon,
         a.login-button .d-icon {
-          color: #F55036 !important;
+          color: #f43e01 !important;
           fill: currentColor;
         }
       }

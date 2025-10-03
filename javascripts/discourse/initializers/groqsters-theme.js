@@ -849,10 +849,23 @@ export default {
           // Get all login and signup buttons
           const loginButtons = document.querySelectorAll('.login-button, .sign-up-button, .signup-button');
           
-          loginButtons.forEach(button => {
+          loginButtons.forEach((button, index) => {
             // Skip if already processed
             if (button.dataset.groqOidcProcessed) return;
             button.dataset.groqOidcProcessed = 'true';
+            
+            // Add animation index for staggered fade-in
+            button.style.setProperty('--index', index);
+            
+            // Change button text to "Sign in with Groq"
+            if (button.classList.contains('sign-up-button') || button.classList.contains('signup-button')) {
+              const buttonText = button.querySelector('.d-button-label');
+              if (buttonText) {
+                buttonText.textContent = 'Sign in with Groq';
+              } else if (!button.querySelector('.d-icon')) {
+                button.textContent = 'Sign in with Groq';
+              }
+            }
             
             // Add click event listener
             button.addEventListener('click', (e) => {

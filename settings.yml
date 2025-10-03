@@ -25,7 +25,7 @@ alert_banner_message:
 
 alert_banner_color:
   type: string
-  default: "#ff6a39"
+  default: "#f43e01"
   description: "Background color for the alert banner (hex color)"
 
 alert_banner_cta_text:
