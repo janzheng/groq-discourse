@@ -71,7 +71,7 @@ body[class*="login"] .groqsters-banners-container {
     border-radius: 4px;
 
     color: #1E1E1E;
-    border: 2px solid #f97316;
+    border: 2px solid #f43e01;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
     transition: all 0.3s ease;
 
@@ -171,7 +171,7 @@ body[class*="login"] .groqsters-banners-container {
 //     display: flex;
 //     align-items: center;
 //     background: white;
-//     border: 2px solid #f97316;
+//     border: 2px solid #f43e01;
 //     border-radius: 8px;
 //     overflow: hidden;
 //     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
@@ -202,7 +202,7 @@ body[class*="login"] .groqsters-banners-container {
 //     padding: 0.75rem;
 //     border: none;
 //     background: transparent;
-//     color: #f97316;
+//     color: #f43e01;
 //     cursor: pointer;
 //     display: flex;
 //     align-items: center;
@@ -935,7 +935,10 @@ div.groqsters-feature-banner {
         color: #ffffff !important;
         box-shadow: 0 0 0 1px rgba(244, 62, 1, 0.3) !important;
         overflow: hidden !important; // Ensure ::after stays within bounds
-        transition: all 0.3s ease !important; // Smooth all transitions
+        // Move transition here so it works both entering AND leaving hover/active states
+        transition: transform 0.3s ease, opacity 0.3s ease, box-shadow 0.3s ease !important;
+        transform-origin: center center !important;
+        will-change: transform !important; // Hint to browser for better performance
         
         &::after {
           content: "" !important;
@@ -951,19 +954,17 @@ div.groqsters-feature-banner {
           transition: all 0.3s ease !important;
           z-index: -1 !important;
           transform-origin: center center !important;
-          will-change: transform !important; // Hint to browser for better performance
+          will-change: transform !important;
         }
         
         &:hover {
           // Dim the button slightly and add subtle scale to the whole button
           box-shadow: 0 0 0 1px rgba(244, 62, 1, 0.5) !important;
           transform: scale(1.075, 1.15) !important; // Subtle scale on the button itself
-          transition: transform 0.3s ease, opacity 0.3s ease, box-shadow 0.3s ease !important;
         }
         
         &:active {
-          transform: scale(1.075, 1.15) !important; // Press down effect
-          transition: transform 0.3s ease !important;
+          transform: scale(0.95, 0.95) !important; // Press down effect (smaller)
         }
       }
 
