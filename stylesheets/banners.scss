@@ -934,7 +934,7 @@ div.groqsters-feature-banner {
         border: 1px solid #ffffff !important; // White border
         color: #ffffff !important;
         box-shadow: none !important;
-        overflow: hidden !important;
+        overflow: visible !important; // Allow background to grow beyond button
         position: relative !important;
         
         // Text and content - stays completely static, no z-index needed
@@ -948,13 +948,10 @@ div.groqsters-feature-banner {
           content: "" !important;
           background-color: #f43e01 !important;
           border-radius: 18px !important;
-          bottom: 1px !important;
+          inset: 0 !important; // Fill entire button
           display: block !important;
-          left: 1px !important;
           opacity: 1 !important;
           position: absolute !important;
-          right: 1px !important;
-          top: 1px !important;
           transition: transform 0.3s ease !important;
           z-index: -1 !important;
         }
