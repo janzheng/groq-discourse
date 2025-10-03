@@ -844,61 +844,66 @@ export default {
       setTimeout(() => autoSubmitOIDCForm(), 500);
       setTimeout(() => autoSubmitOIDCForm(), 1000);
       
+      // Helper function to process login/signup buttons
+      const processAuthButtons = () => {
+        const loginButtons = document.querySelectorAll('.login-button, .sign-up-button, .signup-button');
+        
+        loginButtons.forEach((button, index) => {
+          // Skip if already processed
+          if (button.dataset.groqOidcProcessed) return;
+          button.dataset.groqOidcProcessed = 'true';
+          
+          // Add animation index for staggered fade-in
+          button.style.setProperty('--index', index);
+          
+          // Change button text to "Sign in with Groq"
+          if (button.classList.contains('sign-up-button') || button.classList.contains('signup-button')) {
+            const buttonText = button.querySelector('.d-button-label');
+            if (buttonText) {
+              buttonText.textContent = 'Sign in with Groq';
+            } else if (!button.querySelector('.d-icon')) {
+              button.textContent = 'Sign in with Groq';
+            }
+          }
+          
+          // Add click event listener
+          button.addEventListener('click', (e) => {
+            // Only intercept if user is not logged in
+            const isAnon = document.documentElement.classList.contains('anon');
+            if (!isAnon) return; // Let default behavior work for logged-in users
+            
+            console.log('[Groq OIDC] Intercepting login button, redirecting to OIDC');
+            e.preventDefault();
+            e.stopPropagation();
+            
+            // Try multiple approaches to skip confirmation page
+            // Approach 1: Check if Discourse has a direct login endpoint
+            var directLoginUrl = '/session/sso_login?return_path=' + encodeURIComponent(window.location.pathname);
+            
+            // Approach 2: Use /auth/oidc with origin parameter (some configs respect this)
+            var oidcUrl = '/auth/oidc?origin=' + encodeURIComponent(window.location.href);
+            
+            // For now, use the oidc URL - admin needs to configure:
+            // Admin → Settings → "enable_local_logins" = false
+            // Admin → Settings → "openid_connect_overrides_local" = true
+            window.location.href = oidcUrl;
+          }, true); // Use capture phase to ensure we intercept before Discourse
+        });
+      };
+
       // OIDC Direct Login: Intercept login/signup button clicks and redirect to OIDC
       // This bypasses the default Discourse login modal
       api.onPageChange(() => {
         // Try auto-submit on page changes
         if (autoSubmitOIDCForm()) return;
         
-        setTimeout(() => {
-          // Try again after a delay
-          if (autoSubmitOIDCForm()) return;
-          
-          // Get all login and signup buttons
-          const loginButtons = document.querySelectorAll('.login-button, .sign-up-button, .signup-button');
-          
-          loginButtons.forEach((button, index) => {
-            // Skip if already processed
-            if (button.dataset.groqOidcProcessed) return;
-            button.dataset.groqOidcProcessed = 'true';
-            
-            // Add animation index for staggered fade-in
-            button.style.setProperty('--index', index);
-            
-            // Change button text to "Sign in with Groq"
-            if (button.classList.contains('sign-up-button') || button.classList.contains('signup-button')) {
-              const buttonText = button.querySelector('.d-button-label');
-              if (buttonText) {
-                buttonText.textContent = 'Sign in with Groq';
-              } else if (!button.querySelector('.d-icon')) {
-                button.textContent = 'Sign in with Groq';
-              }
-            }
-            
-            // Add click event listener
-            button.addEventListener('click', (e) => {
-              // Only intercept if user is not logged in
-              const isAnon = document.documentElement.classList.contains('anon');
-              if (!isAnon) return; // Let default behavior work for logged-in users
-              
-              console.log('[Groq OIDC] Intercepting login button, redirecting to OIDC');
-              e.preventDefault();
-              e.stopPropagation();
-              
-              // Try multiple approaches to skip confirmation page
-              // Approach 1: Check if Discourse has a direct login endpoint
-              var directLoginUrl = '/session/sso_login?return_path=' + encodeURIComponent(window.location.pathname);
-              
-              // Approach 2: Use /auth/oidc with origin parameter (some configs respect this)
-              var oidcUrl = '/auth/oidc?origin=' + encodeURIComponent(window.location.href);
-              
-              // For now, use the oidc URL - admin needs to configure:
-              // Admin → Settings → "enable_local_logins" = false
-              // Admin → Settings → "openid_connect_overrides_local" = true
-              window.location.href = oidcUrl;
-            }, true); // Use capture phase to ensure we intercept before Discourse
-          });
-        }, 100);
+        // Process immediately
+        processAuthButtons();
+        
+        // Also process after delays to catch dynamically added buttons
+        setTimeout(processAuthButtons, 50);
+        setTimeout(processAuthButtons, 100);
+        setTimeout(processAuthButtons, 200);
       });
 
     });
