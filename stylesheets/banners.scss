@@ -899,7 +899,7 @@ div.groqsters-feature-banner {
         height: 36px; // h-9
         min-width: 130px; // w-[130px]
         padding: 0.714286rem 1.142857rem; // Groq button padding
-        border-radius: 18px !important; // rounded-[18px]
+        border-radius: 124px !important; // rounded-[18px]
         font-size: 0.875rem; // text-sm
         line-height: 1.25rem;
         font-weight: 400; // font-normal
@@ -947,7 +947,7 @@ div.groqsters-feature-banner {
         &::after {
           content: "" !important;
           background-color: #f43e01 !important;
-          border-radius: 18px !important;
+          border-radius: 24px !important;
           inset: 0 !important; // Fill entire button
           display: block !important;
           opacity: 1 !important;

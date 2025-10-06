@@ -49,6 +49,61 @@
   })();
 </script>
 
+<script>
+  // Global OIDC redirect for all login/signup buttons (works on ALL pages including 404)
+  (function() {
+    function interceptAuthButtons() {
+      var buttons = document.querySelectorAll('.login-button, .sign-up-button, .signup-button, a[href="/login"], a[href="/signup"]');
+      
+      buttons.forEach(function(button) {
+        // Skip if already processed
+        if (button.dataset.groqOidcProcessed) return;
+        button.dataset.groqOidcProcessed = 'true';
+        
+        // Change signup button text to "Sign in with Groq"
+        if (button.classList.contains('sign-up-button') || button.classList.contains('signup-button') || button.getAttribute('href') === '/signup') {
+          var buttonText = button.querySelector('.d-button-label');
+          if (buttonText) {
+            buttonText.textContent = 'Sign in with Groq';
+          } else if (!button.querySelector('.d-icon') && !button.querySelector('svg')) {
+            button.textContent = 'Sign in with Groq';
+          }
+        }
+        
+        // Intercept click and redirect to OIDC
+        button.addEventListener('click', function(e) {
+          // Only intercept if user is not logged in
+          var isAnon = document.documentElement.classList.contains('anon') || !document.querySelector('.current-user');
+          if (!isAnon) return;
+          
+          console.log('[Groq OIDC] Intercepting auth button, redirecting to OIDC');
+          e.preventDefault();
+          e.stopPropagation();
+          
+          // Redirect to OIDC endpoint
+          var oidcUrl = '/auth/oidc?origin=' + encodeURIComponent(window.location.href);
+          window.location.href = oidcUrl;
+        }, true);
+      });
+    }
+
+    // Run on DOM ready
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', function() {
+        interceptAuthButtons();
+        // Re-run after short delays to catch dynamically added buttons
+        setTimeout(interceptAuthButtons, 100);
+        setTimeout(interceptAuthButtons, 500);
+      });
+    } else {
+      // DOM is already ready
+      interceptAuthButtons();
+      setTimeout(interceptAuthButtons, 100);
+      setTimeout(interceptAuthButtons, 500);
+    }
+  })();
+</script>
+
 <!-- Iconify for icons in published components -->
 <script src="https://code.iconify.design/3/3.1.1/iconify.min.js"></script>
 
