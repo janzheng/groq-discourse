@@ -67,6 +67,7 @@ kbd {
   :root {
     --primary: #f0f0f0;
     --primary-medium: #c0c0c0;
+    --primary-high: rgb(210.8, 210.8, 210.8); // Lighter for better contrast on dark bg
     --primary-low: #3d3d3d;
     --primary-very-low: #2d2d2d;
     
@@ -104,6 +105,7 @@ html[data-color-scheme="dark"],
 html.theme-dark {
   --primary: #f0f0f0;
   --primary-medium: #c0c0c0;
+  --primary-high: rgb(210.8, 210.8, 210.8); // Lighter for better contrast on dark bg
   --primary-low: #3d3d3d;
   --primary-very-low: #2d2d2d;
   
