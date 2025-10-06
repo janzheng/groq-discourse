@@ -75,12 +75,20 @@ kbd {
     --secondary-low: #3d3d3d;
     --secondary-very-low: #0d0d0d;
     --secondary-or-primary: #1e1e1e;
+    --secondary-rgb: 30, 30, 30; // RGB values for #1e1e1e
     
     --tertiary: #FF6F58;
     --tertiary-low: #3d3d3d;
     
     --header_background: #1e1e1e;
     --header_primary: #f0f0f0;
+    
+    // Notification dropdown and menu panel fixes
+    --d-menu-panel-bg: #2d2d2d;
+    --primary-very-high: #f0f0f0;
+    --highlight-bg: #3d3d3d;
+    --highlight-low: #2d2d2d;
+    --hover: #3d3d3d;
   }
 }
 
@@ -97,12 +105,20 @@ html.theme-dark {
   --secondary-low: #3d3d3d;
   --secondary-very-low: #0d0d0d;
   --secondary-or-primary: #1e1e1e;
+  --secondary-rgb: 30, 30, 30; // RGB values for #1e1e1e
   
   --tertiary: #FF6F58;
   --tertiary-low: #3d3d3d;
   
   --header_background: #1e1e1e;
   --header_primary: #f0f0f0;
+  
+  // Notification dropdown and menu panel fixes
+  --d-menu-panel-bg: #2d2d2d;
+  --primary-very-high: #f0f0f0;
+  --highlight-bg: #3d3d3d;
+  --highlight-low: #2d2d2d;
+  --hover: #3d3d3d;
 }
 
 
