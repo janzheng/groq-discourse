@@ -5,6 +5,33 @@
 #global-notice-alert-emails-disabled,
 #banner {
   border-radius: 8px;
+  
+  // Dark mode support for global notices/banners
+  @media (prefers-color-scheme: dark) {
+    background-color: #2d2d2d !important;
+    color: #f0f0f0 !important;
+    border-color: #3d3d3d !important;
+    
+    a {
+      color: #FF6F58 !important;
+    }
+  }
+}
+
+// Also support manual dark mode selection
+html[data-color-scheme="dark"],
+html.theme-dark {
+  .global-notice,
+  #global-notice-alert-emails-disabled,
+  #banner {
+    background-color: #2d2d2d !important;
+    color: #f0f0f0 !important;
+    border-color: #3d3d3d !important;
+    
+    a {
+      color: #FF6F58 !important;
+    }
+  }
 }
 
 // Banner container - only show on home/categories pages
