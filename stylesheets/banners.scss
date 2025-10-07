@@ -946,7 +946,8 @@ div.groqsters-feature-banner {
         animation-fill-mode: forwards;
       }
 
-      // Hide login button (we only want "Sign in with Groq")
+      // Hide both login and signup buttons initially via CSS
+      // JavaScript will show only one and rename it to "Sign in with Groq"
       .btn.login-button,
       a.login-button {
         display: none !important;
@@ -955,7 +956,27 @@ div.groqsters-feature-banner {
       .btn.sign-up-button,
       .btn.signup-button,
       a.sign-up-button,
-      a.signup-button,
+      a.signup-button {
+        display: none !important;
+      }
+
+      // Only show the button after JavaScript processes it and adds the processed flag
+      .btn.sign-up-button[data-groq-oidc-processed="true"],
+      .btn.signup-button[data-groq-oidc-processed="true"],
+      .btn.login-button[data-groq-oidc-processed="true"],
+      a.sign-up-button[data-groq-oidc-processed="true"],
+      a.signup-button[data-groq-oidc-processed="true"],
+      a.login-button[data-groq-oidc-processed="true"],
+      a.groq-oidc-login-button {
+        display: inline-flex !important;
+      }
+
+      .btn.sign-up-button[data-groq-oidc-processed="true"],
+      .btn.signup-button[data-groq-oidc-processed="true"],
+      .btn.login-button[data-groq-oidc-processed="true"],
+      a.sign-up-button[data-groq-oidc-processed="true"],
+      a.signup-button[data-groq-oidc-processed="true"],
+      a.login-button[data-groq-oidc-processed="true"],
       a.groq-oidc-login-button {
         background: transparent !important; // Background handled by ::after
         border: 1px solid #F3F3EE !important; // White border
@@ -1058,16 +1079,14 @@ div.groqsters-feature-banner {
     .header-buttons,
     .panel {
       .auth-buttons {
-        // Login button remains hidden in dark mode too
-        .btn.login-button,
-        a.login-button {
-          display: none !important;
-        }
-
+        // Login button visibility handled by JavaScript
+        
         .btn.sign-up-button,
         .btn.signup-button,
+        .btn.login-button,
         a.sign-up-button,
         a.signup-button,
+        a.login-button,
         a.groq-oidc-login-button {
           background: #f43e01 !important;
           border: 1px solid #f43e01 !important;

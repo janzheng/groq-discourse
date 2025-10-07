@@ -855,24 +855,74 @@ export default {
       
       // Helper function to process login/signup buttons
       const processAuthButtons = () => {
-        const loginButtons = document.querySelectorAll('.login-button, .sign-up-button, .signup-button');
+        // Cast a wider net to catch all possible signup/login buttons
+        const buttons = document.querySelectorAll('.login-button, .sign-up-button, .signup-button, button.sign-up-button, button.signup-button, button.login-button, a[href="/login"], a[href="/signup"]');
         
-        loginButtons.forEach((button, index) => {
+        // Check if we have both signup and login buttons
+        let hasSignup = false;
+        let hasLogin = false;
+        const loginButtonsList = [];
+        const signupButtonsList = [];
+        
+        buttons.forEach(button => {
+          if (button.classList.contains('sign-up-button') || button.classList.contains('signup-button') || button.getAttribute('href') === '/signup') {
+            hasSignup = true;
+            signupButtonsList.push(button);
+          }
+          if (button.classList.contains('login-button') || button.getAttribute('href') === '/login') {
+            hasLogin = true;
+            loginButtonsList.push(button);
+          }
+        });
+        
+        // Determine which button to keep visible
+        // Priority: signup button if it exists, otherwise login button
+        let buttonToKeep = null;
+        if (hasSignup) {
+          buttonToKeep = signupButtonsList[0]; // Keep first signup button
+        } else if (hasLogin) {
+          buttonToKeep = loginButtonsList[0]; // Keep first login button if no signup
+        }
+        
+        buttons.forEach((button, index) => {
           // Skip if already processed
           if (button.dataset.groqOidcProcessed) return;
-          button.dataset.groqOidcProcessed = 'true';
           
-          // Add animation index for staggered fade-in
-          button.style.setProperty('--index', index);
-          
-          // Change button text to "Sign in with Groq"
-          if (button.classList.contains('sign-up-button') || button.classList.contains('signup-button')) {
-            const buttonText = button.querySelector('.d-button-label');
-            if (buttonText) {
-              buttonText.textContent = 'Sign in with Groq';
-            } else if (!button.querySelector('.d-icon')) {
-              button.textContent = 'Sign in with Groq';
+          // Only process and show the button we want to keep
+          if (button === buttonToKeep) {
+            button.dataset.groqOidcProcessed = 'true';
+            
+            // Add animation index for staggered fade-in
+            button.style.setProperty('--index', index);
+            
+            // Change ALL button text to "Sign in with Groq" (including login buttons)
+            if (button.classList.contains('sign-up-button') || 
+                button.classList.contains('signup-button') ||
+                button.classList.contains('login-button') ||
+                button.getAttribute('href') === '/signup' ||
+                button.getAttribute('href') === '/login') {
+              
+              // Try multiple methods to change the text
+              const buttonText = button.querySelector('.d-button-label');
+              if (buttonText) {
+                buttonText.textContent = 'Sign in with Groq';
+              } else if (!button.querySelector('.d-icon') && !button.querySelector('svg')) {
+                // If there's no icon, just replace the text content
+                button.textContent = 'Sign in with Groq';
+              } else if (button.querySelector('.d-icon') || button.querySelector('svg')) {
+                // If there's an icon, try to find and replace just the text node
+                const textNode = Array.from(button.childNodes).find(node => 
+                  node.nodeType === Node.TEXT_NODE && node.textContent.trim()
+                );
+                if (textNode) {
+                  textNode.textContent = 'Sign in with Groq';
+                }
+              }
             }
+          } else {
+            // Hide all other auth buttons by NOT setting the processed flag
+            // CSS will keep them hidden since they don't have data-groq-oidc-processed="true"
+            return;
           }
           
           // Add click event listener

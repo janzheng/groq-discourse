@@ -53,21 +53,71 @@
   // Global OIDC redirect for all login/signup buttons (works on ALL pages including 404)
   (function() {
     function interceptAuthButtons() {
-      var buttons = document.querySelectorAll('.login-button, .sign-up-button, .signup-button, a[href="/login"], a[href="/signup"]');
+      // Cast a wider net to catch all possible signup/login buttons
+      var buttons = document.querySelectorAll('.login-button, .sign-up-button, .signup-button, a[href="/login"], a[href="/signup"], button.sign-up-button, button.signup-button, button.login-button');
+      
+      // Check if we have both signup and login buttons
+      var hasSignup = false;
+      var hasLogin = false;
+      var loginButtons = [];
+      var signupButtons = [];
+      
+      buttons.forEach(function(button) {
+        if (button.classList.contains('sign-up-button') || button.classList.contains('signup-button') || button.getAttribute('href') === '/signup') {
+          hasSignup = true;
+          signupButtons.push(button);
+        }
+        if (button.classList.contains('login-button') || button.getAttribute('href') === '/login') {
+          hasLogin = true;
+          loginButtons.push(button);
+        }
+      });
+      
+      // Determine which button to keep visible
+      // Priority: signup button if it exists, otherwise login button
+      var buttonToKeep = null;
+      if (hasSignup) {
+        buttonToKeep = signupButtons[0]; // Keep first signup button
+      } else if (hasLogin) {
+        buttonToKeep = loginButtons[0]; // Keep first login button if no signup
+      }
       
       buttons.forEach(function(button) {
         // Skip if already processed
         if (button.dataset.groqOidcProcessed) return;
-        button.dataset.groqOidcProcessed = 'true';
         
-        // Change signup button text to "Sign in with Groq"
-        if (button.classList.contains('sign-up-button') || button.classList.contains('signup-button') || button.getAttribute('href') === '/signup') {
-          var buttonText = button.querySelector('.d-button-label');
-          if (buttonText) {
-            buttonText.textContent = 'Sign in with Groq';
-          } else if (!button.querySelector('.d-icon') && !button.querySelector('svg')) {
-            button.textContent = 'Sign in with Groq';
+        // Only process and show the button we want to keep
+        if (button === buttonToKeep) {
+          button.dataset.groqOidcProcessed = 'true';
+          
+          // Change ALL signup and login button text to "Sign in with Groq"
+          if (button.classList.contains('sign-up-button') || 
+              button.classList.contains('signup-button') || 
+              button.classList.contains('login-button') ||
+              button.getAttribute('href') === '/signup' ||
+              button.getAttribute('href') === '/login') {
+            
+            // Try multiple methods to change the text
+            var buttonText = button.querySelector('.d-button-label');
+            if (buttonText) {
+              buttonText.textContent = 'Sign in with Groq';
+            } else if (!button.querySelector('.d-icon') && !button.querySelector('svg')) {
+              // If there's no icon, just replace the text content
+              button.textContent = 'Sign in with Groq';
+            } else if (button.querySelector('.d-icon') || button.querySelector('svg')) {
+              // If there's an icon, try to find and replace just the text node
+              var textNode = Array.from(button.childNodes).find(function(node) {
+                return node.nodeType === Node.TEXT_NODE && node.textContent.trim();
+              });
+              if (textNode) {
+                textNode.textContent = 'Sign in with Groq';
+              }
+            }
           }
+        } else {
+          // Hide all other auth buttons by NOT setting the processed flag
+          // CSS will keep them hidden since they don't have data-groq-oidc-processed="true"
+          return;
         }
         
         // Intercept click and redirect to OIDC
@@ -94,13 +144,21 @@
         // Re-run after short delays to catch dynamically added buttons
         setTimeout(interceptAuthButtons, 100);
         setTimeout(interceptAuthButtons, 500);
+        setTimeout(interceptAuthButtons, 1000);
       });
     } else {
       // DOM is already ready
       interceptAuthButtons();
       setTimeout(interceptAuthButtons, 100);
       setTimeout(interceptAuthButtons, 500);
+      setTimeout(interceptAuthButtons, 1000);
     }
+    
+    // Also observe DOM changes to catch any dynamically added buttons
+    var observer = new MutationObserver(function(mutations) {
+      interceptAuthButtons();
+    });
+    observer.observe(document.body, { childList: true, subtree: true });
   })();
 </script>
 
