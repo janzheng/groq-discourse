@@ -66,82 +66,328 @@ kbd {
 // Dark mode overrides - use media query for system preference
 @media (prefers-color-scheme: dark) {
   :root {
+    // Primary colors (text)
     --primary: #f0f0f0;
     --primary-medium: #c0c0c0;
     --primary-high: rgb(210.8, 210.8, 210.8); // Lighter for better contrast on dark bg
     --primary-low: #3d3d3d;
     --primary-very-low: #2d2d2d;
+    --primary-very-high: #f0f0f0;
+    --primary-50: #2d2d2d;
+    --primary-100: #333333;
+    --primary-200: #3d3d3d;
+    --primary-300: #4d4d4d;
+    --primary-400: #666666;
+    --primary-500: #808080;
+    --primary-600: #999999;
+    --primary-700: #b3b3b3;
+    --primary-800: #c0c0c0;
+    --primary-900: #e0e0e0;
+    --primary-low-mid: #4d4d4d;
+    --primary-rgb: 240, 240, 240;
+    --primary-low-rgb: 61, 61, 61;
+    --primary-very-low-rgb: 45, 45, 45;
     
+    // Secondary colors (backgrounds)
     --secondary: #1e1e1e;
     --secondary-medium: #2d2d2d;
     --secondary-low: #3d3d3d;
+    --secondary-high: #4d4d4d;
+    --secondary-very-high: #2d2d2d;
     --secondary-very-low: #0d0d0d;
     --secondary-or-primary: #1e1e1e;
     --secondary-rgb: 30, 30, 30; // RGB values for #1e1e1e
     
+    // Tertiary colors (accent/links)
     --tertiary: #FF6F58;
     --tertiary-low: #3d3d3d;
+    --tertiary-very-low: #2d2d2d;
+    --tertiary-medium: #FF8F78;
+    --tertiary-high: #FFAF98;
+    --tertiary-hover: #FF5538;
     --tertiary-25: #4a2a24;
+    --tertiary-50: #3d2d2a;
+    --tertiary-100: #4a3330;
     --tertiary-200: #5a3a34;
+    --tertiary-300: #6a4a44;
+    --tertiary-400: #8a5a54;
+    --tertiary-500: #aa6a64;
+    --tertiary-600: #ca7a74;
+    --tertiary-700: #ea8a84;
+    --tertiary-800: #FF9F88;
+    --tertiary-900: #FFBFA8;
     
+    // Header
     --header_background: #1e1e1e;
     --header_primary: #f0f0f0;
+    --header_background-rgb: 30, 30, 30;
+    --header_primary-low: #3d3d3d;
+    --header_primary-medium: #808080;
+    --header_primary-high: #b3b3b3;
+    --header_primary-very-high: #e0e0e0;
     
+    // Sidebar
     --d-sidebar-admin-background: #2d2d2d;
     --d-sidebar-highlight-background: #3d3d3d;
     --d-sidebar-active-background: #3d3d3d;
     
-    // Notification dropdown and menu panel fixes
-    --d-menu-panel-bg: #2d2d2d;
-    --d-unread-notification-background: #3d3d3d;
-    --primary-very-high: #f0f0f0;
+    // Highlight colors
+    --highlight: #6b6b00;
     --highlight-bg: #3d3d3d;
     --highlight-low: #2d2d2d;
+    --highlight-medium: #4d4d4d;
+    --highlight-high: #5d5d5d;
+    --highlight-rgb: 107, 107, 0;
+    --highlight-low-or-medium: #2d2d2d;
+    
+    // Hover states
     --hover: #3d3d3d;
+    --d-hover: #3d3d3d;
+    
+    // Selected state
+    --d-selected: #2d4d5d;
+    
+    // Notification dropdown and menu panel
+    --d-menu-panel-bg: #2d2d2d;
+    --d-unread-notification-background: #3d3d3d;
+    
+    // Background colors for dark mode
+    --background: #1e1e1e;
+    
+    // Status colors
+    --danger: #ff4444;
+    --danger-low: #4d2d2d;
+    --danger-medium: #dd3333;
+    --danger-hover: #cc2222;
+    --success: #44dd44;
+    --success-low: #2d4d2d;
+    --success-medium: #55ee55;
+    --success-hover: #33cc33;
+    --love: #fa6c8d;
+    --love-low: #4d2d3d;
+    
+    // Badge and card backgrounds
+    --d-badge-card-background-color: #2d2d2d;
+    --mention-background-color: #3d3d3d;
+    
+    // Borders
+    --content-border-color: #3d3d3d;
+    --input-border-color: #4d4d4d;
+    --table-border-color: #3d3d3d;
     
     // Code styling
     --inline-code-bg: #2d2d2d;
+    --hljs-bg: #2d2d2d;
+    --hljs-comment: #808080;
+    --hljs-keyword: #66b3ff;
+    --hljs-string: #88dd88;
+    --hljs-attr: #66ccff;
+    --hljs-attribute: #dd88dd;
+    --hljs-addition: #55aa55;
+    --hljs-deletion: #dd5555;
+    --hljs-title: #ffaa55;
+    --hljs-name: #ffaa55;
+    --hljs-punctuation: #b3b3b3;
+    --hljs-symbol: #99dd66;
+    --hljs-variable: #99dd66;
+    
+    // Misc
+    --metadata-color: #c0c0c0;
+    --title-color: #f0f0f0;
+    --title-color--read: #c0c0c0;
+    --title-color--header: #f0f0f0;
+    --excerpt-color: #c0c0c0;
+    --quaternary: #ff7755;
+    --quaternary-low: #4d3d3d;
+    --wiki: #55dd55;
+    
+    // Composite/derived colors
+    --blend-primary-secondary-5: #252525;
+    --primary-med-or-secondary-med: #2d2d2d;
+    --primary-med-or-secondary-high: #4d4d4d;
+    --primary-high-or-secondary-low: rgb(210.8, 210.8, 210.8);
+    --primary-low-mid-or-secondary-high: #4d4d4d;
+    --primary-low-mid-or-secondary-low: #3d3d3d;
+    --primary-or-primary-low-mid: #f0f0f0;
+    --tertiary-or-tertiary-low: #FF6F58;
+    --tertiary-low-or-tertiary-high: #3d3d3d;
+    --tertiary-med-or-tertiary: #FF8F78;
+    --tertiary-or-white: #FF6F58;
+    
+    // Float kit (tooltips/dropdowns)
+    --float-kit-arrow-stroke-color: #3d3d3d;
+    --float-kit-arrow-fill-color: #1e1e1e;
+    
+    // Timeline
+    --topic-timeline-border-color: #3d3d3d;
+    --topic-timeline-handle-color: #FF6F58;
+    
+    // Always black/white
+    --always-black-rgb: 255, 255, 255; // Inverted for dark mode
   }
 }
 
 // Also support when user manually selects dark mode
 html[data-color-scheme="dark"],
 html.theme-dark {
+  // Primary colors (text)
   --primary: #f0f0f0;
   --primary-medium: #c0c0c0;
   --primary-high: rgb(210.8, 210.8, 210.8); // Lighter for better contrast on dark bg
   --primary-low: #3d3d3d;
   --primary-very-low: #2d2d2d;
+  --primary-very-high: #f0f0f0;
+  --primary-50: #2d2d2d;
+  --primary-100: #333333;
+  --primary-200: #3d3d3d;
+  --primary-300: #4d4d4d;
+  --primary-400: #666666;
+  --primary-500: #808080;
+  --primary-600: #999999;
+  --primary-700: #b3b3b3;
+  --primary-800: #c0c0c0;
+  --primary-900: #e0e0e0;
+  --primary-low-mid: #4d4d4d;
+  --primary-rgb: 240, 240, 240;
+  --primary-low-rgb: 61, 61, 61;
+  --primary-very-low-rgb: 45, 45, 45;
   
+  // Secondary colors (backgrounds)
   --secondary: #1e1e1e;
   --secondary-medium: #2d2d2d;
   --secondary-low: #3d3d3d;
+  --secondary-high: #4d4d4d;
+  --secondary-very-high: #2d2d2d;
   --secondary-very-low: #0d0d0d;
   --secondary-or-primary: #1e1e1e;
   --secondary-rgb: 30, 30, 30; // RGB values for #1e1e1e
   
+  // Tertiary colors (accent/links)
   --tertiary: #FF6F58;
   --tertiary-low: #3d3d3d;
+  --tertiary-very-low: #2d2d2d;
+  --tertiary-medium: #FF8F78;
+  --tertiary-high: #FFAF98;
+  --tertiary-hover: #FF5538;
   --tertiary-25: #4a2a24;
+  --tertiary-50: #3d2d2a;
+  --tertiary-100: #4a3330;
   --tertiary-200: #5a3a34;
+  --tertiary-300: #6a4a44;
+  --tertiary-400: #8a5a54;
+  --tertiary-500: #aa6a64;
+  --tertiary-600: #ca7a74;
+  --tertiary-700: #ea8a84;
+  --tertiary-800: #FF9F88;
+  --tertiary-900: #FFBFA8;
   
+  // Header
   --header_background: #1e1e1e;
   --header_primary: #f0f0f0;
+  --header_background-rgb: 30, 30, 30;
+  --header_primary-low: #3d3d3d;
+  --header_primary-medium: #808080;
+  --header_primary-high: #b3b3b3;
+  --header_primary-very-high: #e0e0e0;
   
+  // Sidebar
   --d-sidebar-admin-background: #2d2d2d;
   --d-sidebar-highlight-background: #3d3d3d;
   --d-sidebar-active-background: #3d3d3d;
   
-  // Notification dropdown and menu panel fixes
-  --d-menu-panel-bg: #2d2d2d;
-  --d-unread-notification-background: #3d3d3d;
-  --primary-very-high: #f0f0f0;
+  // Highlight colors
+  --highlight: #6b6b00;
   --highlight-bg: #3d3d3d;
   --highlight-low: #2d2d2d;
+  --highlight-medium: #4d4d4d;
+  --highlight-high: #5d5d5d;
+  --highlight-rgb: 107, 107, 0;
+  --highlight-low-or-medium: #2d2d2d;
+  
+  // Hover states
   --hover: #3d3d3d;
+  --d-hover: #3d3d3d;
+  
+  // Selected state
+  --d-selected: #2d4d5d;
+  
+  // Notification dropdown and menu panel
+  --d-menu-panel-bg: #2d2d2d;
+  --d-unread-notification-background: #3d3d3d;
+  
+  // Background colors for dark mode
+  --background: #1e1e1e;
+  
+  // Status colors
+  --danger: #ff4444;
+  --danger-low: #4d2d2d;
+  --danger-medium: #dd3333;
+  --danger-hover: #cc2222;
+  --success: #44dd44;
+  --success-low: #2d4d2d;
+  --success-medium: #55ee55;
+  --success-hover: #33cc33;
+  --love: #fa6c8d;
+  --love-low: #4d2d3d;
+  
+  // Badge and card backgrounds
+  --d-badge-card-background-color: #2d2d2d;
+  --mention-background-color: #3d3d3d;
+  
+  // Borders
+  --content-border-color: #3d3d3d;
+  --input-border-color: #4d4d4d;
+  --table-border-color: #3d3d3d;
   
   // Code styling
   --inline-code-bg: #2d2d2d;
+  --hljs-bg: #2d2d2d;
+  --hljs-comment: #808080;
+  --hljs-keyword: #66b3ff;
+  --hljs-string: #88dd88;
+  --hljs-attr: #66ccff;
+  --hljs-attribute: #dd88dd;
+  --hljs-addition: #55aa55;
+  --hljs-deletion: #dd5555;
+  --hljs-title: #ffaa55;
+  --hljs-name: #ffaa55;
+  --hljs-punctuation: #b3b3b3;
+  --hljs-symbol: #99dd66;
+  --hljs-variable: #99dd66;
+  
+  // Misc
+  --metadata-color: #c0c0c0;
+  --title-color: #f0f0f0;
+  --title-color--read: #c0c0c0;
+  --title-color--header: #f0f0f0;
+  --excerpt-color: #c0c0c0;
+  --quaternary: #ff7755;
+  --quaternary-low: #4d3d3d;
+  --wiki: #55dd55;
+  
+  // Composite/derived colors
+  --blend-primary-secondary-5: #252525;
+  --primary-med-or-secondary-med: #2d2d2d;
+  --primary-med-or-secondary-high: #4d4d4d;
+  --primary-high-or-secondary-low: rgb(210.8, 210.8, 210.8);
+  --primary-low-mid-or-secondary-high: #4d4d4d;
+  --primary-low-mid-or-secondary-low: #3d3d3d;
+  --primary-or-primary-low-mid: #f0f0f0;
+  --tertiary-or-tertiary-low: #FF6F58;
+  --tertiary-low-or-tertiary-high: #3d3d3d;
+  --tertiary-med-or-tertiary: #FF8F78;
+  --tertiary-or-white: #FF6F58;
+  
+  // Float kit (tooltips/dropdowns)
+  --float-kit-arrow-stroke-color: #3d3d3d;
+  --float-kit-arrow-fill-color: #1e1e1e;
+  
+  // Timeline
+  --topic-timeline-border-color: #3d3d3d;
+  --topic-timeline-handle-color: #FF6F58;
+  
+  // Always black/white
+  --always-black-rgb: 255, 255, 255; // Inverted for dark mode
 }
 
 
