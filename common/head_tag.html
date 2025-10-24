@@ -52,32 +52,17 @@
 <script>
   // Global OIDC redirect for all login/signup buttons (works on ALL pages including 404)
   (function() {
-    // Track which type of button we initially chose (signup or login)
-    var chosenButtonType = null;
-    
     function interceptAuthButtons() {
       // Cast a wider net to catch all possible signup/login buttons
       var buttons = document.querySelectorAll('.login-button, .sign-up-button, .signup-button, a[href="/login"], a[href="/signup"], button.sign-up-button, button.signup-button, button.login-button');
       
-      // Check if we already have a visible processed button (not off-screen)
-      var visibleButtons = Array.from(buttons).filter(function(btn) {
-        return btn.dataset.groqOidcProcessed === 'true' && 
-               btn.offsetParent !== null &&
-               window.getComputedStyle(btn).position !== 'absolute'; // Not off-screen
-      });
-      var hasVisibleButton = visibleButtons.length > 0;
-      
-      // Separate unprocessed buttons into signup and login
-      var unprocessedButtons = Array.from(buttons).filter(function(btn) {
-        return !btn.dataset.groqOidcProcessed;
-      });
-      
+      // Check if we have both signup and login buttons
       var hasSignup = false;
       var hasLogin = false;
       var loginButtons = [];
       var signupButtons = [];
       
-      unprocessedButtons.forEach(function(button) {
+      buttons.forEach(function(button) {
         if (button.classList.contains('sign-up-button') || button.classList.contains('signup-button') || button.getAttribute('href') === '/signup') {
           hasSignup = true;
           signupButtons.push(button);
@@ -88,28 +73,19 @@
         }
       });
       
-      // Determine which button type to keep on first run
-      if (chosenButtonType === null) {
-        // Priority: signup button if it exists, otherwise login button
-        if (hasSignup) {
-          chosenButtonType = 'signup';
-        } else if (hasLogin) {
-          chosenButtonType = 'login';
-        }
-      }
-      
-      // Now find the button to keep based on our chosen type
+      // Determine which button to keep visible
+      // Priority: signup button if it exists, otherwise login button
       var buttonToKeep = null;
-      if (!hasVisibleButton && unprocessedButtons.length > 0) {
-        // If no visible button exists, process a new one
-        if (chosenButtonType === 'signup' && signupButtons.length > 0) {
-          buttonToKeep = signupButtons[0];
-        } else if (chosenButtonType === 'login' && loginButtons.length > 0) {
-          buttonToKeep = loginButtons[0];
-        }
+      if (hasSignup) {
+        buttonToKeep = signupButtons[0]; // Keep first signup button
+      } else if (hasLogin) {
+        buttonToKeep = loginButtons[0]; // Keep first login button if no signup
       }
       
-      unprocessedButtons.forEach(function(button) {
+      buttons.forEach(function(button) {
+        // Skip if already processed
+        if (button.dataset.groqOidcProcessed) return;
+        
         // Only process and show the button we want to keep
         if (button === buttonToKeep) {
           button.dataset.groqOidcProcessed = 'true';
@@ -138,64 +114,51 @@
               }
             }
           }
-          
-          // Intercept click and redirect to OIDC
-          button.addEventListener('click', function(e) {
-            // Only intercept if user is not logged in
-            var isAnon = document.documentElement.classList.contains('anon') || !document.querySelector('.current-user');
-            if (!isAnon) return;
-            
-            console.log('[Groq OIDC] Intercepting auth button, redirecting to OIDC');
-            e.preventDefault();
-            e.stopPropagation();
-            
-            // Redirect to OIDC endpoint
-            var oidcUrl = '/auth/oidc?origin=' + encodeURIComponent(window.location.href);
-            window.location.href = oidcUrl;
-          }, true);
         } else {
-          // Mark button as processed but hidden so it won't show up
-          button.dataset.groqOidcProcessed = 'hidden';
+          // Hide all other auth buttons by NOT setting the processed flag
+          // CSS will keep them hidden since they don't have data-groq-oidc-processed="true"
+          return;
         }
+        
+        // Intercept click and redirect to OIDC
+        button.addEventListener('click', function(e) {
+          // Only intercept if user is not logged in
+          var isAnon = document.documentElement.classList.contains('anon') || !document.querySelector('.current-user');
+          if (!isAnon) return;
+          
+          console.log('[Groq OIDC] Intercepting auth button, redirecting to OIDC');
+          e.preventDefault();
+          e.stopPropagation();
+          
+          // Redirect to OIDC endpoint
+          var oidcUrl = '/auth/oidc?origin=' + encodeURIComponent(window.location.href);
+          window.location.href = oidcUrl;
+        }, true);
       });
     }
 
-    // Run immediately and repeatedly to catch buttons ASAP
-    interceptAuthButtons();
-    
     // Run on DOM ready
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', function() {
         interceptAuthButtons();
         // Re-run after short delays to catch dynamically added buttons
-        setTimeout(interceptAuthButtons, 50);
         setTimeout(interceptAuthButtons, 100);
-        setTimeout(interceptAuthButtons, 200);
         setTimeout(interceptAuthButtons, 500);
+        setTimeout(interceptAuthButtons, 1000);
       });
     } else {
       // DOM is already ready
       interceptAuthButtons();
-      setTimeout(interceptAuthButtons, 10);
-      setTimeout(interceptAuthButtons, 50);
       setTimeout(interceptAuthButtons, 100);
-      setTimeout(interceptAuthButtons, 200);
       setTimeout(interceptAuthButtons, 500);
+      setTimeout(interceptAuthButtons, 1000);
     }
     
     // Also observe DOM changes to catch any dynamically added buttons
     var observer = new MutationObserver(function(mutations) {
       interceptAuthButtons();
     });
-    
-    // Start observing as soon as body is available
-    if (document.body) {
-      observer.observe(document.body, { childList: true, subtree: true });
-    } else {
-      document.addEventListener('DOMContentLoaded', function() {
-        observer.observe(document.body, { childList: true, subtree: true });
-      });
-    }
+    observer.observe(document.body, { childList: true, subtree: true });
   })();
 </script>
 

@@ -939,44 +939,25 @@ div.groqsters-feature-banner {
         z-index: 1;
         cursor: pointer;
         vertical-align: middle;
-        // Start visible by default, JavaScript will hide the wrong ones
-        opacity: 1;
-      }
-      
-      // Only apply animation to processed buttons
-      .btn.sign-up-button[data-groq-oidc-processed="true"],
-      .btn.signup-button[data-groq-oidc-processed="true"],
-      .btn.login-button[data-groq-oidc-processed="true"],
-      a.sign-up-button[data-groq-oidc-processed="true"],
-      a.signup-button[data-groq-oidc-processed="true"],
-      a.login-button[data-groq-oidc-processed="true"] {
+        // Animation for fade-in on page load
         animation: fadeIn 0.3s ease-in-out;
         animation-delay: calc(var(--index, 0) * 0.05s);
         opacity: 0;
         animation-fill-mode: forwards;
       }
 
-      // Only hide buttons explicitly marked as "hidden" by JavaScript
-      // Let JavaScript handle the initial processing to avoid race conditions
-      .btn.login-button[data-groq-oidc-processed="hidden"],
-      a.login-button[data-groq-oidc-processed="hidden"],
-      button.login-button[data-groq-oidc-processed="hidden"] {
+      // Hide both login and signup buttons initially via CSS
+      // JavaScript will show only one and rename it to "Sign in with Groq"
+      .btn.login-button,
+      a.login-button {
         display: none !important;
-        visibility: hidden !important;
-        opacity: 0 !important;
-        pointer-events: none !important;
       }
 
-      .btn.sign-up-button[data-groq-oidc-processed="hidden"],
-      .btn.signup-button[data-groq-oidc-processed="hidden"],
-      a.sign-up-button[data-groq-oidc-processed="hidden"],
-      a.signup-button[data-groq-oidc-processed="hidden"],
-      button.sign-up-button[data-groq-oidc-processed="hidden"],
-      button.signup-button[data-groq-oidc-processed="hidden"] {
+      .btn.sign-up-button,
+      .btn.signup-button,
+      a.sign-up-button,
+      a.signup-button {
         display: none !important;
-        visibility: hidden !important;
-        opacity: 0 !important;
-        pointer-events: none !important;
       }
 
       // Only show the button after JavaScript processes it and adds the processed flag
@@ -986,15 +967,8 @@ div.groqsters-feature-banner {
       a.sign-up-button[data-groq-oidc-processed="true"],
       a.signup-button[data-groq-oidc-processed="true"],
       a.login-button[data-groq-oidc-processed="true"],
-      button.sign-up-button[data-groq-oidc-processed="true"],
-      button.signup-button[data-groq-oidc-processed="true"],
-      button.login-button[data-groq-oidc-processed="true"],
       a.groq-oidc-login-button {
         display: inline-flex !important;
-        pointer-events: auto !important;
-        position: relative !important;
-        left: auto !important;
-        // opacity is handled by animation
       }
 
       .btn.sign-up-button[data-groq-oidc-processed="true"],
@@ -1003,9 +977,6 @@ div.groqsters-feature-banner {
       a.sign-up-button[data-groq-oidc-processed="true"],
       a.signup-button[data-groq-oidc-processed="true"],
       a.login-button[data-groq-oidc-processed="true"],
-      button.sign-up-button[data-groq-oidc-processed="true"],
-      button.signup-button[data-groq-oidc-processed="true"],
-      button.login-button[data-groq-oidc-processed="true"],
       a.groq-oidc-login-button {
         background: transparent !important; // Background handled by ::after
         border: 1px solid #F3F3EE !important; // White border
@@ -1050,9 +1021,6 @@ div.groqsters-feature-banner {
         a.sign-up-button,
         a.signup-button,
         a.login-button,
-        button.sign-up-button,
-        button.signup-button,
-        button.login-button,
         a.groq-oidc-login-button {
           min-width: 130px !important; // Keep consistent on mobile
           max-width: none !important;
@@ -1071,9 +1039,6 @@ div.groqsters-feature-banner {
         a.sign-up-button,
         a.signup-button,
         a.login-button,
-        button.sign-up-button,
-        button.signup-button,
-        button.login-button,
         a.groq-oidc-login-button {
           min-width: 170px; // lg:w-[170px]
         }

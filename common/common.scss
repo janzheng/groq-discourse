@@ -436,22 +436,16 @@ html.anon {
     display: none;
   }
 
-  // Only hide buttons explicitly marked as "hidden" by JavaScript
-  // Don't hide unprocessed buttons to avoid race conditions
-  .btn.login-button[data-groq-oidc-processed="hidden"],
-  .btn.sign-up-button[data-groq-oidc-processed="hidden"],
-  .btn.signup-button[data-groq-oidc-processed="hidden"],
-  button.login-button[data-groq-oidc-processed="hidden"],
-  button.sign-up-button[data-groq-oidc-processed="hidden"],
-  button.signup-button[data-groq-oidc-processed="hidden"],
-  a.login-button[data-groq-oidc-processed="hidden"],
-  a.sign-up-button[data-groq-oidc-processed="hidden"],
-  a.signup-button[data-groq-oidc-processed="hidden"] {
-    display: none !important;
-    visibility: hidden !important;
-    opacity: 0 !important;
-    pointer-events: none !important;
-  }
+  // Optional: Hide default login/signup buttons when custom OIDC button is present
+  // Uncomment this if you want ONLY the custom "Continue with Groq" button
+  // .d-header {
+  //   .auth-buttons {
+  //     .btn.login-button,
+  //     .btn.sign-up-button {
+  //       display: none !important;
+  //     }
+  //   }
+  // }
 }
 
 
