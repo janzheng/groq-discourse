@@ -949,12 +949,14 @@ div.groqsters-feature-banner {
       // Hide both login and signup buttons initially via CSS
       // JavaScript will show only one and rename it to "Sign in with Groq"
       .btn.login-button,
-      a.login-button {
+      a.login-button,
+      .login-button svg {
         display: none !important;
       }
 
       .btn.sign-up-button,
       .btn.signup-button,
+      .signup-button svg,
       a.sign-up-button,
       a.signup-button {
         display: none !important;
