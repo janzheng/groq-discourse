@@ -963,7 +963,17 @@ export default {
         setTimeout(processAuthButtons, 50);
         setTimeout(processAuthButtons, 100);
         setTimeout(processAuthButtons, 200);
+        setTimeout(processAuthButtons, 500);
       });
+      
+      // Also watch for scroll events that might trigger the minimized header
+      let scrollTimeout;
+      window.addEventListener('scroll', () => {
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(() => {
+          processAuthButtons();
+        }, 100);
+      }, { passive: true });
 
     });
   }

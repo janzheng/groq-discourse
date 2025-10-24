@@ -436,16 +436,23 @@ html.anon {
     display: none;
   }
 
-  // Optional: Hide default login/signup buttons when custom OIDC button is present
-  // Uncomment this if you want ONLY the custom "Continue with Groq" button
-  // .d-header {
-  //   .auth-buttons {
-  //     .btn.login-button,
-  //     .btn.sign-up-button {
-  //       display: none !important;
-  //     }
-  //   }
-  // }
+  // Hide all auth buttons by default
+  .d-header {
+    .auth-buttons {
+      .btn.login-button,
+      .btn.sign-up-button,
+      .btn.signup-button {
+        display: none !important;
+      }
+      
+      // Only show buttons that have been processed by our OIDC code
+      .btn.login-button[data-groq-oidc-processed="true"],
+      .btn.sign-up-button[data-groq-oidc-processed="true"],
+      .btn.signup-button[data-groq-oidc-processed="true"] {
+        display: inline-flex !important;
+      }
+    }
+  }
 }
 
 
