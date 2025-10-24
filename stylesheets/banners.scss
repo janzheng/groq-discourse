@@ -939,7 +939,17 @@ div.groqsters-feature-banner {
         z-index: 1;
         cursor: pointer;
         vertical-align: middle;
-        // Animation for fade-in on page load
+        // Start visible by default, JavaScript will hide the wrong ones
+        opacity: 1;
+      }
+      
+      // Only apply animation to processed buttons
+      .btn.sign-up-button[data-groq-oidc-processed="true"],
+      .btn.signup-button[data-groq-oidc-processed="true"],
+      .btn.login-button[data-groq-oidc-processed="true"],
+      a.sign-up-button[data-groq-oidc-processed="true"],
+      a.signup-button[data-groq-oidc-processed="true"],
+      a.login-button[data-groq-oidc-processed="true"] {
         animation: fadeIn 0.3s ease-in-out;
         animation-delay: calc(var(--index, 0) * 0.05s);
         opacity: 0;
