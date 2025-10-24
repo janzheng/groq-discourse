@@ -855,99 +855,77 @@ export default {
       
       // Helper function to process login/signup buttons
       const processAuthButtons = () => {
-        // Cast a wider net to catch all possible signup/login buttons
+        // Get ALL auth buttons on the page
         const buttons = document.querySelectorAll('.login-button, .sign-up-button, .signup-button, button.sign-up-button, button.signup-button, button.login-button, a[href="/login"], a[href="/signup"]');
         
-        // Check if we have both signup and login buttons
-        let hasSignup = false;
-        let hasLogin = false;
-        const loginButtonsList = [];
-        const signupButtonsList = [];
+        if (buttons.length === 0) return;
         
+        // FIRST: Remove processed flag from ALL buttons and hide them
+        // This ensures we start fresh every time
         buttons.forEach(button => {
-          if (button.classList.contains('sign-up-button') || button.classList.contains('signup-button') || button.getAttribute('href') === '/signup') {
-            hasSignup = true;
-            signupButtonsList.push(button);
-          }
-          if (button.classList.contains('login-button') || button.getAttribute('href') === '/login') {
-            hasLogin = true;
-            loginButtonsList.push(button);
-          }
+          button.removeAttribute('data-groq-oidc-processed');
         });
         
-        // Determine which button to keep visible
-        // Priority: signup button if it exists, otherwise login button
-        let buttonToKeep = null;
-        if (hasSignup) {
-          buttonToKeep = signupButtonsList[0]; // Keep first signup button
-        } else if (hasLogin) {
-          buttonToKeep = loginButtonsList[0]; // Keep first login button if no signup
+        // SECOND: Find which button to show
+        // Priority: first signup button, or first login button if no signup exists
+        let buttonToShow = null;
+        
+        // Look for signup buttons first
+        for (let button of buttons) {
+          if (button.classList.contains('sign-up-button') || 
+              button.classList.contains('signup-button') || 
+              button.getAttribute('href') === '/signup') {
+            buttonToShow = button;
+            break;
+          }
         }
         
-        buttons.forEach((button, index) => {
-          // Skip if already processed
-          if (button.dataset.groqOidcProcessed) return;
-          
-          // Only process and show the button we want to keep
-          if (button === buttonToKeep) {
-            button.dataset.groqOidcProcessed = 'true';
-            
-            // Add animation index for staggered fade-in
-            button.style.setProperty('--index', index);
-            
-            // Change ALL button text to "Sign in with Groq" (including login buttons)
-            if (button.classList.contains('sign-up-button') || 
-                button.classList.contains('signup-button') ||
-                button.classList.contains('login-button') ||
-                button.getAttribute('href') === '/signup' ||
+        // If no signup button, use first login button
+        if (!buttonToShow) {
+          for (let button of buttons) {
+            if (button.classList.contains('login-button') || 
                 button.getAttribute('href') === '/login') {
-              
-              // Try multiple methods to change the text
-              const buttonText = button.querySelector('.d-button-label');
-              if (buttonText) {
-                buttonText.textContent = 'Sign in with Groq';
-              } else if (!button.querySelector('.d-icon') && !button.querySelector('svg')) {
-                // If there's no icon, just replace the text content
-                button.textContent = 'Sign in with Groq';
-              } else if (button.querySelector('.d-icon') || button.querySelector('svg')) {
-                // If there's an icon, try to find and replace just the text node
-                const textNode = Array.from(button.childNodes).find(node => 
-                  node.nodeType === Node.TEXT_NODE && node.textContent.trim()
-                );
-                if (textNode) {
-                  textNode.textContent = 'Sign in with Groq';
-                }
-              }
+              buttonToShow = button;
+              break;
             }
-          } else {
-            // Hide all other auth buttons by NOT setting the processed flag
-            // CSS will keep them hidden since they don't have data-groq-oidc-processed="true"
-            return;
           }
-          
-          // Add click event listener
-          button.addEventListener('click', (e) => {
-            // Only intercept if user is not logged in
+        }
+        
+        if (!buttonToShow) return;
+        
+        // THIRD: Process ONLY the button we want to show
+        buttonToShow.setAttribute('data-groq-oidc-processed', 'true');
+        
+        // Change text to "Sign in with Groq"
+        const buttonText = buttonToShow.querySelector('.d-button-label');
+        if (buttonText) {
+          buttonText.textContent = 'Sign in with Groq';
+        } else if (!buttonToShow.querySelector('.d-icon') && !buttonToShow.querySelector('svg')) {
+          buttonToShow.textContent = 'Sign in with Groq';
+        } else if (buttonToShow.querySelector('.d-icon') || buttonToShow.querySelector('svg')) {
+          const textNode = Array.from(buttonToShow.childNodes).find(node => 
+            node.nodeType === Node.TEXT_NODE && node.textContent.trim()
+          );
+          if (textNode) {
+            textNode.textContent = 'Sign in with Groq';
+          }
+        }
+        
+        // Add click handler ONLY if not already added
+        if (!buttonToShow.dataset.groqOidcClickAdded) {
+          buttonToShow.dataset.groqOidcClickAdded = 'true';
+          buttonToShow.addEventListener('click', (e) => {
             const isAnon = document.documentElement.classList.contains('anon');
-            if (!isAnon) return; // Let default behavior work for logged-in users
+            if (!isAnon) return;
             
             console.log('[Groq OIDC] Intercepting login button, redirecting to OIDC');
             e.preventDefault();
             e.stopPropagation();
             
-            // Try multiple approaches to skip confirmation page
-            // Approach 1: Check if Discourse has a direct login endpoint
-            var directLoginUrl = '/session/sso_login?return_path=' + encodeURIComponent(window.location.pathname);
-            
-            // Approach 2: Use /auth/oidc with origin parameter (some configs respect this)
             var oidcUrl = '/auth/oidc?origin=' + encodeURIComponent(window.location.href);
-            
-            // For now, use the oidc URL - admin needs to configure:
-            // Admin → Settings → "enable_local_logins" = false
-            // Admin → Settings → "openid_connect_overrides_local" = true
             window.location.href = oidcUrl;
-          }, true); // Use capture phase to ensure we intercept before Discourse
-        });
+          }, true);
+        }
       };
 
       // OIDC Direct Login: Intercept login/signup button clicks and redirect to OIDC
