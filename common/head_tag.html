@@ -59,19 +59,25 @@
       // Cast a wider net to catch all possible signup/login buttons
       var buttons = document.querySelectorAll('.login-button, .sign-up-button, .signup-button, a[href="/login"], a[href="/signup"], button.sign-up-button, button.signup-button, button.login-button');
       
-      // Check if we already have a visible processed button
-      var hasVisibleButton = Array.from(buttons).some(function(btn) {
+      // Check if we already have a visible processed button (not off-screen)
+      var visibleButtons = Array.from(buttons).filter(function(btn) {
         return btn.dataset.groqOidcProcessed === 'true' && 
-               btn.offsetParent !== null; // Check if button is actually visible
+               btn.offsetParent !== null &&
+               window.getComputedStyle(btn).position !== 'absolute'; // Not off-screen
+      });
+      var hasVisibleButton = visibleButtons.length > 0;
+      
+      // Separate unprocessed buttons into signup and login
+      var unprocessedButtons = Array.from(buttons).filter(function(btn) {
+        return !btn.dataset.groqOidcProcessed;
       });
       
-      // Check if we have both signup and login buttons
       var hasSignup = false;
       var hasLogin = false;
       var loginButtons = [];
       var signupButtons = [];
       
-      buttons.forEach(function(button) {
+      unprocessedButtons.forEach(function(button) {
         if (button.classList.contains('sign-up-button') || button.classList.contains('signup-button') || button.getAttribute('href') === '/signup') {
           hasSignup = true;
           signupButtons.push(button);
@@ -94,7 +100,7 @@
       
       // Now find the button to keep based on our chosen type
       var buttonToKeep = null;
-      if (!hasVisibleButton) {
+      if (!hasVisibleButton && unprocessedButtons.length > 0) {
         // If no visible button exists, process a new one
         if (chosenButtonType === 'signup' && signupButtons.length > 0) {
           buttonToKeep = signupButtons[0];
@@ -103,10 +109,7 @@
         }
       }
       
-      buttons.forEach(function(button) {
-        // Skip if already processed
-        if (button.dataset.groqOidcProcessed) return;
-        
+      unprocessedButtons.forEach(function(button) {
         // Only process and show the button we want to keep
         if (button === buttonToKeep) {
           button.dataset.groqOidcProcessed = 'true';
@@ -152,10 +155,7 @@
           }, true);
         } else {
           // Mark button as processed but hidden so it won't show up
-          if (!button.dataset.groqOidcProcessed) {
-            button.dataset.groqOidcProcessed = 'hidden';
-          }
-          return;
+          button.dataset.groqOidcProcessed = 'hidden';
         }
       });
     }
