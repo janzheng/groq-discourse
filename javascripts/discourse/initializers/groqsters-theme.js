@@ -952,6 +952,64 @@ export default {
 
       // OIDC Direct Login: Intercept login/signup button clicks and redirect to OIDC
       // This bypasses the default Discourse login modal
+      
+      // Set up MutationObserver to watch for header changes (especially during scroll)
+      const observeAuthButtons = () => {
+        // Target the main header and common button containers
+        const targets = [
+          document.querySelector('.d-header'),
+          document.querySelector('.panel'),
+          document.querySelector('.auth-buttons'),
+          document.body
+        ].filter(Boolean);
+        
+        if (targets.length === 0) return;
+        
+        const observer = new MutationObserver((mutations) => {
+          // Check if any mutations affected auth buttons
+          const shouldProcess = mutations.some(mutation => {
+            // Check if added nodes contain auth buttons
+            if (mutation.addedNodes.length > 0) {
+              for (let node of mutation.addedNodes) {
+                if (node.nodeType === Node.ELEMENT_NODE) {
+                  if (node.matches && (
+                    node.matches('.login-button, .sign-up-button, .signup-button, .auth-buttons') ||
+                    node.querySelector && node.querySelector('.login-button, .sign-up-button, .signup-button, .auth-buttons')
+                  )) {
+                    return true;
+                  }
+                }
+              }
+            }
+            // Check if the mutation target or its children contain auth buttons
+            if (mutation.target.nodeType === Node.ELEMENT_NODE) {
+              if (mutation.target.matches && mutation.target.matches('.d-header, .panel, .auth-buttons')) {
+                return true;
+              }
+            }
+            return false;
+          });
+          
+          if (shouldProcess) {
+            processAuthButtons();
+          }
+        });
+        
+        // Observe each target
+        targets.forEach(target => {
+          observer.observe(target, {
+            childList: true,
+            subtree: true,
+            attributes: false
+          });
+        });
+        
+        // Store observer so we can disconnect if needed
+        if (!window.__groqOidcObserver) {
+          window.__groqOidcObserver = observer;
+        }
+      };
+      
       api.onPageChange(() => {
         // Try auto-submit on page changes
         if (autoSubmitOIDCForm()) return;
@@ -963,6 +1021,15 @@ export default {
         setTimeout(processAuthButtons, 50);
         setTimeout(processAuthButtons, 100);
         setTimeout(processAuthButtons, 200);
+        setTimeout(processAuthButtons, 500);
+        
+        // Set up observer (only once)
+        if (!window.__groqOidcObserverInitialized) {
+          setTimeout(() => {
+            observeAuthButtons();
+            window.__groqOidcObserverInitialized = true;
+          }, 300);
+        }
       });
 
     });
