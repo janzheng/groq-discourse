@@ -436,7 +436,7 @@ html.anon {
     display: none;
   }
 
-  // Hide all auth buttons by default
+  // Hide ALL auth buttons in the header for anonymous users
   .d-header {
     .auth-buttons {
       .btn.login-button,
@@ -444,15 +444,10 @@ html.anon {
       .btn.signup-button {
         display: none !important;
       }
-      
-      // Only show buttons that have been processed by our OIDC code
-      .btn.login-button[data-groq-oidc-processed="true"],
-      .btn.sign-up-button[data-groq-oidc-processed="true"],
-      .btn.signup-button[data-groq-oidc-processed="true"] {
-        display: inline-flex !important;
-      }
     }
   }
+  
+  // The JavaScript will manually control visibility of the single button we want to show
 }
 
 
