@@ -436,18 +436,8 @@ html.anon {
     display: none;
   }
 
-  // Hide unprocessed buttons globally to prevent flashing
-  // Move them off-screen while keeping them in the DOM for JavaScript
-  // Also hide buttons explicitly marked as "hidden" (duplicates from scrolling)
-  .btn.login-button:not([data-groq-oidc-processed="true"]),
-  .btn.sign-up-button:not([data-groq-oidc-processed="true"]),
-  .btn.signup-button:not([data-groq-oidc-processed="true"]),
-  button.login-button:not([data-groq-oidc-processed="true"]),
-  button.sign-up-button:not([data-groq-oidc-processed="true"]),
-  button.signup-button:not([data-groq-oidc-processed="true"]),
-  a.login-button:not([data-groq-oidc-processed="true"]),
-  a.sign-up-button:not([data-groq-oidc-processed="true"]),
-  a.signup-button:not([data-groq-oidc-processed="true"]),
+  // Only hide buttons explicitly marked as "hidden" by JavaScript
+  // Don't hide unprocessed buttons to avoid race conditions
   .btn.login-button[data-groq-oidc-processed="hidden"],
   .btn.sign-up-button[data-groq-oidc-processed="hidden"],
   .btn.signup-button[data-groq-oidc-processed="hidden"],
@@ -457,10 +447,10 @@ html.anon {
   a.login-button[data-groq-oidc-processed="hidden"],
   a.sign-up-button[data-groq-oidc-processed="hidden"],
   a.signup-button[data-groq-oidc-processed="hidden"] {
+    display: none !important;
+    visibility: hidden !important;
     opacity: 0 !important;
     pointer-events: none !important;
-    position: absolute !important;
-    left: -9999px !important;
   }
 }
 

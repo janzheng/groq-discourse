@@ -160,28 +160,42 @@
       });
     }
 
+    // Run immediately and repeatedly to catch buttons ASAP
+    interceptAuthButtons();
+    
     // Run on DOM ready
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', function() {
         interceptAuthButtons();
         // Re-run after short delays to catch dynamically added buttons
+        setTimeout(interceptAuthButtons, 50);
         setTimeout(interceptAuthButtons, 100);
+        setTimeout(interceptAuthButtons, 200);
         setTimeout(interceptAuthButtons, 500);
-        setTimeout(interceptAuthButtons, 1000);
       });
     } else {
       // DOM is already ready
       interceptAuthButtons();
+      setTimeout(interceptAuthButtons, 10);
+      setTimeout(interceptAuthButtons, 50);
       setTimeout(interceptAuthButtons, 100);
+      setTimeout(interceptAuthButtons, 200);
       setTimeout(interceptAuthButtons, 500);
-      setTimeout(interceptAuthButtons, 1000);
     }
     
     // Also observe DOM changes to catch any dynamically added buttons
     var observer = new MutationObserver(function(mutations) {
       interceptAuthButtons();
     });
-    observer.observe(document.body, { childList: true, subtree: true });
+    
+    // Start observing as soon as body is available
+    if (document.body) {
+      observer.observe(document.body, { childList: true, subtree: true });
+    } else {
+      document.addEventListener('DOMContentLoaded', function() {
+        observer.observe(document.body, { childList: true, subtree: true });
+      });
+    }
   })();
 </script>
 
