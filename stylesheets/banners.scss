@@ -948,34 +948,25 @@ div.groqsters-feature-banner {
 
       // Hide both login and signup buttons initially via CSS
       // JavaScript will show only one and rename it to "Sign in with Groq"
-      // Use visibility:hidden instead of display:none so JavaScript can still find them
-      .btn.login-button,
-      a.login-button,
-      button.login-button {
-        visibility: hidden !important;
+      .btn.login-button:not([data-groq-oidc-processed="true"]),
+      a.login-button:not([data-groq-oidc-processed="true"]),
+      button.login-button:not([data-groq-oidc-processed="true"]) {
         opacity: 0 !important;
         pointer-events: none !important;
-        max-width: 0 !important;
-        max-height: 0 !important;
-        overflow: hidden !important;
-        margin: 0 !important;
-        padding: 0 !important;
+        position: absolute !important;
+        left: -9999px !important;
       }
 
-      .btn.sign-up-button,
-      .btn.signup-button,
-      a.sign-up-button,
-      a.signup-button,
-      button.sign-up-button,
-      button.signup-button {
-        visibility: hidden !important;
+      .btn.sign-up-button:not([data-groq-oidc-processed="true"]),
+      .btn.signup-button:not([data-groq-oidc-processed="true"]),
+      a.sign-up-button:not([data-groq-oidc-processed="true"]),
+      a.signup-button:not([data-groq-oidc-processed="true"]),
+      button.sign-up-button:not([data-groq-oidc-processed="true"]),
+      button.signup-button:not([data-groq-oidc-processed="true"]) {
         opacity: 0 !important;
         pointer-events: none !important;
-        max-width: 0 !important;
-        max-height: 0 !important;
-        overflow: hidden !important;
-        margin: 0 !important;
-        padding: 0 !important;
+        position: absolute !important;
+        left: -9999px !important;
       }
 
       // Only show the button after JavaScript processes it and adds the processed flag
@@ -990,13 +981,9 @@ div.groqsters-feature-banner {
       button.login-button[data-groq-oidc-processed="true"],
       a.groq-oidc-login-button {
         display: inline-flex !important;
-        visibility: visible !important;
         pointer-events: auto !important;
-        max-width: none !important;
-        max-height: none !important;
-        overflow: visible !important;
-        margin: revert !important;
-        padding: 0.714286rem 1.142857rem !important;
+        position: relative !important;
+        left: auto !important;
         // opacity is handled by animation
       }
 

@@ -436,8 +436,8 @@ html.anon {
     display: none;
   }
 
-  // Hide unprocessed buttons globally but keep them in DOM for JavaScript
-  // Uses visibility:hidden and size constraints to prevent flashing
+  // Hide unprocessed buttons globally to prevent flashing
+  // Move them off-screen while keeping them in the DOM for JavaScript
   .btn.login-button:not([data-groq-oidc-processed="true"]),
   .btn.sign-up-button:not([data-groq-oidc-processed="true"]),
   .btn.signup-button:not([data-groq-oidc-processed="true"]),
@@ -447,12 +447,10 @@ html.anon {
   a.login-button:not([data-groq-oidc-processed="true"]),
   a.sign-up-button:not([data-groq-oidc-processed="true"]),
   a.signup-button:not([data-groq-oidc-processed="true"]) {
-    visibility: hidden !important;
     opacity: 0 !important;
     pointer-events: none !important;
-    max-width: 0 !important;
-    max-height: 0 !important;
-    overflow: hidden !important;
+    position: absolute !important;
+    left: -9999px !important;
   }
 }
 
