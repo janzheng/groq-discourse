@@ -436,16 +436,22 @@ html.anon {
     display: none;
   }
 
-  // Optional: Hide default login/signup buttons when custom OIDC button is present
-  // Uncomment this if you want ONLY the custom "Continue with Groq" button
-  // .d-header {
-  //   .auth-buttons {
-  //     .btn.login-button,
-  //     .btn.sign-up-button {
-  //       display: none !important;
-  //     }
-  //   }
-  // }
+  // Hide all login/signup buttons globally until JavaScript processes them
+  // This prevents them from flashing when scrolling or navigating
+  .btn.login-button:not([data-groq-oidc-processed="true"]),
+  .btn.sign-up-button:not([data-groq-oidc-processed="true"]),
+  .btn.signup-button:not([data-groq-oidc-processed="true"]),
+  button.login-button:not([data-groq-oidc-processed="true"]),
+  button.sign-up-button:not([data-groq-oidc-processed="true"]),
+  button.signup-button:not([data-groq-oidc-processed="true"]),
+  a.login-button:not([data-groq-oidc-processed="true"]),
+  a.sign-up-button:not([data-groq-oidc-processed="true"]),
+  a.signup-button:not([data-groq-oidc-processed="true"]) {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
 }
 
 

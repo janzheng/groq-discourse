@@ -949,15 +949,24 @@ div.groqsters-feature-banner {
       // Hide both login and signup buttons initially via CSS
       // JavaScript will show only one and rename it to "Sign in with Groq"
       .btn.login-button,
-      a.login-button {
+      a.login-button,
+      button.login-button {
         display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+        pointer-events: none !important;
       }
 
       .btn.sign-up-button,
       .btn.signup-button,
       a.sign-up-button,
-      a.signup-button {
+      a.signup-button,
+      button.sign-up-button,
+      button.signup-button {
         display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+        pointer-events: none !important;
       }
 
       // Only show the button after JavaScript processes it and adds the processed flag
@@ -967,8 +976,14 @@ div.groqsters-feature-banner {
       a.sign-up-button[data-groq-oidc-processed="true"],
       a.signup-button[data-groq-oidc-processed="true"],
       a.login-button[data-groq-oidc-processed="true"],
+      button.sign-up-button[data-groq-oidc-processed="true"],
+      button.signup-button[data-groq-oidc-processed="true"],
+      button.login-button[data-groq-oidc-processed="true"],
       a.groq-oidc-login-button {
         display: inline-flex !important;
+        visibility: visible !important;
+        pointer-events: auto !important;
+        // opacity is handled by animation
       }
 
       .btn.sign-up-button[data-groq-oidc-processed="true"],
@@ -977,6 +992,9 @@ div.groqsters-feature-banner {
       a.sign-up-button[data-groq-oidc-processed="true"],
       a.signup-button[data-groq-oidc-processed="true"],
       a.login-button[data-groq-oidc-processed="true"],
+      button.sign-up-button[data-groq-oidc-processed="true"],
+      button.signup-button[data-groq-oidc-processed="true"],
+      button.login-button[data-groq-oidc-processed="true"],
       a.groq-oidc-login-button {
         background: transparent !important; // Background handled by ::after
         border: 1px solid #F3F3EE !important; // White border
@@ -1021,6 +1039,9 @@ div.groqsters-feature-banner {
         a.sign-up-button,
         a.signup-button,
         a.login-button,
+        button.sign-up-button,
+        button.signup-button,
+        button.login-button,
         a.groq-oidc-login-button {
           min-width: 130px !important; // Keep consistent on mobile
           max-width: none !important;
@@ -1039,6 +1060,9 @@ div.groqsters-feature-banner {
         a.sign-up-button,
         a.signup-button,
         a.login-button,
+        button.sign-up-button,
+        button.signup-button,
+        button.login-button,
         a.groq-oidc-login-button {
           min-width: 170px; // lg:w-[170px]
         }
