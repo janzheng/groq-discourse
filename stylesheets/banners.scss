@@ -948,9 +948,13 @@ div.groqsters-feature-banner {
 
       // Hide both login and signup buttons initially via CSS
       // JavaScript will show only one and rename it to "Sign in with Groq"
+      // Hide unprocessed buttons AND buttons marked as "hidden"
       .btn.login-button:not([data-groq-oidc-processed="true"]),
       a.login-button:not([data-groq-oidc-processed="true"]),
-      button.login-button:not([data-groq-oidc-processed="true"]) {
+      button.login-button:not([data-groq-oidc-processed="true"]),
+      .btn.login-button[data-groq-oidc-processed="hidden"],
+      a.login-button[data-groq-oidc-processed="hidden"],
+      button.login-button[data-groq-oidc-processed="hidden"] {
         opacity: 0 !important;
         pointer-events: none !important;
         position: absolute !important;
@@ -962,7 +966,13 @@ div.groqsters-feature-banner {
       a.sign-up-button:not([data-groq-oidc-processed="true"]),
       a.signup-button:not([data-groq-oidc-processed="true"]),
       button.sign-up-button:not([data-groq-oidc-processed="true"]),
-      button.signup-button:not([data-groq-oidc-processed="true"]) {
+      button.signup-button:not([data-groq-oidc-processed="true"]),
+      .btn.sign-up-button[data-groq-oidc-processed="hidden"],
+      .btn.signup-button[data-groq-oidc-processed="hidden"],
+      a.sign-up-button[data-groq-oidc-processed="hidden"],
+      a.signup-button[data-groq-oidc-processed="hidden"],
+      button.sign-up-button[data-groq-oidc-processed="hidden"],
+      button.signup-button[data-groq-oidc-processed="hidden"] {
         opacity: 0 !important;
         pointer-events: none !important;
         position: absolute !important;

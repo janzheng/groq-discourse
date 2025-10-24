@@ -52,6 +52,10 @@
 <script>
   // Global OIDC redirect for all login/signup buttons (works on ALL pages including 404)
   (function() {
+    // Track which type of button we initially chose (signup or login)
+    var chosenButtonType = null;
+    var processedCount = 0;
+    
     function interceptAuthButtons() {
       // Cast a wider net to catch all possible signup/login buttons
       var buttons = document.querySelectorAll('.login-button, .sign-up-button, .signup-button, a[href="/login"], a[href="/signup"], button.sign-up-button, button.signup-button, button.login-button');
@@ -73,13 +77,25 @@
         }
       });
       
-      // Determine which button to keep visible
-      // Priority: signup button if it exists, otherwise login button
+      // Determine which button type to keep on first run
+      if (chosenButtonType === null) {
+        // Priority: signup button if it exists, otherwise login button
+        if (hasSignup) {
+          chosenButtonType = 'signup';
+        } else if (hasLogin) {
+          chosenButtonType = 'login';
+        }
+      }
+      
+      // Now find the button to keep based on our chosen type
       var buttonToKeep = null;
-      if (hasSignup) {
-        buttonToKeep = signupButtons[0]; // Keep first signup button
-      } else if (hasLogin) {
-        buttonToKeep = loginButtons[0]; // Keep first login button if no signup
+      if (chosenButtonType === 'signup' && signupButtons.length > 0) {
+        buttonToKeep = signupButtons[0];
+      } else if (chosenButtonType === 'login' && loginButtons.length > 0) {
+        // Only process ONE login button ever
+        if (processedCount === 0) {
+          buttonToKeep = loginButtons[0];
+        }
       }
       
       buttons.forEach(function(button) {
@@ -89,6 +105,7 @@
         // Only process and show the button we want to keep
         if (button === buttonToKeep) {
           button.dataset.groqOidcProcessed = 'true';
+          processedCount++;
           
           // Change ALL signup and login button text to "Sign in with Groq"
           if (button.classList.contains('sign-up-button') || 
@@ -115,8 +132,10 @@
             }
           }
         } else {
-          // Hide all other auth buttons by NOT setting the processed flag
-          // CSS will keep them hidden since they don't have data-groq-oidc-processed="true"
+          // Mark button as processed but hidden so it won't show up
+          if (!button.dataset.groqOidcProcessed) {
+            button.dataset.groqOidcProcessed = 'hidden';
+          }
           return;
         }
         
