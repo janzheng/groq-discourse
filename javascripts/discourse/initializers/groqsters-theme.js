@@ -855,30 +855,34 @@ export default {
       
       // Helper function to process login/signup buttons
       const processAuthButtons = () => {
-        // Cast a wider net to catch all possible signup/login buttons
-        const buttons = document.querySelectorAll('.login-button, .sign-up-button, .signup-button, button.sign-up-button, button.signup-button, button.login-button, a[href="/login"], a[href="/signup"]');
-        
-        // First, hide ALL buttons explicitly (including any we previously created)
-        buttons.forEach(button => {
-          button.style.display = 'none';
-        });
-        
         // Check if we're in dropdown mode (minimized header on scroll)
         const dropdownMode = document.querySelector('.drop-down-mode');
         
         if (dropdownMode) {
-          // In dropdown mode, we need to ensure there's only ONE button
-          // Remove any duplicate buttons first
+          // In dropdown mode, check if we already have our custom button
           const authButtonsContainer = dropdownMode.querySelector('.auth-buttons');
           if (authButtonsContainer) {
+            const existingCustomButton = authButtonsContainer.querySelector('.login-button[data-groq-custom-injected="true"]');
+            
+            if (existingCustomButton) {
+              // Our button already exists, just make sure it's visible
+              existingCustomButton.style.display = 'inline-flex';
+              // Hide any other buttons
+              const otherButtons = authButtonsContainer.querySelectorAll('.login-button:not([data-groq-custom-injected="true"]), .sign-up-button, .signup-button');
+              otherButtons.forEach(btn => btn.style.display = 'none');
+              return;
+            }
+            
+            // Remove ALL existing buttons
             const allButtons = authButtonsContainer.querySelectorAll('.login-button, .sign-up-button, .signup-button');
             allButtons.forEach(button => button.remove());
             
-            // Create our custom button
+            // Create our custom button with special marker
             const customButton = document.createElement('button');
             customButton.className = 'btn btn-icon-text btn-primary btn-small login-button';
             customButton.type = 'button';
             customButton.dataset.groqOidcProcessed = 'true';
+            customButton.dataset.groqCustomInjected = 'true'; // Special marker for our injected button
             customButton.innerHTML = '<svg class="fa d-icon d-icon-user svg-icon svg-string" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><use href="#user"></use></svg><span class="d-button-label">Sign in with Groq</span>';
             
             // Add click event listener
@@ -900,6 +904,14 @@ export default {
           }
         } else {
           // Not in dropdown mode - use original logic
+          // Cast a wider net to catch all possible signup/login buttons (excluding our custom injected ones)
+          const buttons = document.querySelectorAll('.login-button:not([data-groq-custom-injected="true"]), .sign-up-button, .signup-button, button.sign-up-button, button.signup-button, button.login-button:not([data-groq-custom-injected="true"]), a[href="/login"], a[href="/signup"]');
+          
+          // First, hide ALL buttons explicitly
+          buttons.forEach(button => {
+            button.style.display = 'none';
+          });
+          
           // Check if we have both signup and login buttons
           let hasSignup = false;
           let hasLogin = false;
