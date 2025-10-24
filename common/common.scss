@@ -436,18 +436,16 @@ html.anon {
     display: none;
   }
 
-  // Hide ALL auth buttons in the header for anonymous users
-  .d-header {
-    .auth-buttons {
-      .btn.login-button,
-      .btn.sign-up-button,
-      .btn.signup-button {
-        display: none !important;
-      }
-    }
-  }
-  
-  // The JavaScript will manually control visibility of the single button we want to show
+  // Optional: Hide default login/signup buttons when custom OIDC button is present
+  // Uncomment this if you want ONLY the custom "Continue with Groq" button
+  // .d-header {
+  //   .auth-buttons {
+  //     .btn.login-button,
+  //     .btn.sign-up-button {
+  //       display: none !important;
+  //     }
+  //   }
+  // }
 }
 
 
