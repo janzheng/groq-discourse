@@ -963,20 +963,20 @@ div.groqsters-feature-banner {
       // Only show the button after JavaScript processes it and adds the processed flag
       .btn.sign-up-button[data-groq-oidc-processed="true"],
       .btn.signup-button[data-groq-oidc-processed="true"],
-      // .btn.login-button[data-groq-oidc-processed="true"],
+      .btn.login-button[data-groq-oidc-processed="true"],
       a.sign-up-button[data-groq-oidc-processed="true"],
       a.signup-button[data-groq-oidc-processed="true"],
-      // a.login-button[data-groq-oidc-processed="true"],
+      a.login-button[data-groq-oidc-processed="true"],
       a.groq-oidc-login-button {
         display: inline-flex !important;
       }
 
       .btn.sign-up-button[data-groq-oidc-processed="true"],
       .btn.signup-button[data-groq-oidc-processed="true"],
-      // .btn.login-button[data-groq-oidc-processed="true"],
+      .btn.login-button[data-groq-oidc-processed="true"],
       a.sign-up-button[data-groq-oidc-processed="true"],
       a.signup-button[data-groq-oidc-processed="true"],
-      // a.login-button[data-groq-oidc-processed="true"],
+      a.login-button[data-groq-oidc-processed="true"],
       a.groq-oidc-login-button {
         background: transparent !important; // Background handled by ::after
         border: 1px solid #F3F3EE !important; // White border
