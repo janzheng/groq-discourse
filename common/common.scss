@@ -448,5 +448,65 @@ html.anon {
   // }
 }
 
+// Disable show-more animation that interferes with layout
+#list-area .show-more.has-topics,
+.show-more.has-topics {
+  animation: none !important;
+  transition: none !important;
+}
+
+// Fix username visibility in dark mode
+@media (prefers-color-scheme: dark) {
+  // Chat usernames
+  .chat-message-info__username__name,
+  .chat-message-info__username {
+    color: var(--primary) !important;
+  }
+  
+  // Post usernames and author links
+  .topic-meta-data .names .first a,
+  .names span.first a,
+  a.username,
+  .user-title,
+  .topic-body .names .first a,
+  .embedded-posts .topic-body .names .first a {
+    color: var(--primary) !important;
+  }
+  
+  // User cards and mentions
+  .user-card .username,
+  .user-info .username,
+  a.mention {
+    color: var(--primary) !important;
+  }
+}
+
+// Also support when user manually selects dark mode
+html[data-color-scheme="dark"],
+html.theme-dark {
+  // Chat usernames
+  .chat-message-info__username__name,
+  .chat-message-info__username {
+    color: var(--primary) !important;
+  }
+  
+  // Post usernames and author links
+  .topic-meta-data .names .first a,
+  .names span.first a,
+  a.username,
+  .user-title,
+  .topic-body .names .first a,
+  .embedded-posts .topic-body .names .first a {
+    color: var(--primary) !important;
+  }
+  
+  // User cards and mentions
+  .user-card .username,
+  .user-info .username,
+  a.mention {
+    color: var(--primary) !important;
+  }
+}
+
 
 
